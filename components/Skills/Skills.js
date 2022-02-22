@@ -1,4 +1,4 @@
-
+import AppWrap from "../../wrapper/AppWrap"
 
 const Skills = () => {
   return (
@@ -8,4 +8,4 @@ const Skills = () => {
   )
 }
 
-export default Skills
+export default AppWrap(Skills, 'skills');

@@ -1,4 +1,4 @@
-
+import AppWrap from "../../wrapper/AppWrap"
 
 const Work = () => {
   return (
@@ -8,4 +8,4 @@ const Work = () => {
   )
 }
 
-export default Work
+export default AppWrap(Work, 'work');

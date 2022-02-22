@@ -1,0 +1,40 @@
+.app__about {
+    flex: 1;
+    width: 100%;
+    flex-direction: column;
+}
+
+.app__profiles {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.app__profile-item {
+    width: 240px;
+    display: flex;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    margin: 2rem;
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        height: fit-content;
+        border-radius: 15px;
+        object-fit: cover;
+    }
+
+    @media screen and (min-width: 1600px) {
+        width: 360px;
+        margin: 2rem 4rem;
+    }
+
+    @media screen and (max-width: 600px) {
+        width: 100%;
+    }
+}

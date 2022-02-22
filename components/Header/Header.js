@@ -2,6 +2,8 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import images from '../../assets';
 
+import AppWrap from '../../wrapper/AppWrap';
+
 const scaleVariants = {
   whileInView: {
     scale: [0, 1],
@@ -87,4 +89,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default AppWrap(Header, 'home')
