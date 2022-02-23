@@ -13,28 +13,30 @@
 }
 
 .app__profile-item {
-    width: 240px;
+    width: 260px;
     display: flex;
-    display: flex;
+    padding: 1rem;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
     margin: 2rem;
     cursor: pointer;
+    background-color: var(--primary-color);
+    border-radius: 15px;
 
     img {
         width: 100%;
-        height: fit-content;
+        height: auto;
         border-radius: 15px;
         object-fit: cover;
     }
 
     @media screen and (min-width: 1600px) {
-        width: 360px;
+        width: 400px;
         margin: 2rem 4rem;
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 768px) {
         width: 100%;
     }
 }

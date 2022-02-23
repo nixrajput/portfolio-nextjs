@@ -54,13 +54,24 @@ const Work = () => {
 
   return (
     <>
-      <h2 className="head-text">
-        My Creative <span>Portfolio</span> Section
-      </h2>
 
-      <div className="app__work-filter">
+      <motion.div
+        whileInView={{ x: [-300, 0] }}
+        transition={{ duration: 1, ease: "easeInOut" }}
+      >
+        <h2 className="head-text">
+          My Creative <span>Portfolio</span> Section
+        </h2>
+      </motion.div>
+
+
+      <motion.div
+        whileInView={{ x: [300, 0] }}
+        transition={{ duration: 1, ease: "easeInOut" }}
+        className="app__work-filter"
+      >
         {
-          ["Web App", "Mobile App", "API", "All"].map((item, index) => (
+          ["All", "Web Apps", "Mobile Apps", "APIs"].map((item, index) => (
             <div key={index}
               onClick={() => handleWorkFilter(item)}
               className={`app__work-filter-item app__flex p-text ${activeFilter === item ? "item-active" : ""}`}
@@ -69,11 +80,12 @@ const Work = () => {
             </div>
           ))
         }
-      </div>
+      </motion.div>
 
       <motion.div
         animate={animateCard}
-        transition={{ duration: 0.5, delayChildren: 0.5 }}
+        whileInView={{ x: [300, 0] }}
+        transition={{ duration: 1, delayChildren: 0.5 }}
         className="app__work-portfolio"
       >
         {

@@ -23,7 +23,7 @@
 
     padding: 8rem 2rem 2rem;
 
-    @media screen and (min-width: 2000px) {
+    @media screen and (min-width: 1600px) {
         padding-top: 8rem;
     }
 
@@ -31,7 +31,7 @@
         flex-direction: column;
     }
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 768px) {
         padding: 7rem 1rem 2rem;
     }
 }
@@ -44,7 +44,7 @@
     align-items: flex-start;
     height: 100%;
 
-    @media screen and (max-width: 2000px) {
+    @media screen and (max-width: 1600px) {
         width: 100%;
         margin-right: 0rem;
     }
@@ -65,6 +65,7 @@
         flex-direction: row;
         width: auto;
 
+        background-color: var(--white-color);
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
 

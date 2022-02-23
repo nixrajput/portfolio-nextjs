@@ -20,44 +20,41 @@
         align-items: center;
 
         margin: 1rem 0;
-        padding: 1rem;
-        border-radius: 10px;
-        cursor: pointer;
-        background-color: #fef4f5;
+        padding: 2rem 1rem;
+        border-radius: 15px;
+        background-color: var(--white-color);
 
         transition: all .03s ease-in-out;
 
         img {
-            width: 40px;
-            height: 40px;
+            width: 80px;
+            height: 80px;
             margin: 0 0.75rem;
         }
 
         p {
             font-weight: 600;
+            font-size: 16px;
         }
 
         a {
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 16px;
         }
 
         &:hover {
-            box-shadow: 0 0 25px #fef4f5;
+            box-shadow: 0 0 25px rgba($color: #000000, $alpha: 0.1);
         }
 
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 768px) {
             width: 100%;
         }
     }
 
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 768px) {
         width: 100%;
     }
-}
-
-.app__footer-cards .app__footer-card:last-child {
-    background-color: #f2f7fb;
 }
 
 .app__footer-form {
@@ -111,7 +108,7 @@
         cursor: pointer;
     }
 
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 768px) {
         width: 100%;
         margin: 1rem 0;
     }

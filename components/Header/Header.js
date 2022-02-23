@@ -20,8 +20,8 @@ const Header = () => {
     <div id='home' className='app__header app__flex'>
 
       <motion.div
-        whileInView={{ x: [-100, 0], opacity: [0, 1] }}
-        transition={{ duration: 2 }}
+        whileInView={{ x: [-300, 0], opacity: [0, 1] }}
+        transition={{ duration: 1 }}
         className='app__header-info'
       >
 
@@ -66,7 +66,7 @@ const Header = () => {
 
       <motion.div
         whileInView={{ scale: [0, 1] }}
-        transition={{ duration: 1, delay: 1 }}
+        transition={{ duration: 1, delay: 0.5 }}
         className='app__header-circles'
       >
 

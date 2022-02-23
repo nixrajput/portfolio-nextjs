@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import images from '../../assets';
 import { AppWrap, MotionWrap } from '../../wrapper';
+import { motion } from 'framer-motion';
 
 const Footer = () => {
 
@@ -24,10 +25,23 @@ const Footer = () => {
 
   return (
     <>
-      <h2 className="head-text">Take a Coffee & Chat with me</h2>
+      <motion.div
+        whileInView={{ x: [300, 0] }}
+        transition={{ duration: 1, ease: "easeInOut" }}
+      >
+        <h2 className="head-text">Take a Coffee & Chat with me</h2>
+      </motion.div>
 
-      <div className="app__footer-cards">
-        <div className="app__footer-card">
+      <motion.div
+        whileInView={{ x: [-300, 0] }}
+        transition={{ duration: 1, ease: "easeInOut" }}
+        className="app__footer-cards"
+      >
+        <motion.div
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="app__footer-card"
+        >
           <img
             src={images.email.src}
             alt='email'
@@ -36,9 +50,13 @@ const Footer = () => {
             className='p-text'>
             nkr.nikhil.nkr@gmail.com
           </a>
-        </div>
+        </motion.div>
 
-        <div className="app__footer-card">
+        <motion.div
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
+          className="app__footer-card"
+        >
           <img
             src={images.mobile.src}
             alt='email'
@@ -47,13 +65,16 @@ const Footer = () => {
             className='p-text'>
             +91 8302364750
           </a>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {
         !isFormSubmitted ?
           (
-            <div className="app__footer-form app__flex">
+            <motion.div
+              whileInView={{ y: [300, 0] }}
+              transition={{ duration: 1, ease: "easeInOut" }}
+              className="app__footer-form app__flex">
               <div className="app__flex">
                 <input className='p-text'
                   type='text'
@@ -89,7 +110,7 @@ const Footer = () => {
               >{
                   loading ? "Sending..." : "Send Message"
                 }</button>
-            </div>
+            </motion.div>
           )
           :
           (

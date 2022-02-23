@@ -38,6 +38,7 @@
 
   display: flex;
   flex-direction: row;
+  overflow: hidden;
 }
 
 .app__flex {
@@ -126,7 +127,7 @@
 
   padding: 1rem;
 
-  div {
+  a {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -137,6 +138,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    text-decoration: none;
 
     transition: all 0.3s ease-in-out;
 

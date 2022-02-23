@@ -30,22 +30,28 @@ const About = () => {
   return (
     <>
 
-      <h2 className="head-text"
-        style={{
-          textTransform: "none"
-        }}>
-        I am a <span>Software Engineer</span> specialized
-        in both <span>front-end</span> and <span>back-end</span> development
-        across multiple platforms.
-      </h2>
+      <motion.div
+        whileInView={{ x: [300, 0] }}
+        transition={{ duration: 1, type: "tween", ease: "easeInOut" }}
+      >
+        <h2 className="head-text"
+          style={{
+            textTransform: "none"
+          }}>
+          I am a <span>Software Engineer</span> specialized
+          in both <span>front-end</span> and <span>back-end</span> development
+          across platforms.
+        </h2>
+      </motion.div>
+
 
       <div className="app__profiles">
         {
           aboutItems.map((about, index) => (
             <motion.div key={about.title + index}
-              whileInView={{ opacity: 1 }}
+              whileInView={{ opacity: [0, 1], x: [-300, 0] }}
               whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.6, type: "tween" }}
+              transition={{ duration: 0.5, type: "tween", delay: 0.5 }}
               className='app__profile-item'
             >
 
