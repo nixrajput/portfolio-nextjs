@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import images from '../../assets';
 
-import AppWrap from '../../wrapper/AppWrap';
+import { AppWrap, MotionWrap } from '../../wrapper';
 
 const scaleVariants = {
   whileInView: {
@@ -47,11 +47,12 @@ const Header = () => {
         transition={{ duration: 2.5, delayChildren: 0.5 }}
         className='app__header-img'
       >
-        <Image
-          src={images.profile}
+
+        <motion.img
+          whileInView={{ scale: [0, 1] }}
+          transition={{ duration: 2, ease: 'easeInOut' }}
+          src={images.profile.src}
           alt='profile'
-          objectFit='cover'
-          priority
         />
 
         <motion.img
@@ -64,13 +65,13 @@ const Header = () => {
       </motion.div>
 
       <motion.div
-        variants={scaleVariants}
-        whileInView={{ opacity: scaleVariants.whileInView }}
+        whileInView={{ scale: [0, 1] }}
+        transition={{ duration: 1, delay: 1 }}
         className='app__header-circles'
       >
 
         {
-          [images.redux, images.flutter, images.python]
+          [images.react, images.flutter, images.python, images.node, images.django]
             .map((circle, index) => (
               <div key={`circle-${index}`}
                 className='circle-cmp app__flex'
@@ -89,4 +90,7 @@ const Header = () => {
   )
 }
 
-export default AppWrap(Header, 'home')
+export default AppWrap(
+  MotionWrap(Header),
+  'home'
+)

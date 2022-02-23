@@ -5,28 +5,29 @@
 }
 
 .app__skills-container {
-    width: 80%;
-    margin-top: 3rem;
+    width: 100%;
+    margin-top: 4rem;
 
     display: flex;
     flex-direction: row;
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 768px) {
         width: 100%;
         flex-direction: column;
     }
 }
 
 .app__skills-list {
-    flex: 1;
+    flex: 2;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
 
-    margin-right: 5rem;
+    margin-right: 2rem;
 
-    @media screen and (max-width: 600px) {
+    @media screen and (max-width: 768px) {
+        margin-bottom: 2rem;
         margin-right: 0;
         justify-content: center;
         align-items: center;
@@ -42,8 +43,8 @@
     transition: all 0.3s ease-in-out;
 
     div {
-        width: 100px;
-        height: 100px;
+        width: 80px;
+        height: 80px;
         border-radius: 50%;
         background-color: var(--white-color);
 
@@ -57,18 +58,13 @@
         }
 
         @media screen and (min-width: 1600px) {
-            width: 140px;
-            height: 140px;
-        }
-
-        @media screen and (max-width: 600px) {
-            width: 80px;
-            height: 80px;
+            width: 120px;
+            height: 120px;
         }
     }
 
     p {
-        font-weight: 500;
+        font-weight: 600;
         margin-top: 0.5rem;
     }
 

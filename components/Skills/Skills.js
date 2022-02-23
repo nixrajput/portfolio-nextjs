@@ -6,8 +6,8 @@ import ReactTooltip from "react-tooltip";
 
 const skillItems = [
   {
-    title: "ReactJS",
-    icon: images.react,
+    title: "Python",
+    icon: images.python,
     bgColor: "#edf2f8"
   },
   {
@@ -16,34 +16,86 @@ const skillItems = [
     bgColor: "#edf2f8"
   },
   {
-    title: "NodeJS",
-    icon: images.node,
-    bgColor: "#edf2f8"
-  },
-  {
     title: "JavaScript",
     icon: images.javascript,
     bgColor: "#edf2f8"
   },
   {
-    title: "GraphQL",
-    icon: images.graphql,
+    title: "ReactJS",
+    icon: images.react,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "NodeJS",
+    icon: images.node,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "Express",
+    icon: images.express,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "NextJS",
+    icon: images.nextjs,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "Redux",
+    icon: images.redux,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "Django",
+    icon: images.django,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "MongoDB",
+    icon: images.mongodb,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "PostgreSQL",
+    icon: images.postgresql,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "MySQL",
+    icon: images.mysql,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "C++",
+    icon: images.cpp,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "HTML",
+    icon: images.html,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "CSS",
+    icon: images.css,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "Sass",
+    icon: images.sass,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "Firebase",
+    icon: images.firebase,
+    bgColor: "#edf2f8"
+  },
+  {
+    title: "AWS",
+    icon: images.aws,
     bgColor: "#edf2f8"
   },
 ]
-
-// const experienceItems = [
-//   {
-//     title: "Full Stack Developer",
-//     comapany: "TECHOX LLP",
-//     desc: "I worked as a full stack mobile app development intern."
-//   },
-//   {
-//     title: "Web App Developer",
-//     comapany: "Career Corner Solution Pvt Ltd",
-//     desc: "I worked as a web development intern."
-//   },
-// ]
 
 const experienceItems = [
   {
@@ -53,12 +105,7 @@ const experienceItems = [
         title: "Full Stack Developer",
         company: "TECHOX LLP",
         desc: "I worked as a full stack mobile app development intern."
-      }
-    ]
-  },
-  {
-    year: "2020",
-    works: [
+      },
       {
         title: "Web App Developer",
         company: "Career Corner Solution Pvt Ltd",

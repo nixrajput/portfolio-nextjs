@@ -1,22 +1,27 @@
 import email from './email.png';
 import mobile from './mobile.png';
-import api from './api.png';
+
 import cpp from './cpp.png';
 import css from './css.png';
-import figma from './figma.png';
+import django from './django.png';
 import flutter from './flutter.png';
-import git from './git.png';
-import graphql from './graphql.png';
 import html from './html.png';
 import javascript from './javascript.png';
-import mu5 from './mu5.png';
 import node from './node.png';
 import python from './python.png';
 import react from './react.png';
 import redux from './redux.png';
 import sass from './sass.png';
-import typescript from './typescript.png';
-import vue from './vue.png';
+import express from './express.png';
+import nextjs from './nextjs.png';
+
+import mongodb from './mongodb.png';
+import mysql from './mysql.png';
+import postgresql from './postgresql.png';
+
+import aws from './aws.png';
+import firebase from './firebase.png';
+import linux from './linux.png';
 
 import about01 from './about01.png';
 import about02 from './about02.png';
@@ -27,34 +32,28 @@ import profile from './profile.png';
 import circle from './circle.svg';
 import logo from './logo.png';
 
-import adidas from './adidas.png';
-import amazon from './amazon.png';
-import asus from './asus.png';
-import bolt from './bolt.png';
-import nb from './nb.png';
-import skype from './skype.png';
-import spotify from './spotify.png';
-
 export default {
+    aws,
     email,
     mobile,
-    api,
     cpp,
     css,
-    figma,
+    django,
+    express,
+    firebase,
     flutter,
-    git,
-    graphql,
     html,
     javascript,
-    mu5,
+    linux,
+    mongodb,
+    mysql,
+    nextjs,
     node,
+    postgresql,
     python,
     react,
     redux,
     sass,
-    typescript,
-    vue,
     about01,
     about02,
     about03,
@@ -62,11 +61,4 @@ export default {
     profile,
     circle,
     logo,
-    adidas,
-    amazon,
-    asus,
-    bolt,
-    nb,
-    skype,
-    spotify,
 };
