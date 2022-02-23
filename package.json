@@ -14,7 +14,8 @@
     "node-sass": "^7.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-icons": "^4.3.1"
+    "react-icons": "^4.3.1",
+    "react-tooltip": "^4.2.21"
   },
   "devDependencies": {
     "eslint": "8.9.0",
