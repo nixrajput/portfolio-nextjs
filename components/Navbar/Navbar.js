@@ -5,7 +5,7 @@ import { HiMenuAlt4, HiX } from 'react-icons/hi';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
-const menuItems = ['home', 'about', 'work', 'skills', 'contact'];
+const menuItems = ['home', 'about', 'works', 'skills', 'contact'];
 
 const Navbar = () => {
 

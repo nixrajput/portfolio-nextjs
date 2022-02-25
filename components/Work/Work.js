@@ -62,9 +62,17 @@ const Work = () => {
     }, 500);
   }
 
+  // const fetchWorksFromServer = async () => {
+  //   const res = await fetch(`https://portfolioapi.nixlab.co.in/api/v1/works`);
+  //   const data = await res.json();
+  //   setWorks(data.results);
+  //   setFilterWorks(data.results);
+  // }
+
   useEffect(() => {
     setWorks(workItems);
     setFilterWorks(workItems);
+    // fetchWorksFromServer();
     return () => { }
   }, [])
 
@@ -106,7 +114,9 @@ const Work = () => {
       >
         {
           filterWorks.map((work, index) => (
-            <div key={index}
+            <motion.div key={index}
+              whileInView={{ x: [-300, 0] }}
+              transition={{ duration: 1, delayChildren: 0.5 }}
               className="app__work-item app__flex"
             >
               <div className="app__work-img app__flex">
@@ -162,7 +172,7 @@ const Work = () => {
 
               </div>
 
-            </div>
+            </motion.div>
           ))
         }
       </motion.div>
@@ -173,6 +183,6 @@ const Work = () => {
 
 export default AppWrap(
   MotionWrap(Work, 'app__works'),
-  'work',
+  'works',
   'app__primarybg'
 );
