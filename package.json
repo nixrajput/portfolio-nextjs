@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "dotenv": "^16.0.0",
+    "axios": "^0.26.0",
     "framer-motion": "^6.2.7",
     "next": "12.1.0",
     "node-sass": "^7.0.1",

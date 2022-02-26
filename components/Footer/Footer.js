@@ -2,6 +2,7 @@ import { useState } from 'react';
 import images from '../../assets';
 import { AppWrap, MotionWrap } from '../../wrapper';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 
 const Footer = () => {
 
@@ -17,10 +18,16 @@ const Footer = () => {
     setFormData({ ...formData, [name]: value });
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setLoading(true);
-
-
+    const url = `https://portfolioapi.nixlab.co.in/api/v1/contact/create`;
+    await axios.post(url, {
+      name,
+      email,
+      message
+    });
+    setLoading(false);
+    setIsFormSubmitted(true);
   }
 
   return (
@@ -115,7 +122,11 @@ const Footer = () => {
           :
           (
             <div>
-              <h3 className="head-text">Thank you for getting in touch.</h3>
+              <h3 className="head-text"
+                style={{
+                  color: "green"
+                }}
+              >Thank you for getting in touch.</h3>
             </div>
           )
       }

@@ -157,3 +157,14 @@
         }
     }
 }
+
+.app__work-tags {
+    flex-wrap: wrap;
+    margin: 0.5rem 0 0;
+
+    p {
+        margin: 0 0.25rem;
+        color: var(--secondary-color);
+        font-weight: 600;
+    }
+}
