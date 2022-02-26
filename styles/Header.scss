@@ -21,10 +21,10 @@
     height: 100%;
     flex-direction: row;
 
-    padding: 8rem 2rem 2rem;
+    padding: 10rem 2rem 2rem;
 
     @media screen and (min-width: 1600px) {
-        padding-top: 8rem;
+        padding-top: 12rem;
     }
 
     @media screen and (max-width: 1200px) {
@@ -32,7 +32,7 @@
     }
 
     @media screen and (max-width: 768px) {
-        padding: 7rem 1rem 2rem;
+        padding: 8rem 1rem 2rem;
     }
 }
 

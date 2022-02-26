@@ -127,7 +127,7 @@ const Work = () => {
 
                 <motion.div
                   whileHover={{ opacity: [0, 1] }}
-                  transition={{ duration: 0.25, ease: "easeInOut", staggerChildren: 0.5 }}
+                  transition={{ duration: 0.3, ease: "easeInOut", staggerChildren: 0.5 }}
                   className="app__work-hover app__flex"
                 >
 
@@ -138,6 +138,7 @@ const Work = () => {
                     <motion.div
                       whileInView={{ scale: [0, 1] }}
                       whileHover={{ scale: [1, 0.9] }}
+                      whileTap={{ scale: [1, 0.9] }}
                       transition={{ duration: 0.25 }}
                       className="app__flex"
                     >
@@ -152,6 +153,7 @@ const Work = () => {
                     <motion.div
                       whileInView={{ scale: [0, 1] }}
                       whileHover={{ scale: [1, 0.9] }}
+                      whileTap={{ scale: [1, 0.9] }}
                       transition={{ duration: 0.25 }}
                       className="app__flex"
                     >

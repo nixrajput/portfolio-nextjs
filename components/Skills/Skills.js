@@ -172,32 +172,30 @@ const Skills = () => {
                   <p className="bold-text">{experience.year}</p>
                 </div>
 
-                <motion.div
-                  className="app__skills-exp-works"
-                >
+                <div className="app__skills-exp-works">
                   {
                     experience.works.map((work, ind) => (
-                      <>
-                        <motion.div key={work.title + ind}
-                          className="app__skills-exp-work"
+                      <div key={work.title + ind}>
+                        <div className="app__skills-exp-work"
                           data-tip
                           data-for={work.title}
                         >
                           <h4 className="bold-text">{work.title}</h4>
                           <p className="p-text">{work.company}</p>
-                        </motion.div>
+                        </div>
                         <ReactTooltip
                           id={work.title}
                           effect="solid"
-                          arrowColor="#fff"
+                          arrowColor="rgba(0, 0, 0, 0.8)"
                           className="skills-tooltip"
+                          html={false}
                         >
                           {work.desc}
                         </ReactTooltip>
-                      </>
+                      </div>
                     ))
                   }
-                </motion.div>
+                </div>
               </div>
             ))
           }

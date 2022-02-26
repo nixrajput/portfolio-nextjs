@@ -15,13 +15,10 @@ const Navbar = () => {
     <nav className='app__navbar'>
 
       <div className='app__navbar-logo'>
-        <div className='logo-image'>
-          <Image
-            src={images.logo}
-            alt='logo'
-            priority
-          />
-        </div>
+        <img
+          src={images.logo.src}
+          alt='logo'
+        />
       </div>
 
       <ul className='app__navbar-links'>

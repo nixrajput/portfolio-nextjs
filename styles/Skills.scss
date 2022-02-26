@@ -125,22 +125,29 @@
     margin-right: 3rem;
 
     p {
-        font-weight: 800;
+        font-size: 18px;
+        font-weight: 900;
         color: var(--secondary-color);
     }
 
-    @media screen and (max-width: 600px) {
-        margin-right: 1rem;
+    @media screen and (max-width: 768px) {
+        margin-right: 2rem;
+
+        p {
+            font-size: 16px;
+        }
     }
 }
 
 .skills-tooltip {
     max-width: 300px !important;
-    background-color: var(--white-color) !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(5px) !important;
+    -webkit-backdrop-filter: blur(5px) !important;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.1) !important;
     border-radius: 5px !important;
     padding: 1rem !important;
-    color: var(--gray-color) !important;
+    color: var(--white-color) !important;
     text-align: center !important;
     line-height: 1.5 !important;
     opacity: 1 !important;
