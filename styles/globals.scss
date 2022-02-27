@@ -10,6 +10,8 @@
   --gray-color: #6b7688;
   --brown-color: #46364a;
   --white-color: #ffffff;
+  --grad-color-1: #715DF2;
+  --grad-color-2: #cf226a;
 }
 
 * {
@@ -20,16 +22,22 @@
 }
 
 .app {
-  background-color: var(--primary-color);
+  background-color: var(--grad-color-1);
   font-family: var(--font-base);
 }
 
 .app__whitebg {
-  background-color: var(--white-color);
+  background: url('../assets/bgGrad.svg');
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
 }
 
 .app__primarybg {
-  background-color: var(--primary-color);
+  background: url('../assets/bgGrad3.svg');
+  background-size: cover;
+  background-repeat: repeat;
+  background-position: center;
 }
 
 .app__container {
@@ -159,14 +167,14 @@
     }
 
     @media screen and (min-width: 1600px) {
-      width: 70px;
-      height: 70px;
+      width: 45px;
+      height: 45px;
 
       margin: 0.5rem 0;
 
       svg {
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
       }
     }
   }

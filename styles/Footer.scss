@@ -20,9 +20,11 @@
         align-items: center;
 
         margin: 1rem 0;
-        padding: 2rem 1rem;
-        border-radius: 15px;
-        background-color: var(--white-color);
+        padding: 1.5rem 1rem;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
 
         transition: all .03s ease-in-out;
 
@@ -41,6 +43,7 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 16px;
+            color: var(--white-color);
         }
 
         &:hover {
@@ -67,8 +70,10 @@
 
         margin: 0.75rem 0;
         border-radius: 10px;
-        cursor: pointer;
-        background-color: var(--white-color);
+
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
 
         transition: all 0.3s ease-in-out;
 
@@ -79,14 +84,20 @@
             border: none;
             outline: none;
             border-radius: 8px;
-            background-color: var(--white-color);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
 
             font-family: var(--font-base);
-            color: var(--secondary-color);
+            color: var(--white-color);
         }
 
         textarea {
             height: 180px;
+            min-height: 180px;
+            min-width: 100%;
+            max-width: 100%;
+            max-height: 360px;
         }
 
         &:hover {

@@ -1,45 +1,10 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { AppWrap, MotionWrap } from "../../wrapper";
-import images from '../../assets';
 import { AiFillEye, AiFillGithub } from 'react-icons/ai';
 import axios from "axios";
 import LoadingWidget from "../LoadingWidget/LoadingWidget";
 
-const workItems = [
-  {
-    title: "get_time_ago",
-    description: "A Flutter package to convert and format DateTime object into get_time_ago format to get String like 10 seconds ago, a minute ago, 7 hours ago, etc.",
-    projectLink: "https://pub.dev/packages/get_time_ago",
-    codeLink: "https://github.com/nixrajput/get-time-ago",
-    imgUrl: images.about02,
-    tags: ["Flutter", "package", "plugin"]
-  },
-  {
-    title: "flutter_carousel_widget",
-    description: "A customizable carousel slider widget in Flutter which supports infinite scrolling, auto scrolling, custom child widget, custom animations and pre-built indicators.",
-    projectLink: "https://pub.dev/packages/flutter_carousel_widget",
-    codeLink: "https://github.com/nixrajput/flutter_carousel_widget",
-    imgUrl: images.about02,
-    tags: ["Flutter", "package", "plugin"]
-  },
-  {
-    title: "Ecommerce Web App",
-    description: "An Ecommerce web app developed using MERN Stack.",
-    projectLink: "https://nixlab-shop.herokuapp.com",
-    codeLink: "https://github.com/nixrajput/ecommerce-mern",
-    imgUrl: images.about01,
-    tags: ["MERN", "ReactJS", "NodeJS", "Express", "MongoDB", "Web App"]
-  },
-  {
-    title: "Grocery List Maker",
-    description: "A Flutter application to easily make your grocery lists and generate PDF file.",
-    projectLink: "https://github.com/nixrajput/grocery-list-maker-flutter/releases/tag/v1.0.1",
-    codeLink: "https://github.com/nixrajput/grocery-list-maker-flutter",
-    imgUrl: images.about02,
-    tags: ["Flutter", "Mobile App", "application"]
-  },
-]
 
 const Work = () => {
 
@@ -87,7 +52,7 @@ const Work = () => {
         transition={{ duration: 1, ease: "easeInOut" }}
       >
         <h2 className="head-text">
-          My Creative <span>Portfolio</span> Section
+          My <span>Works</span> and <span>Projects</span>
         </h2>
       </motion.div>
 
@@ -111,7 +76,6 @@ const Work = () => {
 
       <motion.div
         animate={animateCard}
-        whileInView={{ x: [300, 0] }}
         transition={{ duration: 1, delayChildren: 0.5 }}
         className="app__work-portfolio"
       >

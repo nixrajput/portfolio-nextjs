@@ -36,7 +36,7 @@ const Footer = () => {
         whileInView={{ x: [300, 0] }}
         transition={{ duration: 1, ease: "easeInOut" }}
       >
-        <h2 className="head-text">Take a Coffee & Chat with me</h2>
+        <h2 className="head-text">Get in touch</h2>
       </motion.div>
 
       <motion.div

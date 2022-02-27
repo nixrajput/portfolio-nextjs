@@ -1,27 +1,15 @@
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import images from '../../assets';
 
 import { AppWrap, MotionWrap } from '../../wrapper';
 
-const scaleVariants = {
-  whileInView: {
-    scale: [0, 1],
-    opacity: [0, 1],
-    transition: {
-      duration: 1,
-      ease: 'easeInOut'
-    }
-  }
-}
-
 const Header = () => {
   return (
-    <div id='home' className='app__header app__flex'>
+    <div className='app__header app__flex'>
 
       <motion.div
         whileInView={{ x: [-300, 0], opacity: [0, 1] }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 1, ease: "circInOut" }}
         className='app__header-info'
       >
 
@@ -44,20 +32,20 @@ const Header = () => {
 
       <motion.div
         whileInView={{ opacity: [0, 1] }}
-        transition={{ duration: 2.5, delayChildren: 0.5 }}
+        transition={{ duration: 2, delayChildren: 0.5 }}
         className='app__header-img'
       >
 
         <motion.img
           whileInView={{ scale: [0, 1] }}
-          transition={{ duration: 2, ease: 'easeInOut' }}
+          transition={{ duration: 1.5, ease: 'easeInOut' }}
           src={images.profile.src}
           alt='profile'
         />
 
         <motion.img
           whileInView={{ scale: [0, 1] }}
-          transition={{ duration: 1, ease: 'easeInOut' }}
+          transition={{ duration: 0.5, ease: 'easeInOut' }}
           src={images.circle.src}
           alt='profile_circle'
           className='overlay_circle'
@@ -66,7 +54,7 @@ const Header = () => {
 
       <motion.div
         whileInView={{ scale: [0, 1] }}
-        transition={{ duration: 1, delay: 0.5 }}
+        transition={{ duration: 0.8, delay: 0.25 }}
         className='app__header-circles'
       >
 

@@ -6,10 +6,10 @@
     align-items: center;
 
     padding: 1rem 2rem;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     position: fixed;
     z-index: 9;
 }
@@ -94,7 +94,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--secondary-color);
+    background-color: var(--grad-color-2);
 
     svg {
         width: 75%;
@@ -121,7 +121,7 @@
         flex-direction: column;
 
         background: url('../assets/bgWhite.png');
-        background-color: var(--white-color);
+        background-color: var(--grad-color-2);
         background-size: cover;
         background-repeat: repeat;
 
@@ -130,7 +130,7 @@
         svg {
             width: 35px;
             height: 35px;
-            color: var(--secondary-color);
+            color: var(--white-color);
             margin: 0.5rem 1rem;
             cursor: pointer;
         }
@@ -152,7 +152,7 @@
                 cursor: pointer;
 
                 a {
-                    color: var(--brown-color);
+                    color: var(--lightGray-color);
                     text-decoration: none;
                     font-size: 16px;
                     text-transform: uppercase;
