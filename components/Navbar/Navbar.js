@@ -13,12 +13,12 @@ const Navbar = () => {
   return (
     <nav className='app__navbar'>
 
-      <div className='app__navbar-logo'>
+      <a href='#home' className='app__navbar-logo'>
         <img
           src={images.logo.src}
           alt='logo'
         />
-      </div>
+      </a>
 
       <ul className='app__navbar-links'>
 
@@ -40,8 +40,8 @@ const Navbar = () => {
 
         {toggle && (
           <motion.div
-            whileInView={{ x: [300, 0], y: [100, 0] }}
-            transition={{ duration: 0.75, ease: "easeOut" }} >
+            whileInView={{ y: [400, 0] }}
+            transition={{ duration: 0.8, ease: "easeInOut" }} >
             <HiX onClick={() => setToggle(false)} />
             <ul>
               {

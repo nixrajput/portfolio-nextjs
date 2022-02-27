@@ -10,8 +10,9 @@
   --gray-color: #6b7688;
   --brown-color: #46364a;
   --white-color: #ffffff;
-  --grad-color-1: #715DF2;
-  --grad-color-2: #cf226a;
+  --grad-color-1: #cf226a;
+  --grad-color-2: #715DF2;
+  --placeholder-color: #b1b1b1;
 }
 
 * {
@@ -23,21 +24,19 @@
 
 .app {
   background-color: var(--grad-color-1);
+  background-image: linear-gradient(to right top, #cf226a, #c72872, #be2e7a, #b43481, #a93986);
   font-family: var(--font-base);
 }
 
 .app__whitebg {
-  background: url('../assets/bgGrad.svg');
-  background-size: cover;
-  background-repeat: repeat;
-  background-position: center;
+  background-color: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .app__primarybg {
-  background: url('../assets/bgGrad3.svg');
-  background-size: cover;
-  background-repeat: repeat;
-  background-position: center;
+  background-color: var(--grad-color-1);
+  background-image: linear-gradient(to right top, #cf226a, #c72872, #be2e7a, #b43481, #a93986);
 }
 
 .app__container {

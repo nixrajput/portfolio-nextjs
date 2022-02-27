@@ -26,8 +26,17 @@ const Header = () => {
             <p className="p-text">Full Stack Developer</p>
             <p className="p-text">Freelancer</p>
           </div>
-        </div>
 
+          <div className="tag-cmp app__flex">
+            <a href="https://drive.google.com/file/d/167lPNS0MMNnurTEO71UZRrbajWGNWR8U/view?usp=sharing"
+              target="_blank"
+              rel='noreferrer'
+            >
+              Download Resume
+            </a>
+          </div>
+
+        </div>
       </motion.div>
 
       <motion.div

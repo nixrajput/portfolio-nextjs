@@ -186,8 +186,8 @@ const Skills = () => {
                             data-tip
                             data-for={work.title}
                           >
-                            <h2>{work.title}</h2>
-                            <p className="p-text">{work.company}</p>
+                            <h2 >{work.title}</h2>
+                            <p>{work.company}</p>
                           </div>
 
                           {
