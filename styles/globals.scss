@@ -3,16 +3,15 @@
 :root {
   --font-base: "DM Sans", sans-serif;
 
-  --primary-color: #edf2f8;
-  --secondary-color: #313bac;
-  --black-color: #030303;
-  --lightGray-color: #e4e4e4;
-  --gray-color: #6b7688;
+  --lightGrayColor: #e4e4e4;
+  --grayColor: #6d6868;
   --brown-color: #46364a;
-  --white-color: #ffffff;
-  --grad-color-1: #cf226a;
-  --grad-color-2: #715DF2;
-  --placeholder-color: #b1b1b1;
+  --whiteColor: #ffffff;
+  --darkBgColor: #1c1d31;
+  --darkDialogColor: #333446;
+  --darkPrimaryTextColor: rgb(182, 182, 182);
+  --accentColor: #ff5a5f;
+  --lightAccentColor: #e7696d;
 }
 
 * {
@@ -22,30 +21,18 @@
   scroll-behavior: smooth;
 }
 
-.app {
-  background-color: var(--grad-color-1);
-  background-image: linear-gradient(to right top, #cf226a, #c72872, #be2e7a, #b43481, #a93986);
+body {
   font-family: var(--font-base);
+  font-size: 1rem;
+  background-color: var(--darkBgColor);
+  color: var(--darkPrimaryTextColor);
+  overflow-x: hidden;
 }
 
-.app__whitebg {
-  background-color: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.app__primarybg {
-  background-color: var(--grad-color-1);
-  background-image: linear-gradient(to right top, #cf226a, #c72872, #be2e7a, #b43481, #a93986);
-}
-
-.app__container {
-  width: 100%;
-  min-height: 100vh;
-
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
+.app {
+  background-color: var(--darkBgColor);
+  color: var(--darkPrimaryTextColor);
+  font-family: var(--font-base);
 }
 
 .app__flex {
@@ -54,9 +41,79 @@
   align-items: center;
 }
 
+.flex__row {
+  display: flex;
+  flex-direction: row;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.spacer {
+  width: 10rem;
+
+  @media screen and (max-width: 768px) {
+    width: 0;
+    height: 2rem;
+  }
+}
+
+p {
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--darkPrimaryTextColor);
+  line-height: 1.5;
+
+  @media screen and (min-width: 1600px) {
+    font-size: 1.25rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--darkPrimaryTextColor);
+  line-height: 1.5;
+
+  @media screen and (min-width: 1600px) {
+    font-size: 2.25rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.75rem;
+  }
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--darkPrimaryTextColor);
+  line-height: 1.5;
+
+  @media screen and (min-width: 1600px) {
+    font-size: 1.8rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 1.25rem;
+  }
+}
+
+.app__container {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
 .app__wrapper {
   flex: 1;
   width: 100%;
+  min-height: 100vh;
   flex-direction: column;
   padding: 4rem 2rem;
 
@@ -65,157 +122,155 @@
   }
 }
 
-.copyright {
-  width: 100%;
-  padding: 2rem 0 0;
-
+.outlined-btn {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
-
-  p {
-    text-transform: uppercase;
-    color: var(--black-color);
-  }
-}
-
-.head-text {
-  font-size: 2.75rem;
-  font-weight: 800;
-  text-align: center;
-  color: var(--black-color);
-  text-transform: capitalize;
-
-  span {
-    color: var(--secondary-color);
-  }
-
-  @media screen and (min-width: 1600px) {
-    font-size: 4rem;
-  }
-
-  @media screen and (max-width: 567px) {
-    font-size: 2rem;
-  }
-}
-
-.p-text {
-  font-size: 0.8rem;
-  text-align: left;
-  color: var(--gray-color);
-  line-height: 1.5;
-
-  @media screen and (min-width: 1600px) {
-    font-size: 1.75rem;
-  }
-}
-
-.bold-text {
-  font-size: 1rem;
-  font-weight: 800;
-  color: var(--black-color);
-  text-align: left;
-
-  @media screen and (min-width: 1600px) {
-    font-size: 2rem;
-  }
-
-  @media screen and (max-width: 567px) {
-    font-size: 0.9rem;
-  }
-}
-
-.app__social {
-  display: flex;
-  justify-content: flex-end;
+  flex-direction: row;
   align-items: center;
-  flex-direction: column;
+  justify-content: center;
 
-  padding: 1rem;
+  text-decoration: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--accentColor);
+  border: 2px solid var(--accentColor);
+  border-radius: 2rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
 
-  a {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: var(--white-color);
-    margin: 0.25rem 0;
-    border: 1px solid var(--lightGray-color);
+  svg {
+    margin-right: 0.5rem;
+  }
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    text-decoration: none;
+  &:hover {
+    background-color: var(--accentColor);
+    color: var(--whiteColor);
+  }
 
-    transition: all 0.3s ease-in-out;
+  @media screen and (min-width: 1600px) {
+    font-size: 1.25rem;
+  }
 
-    svg {
-      width: 15px;
-      height: 15px;
-      color: var(--gray-color);
-    }
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
 
-    &:hover {
-      background-color: var(--secondary-color);
-      border-color: var(--secondary-color);
+.text-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 
-      svg {
-        color: var(--white-color);
-      }
-    }
+  text-decoration: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--accentColor);
+  border: none;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
 
-    @media screen and (min-width: 1600px) {
-      width: 45px;
-      height: 45px;
+  svg {
+    margin-right: 0.5rem;
+  }
 
-      margin: 0.5rem 0;
+  &:hover {
+    color: var(--whiteColor);
+  }
 
-      svg {
-        width: 20px;
-        height: 20px;
-      }
-    }
+  @media screen and (min-width: 1600px) {
+    font-size: 1.25rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
+  }
+}
+
+.filled-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  outline: none;
+  background-color: var(--accentColor);
+  color: var(--whiteColor);
+  border: 2px solid var(--accentColor);
+  border-radius: 2rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+
+  svg {
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    background-color: transparent;
+    border: 2px solid var(--accentColor);
+    color: var(--accentColor);
+  }
+
+  @media screen and (min-width: 1600px) {
+    font-size: 1.25rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    font-size: 1rem;
   }
 }
 
 .app__navigation {
+  position: fixed;
+  top: calc(50% - 3rem);
+  right: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 
-  padding: 1rem;
-
   .app__navigation-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #cbcbcb;
+    width: 0.2rem;
+    height: 1.5rem;
+    background-color: var(--darkDialogColor);
     margin: 0.5rem;
+    transition: all 0.2s ease-in-out;
 
-    transition: background-color 0.2s ease-in-out;
+    a {
+      position: absolute;
+      opacity: 0;
+    }
 
     &:hover {
-      background-color: var(--secondary-color);
+      background-color: var(--whiteColor);
     }
 
     @media screen and (min-width: 1600px) {
-      width: 20px;
-      height: 20px;
+      height: 2rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      height: 1rem;
     }
   }
-}
 
-@media screen and (max-width: 567px) {
-
-  .app__navigation,
-  .app__social {
-    display: none;
+  .active {
+    background-color: var(--whiteColor);
   }
 
-  .copyright {
-    padding: 2rem;
+  @media screen and (max-width: 768px) {
+    right: 0.5rem;
   }
 }
 
@@ -235,7 +290,6 @@
     position: absolute;
     animation: loadingRotate 1000ms linear infinite;
   }
-
 }
 
 @keyframes loadingRotate {

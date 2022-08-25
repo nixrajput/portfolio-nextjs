@@ -1,27 +1,20 @@
-import Head from 'next/head';
-import {
-  Navbar, Header, About, Skills,
-  Work, Footer
-} from '../components';
+import Head from "next/head";
+import { Hero, About, Projects, Experiences, Footer } from "../components";
 
 export default function Home() {
-
   return (
-    <div className='app'>
-
+    <div className="app">
       <Head>
-        <title>Nikhil Rajput</title>
-        <meta name="description" content="Nikhil Rajput's portfolio web app." />
+        <title>Nikhil Rajput - Portfolio</title>
+        <meta name="description" content="Nikhil Rajput's portfolio developed using Next.js." />
+        <meta name="keywords" content="Nixrajput,nixrajput,nix,software engineer,full stack developer" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Navbar />
-      <Header />
+      <Hero />
       <About />
-      <Work />
-      <Skills />
+      <Projects />
+      <Experiences />
       <Footer />
-
     </div>
-  )
+  );
 }
