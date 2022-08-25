@@ -4,8 +4,17 @@
   padding: 2rem;
 
   .head-text {
-    color: var(--whiteColor);
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 1.5srem;
+      height: 1.5rem;
+      margin-left: 0.5rem;
+    }
   }
 
   .contact__info {
@@ -13,19 +22,30 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+    transition: all 0.3s ease-in-out;
 
     .email {
       display: flex;
       align-items: center;
       justify-content: flex-start;
       font-size: 1.2rem;
-      color: var(--lightGrayColor);
+      margin-top: 0.5rem;
+      color: var(--whiteColor);
+
+      svg {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
 
       a {
         text-decoration: none;
-        color: var(--lightGrayColor);
-        margin-left: 0.5rem;
+        color: var(--whiteColor);
+        margin-left: 1rem;
+
+        &:hover {
+          color: var(--grayColor);
+        }
       }
     }
   }
@@ -35,10 +55,10 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 4rem;
+    margin-top: 1rem;
 
     a {
-      color: var(--lightGrayColor);
+      color: var(--whiteColor);
       margin: 0 1rem;
       font-size: 2rem;
       text-decoration: none;

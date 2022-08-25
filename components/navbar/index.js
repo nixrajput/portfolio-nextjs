@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
 import Link from "next/link";
 import { HiX } from 'react-icons/hi';
 import { RiMenu3Fill } from 'react-icons/ri';
 import { useState, useEffect } from 'react';
+import usePath from "../../hooks/usePath";
 
 const menuItems = ['home', 'about', 'projects', 'experiences', 'contact'];
 
@@ -11,7 +11,7 @@ const Navbar = () => {
   const [toggle, setToggle] = useState(false);
   const [scolled, setScolled] = useState(false);
 
-  const router = useRouter();
+  const path = usePath();
 
   useEffect(() => {
 
@@ -36,7 +36,7 @@ const Navbar = () => {
         {
           menuItems.map((item) => (
             <li key={`link-${item}`}
-              className={router.asPath == `/#${item}` ? 'app__flex p-text active' : 'app__flex p-text'} >
+              className={path == `#${item}` ? 'app__flex p-text active' : 'app__flex p-text'} >
               <div />
               <Link href={`#${item}`}>{item}</Link>
             </li>
@@ -55,7 +55,7 @@ const Navbar = () => {
             {
               menuItems.map((item) => (
                 <li key={item}
-                  className={router.asPath == `/#${item}` ? 'active' : ''}
+                  className={path == `#${item}` ? 'active' : ''}
                   onClick={() => setToggle(false)}
                 >
                   <Link href={`#${item}`}

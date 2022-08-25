@@ -1,5 +1,6 @@
 import { BsFillCheckCircleFill } from 'react-icons/bs';
 import { AppWrap, MotionWrap } from "../wrapper";
+import Image from 'next/image';
 
 const About = () => {
   return (
@@ -7,7 +8,13 @@ const About = () => {
       <div className="flex__row">
 
         <div className="profile__img">
-          <img src="/profile-pic.png" alt="profile" />
+          <Image src="/profile-pic.png"
+            alt="profile"
+            width={1080}
+            height={1080}
+            layout="intrinsic"
+            priority
+          />
         </div>
 
         <div className="spacer" />
@@ -22,7 +29,7 @@ const About = () => {
 
           <div className="preferred__skills">
             {
-              ["Dart / C++ / JavaScript", "Flutter / React.js / Next.js", "GetX / Provider / Redux", "MongoDB / Firebase"].map((item, index) => {
+              ["Dart, JavaScript, C++", "Flutter, React.js, Node.js, Next.js", "GetX, Provider, Redux", "MongoDB, Firebase, MySQL"].map((item, index) => {
                 return (
                   <div key={index} className="profile__skill">
                     <span><BsFillCheckCircleFill /></span>

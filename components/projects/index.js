@@ -1,5 +1,6 @@
 import { BsFillCheckCircleFill, BsGithub } from 'react-icons/bs';
 import { AppWrap, MotionWrap } from "../wrapper";
+import Image from 'next/image';
 
 const projects = [
   {
@@ -48,7 +49,11 @@ const Projects = () => {
             return (
               <div key={index} className="project__work">
                 <div className="project__work__img">
-                  <img src={project.coverUrl} alt={project.title} />
+                  <Image src={project.coverUrl}
+                    alt={project.title}
+                    layout="fill"
+                    priority
+                  />
                 </div>
                 <div className="project__work__details">
                   <h3 className="project__work__title">{project.title}</h3>

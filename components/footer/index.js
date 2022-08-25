@@ -1,14 +1,14 @@
 import { AppWrap, MotionWrap } from "../wrapper";
-import { BsTwitter, BsInstagram, BsLinkedin, BsFacebook, BsEnvelopeFill } from "react-icons/bs";
+import { BsTwitter, BsInstagram, BsLinkedin, BsFacebook, BsEnvelopeFill, BsCup } from "react-icons/bs";
 
 const Footer = () => {
 
   return (
     <>
-      <h2 className="head-text">Let&lsquo;s work together</h2>
+      <h2 className="head-text">Let&lsquo;s work together 🤝</h2>
 
       <div className="contact__info">
-
+        <p>Mai me at 👇</p>
         <div className="email">
           <BsEnvelopeFill />
           <a
@@ -21,6 +21,8 @@ const Footer = () => {
         </div>
 
       </div>
+
+      <p>Follow me here 👇</p>
 
       <div className="app__social__links">
         <a
