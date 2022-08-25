@@ -1,0 +1,96 @@
+.app__about {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  flex-direction: column;
+
+  padding: 2rem;
+  transition: all 0.3s ease-in-out;
+
+  .flex__row {
+    align-items: flex-start;
+    justify-content: space-between;
+
+    .profile__img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--darkDialogColor);
+      min-width: 15rem;
+      min-height: 15rem;
+      max-width: 30rem;
+      max-height: 30rem;
+      border-radius: 50%;
+      border: 1px solid var(--lightGrayColor);
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+
+      img {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1;
+        object-fit: contain;
+      }
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      .head-text {
+        color: var(--whiteColor);
+        margin-bottom: 0.5rem;
+
+        @media screen and (min-width: 1600px) {
+          font-size: 2rem;
+        }
+
+        @media screen and (max-width: 768px) {
+          font-size: 1.5rem;
+        }
+      }
+
+      .p-text {
+        margin: 0.5rem 0;
+        color: var(--lightGrayColor);
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        span {
+          color: var(--whiteColor);
+          margin-right: 0.5rem;
+        }
+      }
+
+      .p-text-head {
+        margin: 1rem 0;
+      }
+
+      .preferred__skills {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+
+        .profile__skill {
+          flex: 0 0 20rem;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-start;
+          color: var(--lightGrayColor);
+
+          span {
+            width: 1rem;
+            height: 1rem;
+            color: var(--accentColor);
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}
