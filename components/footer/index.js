@@ -8,7 +8,7 @@ const Footer = () => {
       <h2 className="head-text">Let&lsquo;s work together 🤝</h2>
 
       <div className="contact__info">
-        <p>Mai me at 👇</p>
+        <p>Mail me at 👇</p>
         <div className="email">
           <BsEnvelopeFill />
           <a
@@ -22,41 +22,44 @@ const Footer = () => {
 
       </div>
 
-      <p>Follow me here 👇</p>
+      <div className="app__Social">
+        <p>Follow me here 👇</p>
 
-      <div className="app__social__links">
-        <a
-          href="https://linkedin.com/in/nixrajput"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <BsLinkedin />
-        </a>
+        <div className="app__social__links">
+          <a
+            href="https://linkedin.com/in/nixrajput"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <BsLinkedin />
+          </a>
 
-        <a
-          href="https://instagram.com/nixrajput"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <BsInstagram />
-        </a>
+          <a
+            href="https://instagram.com/nixrajput"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <BsInstagram />
+          </a>
 
-        <a
-          href="https://twitter.com/nixrajput07"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <BsTwitter />
-        </a>
+          <a
+            href="https://twitter.com/nixrajput07"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <BsTwitter />
+          </a>
 
-        <a
-          href="https://facebook.com/nixrajput07"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <BsFacebook />
-        </a>
+          <a
+            href="https://facebook.com/nixrajput07"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <BsFacebook />
+          </a>
+        </div>
       </div>
+
     </>
   );
 };

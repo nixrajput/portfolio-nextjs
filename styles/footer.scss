@@ -50,22 +50,29 @@
     }
   }
 
-  .app__social__links {
+  .app__Social {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
 
-    a {
-      color: var(--whiteColor);
-      margin: 0 1rem;
-      font-size: 2rem;
-      text-decoration: none;
-      transition: all 0.3s ease-in-out;
+    .app__social__links {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
 
-      &:hover {
-        transform: scale(1.2);
+      a {
+        color: var(--whiteColor);
+        margin: 0 1rem;
+        font-size: 2rem;
+        text-decoration: none;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          transform: scale(1.2);
+        }
       }
     }
   }
