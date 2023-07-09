@@ -1,5 +1,5 @@
 {
-  "name": "nixrajput-portfolio",
+  "name": "portfolio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,16 +9,24 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "framer-motion": "^7.2.1",
-    "next": "12.2.5",
+    "classnames": "^2.3.2",
+    "embla-carousel-react": "8.0.0-rc09",
+    "framer-motion": "^10.12.12",
+    "next": "13.4.3",
+    "postcss": "8.4.23",
+    "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.4.0",
-    "sass": "^1.54.5",
-    "typescript": "^4.7.4"
+    "react-icons": "^4.8.0",
+    "tailwindcss": "3.3.2",
+    "use-count-up": "^3.0.1"
   },
   "devDependencies": {
-    "eslint": "8.22.0",
-    "eslint-config-next": "12.2.5"
+    "@babel/core": "^7.21.8",
+    "autoprefixer": "10.4.14",
+    "eslint": "8.41.0",
+    "eslint-config-next": "13.4.3",
+    "sass": "^1.63.6",
+    "typescript": "^5.0.4"
   }
 }
