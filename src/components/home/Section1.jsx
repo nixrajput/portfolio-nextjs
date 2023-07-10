@@ -11,21 +11,21 @@ import socialLinks from "@/data/socialLinks";
 const HomeSection1 = () => {
   return (
     <ResponsiveBox classNames="bg-[var(--dialogColor)]">
-      <ConstraintedBox classNames="p-4 py-16">
-        <WrappedBox classes="justify-items-center">
+      <ConstraintedBox classNames="p-4 pb-16 pt-8 sm:pt-16">
+        <WrappedBox classes="justify-items-stretch">
           <Column classes="justify-center">
-            <p>
+            <p className="max-w-sm">
               Hi 👋,{" "}
               <span className="text-[var(--primaryColor)]">I&apos;m</span>
             </p>
 
             <h1 className="text-[var(--primaryColor)]">Nikhil Rajput</h1>
 
-            <p className="font-medium">
+            <p className="font-semibold max-w-sm">
               Software Enginner & Fullstack Developer
             </p>
 
-            <p className="mt-8">
+            <p className="mt-8 max-w-sm">
               An inquisitive software developer specialized in both front-end
               and back-end development across platforms.
             </p>
@@ -57,7 +57,7 @@ const HomeSection1 = () => {
             </Column>
           </Column>
 
-          <CircleBox classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] mx-auto pointer-events-none">
+          <CircleBox classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end">
             <Image
               src="/profile.webp"
               alt="profile"

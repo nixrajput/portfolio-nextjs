@@ -1,13 +1,14 @@
 "use client";
 
-import useEmblaCarousel from "embla-carousel-react";
 import { useEffect, useState, useCallback } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import PropTypes from "prop-types";
 import DotButton from "./DotButton";
 import PrevButton from "./PrevButton";
 import NextButton from "./NextButton";
 
 const Carousel = (props) => {
-  const { children, classes, ...options } = props;
+  const { children, classes, options } = props;
 
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
@@ -50,29 +51,37 @@ const Carousel = (props) => {
   }, [emblaApi, onInit, onSelect]);
 
   return (
-    <div className="carousel">
-      <div className={`overflow-hidden relative ${classes}`} ref={emblaRef}>
-        <div className="flex">{children}</div>
-
-        <div className="embla__dots">
-          {scrollSnaps.map((_, index) => (
-            <DotButton
-              key={index}
-              onClick={() => scrollTo(index)}
-              className={"embla__dot".concat(
-                index === selectedIndex ? " embla__dot--selected" : ""
-              )}
-            />
-          ))}
+    <>
+      <div className={`carousel ${classes}`}>
+        <div className={`carousel__viewport`} ref={emblaRef}>
+          <div className="carousel__container">{children}</div>
         </div>
+      </div>
+
+      <div className="embla__dots">
+        {scrollSnaps.map((_, index) => (
+          <DotButton
+            key={index}
+            onClick={() => scrollTo(index)}
+            className={"embla__dot".concat(
+              index === selectedIndex ? " embla__dot--selected" : ""
+            )}
+          />
+        ))}
       </div>
 
       <div className="embla__buttons">
         <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
         <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
       </div>
-    </div>
+    </>
   );
+};
+
+Carousel.propTypes = {
+  children: PropTypes.node,
+  classes: PropTypes.string,
+  options: PropTypes.any,
 };
 
 export default Carousel;

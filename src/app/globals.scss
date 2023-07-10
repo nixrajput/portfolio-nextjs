@@ -100,22 +100,22 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 0.5rem;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #e0e0e0;
+  background: #b6b6b6;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--primaryColor60);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--primaryColor80);
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -307,7 +307,7 @@ h6 {
   outline: none;
   background-color: transparent;
   border: 1px solid var(--primaryColor);
-  border-radius: var(--borderRadius);
+  border-radius: 2rem var(--borderRadius);
   padding: 0.65rem 2rem;
 
   color: var(--primaryColor);
@@ -355,9 +355,9 @@ h6 {
 
   width: fit-content;
   outline: none;
+  border: none;
   background-color: var(--primaryColor);
-  border: 1px solid var(--primaryColor);
-  border-radius: var(--borderRadius);
+  border-radius: 2rem var(--borderRadius);
   padding: 0.65rem 2rem;
 
   color: var(--whiteColor);
@@ -378,7 +378,6 @@ h6 {
 
   &:hover {
     background-color: var(--primaryColor60);
-    border-color: var(--primaryColor60);
   }
 
   @media screen and (min-width: 1600px) {
@@ -700,76 +699,24 @@ h6 {
   --background-code: rgb(244, 244, 244);
 }
 
-.embla__viewport {
+.carousel__viewport {
   overflow: hidden;
+  position: relative;
 }
 
-.embla__container {
+.carousel__container {
   backface-visibility: hidden;
   display: flex;
   touch-action: pan-y;
   margin-left: calc(var(--slide-spacing) * -1);
 }
 
-.embla__slide {
-  flex: 0 0 var(--slide-size);
+.carousel__slide {
+  flex: 0 0 100%;
   min-width: 0;
-  padding-left: var(--slide-spacing);
+  max-width: 30rem;
   position: relative;
-}
-
-.embla__slide__img {
-  display: block;
-  height: var(--slide-height);
-  width: 100%;
-  object-fit: cover;
-}
-
-.embla__slide__number {
-  width: 4.6rem;
-  height: 4.6rem;
-  z-index: 1;
-  position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
-  border-radius: 50%;
-  background-color: rgba(var(--background-site-rgb-value), 0.85);
-  line-height: 4.6rem;
-  font-weight: 900;
-  text-align: center;
-  pointer-events: none;
-}
-
-.embla__slide__number > span {
-  color: var(--brand-primary);
-  background-image: linear-gradient(
-    45deg,
-    var(--brand-primary),
-    var(--brand-secondary)
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 1.6rem;
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-}
-
-.embla__button {
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: transparent;
-  touch-action: manipulation;
-  display: inline-flex;
-  text-decoration: none;
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  margin: 0;
+  padding-left: var(--slide-spacing);
 }
 
 .embla__buttons {
@@ -777,27 +724,12 @@ h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem;
-}
-
-.embla__button {
-  z-index: 1;
-  color: var(--background-site);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  width: 4rem;
-  height: 4rem;
-
-  &:disabled {
-    opacity: 0.3;
-  }
+  margin-top: 2rem;
 }
 
 .embla__button__svg {
-  width: 65%;
-  height: 65%;
+  width: 2rem;
+  height: 2rem;
 }
 
 .embla__dot {
@@ -815,18 +747,16 @@ h6 {
 
 .embla__dots {
   z-index: 1;
-  bottom: 0.5rem;
-  position: absolute;
-  left: 0;
-  right: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
+  margin-top: 1rem;
 }
 
 .embla__dot {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 1.5rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   margin-right: 0.75rem;
@@ -834,7 +764,7 @@ h6 {
 }
 
 .embla__dot:after {
-  background: var(--background-site);
+  background: var(--whiteColor70);
   border-radius: 0.2rem;
   width: 100%;
   height: 0.3rem;
@@ -843,8 +773,8 @@ h6 {
 
 .embla__dot--selected:after {
   background: linear-gradient(
-    45deg,
+    120deg,
     var(--primaryColor),
-    var(--primaryColor30)
+    var(--primaryColor50)
   );
 }

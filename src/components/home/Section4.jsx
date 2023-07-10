@@ -69,33 +69,32 @@ const HomeSection4 = () => {
           Recent <span className="text-[var(--primaryColor)]">Projects</span>
         </h2>
 
-        <Carousel classes="mt-12">
+        <Carousel classes="mt-12 w-full" options={{}}>
           {projects.map((project, index) => {
             return (
-              <Column
-                key={`service-${index}`}
-                classes="w-full flex-[0_0_100%] min-h-[20rem] bg-[var(--dialogColor)] p-4 rounded-lg items-center text-center"
-              >
-                {/* <Image
-                  src={project.image}
-                  alt="profile"
-                  width={100}
-                  height={100}
-                  sizes="100%"
-                  priority
-                  placeholder="blur"
-                  blurDataURL={project.image}
-                  style={{
-                    objectFit: "cover",
-                    width: "5rem",
-                    height: "5rem",
-                    aspectRatio: "1 / 1",
-                  }}
-                /> */}
+              <Column key={`service-${index}`} classes="carousel__slide">
+                <Column classes="w-full bg-[var(--dialogColor)] p-4 rounded-lg items-center justify-between text-center min-h-[20rem]">
+                  <Image
+                    src="/logo/flutter.webp"
+                    alt="profile"
+                    width={100}
+                    height={100}
+                    sizes="100%"
+                    priority
+                    placeholder="blur"
+                    blurDataURL="/logo/flutter.webp"
+                    style={{
+                      objectFit: "cover",
+                      width: "4.5rem",
+                      height: "4.5rem",
+                      aspectRatio: "1 / 1",
+                    }}
+                  />
 
-                <h5 className="font-bold mt-4">{project.title}</h5>
+                  <h5 className="font-bold mt-8">{project.title}</h5>
 
-                <small className="mt-4">{project.description}</small>
+                  <p className="mt-4">{project.description}</p>
+                </Column>
               </Column>
             );
           })}

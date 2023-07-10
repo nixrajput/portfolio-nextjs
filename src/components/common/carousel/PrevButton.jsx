@@ -3,7 +3,7 @@ const PrevButton = (props) => {
 
   return (
     <button
-      className="embla__button embla__button--prev"
+      className="app__filled_btn mr-4 disabled:opacity-40"
       type="button"
       {...restProps}
     >

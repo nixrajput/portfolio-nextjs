@@ -3,7 +3,7 @@ const NextButton = (props) => {
 
   return (
     <button
-      className="embla__button embla__button--next"
+      className="app__filled_btn ml-4 disabled:opacity-40"
       type="button"
       {...restProps}
     >
