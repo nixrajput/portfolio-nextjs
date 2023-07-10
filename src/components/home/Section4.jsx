@@ -74,7 +74,7 @@ const HomeSection4 = () => {
             return (
               <Column
                 key={`service-${index}`}
-                classes="flex-[0_0_100%] min-h-[20rem] bg-[var(--dialogColor)] p-4 rounded-lg items-center text-center"
+                classes="w-full flex-[0_0_100%] min-h-[20rem] bg-[var(--dialogColor)] p-4 rounded-lg items-center text-center"
               >
                 {/* <Image
                   src={project.image}
