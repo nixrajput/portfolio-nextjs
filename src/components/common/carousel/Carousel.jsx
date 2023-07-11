@@ -3,16 +3,16 @@
 import { useEffect, useState, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import PropTypes from "prop-types";
-import DotButton from "./DotButton";
-import PrevButton from "./PrevButton";
-import NextButton from "./NextButton";
+import DotButton from "@/components/common/carousel/DotButton";
+import PrevButton from "@/components/common/carousel/PrevButton";
+import NextButton from "@/components/common/carousel/NextButton";
 
 const Carousel = (props) => {
   const { children, classes, options } = props;
 
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(1);
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
   const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
   const [scrollSnaps, setScrollSnaps] = useState([]);
@@ -71,8 +71,12 @@ const Carousel = (props) => {
       </div>
 
       <div className="embla__buttons">
-        <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled} />
-        <NextButton onClick={scrollNext} disabled={nextBtnDisabled} />
+        <PrevButton onClick={scrollPrev} disabled={prevBtnDisabled}>
+          Prev
+        </PrevButton>
+        <NextButton onClick={scrollNext} disabled={nextBtnDisabled}>
+          Next
+        </NextButton>
       </div>
     </>
   );

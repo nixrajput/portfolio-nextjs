@@ -28,14 +28,61 @@
   --primaryColor80: rgba(227, 9, 111, 0.8);
   --primaryColor90: rgba(227, 9, 111, 0.9);
 
-  --secondaryColor: rgb(236, 185, 130);
-  --secondaryColorLight: rgb(240, 216, 187);
+  --secondaryColor: rgba(236, 185, 130, 1);
+  --secondaryColor10: rgba(236, 185, 130, 0.1);
+  --secondaryColor20: rgba(236, 185, 130, 0.2);
+  --secondaryColor30: rgba(236, 185, 130, 0.3);
+  --secondaryColor40: rgba(236, 185, 130, 0.4);
+  --secondaryColor50: rgba(236, 185, 130, 0.5);
+  --secondaryColor60: rgba(236, 185, 130, 0.6);
+  --secondaryColor70: rgba(236, 185, 130, 0.7);
+  --secondaryColor80: rgba(236, 185, 130, 0.8);
+  --secondaryColor90: rgba(236, 185, 130, 0.9);
 
-  --successColor: #1eb450;
-  --errorColor: #f44336;
-  --warningColor: #f09c00;
+  --successColor: rgba(30, 180, 80, 1);
+  --successColor10: rgba(30, 180, 80, 0.1);
+  --successColor20: rgba(30, 180, 80, 0.2);
+  --successColor30: rgba(30, 180, 80, 0.3);
+  --successColor40: rgba(30, 180, 80, 0.4);
+  --successColor50: rgba(30, 180, 80, 0.5);
+  --successColor60: rgba(30, 180, 80, 0.6);
+  --successColor70: rgba(30, 180, 80, 0.7);
+  --successColor80: rgba(30, 180, 80, 0.8);
+  --successColor90: rgba(30, 180, 80, 0.9);
+
+  --errorColor: rgba(244, 67, 54, 1);
+  --errorColor10: rgba(244, 67, 54, 0.1);
+  --errorColor20: rgba(244, 67, 54, 0.2);
+  --errorColor30: rgba(244, 67, 54, 0.3);
+  --errorColor40: rgba(244, 67, 54, 0.4);
+  --errorColor50: rgba(244, 67, 54, 0.5);
+  --errorColor60: rgba(244, 67, 54, 0.6);
+  --errorColor70: rgba(244, 67, 54, 0.7);
+  --errorColor80: rgba(244, 67, 54, 0.8);
+  --errorColor90: rgba(244, 67, 54, 0.9);
+
+  --warningColor: rgba(240, 156, 0, 1);
+  --warningColor10: rgba(240, 156, 0, 0.1);
+  --warningColor20: rgba(240, 156, 0, 0.2);
+  --warningColor30: rgba(240, 156, 0, 0.3);
+  --warningColor40: rgba(240, 156, 0, 0.4);
+  --warningColor50: rgba(240, 156, 0, 0.5);
+  --warningColor60: rgba(240, 156, 0, 0.6);
+  --warningColor70: rgba(240, 156, 0, 0.7);
+  --warningColor80: rgba(240, 156, 0, 0.8);
+  --warningColor90: rgba(240, 156, 0, 0.9);
 
   --textColor: rgba(248, 248, 248, 1);
+  --textColor10: rgba(248, 248, 248, 0.1);
+  --textColor20: rgba(248, 248, 248, 0.2);
+  --textColor30: rgba(248, 248, 248, 0.3);
+  --textColor40: rgba(248, 248, 248, 0.4);
+  --textColor50: rgba(248, 248, 248, 0.5);
+  --textColor60: rgba(248, 248, 248, 0.6);
+  --textColor70: rgba(248, 248, 248, 0.7);
+  --textColor80: rgba(248, 248, 248, 0.8);
+  --textColor90: rgba(248, 248, 248, 0.9);
+
   --textColorLight: rgb(212, 212, 212);
 
   --blackColor10: rgba(0, 0, 0, 0.1);
@@ -307,7 +354,7 @@ h6 {
   outline: none;
   background-color: transparent;
   border: 1px solid var(--primaryColor);
-  border-radius: 2rem var(--borderRadius);
+  border-radius: 0.25rem;
   padding: 0.65rem 2rem;
 
   color: var(--primaryColor);
@@ -357,7 +404,7 @@ h6 {
   outline: none;
   border: none;
   background-color: var(--primaryColor);
-  border-radius: 2rem var(--borderRadius);
+  border-radius: 0.25rem;
   padding: 0.65rem 2rem;
 
   color: var(--whiteColor);
@@ -477,6 +524,14 @@ h6 {
   @media screen and (max-width: 480px) {
     font-size: 0.905rem;
   }
+}
+
+.btn__radius_left {
+  border-radius: 100% 70% 70% 100%;
+}
+
+.btn__radius_right {
+  border-radius: 70% 100% 100% 70%;
 }
 
 @keyframes animate {
@@ -714,7 +769,7 @@ h6 {
 .carousel__slide {
   flex: 0 0 100%;
   min-width: 0;
-  max-width: 30rem;
+  max-width: 85%;
   position: relative;
   padding-left: var(--slide-spacing);
 }
@@ -724,12 +779,12 @@ h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .embla__button__svg {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .embla__dot {
@@ -751,7 +806,7 @@ h6 {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .embla__dot {
