@@ -769,9 +769,13 @@ h6 {
 .carousel__slide {
   flex: 0 0 100%;
   min-width: 0;
-  max-width: 85%;
+  max-width: 80%;
   position: relative;
   padding-left: var(--slide-spacing);
+
+  @media screen and (min-width: 1080px) {
+    max-width: 40rem;
+  }
 }
 
 .embla__buttons {
