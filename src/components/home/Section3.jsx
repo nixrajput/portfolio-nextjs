@@ -60,7 +60,7 @@ const HomeSection3 = () => {
             return (
               <Column
                 key={`service-${index}`}
-                classes="bg-[var(--secondaryColor20)] p-4 px-8 rounded-lg items-center text-center min-w-[10rem]"
+                classes="bg-[var(--textColor10)] p-4 px-8 rounded-lg items-center text-center min-w-[10rem]"
               >
                 <Image
                   src={service.icon}

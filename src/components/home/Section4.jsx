@@ -61,7 +61,7 @@ const projects = [
   {
     title: "E-commerce API",
     description:
-      "An RESTful API developed using Node.js, Express.js, MongoDB, and Stripe.",
+      "An RESTful API developed using Node.js, Express.js, MongoDB, and Stripe to integrate e-commerce backend.",
     icon: "/logo/nodejs.webp",
     sceenshots: [],
     githubUrl: "https://github.com/nixrajput/ecommerce-api-nodejs",
@@ -78,7 +78,7 @@ const HomeSection4 = () => {
           Recent <span className="text-[var(--primaryColor)]">Projects</span>
         </h2>
 
-        <Carousel classes="mt-12 w-full" options={{}}>
+        <Carousel classes="mt-12 w-full">
           {projects.map((project, index) => {
             return <ProjectItem key={`service-${index}`} project={project} />;
           })}

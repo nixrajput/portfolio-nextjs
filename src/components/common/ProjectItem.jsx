@@ -9,7 +9,7 @@ const ProjectItem = ({ project }) => {
     <Column classes="carousel__slide">
       <Column classes="w-full bg-[var(--dialogColor)] p-4 rounded-lg items-center justify-between text-center">
         <Column classes="w-full items-center justify-center">
-          <Row classes="w-[5rem] aspect-square bg-[var(--bgColor)] rounded-full p-[1rem] items-center justify-center">
+          <Row classes="w-[5rem] aspect-square bg-[var(--textColor10)] rounded-full p-[1rem] items-center justify-center">
             <Image
               src={project.icon}
               alt={`project-${project.title}`}
@@ -81,7 +81,7 @@ const ProjectItem = ({ project }) => {
               return (
                 <small
                   key={`tag-${i}`}
-                  className="bg-[var(--secondaryColor10)] rounded-lg py-[0.5rem] px-[1rem] mr-4 font-medium"
+                  className="bg-[var(--textColor10)] rounded-lg py-[0.45rem] px-[0.75rem] mr-2 mb-2 font-medium"
                 >
                   {tag}
                 </small>
