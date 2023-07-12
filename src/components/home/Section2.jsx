@@ -59,7 +59,7 @@ const HomeSection2 = () => {
 
                 <h5 className="font-bold mt-4">{service.title}</h5>
 
-                <small className="mt-4">{service.description}</small>
+                <small className="mt-8">{service.description}</small>
               </Column>
             );
           })}

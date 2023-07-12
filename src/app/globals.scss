@@ -208,27 +208,28 @@ p {
 }
 
 small {
-  font-size: 0.75rem;
-  font-weight: 400;
+  font-size: 0.8rem;
+  font-weight: 300;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
+  display: block;
 
   @media screen and (min-width: 1600px) {
-    font-size: 0.775rem;
+    font-size: 0.815rem;
   }
 
   @media screen and (max-width: 768px) {
-    font-size: 0.675rem;
+    font-size: 0.775rem;
   }
 
   @media screen and (max-width: 480px) {
-    font-size: 0.635rem;
+    font-size: 0.755rem;
   }
 }
 
 h1 {
   font-size: 3rem;
-  font-weight: 700;
+  font-weight: 600;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
 
@@ -247,7 +248,7 @@ h1 {
 
 h2 {
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 600;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
 
@@ -266,7 +267,7 @@ h2 {
 
 h3 {
   font-size: 1.75rem;
-  font-weight: 700;
+  font-weight: 600;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
 
@@ -285,7 +286,7 @@ h3 {
 
 h4 {
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
 
@@ -323,7 +324,7 @@ h5 {
 
 h6 {
   font-size: 0.875rem;
-  font-weight: 400;
+  font-weight: 500;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
 

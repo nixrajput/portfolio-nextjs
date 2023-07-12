@@ -81,7 +81,7 @@ const ProjectItem = ({ project }) => {
               return (
                 <small
                   key={`tag-${i}`}
-                  className="bg-[var(--secondaryColor20)] rounded-lg py-[0.5rem] px-[1rem] mr-4 font-medium"
+                  className="bg-[var(--secondaryColor10)] rounded-lg py-[0.5rem] px-[1rem] mr-4 font-medium"
                 >
                   {tag}
                 </small>
