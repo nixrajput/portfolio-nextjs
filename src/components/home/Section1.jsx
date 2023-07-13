@@ -59,14 +59,14 @@ const HomeSection1 = () => {
 
           <CircleBox classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end">
             <Image
-              src="/profile.webp"
+              src="/images/profile.webp"
               alt="profile"
               width={400}
               height={400}
               sizes="100%"
               priority
               placeholder="blur"
-              blurDataURL="/profile.webp"
+              blurDataURL="/images/profile.webp"
               style={{
                 objectFit: "cover",
                 width: "100%",
