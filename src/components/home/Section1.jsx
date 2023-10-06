@@ -9,16 +9,17 @@ import Column from "@/components/common/Column";
 import CircleBox from "@/components/common/CircleBox";
 import Row from "@/components/common/Row";
 import socialLinks from "@/data/socialLinks";
+import FilledButton from "../common/FilledButton";
 
 const telegramLink = "https://telegram.me/nixrajput";
 
+const onHandleClickTalkBtn = () => {
+  if (typeof window === "undefined") return;
+
+  window.open(telegramLink, "_blank");
+};
+
 const HomeSection1 = () => {
-  const onHandleClickTalkBtn = () => {
-    if (typeof window === "undefined") return;
-
-    window.open(telegramLink, "_blank");
-  };
-
   return (
     <ResponsiveBox classNames="bg-[var(--dialogColor)]">
       <ConstraintedBox classNames="p-4 pb-16 pt-8 sm:pt-16">
@@ -40,14 +41,11 @@ const HomeSection1 = () => {
               and back-end development across platforms.
             </p>
 
-            <button
-              name="talk-btn"
-              type="button"
-              className="app__filled_btn mt-10"
+            <FilledButton
+              label="Let's Talk"
               onClick={onHandleClickTalkBtn}
-            >
-              Let&apos;s Talk
-            </button>
+              className="mt-10"
+            />
 
             <Column classes="mt-8">
               <p>Follow me here</p>
@@ -68,24 +66,28 @@ const HomeSection1 = () => {
             </Column>
           </Column>
 
-          <CircleBox classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end">
-            <Image
-              src="/images/profile.jpg"
-              alt="profile"
-              width={400}
-              height={400}
-              sizes="100%"
-              priority
-              placeholder="blur"
-              blurDataURL="/images/profile.jpg"
-              style={{
-                objectFit: "cover",
-                width: "100%",
-                height: "100%",
-                aspectRatio: "1 / 1",
-              }}
-            />
-          </CircleBox>
+          <Row classes="justify-self-center sm:justify-self-end items-center justify-center rounded-full bg-transparent border-2 border-[var(--primaryColor60)] h-full w-auto aspect-sqaure overflow-hidden">
+            <Row classes="items-center justify-center rounded-full bg-transparent border-[0.8rem] border-[var(--primaryColor30)] h-full w-auto aspect-sqaure overflow-hidden">
+              <CircleBox classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none">
+                <Image
+                  src="/images/profile.jpg"
+                  alt="profile"
+                  width={400}
+                  height={400}
+                  sizes="100%"
+                  priority
+                  placeholder="blur"
+                  blurDataURL="/images/profile.jpg"
+                  style={{
+                    objectFit: "cover",
+                    width: "100%",
+                    height: "100%",
+                    aspectRatio: "1 / 1",
+                  }}
+                />
+              </CircleBox>
+            </Row>
+          </Row>
         </WrappedBox>
       </ConstraintedBox>
     </ResponsiveBox>
