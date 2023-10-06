@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
@@ -8,7 +10,15 @@ import CircleBox from "@/components/common/CircleBox";
 import Row from "@/components/common/Row";
 import socialLinks from "@/data/socialLinks";
 
+const telegramLink = "https://telegram.me/nixrajput";
+
 const HomeSection1 = () => {
+  const onHandleClickTalkBtn = () => {
+    if (typeof window === "undefined") return;
+
+    window.open(telegramLink, "_blank");
+  };
+
   return (
     <ResponsiveBox classNames="bg-[var(--dialogColor)]">
       <ConstraintedBox classNames="p-4 pb-16 pt-8 sm:pt-16">
@@ -34,6 +44,7 @@ const HomeSection1 = () => {
               name="talk-btn"
               type="button"
               className="app__filled_btn mt-10"
+              onClick={onHandleClickTalkBtn}
             >
               Let&apos;s Talk
             </button>
@@ -59,14 +70,14 @@ const HomeSection1 = () => {
 
           <CircleBox classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end">
             <Image
-              src="/images/profile.webp"
+              src="/images/profile.jpg"
               alt="profile"
               width={400}
               height={400}
               sizes="100%"
               priority
               placeholder="blur"
-              blurDataURL="/images/profile.webp"
+              blurDataURL="/images/profile.jpg"
               style={{
                 objectFit: "cover",
                 width: "100%",

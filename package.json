@@ -11,23 +11,23 @@
   },
   "dependencies": {
     "classnames": "^2.3.2",
-    "embla-carousel-react": "8.0.0-rc09",
-    "framer-motion": "^10.12.12",
-    "next": "13.4.3",
-    "postcss": "8.4.23",
+    "embla-carousel-react": "8.0.0-rc14",
+    "framer-motion": "^10.16.4",
+    "next": "13.5.4",
+    "postcss": "8.4.31",
     "prop-types": "^15.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.8.0",
-    "tailwindcss": "3.3.2",
+    "react-icons": "^4.11.0",
+    "tailwindcss": "3.3.3",
     "use-count-up": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.8",
-    "autoprefixer": "10.4.14",
-    "eslint": "8.41.0",
-    "eslint-config-next": "13.4.3",
-    "sass": "^1.63.6",
-    "typescript": "^5.0.4"
+    "@babel/core": "^7.23.0",
+    "autoprefixer": "10.4.16",
+    "eslint": "8.50.0",
+    "eslint-config-next": "13.5.4",
+    "sass": "^1.69.0",
+    "typescript": "^5.2.2"
   }
 }
