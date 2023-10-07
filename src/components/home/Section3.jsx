@@ -49,7 +49,7 @@ const skills = [
 
 const HomeSection3 = () => {
   return (
-    <ResponsiveBox classNames="bg-[var(--dialogColor)]">
+    <ResponsiveBox classNames="bg-[var(--dialogColor)] min-h-[90vh] items-center justify-center">
       <ConstraintedBox classNames="p-4 py-12">
         <h2 className="text-center mx-auto">
           Skills <span className="text-[var(--primaryColor)]">I Know</span>

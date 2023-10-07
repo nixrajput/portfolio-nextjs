@@ -1,12 +1,12 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
 import WrappedBox from "@/components/common/WrappedBox";
 import Column from "@/components/common/Column";
-import CircleBox from "@/components/common/CircleBox";
 import Row from "@/components/common/Row";
 import socialLinks from "@/data/socialLinks";
 import FilledButton from "../common/FilledButton";
@@ -21,7 +21,7 @@ const onHandleClickTalkBtn = () => {
 
 const HomeSection1 = () => {
   return (
-    <ResponsiveBox classNames="bg-[var(--dialogColor)]">
+    <ResponsiveBox classNames="bg-[var(--dialogColor)] min-h-[90vh] items-center justify-center">
       <ConstraintedBox classNames="p-4 pb-16 pt-8 sm:pt-16">
         <WrappedBox classes="justify-items-stretch">
           <Column classes="justify-center">
@@ -49,14 +49,14 @@ const HomeSection1 = () => {
 
             <Column classes="mt-8">
               <p>Follow me here</p>
-              <Row classes="mt-2">
+              <Row classes="mt-2 gap-2">
                 {socialLinks.map((link, index) => {
                   return (
                     <Link
                       key={`social-link-${index}`}
                       href={link.url}
                       target="_blank"
-                      className="text-white bg-[var(--primaryColor)] p-2 rounded-full flex items-center justify-center mr-2 last:mr-0 hover:bg-[var(--primaryColor50)] transition duration-300 ease-in-out"
+                      className="app__icon_btn"
                     >
                       {link.icon}
                     </Link>
@@ -66,26 +66,24 @@ const HomeSection1 = () => {
             </Column>
           </Column>
 
-          <Row classes="justify-self-center sm:justify-self-end items-center justify-center rounded-full bg-transparent border-2 border-[var(--primaryColor60)] h-full w-auto aspect-sqaure overflow-hidden">
-            <Row classes="items-center justify-center rounded-full bg-transparent border-[0.8rem] border-[var(--primaryColor30)] h-full w-auto aspect-sqaure overflow-hidden">
-              <CircleBox classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none">
-                <Image
-                  src="/images/profile.jpg"
-                  alt="profile"
-                  width={400}
-                  height={400}
-                  sizes="100%"
-                  priority
-                  placeholder="blur"
-                  blurDataURL="/images/profile.jpg"
-                  style={{
-                    objectFit: "cover",
-                    width: "100%",
-                    height: "100%",
-                    aspectRatio: "1 / 1",
-                  }}
-                />
-              </CircleBox>
+          <Row classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end items-center justify-center rounded-full bg-transparent border-2 border-[var(--primaryColor60)] aspect-sqaure overflow-hidden my-auto">
+            <Row classes="w-full h-auto items-center justify-center rounded-full bg-transparent border-[0.8rem] border-[var(--primaryColor30)] aspect-sqaure overflow-hidden pointer-events-none">
+              <Image
+                src="/images/profile.jpg"
+                alt="profile"
+                width={400}
+                height={400}
+                sizes="100%"
+                priority
+                placeholder="blur"
+                blurDataURL="/images/profile.jpg"
+                style={{
+                  objectFit: "cover",
+                  width: "100%",
+                  height: "100%",
+                  aspectRatio: "1 / 1",
+                }}
+              />
             </Row>
           </Row>
         </WrappedBox>

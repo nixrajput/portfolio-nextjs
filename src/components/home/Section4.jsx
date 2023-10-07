@@ -72,7 +72,10 @@ const projects = [
 
 const HomeSection4 = () => {
   return (
-    <ResponsiveBox classNames="bg-[var(--bgColor)]">
+    <ResponsiveBox
+      classNames="bg-[var(--bgColor)] min-h-[90vh] items-center justify-center"
+      animateReverse
+    >
       <ConstraintedBox classNames="p-4 py-16">
         <h2 className="text-center mx-auto">
           Recent <span className="text-[var(--primaryColor)]">Projects</span>
