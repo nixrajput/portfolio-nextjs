@@ -138,7 +138,7 @@ body {
     Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
     sans-serif;
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
   transition: all 0.5s ease-in-out;
   color: var(--textColor);
@@ -452,6 +452,15 @@ h6 {
     transform: translateX(0);
   }
 
+  &:disabled {
+    &:hover:before {
+      top: 0;
+      left: 0;
+      border: 0px;
+      transform: translateX(-100%);
+    }
+  }
+
   @media screen and (min-width: 1600px) {
     font-size: 1.015rem;
   }
@@ -528,9 +537,11 @@ h6 {
   background-color: var(--primaryColor50);
   border: none;
   border-radius: 100%;
-  padding: 0.5rem;
+  padding: 1rem;
 
   color: var(--whiteColor);
+
+  font-size: 1rem;
 
   overflow: hidden;
   z-index: 1;
@@ -678,7 +689,7 @@ h6 {
   background-color: transparent;
   cursor: pointer;
   width: 100%;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.15s ease-in-out;
 }
 
 .menu-items a,
@@ -689,13 +700,11 @@ h6 {
 
 .menu-items a:hover,
 .menu-items button:hover {
-  background-color: #ed7f1e3f;
-  color: #ed801e;
+  background-color: var(--primaryColor20);
 }
 
 .menu-items button.selected {
-  background-color: #ed7f1e2a;
-  color: #ed801e;
+  background-color: var(--primaryColor20);
 }
 
 .arrow::after {

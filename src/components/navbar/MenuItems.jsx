@@ -1,5 +1,6 @@
+"use client";
+
 import { useState, useEffect, useRef } from "react";
-import { useRouter, usePathname } from "next/navigation";
 import { MdExpandMore } from "react-icons/md";
 import Dropdown from "@/components/navbar/Dropdown";
 
@@ -7,11 +8,23 @@ const MenuItems = (props) => {
   const { items, depthLevel, mobileNav, handleCloseMobileMenu } = props;
 
   const [dropdown, setDropdown] = useState(false);
+  const [current, setCurrent] = useState("about");
 
   let ref = useRef();
 
-  const router = useRouter();
-  const pathname = usePathname();
+  const handleScroll = (id) => {
+    if (!id) return;
+    const element = document.getElementById(id);
+    if (!element) return;
+    const elementPosition = element.offsetTop;
+    const offsetPosition = elementPosition;
+
+    window.scroll({
+      top: offsetPosition,
+      behavior: "smooth",
+    });
+    setCurrent(id);
+  };
 
   useEffect(() => {
     const handler = (event) => {
@@ -48,12 +61,7 @@ const MenuItems = (props) => {
             type="button"
             aria-haspopup="menu"
             aria-expanded={dropdown ? "true" : "false"}
-            className={
-              pathname === items.path ||
-              (items.path !== "/" && pathname.includes(items.path))
-                ? `selected`
-                : ""
-            }
+            className={current === items.section ? `selected` : ""}
             onClick={() => setDropdown((prev) => !prev)}
           >
             <p>{items.title}</p>
@@ -70,15 +78,10 @@ const MenuItems = (props) => {
       ) : (
         <button
           type="button"
-          className={
-            pathname === items.path ||
-            (items.path !== "/" && pathname.includes(items.path))
-              ? `selected`
-              : ""
-          }
+          className={current === items.section ? `selected` : ""}
           onClick={() => {
             handleCloseMobileMenu();
-            router.push(items.path);
+            handleScroll(items.section);
           }}
         >
           <p>{items.title}</p>

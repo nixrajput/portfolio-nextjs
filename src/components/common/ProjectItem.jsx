@@ -7,7 +7,7 @@ import { FaGithub, FaEye } from "react-icons/fa";
 const ProjectItem = ({ project }) => {
   return (
     <Column classes="carousel__slide">
-      <Column classes="w-full bg-[var(--dialogColor)] p-4 rounded-lg items-center justify-between text-center">
+      <Column classes="w-full bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center justify-between text-center">
         <Column classes="w-full items-center justify-center">
           <Row classes="w-[5rem] aspect-square bg-[var(--textColor10)] rounded-full p-[1rem] items-center justify-center">
             <Image

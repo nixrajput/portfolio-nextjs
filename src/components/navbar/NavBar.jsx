@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { HiMenuAlt3 } from "react-icons/hi";
@@ -77,7 +78,15 @@ const NavBar = () => {
   useOnClickOutside(navRef, hideMobileMenu);
 
   return (
-    <nav
+    <motion.div
+      initial={{ y: "-100%", opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{
+        type: "spring",
+        duration: 0.8,
+        bounce: 0.4,
+        stiffness: 100,
+      }}
       className="fixed w-screen h-auto z-[1000] top-0 bg-[var(--dialogColor)]"
       ref={navRef}
     >
@@ -135,7 +144,7 @@ const NavBar = () => {
         {/* Mobile Menu */}
 
         <div
-          className="mobile-menu text-center flex-col m-0 w-[50%] md:w-[30%] bg-[var(--dialogColor)] h-screen absolute top-full right-0 transition duration-300 ease-in-out drop_out hidden opacity-0 z-0 invisible box-shadow lg:hidden"
+          className="mobile-menu text-center flex-col m-0 w-[50%] md:w-[25%] bg-[var(--dialogColor)] h-screen absolute top-full right-0 transition duration-300 ease-in-out drop_out hidden opacity-0 z-0 invisible box-shadow shadow-sm lg:hidden"
           ref={mobileMenuRef}
         >
           <div className="flex flex-col list-none">
@@ -154,7 +163,7 @@ const NavBar = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </motion.div>
   );
 };
 

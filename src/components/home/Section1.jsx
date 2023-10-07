@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
@@ -21,7 +20,10 @@ const onHandleClickTalkBtn = () => {
 
 const HomeSection1 = () => {
   return (
-    <ResponsiveBox classNames="bg-[var(--dialogColor)] min-h-[90vh] items-center justify-center">
+    <ResponsiveBox
+      classNames="bg-[var(--dialogColor)] min-h-[90vh] items-center justify-center"
+      id="about"
+    >
       <ConstraintedBox classNames="p-4 pb-16 pt-8 sm:pt-16">
         <WrappedBox classes="justify-items-stretch">
           <Column classes="justify-center">
@@ -44,11 +46,11 @@ const HomeSection1 = () => {
             <FilledButton
               label="Let's Talk"
               onClick={onHandleClickTalkBtn}
-              className="mt-10"
+              className="mt-8 min-w-[10rem]"
             />
 
             <Column classes="mt-8">
-              <p>Follow me here</p>
+              <p className="text-md font-semibold">Follow me here</p>
               <Row classes="mt-2 gap-2">
                 {socialLinks.map((link, index) => {
                   return (
@@ -58,7 +60,7 @@ const HomeSection1 = () => {
                       target="_blank"
                       className="app__icon_btn"
                     >
-                      {link.icon}
+                      <span className="text-xl"> {link.icon}</span>
                     </Link>
                   );
                 })}

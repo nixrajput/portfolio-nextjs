@@ -7,49 +7,52 @@ import Column from "@/components/common/Column";
 const skills = [
   {
     title: "Flutter",
-    level: "Expert",
+    level: "⭐⭐⭐",
     icon: "/logo/flutter.webp",
   },
   {
     title: "React.js",
-    level: "Expert",
+    level: "⭐⭐⭐",
     icon: "/logo/reactjs.webp",
   },
   {
     title: "Next.js",
-    level: "Expert",
+    level: "⭐⭐⭐",
     icon: "/logo/nextjs.webp",
   },
   {
     title: "Node.js",
-    level: "Intermediate",
+    level: "⭐⭐⭐",
     icon: "/logo/nodejs.webp",
   },
   {
     title: "HTML",
-    level: "Expert",
+    level: "⭐⭐",
     icon: "/logo/html.webp",
   },
   {
     title: "CSS",
-    level: "Intermediate",
+    level: "⭐⭐",
     icon: "/logo/css.webp",
   },
   {
     title: "MongoDB",
-    level: "Intermediate",
+    level: "⭐⭐",
     icon: "/logo/mongodb.webp",
   },
   {
     title: "SASS",
-    level: "Intermediate",
+    level: "⭐⭐",
     icon: "/logo/sass.webp",
   },
 ];
 
 const HomeSection3 = () => {
   return (
-    <ResponsiveBox classNames="bg-[var(--dialogColor)] min-h-[90vh] items-center justify-center">
+    <ResponsiveBox
+      classNames="bg-[var(--dialogColor)] min-h-[100vh] items-center justify-center"
+      id="experiences"
+    >
       <ConstraintedBox classNames="p-4 py-12">
         <h2 className="text-center mx-auto">
           Skills <span className="text-[var(--primaryColor)]">I Know</span>
@@ -60,7 +63,7 @@ const HomeSection3 = () => {
             return (
               <Column
                 key={`service-${index}`}
-                classes="bg-[var(--textColor10)] p-4 px-8 rounded-lg items-center text-center min-w-[10rem]"
+                classes="bg-[var(--textColor10)] p-4 px-8 rounded-[var(--borderRadius)] items-center text-center min-w-[10rem]"
               >
                 <Image
                   src={service.icon}
@@ -82,13 +85,6 @@ const HomeSection3 = () => {
                 <h5 className="font-bold mt-4">{service.title}</h5>
 
                 <small className="mt-4 flex flex-row items-center">
-                  <span
-                    style={{
-                      marginRight: "0.25rem",
-                    }}
-                  >
-                    ⭐
-                  </span>
                   {service.level}
                 </small>
               </Column>

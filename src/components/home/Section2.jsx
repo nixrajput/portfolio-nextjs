@@ -23,25 +23,32 @@ const services = [
     description:
       "I enhance your digital applications with a robust and scalable backend infrastructure. With expertise in backend development, I create efficient database structures, develop APIs, and configure servers to ensure optimal performance, security, and scalability. My solutions empower your applications to seamlessly handle high traffic and complex data management.",
   },
+  {
+    title: "Product Strategy",
+    image: "/icons/backend-dev.webp",
+    description:
+      "I collaborate with you to define clear goals, target audiences, and a roadmap for success. My expertise in product ideation and market analysis ensures that your product not only meets user needs but also aligns with your business strategy for long-term growth and full potential of your digital products with effective product strategy.",
+  },
 ];
 
 const HomeSection2 = () => {
   return (
     <ResponsiveBox
-      classNames="bg-[var(--bgColor)] min-h-[90vh] items-center justify-center"
+      classNames="bg-[var(--bgColor)] min-h-[100vh] items-center justify-center"
       animateReverse
+      id="services"
     >
       <ConstraintedBox classNames="p-4 py-16">
         <h2 className="text-center mx-auto">
           What <span className="text-[var(--primaryColor)]">I Do</span>
         </h2>
 
-        <WrappedBox classes="justify-items-center sm:grid-cols-3 mt-12">
+        <WrappedBox classes="justify-items-center sm:grid-cols-2 mt-12">
           {services.map((service, index) => {
             return (
               <Column
                 key={`service-${index}`}
-                classes="bg-[var(--dialogColor)] p-4 rounded-lg items-center text-center"
+                classes="bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center text-center"
               >
                 <Image
                   src={service.image}
@@ -61,6 +68,8 @@ const HomeSection2 = () => {
                 />
 
                 <h5 className="font-bold mt-4">{service.title}</h5>
+
+                <span className="w-[3rem] h-[0.125rem] bg-[var(--primaryColor)] mx-auto mt-4"></span>
 
                 <p className="mt-8">{service.description}</p>
               </Column>

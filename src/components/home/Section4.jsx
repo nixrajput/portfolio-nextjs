@@ -73,8 +73,9 @@ const projects = [
 const HomeSection4 = () => {
   return (
     <ResponsiveBox
-      classNames="bg-[var(--bgColor)] min-h-[90vh] items-center justify-center"
+      classNames="bg-[var(--bgColor)] min-h-[100vh] items-center justify-center"
       animateReverse
+      id="projects"
     >
       <ConstraintedBox classNames="p-4 py-16">
         <h2 className="text-center mx-auto">
