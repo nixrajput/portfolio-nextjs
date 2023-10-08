@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { MdExpandMore } from "react-icons/md";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "@/components/navbar/Dropdown";
 
 const MenuItems = (props) => {
@@ -65,7 +66,8 @@ const MenuItems = (props) => {
             onClick={() => setDropdown((prev) => !prev)}
           >
             <p>{items.title}</p>
-            <MdExpandMore />
+
+            <FontAwesomeIcon icon={faCaretDown} />
           </button>
           <Dropdown
             depthLevel={depthLevel}

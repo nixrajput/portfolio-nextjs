@@ -4,8 +4,8 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { HiMenuAlt3 } from "react-icons/hi";
-import { IoMdClose } from "react-icons/io";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import useOnClickOutside from "@/hooks/useOnClickOutside";
 import navMenus from "@/data/navMenus";
 import MenuItems from "@/components/navbar/MenuItems";
@@ -133,9 +133,15 @@ const NavBar = () => {
               onClick={(_) => toggleMenu()}
             >
               {mobileMenuVisible ? (
-                <IoMdClose className="text-3xl xs:text-2xl hover:scale-110 transition duration-300 ease-in-out" />
+                <FontAwesomeIcon
+                  icon={faXmark}
+                  className="text-2xl xs:text-xl hover:scale-110 transition duration-300 ease-in-out"
+                />
               ) : (
-                <HiMenuAlt3 className="text-3xl xs:text-2xl hover:scale-110 transition duration-300 ease-in-out" />
+                <FontAwesomeIcon
+                  icon={faBars}
+                  className="text-2xl xs:text-xl hover:scale-110 transition duration-300 ease-in-out"
+                />
               )}
             </button>
           </div>

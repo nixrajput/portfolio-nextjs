@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Column from "@/components/common/Column";
 import Row from "@/components/common/Row";
-import { FaGithub, FaEye } from "react-icons/fa";
 
 const ProjectItem = ({ project }) => {
   return (
@@ -50,14 +52,17 @@ const ProjectItem = ({ project }) => {
             {project.repoType}
           </small>
 
-          <Row classes="w-full items-center justify-center mt-4">
+          <Row classes="w-full items-center justify-center mt-4 gap-2">
             {project.githubUrl ? (
               <Link
                 href={project.githubUrl}
                 target="_blank"
-                className="text-white bg-[var(--primaryColor80)] p-2 rounded-full flex items-center justify-center mr-2 last:mr-0 hover:bg-[var(--primaryColor50)] transition duration-500 ease-in-out"
+                className="app__icon_btn"
+                style={{
+                  padding: "0.75rem",
+                }}
               >
-                <FaGithub />
+                <FontAwesomeIcon icon={faGithub} className="text-lg" />
               </Link>
             ) : null}
 
@@ -65,9 +70,12 @@ const ProjectItem = ({ project }) => {
               <Link
                 href={project.url}
                 target="_blank"
-                className="text-white bg-[var(--primaryColor)] p-2 rounded-full flex items-center justify-center mr-2 last:mr-0 hover:bg-[var(--primaryColor50)] transition duration-500 ease-in-out"
+                className="app__icon_btn"
+                style={{
+                  padding: "0.75rem",
+                }}
               >
-                <FaEye />
+                <FontAwesomeIcon icon={faEye} className="text-lg" />
               </Link>
             ) : null}
           </Row>

@@ -1,40 +1,41 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  FaInstagram,
-  FaTwitter,
-  FaGithub,
-  FaLinkedin,
-  FaTelegram,
-} from "react-icons/fa";
+  faGithub,
+  faLinkedin,
+  faTelegram,
+  faInstagram,
+  faXTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 
 const socialLinks = [
   {
     name: "GitHub",
     url: "https://www.github.com/nixrajput",
-    icon: <FaGithub />,
+    icon: <FontAwesomeIcon icon={faGithub} />,
     text: "nixrajput",
   },
   {
     name: "LinkedIn",
     url: "https://www.linkedin.com/in/nixrajput",
-    icon: <FaLinkedin />,
+    icon: <FontAwesomeIcon icon={faLinkedin} />,
     text: "nixrajput",
   },
   {
     name: "Telegram",
     url: "https://telegram.me/nixrajput",
-    icon: <FaTelegram />,
+    icon: <FontAwesomeIcon icon={faTelegram} />,
     text: "nixrajput",
   },
   {
     name: "Instagram",
     url: "https://www.instagram.com/nixrajput",
-    icon: <FaInstagram />,
+    icon: <FontAwesomeIcon icon={faInstagram} />,
     text: "nixrajput",
   },
   {
     name: "Twitter",
     url: "https://www.twitter.com/nixrajput07",
-    icon: <FaTwitter />,
+    icon: <FontAwesomeIcon icon={faXTwitter} />,
     text: "nixrajput07",
   },
 ];
