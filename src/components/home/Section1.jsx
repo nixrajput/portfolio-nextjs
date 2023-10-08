@@ -1,14 +1,16 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
 import WrappedBox from "@/components/common/WrappedBox";
+import FilledButton from "@/components/common/FilledButton";
 import Column from "@/components/common/Column";
 import Row from "@/components/common/Row";
 import socialLinks from "@/data/socialLinks";
-import FilledButton from "../common/FilledButton";
+import useIsInViewport from "@/hooks/useIsInViewport";
 
 const telegramLink = "https://telegram.me/nixrajput";
 
@@ -18,11 +20,24 @@ const onHandleClickTalkBtn = () => {
   window.open(telegramLink, "_blank");
 };
 
-const HomeSection1 = () => {
+const HomeSection1 = ({ current, setCurrent }) => {
+  const homeRef = useRef(null);
+
+  const isInView = useIsInViewport(homeRef);
+
+  useEffect(() => {
+    if (isInView && current !== "about") setCurrent("about");
+
+    return () => {
+      if (isInView && current === "about") setCurrent(null);
+    };
+  }, [isInView, current, setCurrent]);
+
   return (
     <ResponsiveBox
       classNames="bg-[var(--dialogColor)] min-h-[90vh] items-center justify-center"
       id="about"
+      elementRef={homeRef}
     >
       <ConstraintedBox classNames="p-4 pb-16 pt-8 sm:pt-16">
         <WrappedBox classes="justify-items-stretch">

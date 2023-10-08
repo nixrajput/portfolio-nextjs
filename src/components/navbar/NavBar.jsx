@@ -10,7 +10,7 @@ import useOnClickOutside from "@/hooks/useOnClickOutside";
 import navMenus from "@/data/navMenus";
 import MenuItems from "@/components/navbar/MenuItems";
 
-const NavBar = () => {
+const NavBar = ({ current }) => {
   const mobileMenuRef = useRef(null);
   const navRef = useRef();
 
@@ -120,6 +120,7 @@ const NavBar = () => {
                   mobileNav={mobileMenuVisible}
                   depthLevel={depthLevel}
                   handleCloseMobileMenu={hideMobileMenu}
+                  current={current}
                 />
               );
             })}
@@ -150,7 +151,7 @@ const NavBar = () => {
         {/* Mobile Menu */}
 
         <div
-          className="mobile-menu text-center flex-col m-0 w-[50%] md:w-[25%] bg-[var(--dialogColor)] h-screen absolute top-full right-0 transition duration-300 ease-in-out drop_out hidden opacity-0 z-0 invisible box-shadow shadow-sm lg:hidden"
+          className="mobile-menu text-center flex-col m-0 w-[50%] md:w-[25%] bg-[var(--dialogColor)] h-screen absolute top-full right-0 transition duration-300 ease-in-out drop_out hidden opacity-0 z-0 invisible nav_shadow lg:hidden"
           ref={mobileMenuRef}
         >
           <div className="flex flex-col list-none">
@@ -163,6 +164,7 @@ const NavBar = () => {
                   mobileNav={mobileMenuVisible}
                   depthLevel={depthLevel}
                   handleCloseMobileMenu={hideMobileMenu}
+                  current={current}
                 />
               );
             })}

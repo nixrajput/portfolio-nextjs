@@ -1,25 +1,40 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
+import WrappedBox from "@/components/common/WrappedBox";
 import Column from "@/components/common/Column";
 import Row from "@/components/common/Row";
 import socialLinks from "@/data/socialLinks";
-import WrappedBox from "../common/WrappedBox";
+import useIsInViewport from "@/hooks/useIsInViewport";
 
-const HomeSection5 = () => {
+const HomeSection5 = ({ current, setCurrent }) => {
+  const contactRef = useRef(null);
+
+  const isInView = useIsInViewport(contactRef);
+
   const onHandleClickUrl = (url) => {
     if (typeof window === "undefined" || !url) return;
 
     window.open(url, "_blank");
   };
 
+  useEffect(() => {
+    if (isInView && current !== "contact") setCurrent("contact");
+
+    return () => {
+      if (isInView && current === "contact") setCurrent(null);
+    };
+  }, [isInView, current, setCurrent]);
+
   return (
     <ResponsiveBox
-      classNames="bg-[var(--dialogColor)] min-h-[80vh] items-center justify-center"
+      classNames="bg-[var(--dialogColor)] min-h-[90vh] items-center justify-center"
       id="contact"
+      elementRef={contactRef}
     >
       <ConstraintedBox classNames="p-4 py-12">
         <h2 className="text-center mx-auto">

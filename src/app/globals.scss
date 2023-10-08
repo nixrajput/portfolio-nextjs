@@ -117,6 +117,8 @@
   --boxShadow: 0px 4px 12px -6px rgba(0, 0, 0, 0.1),
     0px -4px 12px -6px rgba(0, 0, 0, 0.1), -4px 0px 12px -6px rgba(0, 0, 0, 0.1),
     4px 0px 12px -6px rgba(0, 0, 0, 0.1);
+
+  --navBarShadow: 0 0 10px 0 var(--blackColor10);
 }
 
 * {
@@ -697,15 +699,16 @@ h6 {
 .menu-items button {
   text-align: left;
   padding: 0.5rem 1rem;
+  border-radius: var(--borderRadius);
 }
 
 .menu-items a:hover,
 .menu-items button:hover {
-  background-color: var(--primaryColor20);
+  background-color: var(--textColor10);
 }
 
 .menu-items button.selected {
-  background-color: var(--primaryColor20);
+  background-color: var(--textColor10);
 }
 
 .arrow::after {
@@ -742,6 +745,10 @@ h6 {
   top: 0;
 
   transition: all 1s ease-in-out;
+}
+
+.nav_shadow {
+  box-shadow: var(--navBarShadow);
 }
 
 @media screen and (max-width: 900px) {

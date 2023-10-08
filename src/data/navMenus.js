@@ -1,27 +1,27 @@
 const navMenus = [
   {
     title: "About",
-    path: "/?section=about",
+    path: "/#about",
     section: "about",
   },
   {
     title: "Services",
-    path: "/?section=services",
+    path: "/#services",
     section: "services",
   },
   {
     title: "Experiences",
-    path: "/?section=experiences",
+    path: "/#experiences",
     section: "experiences",
   },
   {
     title: "Projects",
-    path: "/?section=projects",
+    path: "/#projects",
     section: "projects",
   },
   {
     title: "Contact",
-    path: "/?section=contact",
+    path: "/#contact",
     section: "contact",
   },
 ];

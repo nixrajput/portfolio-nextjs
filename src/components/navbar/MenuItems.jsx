@@ -6,10 +6,10 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "@/components/navbar/Dropdown";
 
 const MenuItems = (props) => {
-  const { items, depthLevel, mobileNav, handleCloseMobileMenu } = props;
+  const { items, depthLevel, mobileNav, handleCloseMobileMenu, current } =
+    props;
 
   const [dropdown, setDropdown] = useState(false);
-  const [current, setCurrent] = useState("about");
 
   let ref = useRef();
 
@@ -24,7 +24,6 @@ const MenuItems = (props) => {
       top: offsetPosition,
       behavior: "smooth",
     });
-    setCurrent(id);
   };
 
   useEffect(() => {

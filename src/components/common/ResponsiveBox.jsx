@@ -4,11 +4,12 @@ import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 
 const ResponsiveBox = (props) => {
-  const { children, classNames, animateReverse, id } = props;
+  const { children, classNames, animateReverse, id, elementRef } = props;
 
   return (
     <motion.div
       id={id}
+      ref={elementRef}
       initial={{ x: animateReverse ? "100%" : "-100%", opacity: 0 }}
       whileInView={{ x: 0, opacity: 1 }}
       transition={{
@@ -30,6 +31,7 @@ ResponsiveBox.propTypes = {
   classNames: PropTypes.string,
   animateReverse: PropTypes.bool,
   id: PropTypes.string,
+  elementRef: PropTypes.any,
 };
 
 export default ResponsiveBox;

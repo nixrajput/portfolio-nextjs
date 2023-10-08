@@ -1,8 +1,12 @@
+"use client";
+
+import { useRef, useEffect } from "react";
 import Image from "next/image";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
 import WrappedBox from "@/components/common/WrappedBox";
 import Column from "@/components/common/Column";
+import useIsInViewport from "@/hooks/useIsInViewport";
 
 const services = [
   {
@@ -31,12 +35,25 @@ const services = [
   },
 ];
 
-const HomeSection2 = () => {
+const HomeSection2 = ({ current, setCurrent }) => {
+  const servicesRef = useRef(null);
+
+  const isInView = useIsInViewport(servicesRef);
+
+  useEffect(() => {
+    if (isInView && current !== "services") setCurrent("services");
+
+    return () => {
+      if (isInView && current === "services") setCurrent(null);
+    };
+  }, [isInView, current, setCurrent]);
+
   return (
     <ResponsiveBox
       classNames="bg-[var(--bgColor)] min-h-[100vh] items-center justify-center"
       animateReverse
       id="services"
+      elementRef={servicesRef}
     >
       <ConstraintedBox classNames="p-4 py-16">
         <h2 className="text-center mx-auto">

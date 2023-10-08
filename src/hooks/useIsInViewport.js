@@ -1,21 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
-const options = {
-  root: null,
-  rootMargin: "0px",
-  threshold: 0.5,
-};
+const useIsInViewport = (
+  ref,
+  { root = null, rootMargin = null, threshold = null } = {}
+) => {
+  const options = useMemo(
+    () => ({
+      root: root || null,
+      rootMargin: rootMargin || "40px",
+      threshold: threshold || 0.25,
+    }),
+    [root, rootMargin, threshold]
+  );
 
-const useIsInViewport = (ref) => {
   const [isIntersecting, setIsIntersecting] = useState(false);
 
-  const callbackFunction = (entries) => {
-    const [entry] = entries;
-    setIsIntersecting(entry.isIntersecting);
-  };
-
   useEffect(() => {
-    const value = ref.current;
+    const callbackFunction = (entries) => {
+      const [entry] = entries;
+      setIsIntersecting(entry.isIntersecting);
+    };
+
+    const value = ref?.current;
 
     const observer = new IntersectionObserver(callbackFunction, options);
 
@@ -24,7 +30,7 @@ const useIsInViewport = (ref) => {
     return () => {
       if (value) observer.disconnect();
     };
-  }, [ref]);
+  }, [ref, options]);
 
   return isIntersecting;
 };
