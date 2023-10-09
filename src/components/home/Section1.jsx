@@ -42,10 +42,7 @@ const HomeSection1 = ({ current, setCurrent }) => {
       <ConstraintedBox classNames="p-4 pb-16 pt-8 sm:pt-16">
         <WrappedBox classes="justify-items-stretch">
           <Column classes="justify-center">
-            <p className="max-w-sm">
-              Hi 👋,{" "}
-              <span className="text-[var(--primaryColor)]">I&apos;m</span>
-            </p>
+            <p className="max-w-sm">Hi 👋 I&apos;m</p>
 
             <h1 className="text-[var(--primaryColor)]">Nikhil Rajput</h1>
 
@@ -73,7 +70,7 @@ const HomeSection1 = ({ current, setCurrent }) => {
                       key={`social-link-${index}`}
                       href={link.url}
                       target="_blank"
-                      className="app__icon_btn"
+                      className="app__icon_btn p-3 lg:p-4"
                     >
                       <span className="text-xl"> {link.icon}</span>
                     </Link>

@@ -44,7 +44,7 @@ const HomeSection5 = ({ current, setCurrent }) => {
         <Column classes="mt-12 w-full">
           <WrappedBox classes="sm:grid-cols-2 w-full mx-auto gap-4">
             <Row
-              classes="bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center text-center justify-center cursor-pointer hover:bg-[var(--primaryColor40)] transition duration-500 ease-in-out"
+              classes="bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center text-center justify-center cursor-pointer animated__hover"
               onClick={() =>
                 onHandleClickUrl("mailto:nkr.nikhil.nkr@gmail.com")
               }
@@ -61,7 +61,7 @@ const HomeSection5 = ({ current, setCurrent }) => {
             {socialLinks.map((link, index) => {
               return (
                 <Row
-                  classes="bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center text-center justify-center cursor-pointer hover:bg-[var(--primaryColor40)] transition duration-500 ease-in-out"
+                  classes="bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center text-center justify-center cursor-pointer animated__hover"
                   key={`social-link-${index}`}
                   onClick={() => onHandleClickUrl(link.url)}
                 >

@@ -365,7 +365,7 @@ h6 {
   font-size: 1rem;
   font-family: inherit;
   text-transform: capitalize;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.5rem;
 
   overflow: hidden;
@@ -447,7 +447,7 @@ h6 {
   font-size: 1rem;
   font-family: inherit;
   text-transform: capitalize;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.5rem;
 
   overflow: hidden;
@@ -524,7 +524,7 @@ h6 {
   font-size: 1rem;
   font-family: inherit;
   text-transform: none;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.5rem;
 
   cursor: pointer;
@@ -566,7 +566,7 @@ h6 {
   background-color: var(--primaryColor50);
   border: none;
   border-radius: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
 
   color: var(--whiteColor);
 
@@ -918,4 +918,41 @@ h6 {
     var(--primaryColor),
     var(--primaryColor50)
   );
+}
+
+.animated__hover {
+  overflow: hidden;
+  z-index: 1;
+
+  transition: all 0.5s ease-in-out;
+  animation: drop-in 500ms ease 200ms backwards;
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    background: var(--primaryColor);
+    transition: all 0.6s ease;
+    z-index: -1;
+  }
+
+  &:hover:before {
+    top: 0;
+    left: 0;
+    border: 0px;
+    transform: translateX(0);
+  }
+
+  &:disabled {
+    &:hover:before {
+      top: 0;
+      left: 0;
+      border: 0px;
+      transform: translateX(-100%);
+    }
+  }
 }
