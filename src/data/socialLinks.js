@@ -6,37 +6,38 @@ import {
   faInstagram,
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
+import Strings from "@/constants/strings";
 
 const socialLinks = [
   {
-    name: "GitHub",
-    url: "https://www.github.com/nixrajput",
+    name: Strings.github,
+    url: Strings.githubLink,
     icon: <FontAwesomeIcon icon={faGithub} />,
-    text: "nixrajput",
+    text: Strings.githubUsername,
   },
   {
-    name: "LinkedIn",
-    url: "https://www.linkedin.com/in/nixrajput",
+    name: Strings.linkedIn,
+    url: Strings.linkedInLink,
     icon: <FontAwesomeIcon icon={faLinkedin} />,
-    text: "nixrajput",
+    text: Strings.linkedInUsername,
   },
   {
-    name: "Telegram",
-    url: "https://telegram.me/nixrajput",
+    name: Strings.telegram,
+    url: Strings.telegramLink,
     icon: <FontAwesomeIcon icon={faTelegram} />,
-    text: "nixrajput",
+    text: Strings.telegramUsername,
   },
   {
-    name: "Instagram",
-    url: "https://www.instagram.com/nixrajput",
+    name: Strings.instagram,
+    url: Strings.instagramLink,
     icon: <FontAwesomeIcon icon={faInstagram} />,
-    text: "nixrajput",
+    text: Strings.instagramUsername,
   },
   {
-    name: "Twitter",
-    url: "https://www.twitter.com/nixrajput07",
+    name: Strings.twitter,
+    url: Strings.twitterLink,
     icon: <FontAwesomeIcon icon={faXTwitter} />,
-    text: "nixrajput07",
+    text: Strings.twitterUsername,
   },
 ];
 

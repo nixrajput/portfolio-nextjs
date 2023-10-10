@@ -1,54 +1,138 @@
-# portfolio-nextjs
+# Portfolio Website with Next.js and Sass
 
-Portfolio website using [Next.js](https://nextjs.org/) and SCSS.
+This repository contains the source code for a portfolio website built using Next.js and Sass. This README.md file provides an overview of the project and instructions on how to set it up and customize it for your own use.
+
+## Table of Contents
+
+- [Portfolio Website with Next.js and Sass](#portfolio-website-with-nextjs-and-sass)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+  - [Usage](#usage)
+  - [Customization](#customization)
+    - [Changing Content](#changing-content)
+  - [Deployment](#deployment)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Connect With Me](#connect-with-me)
+
+## Features
+
+- Responsive design for various screen sizes.
+- A customizable portfolio section to showcase your projects.
+- An about section to introduce yourself.
+- Easily customizable with Sass for styling.
 
 ## Getting Started
 
-First, run the development server:
+Follow these instructions to get the project up and running on your local machine.
+
+### Prerequisites
+
+You need to have the following software installed on your computer:
+
+- [Node.js](https://nodejs.org/) (LTS version recommended)
+- [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/) or [Yarn](https://yarnpkg.com/) package manager
+
+### Installation
+
+1. Star the repository.
+
+2. Clone this repository to your local machine using the following command:
+
+   ```bash
+   git clone https://github.com/nixrajput/portfolio-nextjs.git
+   ```
+
+3. Navigate to the project directory:
+
+   ```bash
+   cd portfolio-nextjs
+   ```
+
+4. Install the project dependencies:
+
+   If you're using npm:
+
+   ```bash
+   npm install
+   ```
+
+   If you're using pnpm:
+
+   ```bash
+   pnpm install
+   ```
+
+   If you're using Yarn:
+
+   ```bash
+   yarn install
+   ```
+
+## Usage
+
+To start the development server and view the website locally, run the following command:
 
 ```bash
 npm run dev
+#or
+pnpm run dev
 # or
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will start the Next.js development server, and you can access the website in your web browser at `http://localhost:3000`.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Customization
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+You can customize various aspects of the portfolio website to make it your own.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Changing Content
 
-## Learn More
+1. Update the content in the `data` directory:
 
-To learn more about Next.js, take a look at the following resources:
+   - Edit the `projects.js` file to add or modify project details.
+   - Edit the `about.js` file to update your personal information.
+   - Edit the `experiences.js` file to add or modify experiences you have.
+   - Edit the `skills.js` file to add or modify skills you know.
+   - Edit the `socialLinks.js` file to add or modify socila media links.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Replace or add images in the `public/images` directory to match your projects and profile picture.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Deployment
 
-## Deploy on Vercel
+To deploy the portfolio website to a hosting service of your choice, follow the deployment instructions for Next.js applications. Some popular hosting options include Vercel, Netlify, and GitHub Pages.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Remember to configure environment variables for sensitive information like email credentials if needed.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contributing
+
+If you would like to contribute to this project, feel free to fork the repository, make your changes, and submit a pull request. Please follow the guidelines in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Connect With Me
 
-[<img align="left" alt="nixrajput | Website" width="24px" src="https://raw.githubusercontent.com/nixrajput/nixlab-files/master/images/icons/globe-icon.svg" />][website]
+[![GitHub: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=GitHub&logoColor=333&link=https://www.github.com/nixrajput)][github]
 
-[<img align="left" alt="nixrajput | GitHub" width="24px" src="https://raw.githubusercontent.com/nixrajput/nixlab-files/master/images/icons/github-brands.svg" />][github]
+[![Linkedin: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=LinkedIn&logoColor=blue&link=https://www.linkedin.com/in/nixrajput)][linkedin]
 
-[<img align="left" alt="nixrajput | Instagram" width="24px" src="https://raw.githubusercontent.com/nixrajput/nixlab-files/master/images/icons/instagram-brands.svg" />][instagram]
+[![Instagram: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=Instagram&link=https://www.instagram.com/nixrajput)][instagram]
 
-[<img align="left" alt="nixrajput | Twitter" width="24px" src="https://raw.githubusercontent.com/nixrajput/nixlab-files/master/images/icons/twitter-brands.svg" />][twitter]
-
-[<img align="left" alt="nixrajput | LinkedIn" width="24px" src="https://raw.githubusercontent.com/nixrajput/nixlab-files/master/images/icons/linkedin-in-brands.svg" />][linkedin]
+[![Twitter: nixrajput07](https://img.shields.io/badge/nixrajput-EFF7F6?logo=X&logoColor=333&link=https://x.com/nixrajput)][twitter]
+  
+[![Telegram: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=Telegram&link=https://telegram.me/nixrajput)][telegram]
+  
+[![Gmail: nkr.nikhi.nkr@gmail.com](https://img.shields.io/badge/nkr.nikhil.nkr@gmail.com-EFF7F6?logo=Gmail&link=mailto:nkr.nikhil.nkr@gmail.com)][gmail]
 
 [github]: https://github.com/nixrajput
-[website]: https://nixlab.co.in
 [twitter]: https://twitter.com/nixrajput07
 [instagram]: https://instagram.com/nixrajput
 [linkedin]: https://linkedin.com/in/nixrajput
+[telegram]: "https://telegram.me/nixrajput"
+[gmail]: mailto:nkr.nikhil.nkr@gmail.com

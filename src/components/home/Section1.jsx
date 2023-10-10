@@ -10,20 +10,19 @@ import FilledButton from "@/components/common/FilledButton";
 import Column from "@/components/common/Column";
 import Row from "@/components/common/Row";
 import socialLinks from "@/data/socialLinks";
+import Strings from "@/constants/strings";
 import useIsInViewport from "@/hooks/useIsInViewport";
-
-const telegramLink = "https://telegram.me/nixrajput";
-
-const onHandleClickTalkBtn = () => {
-  if (typeof window === "undefined") return;
-
-  window.open(telegramLink, "_blank");
-};
 
 const HomeSection1 = ({ current, setCurrent }) => {
   const homeRef = useRef(null);
 
   const isInView = useIsInViewport(homeRef);
+
+  const onHandleClickTalkBtn = () => {
+    if (typeof window === "undefined") return;
+
+    window.open(Strings.telegramLink, "_blank");
+  };
 
   useEffect(() => {
     if (isInView && current !== "about") setCurrent("about");
@@ -44,7 +43,7 @@ const HomeSection1 = ({ current, setCurrent }) => {
           <Column classes="justify-center">
             <p className="max-w-sm">Hi 👋 I&apos;m</p>
 
-            <h1 className="text-[var(--primaryColor)]">Nikhil Rajput</h1>
+            <h1 className="text-[var(--primaryColor)]">{Strings.fullName}</h1>
 
             <p className="font-semibold max-w-sm">
               Software Enginner & Fullstack Developer
