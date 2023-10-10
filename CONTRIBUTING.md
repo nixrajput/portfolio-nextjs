@@ -56,7 +56,7 @@ Here are the steps to contribute to this project:
 
 ## Reporting Issues
 
-If you encounter any issues or bugs while using the Portfolio Website, please report them on the [Issues](https://github.com/your-username/portfolio-nextjs-sass/issues) page of the repository. Provide as much detail as possible to help us understand and address the problem.
+If you encounter any issues or bugs while using the Portfolio Website, please report them on the [Issues](https://github.com/nixrajput/portfolio-nextjs/issues) page of the repository. Provide as much detail as possible to help us understand and address the problem.
 
 ## Thank You
 
