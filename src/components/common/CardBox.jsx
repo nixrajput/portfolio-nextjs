@@ -1,22 +1,20 @@
-import Column from '@/components/commons/Column';
+import PropTypes from "prop-types";
 
-const CardBox = ({ children, ...props }) => {
-    return (
-        <Column
-            sx={{
-                p: "1rem",
-                backgroundColor: "var(--dialogColor)",
-                boxShadow: "var(--boxShadow)",
-                borderRadius: "var(--borderRadius)",
-                transition: "all 0.5s ease-in-out",
-                animation: "drop-in 500ms ease 200ms backwards",
-                overflow: "hidden",
-                ...props.sx
-            }}
-        >
-            {children}
-        </Column>
-    )
-}
+const CardBox = (props) => {
+  const { children, classes } = props;
+
+  return (
+    <div
+      className={`relative flex flex-col justify-start items-start bg-[var(--dialogColor)] transition duration-300 ease-in-out ${classes}`}
+    >
+      {children}
+    </div>
+  );
+};
+
+CardBox.propTypes = {
+  children: PropTypes.node,
+  classes: PropTypes.string,
+};
 
 export default CardBox;

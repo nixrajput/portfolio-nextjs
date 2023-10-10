@@ -11,6 +11,7 @@ import Column from "@/components/common/Column";
 import Row from "@/components/common/Row";
 import socialLinks from "@/data/socialLinks";
 import Strings from "@/constants/strings";
+import About from "@/data/about";
 import useIsInViewport from "@/hooks/useIsInViewport";
 
 const HomeSection1 = ({ current, setCurrent }) => {
@@ -41,17 +42,14 @@ const HomeSection1 = ({ current, setCurrent }) => {
       <ConstraintedBox classNames="p-4 pb-16 pt-8 sm:pt-16">
         <WrappedBox classes="justify-items-stretch">
           <Column classes="justify-center">
-            <p className="max-w-sm">Hi 👋 I&apos;m</p>
+            <p className="max-w-sm">{About.welcomeText}</p>
 
-            <h1 className="text-[var(--primaryColor)]">{Strings.fullName}</h1>
+            <h1 className="text-[var(--primaryColor)]">{About.fullName}</h1>
 
-            <p className="font-semibold max-w-sm">
-              Software Enginner & Fullstack Developer
-            </p>
+            <p className="font-semibold max-w-sm">{About.designation}</p>
 
-            <p className="mt-8 max-w-sm">
-              An inquisitive software developer specialized in both front-end
-              and back-end development across platforms.
+            <p className="mt-8 max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
+              {About.description}
             </p>
 
             <FilledButton
@@ -61,7 +59,7 @@ const HomeSection1 = ({ current, setCurrent }) => {
             />
 
             <Column classes="mt-8">
-              <p className="text-md font-semibold">Follow me here</p>
+              <p className="text-md font-semibold">{About.followText}</p>
               <Row classes="mt-2 gap-2">
                 {socialLinks.map((link, index) => {
                   return (
@@ -82,14 +80,14 @@ const HomeSection1 = ({ current, setCurrent }) => {
           <Row classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end items-center justify-center rounded-full bg-transparent border-2 border-[var(--primaryColor60)] aspect-sqaure overflow-hidden my-auto">
             <Row classes="w-full h-auto items-center justify-center rounded-full bg-transparent border-[0.8rem] border-[var(--primaryColor30)] aspect-sqaure overflow-hidden pointer-events-none">
               <Image
-                src="/images/profile.jpg"
+                src={About.avatarUrl}
                 alt="profile"
                 width={400}
                 height={400}
                 sizes="100%"
                 priority
                 placeholder="blur"
-                blurDataURL="/images/profile.jpg"
+                blurDataURL={About.avatarUrl}
                 style={{
                   objectFit: "cover",
                   width: "100%",
