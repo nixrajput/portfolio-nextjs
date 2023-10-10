@@ -10,7 +10,7 @@ const ProjectItem = ({ project }) => {
   return (
     <Column classes="w-full bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center justify-between text-center">
       <Column classes="w-full items-center justify-center">
-        <Row classes="w-[5rem] aspect-square bg-[var(--textColor10)] rounded-full p-[1rem] items-center justify-center">
+        <Row classes="w-[4rem] aspect-square bg-[var(--textColor10)] rounded-full p-[1rem] items-center justify-center">
           <Image
             src={project.icon}
             alt={`project-${project.title}`}
@@ -23,6 +23,7 @@ const ProjectItem = ({ project }) => {
             style={{
               objectFit: "cover",
               width: "100%",
+              height: "100%",
               aspectRatio: "1 / 1",
             }}
           />
@@ -58,10 +59,10 @@ const ProjectItem = ({ project }) => {
               target="_blank"
               className="app__icon_btn"
               style={{
-                padding: "0.75rem",
+                padding: "0.5rem",
               }}
             >
-              <FontAwesomeIcon icon={faGithub} className="text-lg" />
+              <FontAwesomeIcon icon={faGithub} className="text-md" />
             </Link>
           ) : null}
 
@@ -71,17 +72,17 @@ const ProjectItem = ({ project }) => {
               target="_blank"
               className="app__icon_btn"
               style={{
-                padding: "0.75rem",
+                padding: "0.5rem",
               }}
             >
-              <FontAwesomeIcon icon={faEye} className="text-lg" />
+              <FontAwesomeIcon icon={faEye} className="text-md" />
             </Link>
           ) : null}
         </Row>
       </Column>
 
-      <Column classes="w-full mt-12">
-        <p>{project.description}</p>
+      <Column classes="w-full mt-8 items-center">
+        <p className="text-center">{project.description}</p>
 
         <Row classes="w-full items-center justify-center flex-wrap mt-4">
           {project.tags.map((tag, i) => {

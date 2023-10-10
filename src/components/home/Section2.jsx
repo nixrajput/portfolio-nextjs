@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import Image from "next/image";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
+import ReadMoreText from "@/components/common/ReadMoreText";
 import WrappedBox from "@/components/common/WrappedBox";
 import Column from "@/components/common/Column";
 import useIsInViewport from "@/hooks/useIsInViewport";
@@ -25,11 +26,10 @@ const HomeSection2 = ({ current, setCurrent }) => {
   return (
     <ResponsiveBox
       classNames="bg-[var(--bgColor)] min-h-[100vh] items-center justify-center"
-      animateReverse
       id="services"
       elementRef={servicesRef}
     >
-      <ConstraintedBox classNames="p-4 py-16">
+      <ConstraintedBox classNames="p-4 py-16" animateReverse>
         <h2 className="text-center mx-auto">
           What <span className="text-[var(--primaryColor)]">I Do</span>
         </h2>
@@ -51,7 +51,6 @@ const HomeSection2 = ({ current, setCurrent }) => {
                   placeholder="blur"
                   blurDataURL={service.image}
                   style={{
-                    objectFit: "cover",
                     width: "5rem",
                     height: "5rem",
                     aspectRatio: "1 / 1",
@@ -62,7 +61,9 @@ const HomeSection2 = ({ current, setCurrent }) => {
 
                 <span className="w-[3rem] h-[0.125rem] bg-[var(--primaryColor)] mx-auto mt-4"></span>
 
-                <p className="mt-8">{service.description}</p>
+                <ReadMoreText className="mt-8" visibleTextCount={120}>
+                  {service.description}
+                </ReadMoreText>
               </Column>
             );
           })}

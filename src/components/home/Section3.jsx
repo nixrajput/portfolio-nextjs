@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
+import ReadMoreText from "@/components/common/ReadMoreText";
 import WrappedBox from "@/components/common/WrappedBox";
 import Column from "@/components/common/Column";
 import useIsInViewport from "@/hooks/useIsInViewport";
@@ -57,9 +58,9 @@ const HomeSection3 = ({ current, setCurrent }) => {
                   @ {exp.company}
                 </p>
 
-                <p className="mt-4 text-[var(--textColorLight)]">
+                <ReadMoreText className="mt-4 text-[var(--textColorLight)]">
                   {exp.description}
-                </p>
+                </ReadMoreText>
               </Column>
             );
           })}

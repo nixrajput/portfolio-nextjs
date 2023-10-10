@@ -24,7 +24,6 @@ const HomeSection5 = ({ current, setCurrent }) => {
   return (
     <ResponsiveBox
       classNames="bg-[var(--dialogColor)] min-h-[100vh] items-center justify-center"
-      animateReverse
       id="projects"
       elementRef={projectsRef}
     >

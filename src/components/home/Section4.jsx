@@ -28,12 +28,12 @@ const HomeSection4 = ({ current, setCurrent }) => {
       id="skills"
       elementRef={skillsRef}
     >
-      <ConstraintedBox classNames="p-4 py-12">
+      <ConstraintedBox classNames="p-4 py-12" animateReverse>
         <h2 className="text-center mx-auto">
           Skills <span className="text-[var(--primaryColor)]">I Know</span>
         </h2>
 
-        <WrappedBox classes="justify-items-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mt-12">
+        <WrappedBox classes="justify-items-center grid-cols-2 sm:grid-cols-3 mt-12">
           {skills.map((service, index) => {
             return (
               <Column
