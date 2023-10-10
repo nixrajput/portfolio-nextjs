@@ -8,95 +8,93 @@ import Row from "@/components/common/Row";
 
 const ProjectItem = ({ project }) => {
   return (
-    <Column classes="carousel__slide">
-      <Column classes="w-full bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center justify-between text-center">
-        <Column classes="w-full items-center justify-center">
-          <Row classes="w-[5rem] aspect-square bg-[var(--textColor10)] rounded-full p-[1rem] items-center justify-center">
-            <Image
-              src={project.icon}
-              alt={`project-${project.title}`}
-              width={100}
-              height={100}
-              sizes="100%"
-              priority
-              placeholder="blur"
-              blurDataURL={project.icon}
-              style={{
-                objectFit: "cover",
-                width: "100%",
-                aspectRatio: "1 / 1",
-              }}
-            />
-          </Row>
-
-          <h4 className="font-bold mt-4">{project.title}</h4>
-
-          <small
-            className="rounded-lg py-[0.15rem] px-[0.5rem] mt-2 font-normal capitalize text-center"
+    <Column classes="w-full bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center justify-between text-center">
+      <Column classes="w-full items-center justify-center">
+        <Row classes="w-[5rem] aspect-square bg-[var(--textColor10)] rounded-full p-[1rem] items-center justify-center">
+          <Image
+            src={project.icon}
+            alt={`project-${project.title}`}
+            width={100}
+            height={100}
+            sizes="100%"
+            priority
+            placeholder="blur"
+            blurDataURL={project.icon}
             style={{
-              backgroundColor:
-                project.repoType.toLowerCase() === "private"
-                  ? "var(--errorColor30)"
-                  : "var(--successColor30)",
-              border: `1px solid ${
-                project.repoType.toLowerCase() === "private"
-                  ? "var(--errorColor50)"
-                  : "var(--successColor50)"
-              }`,
-              color:
-                project.repoType.toLowerCase() === "private"
-                  ? "var(--errorColor)"
-                  : "var(--successColor)",
+              objectFit: "cover",
+              width: "100%",
+              aspectRatio: "1 / 1",
             }}
-          >
-            {project.repoType}
-          </small>
+          />
+        </Row>
 
-          <Row classes="w-full items-center justify-center mt-4 gap-2">
-            {project.githubUrl ? (
-              <Link
-                href={project.githubUrl}
-                target="_blank"
-                className="app__icon_btn"
-                style={{
-                  padding: "0.75rem",
-                }}
+        <h4 className="font-bold mt-4">{project.title}</h4>
+
+        <small
+          className="rounded-lg py-[0.15rem] px-[0.5rem] mt-2 font-normal capitalize text-center"
+          style={{
+            backgroundColor:
+              project.repoType.toLowerCase() === "private"
+                ? "var(--errorColor30)"
+                : "var(--successColor30)",
+            border: `1px solid ${
+              project.repoType.toLowerCase() === "private"
+                ? "var(--errorColor50)"
+                : "var(--successColor50)"
+            }`,
+            color:
+              project.repoType.toLowerCase() === "private"
+                ? "var(--errorColor)"
+                : "var(--successColor)",
+          }}
+        >
+          {project.repoType}
+        </small>
+
+        <Row classes="w-full items-center justify-center mt-4 gap-2">
+          {project.githubUrl ? (
+            <Link
+              href={project.githubUrl}
+              target="_blank"
+              className="app__icon_btn"
+              style={{
+                padding: "0.75rem",
+              }}
+            >
+              <FontAwesomeIcon icon={faGithub} className="text-lg" />
+            </Link>
+          ) : null}
+
+          {project.url ? (
+            <Link
+              href={project.url}
+              target="_blank"
+              className="app__icon_btn"
+              style={{
+                padding: "0.75rem",
+              }}
+            >
+              <FontAwesomeIcon icon={faEye} className="text-lg" />
+            </Link>
+          ) : null}
+        </Row>
+      </Column>
+
+      <Column classes="w-full mt-12">
+        <p>{project.description}</p>
+
+        <Row classes="w-full items-center justify-center flex-wrap mt-4">
+          {project.tags.map((tag, i) => {
+            return (
+              <small
+                key={`tag-${i}`}
+                className="bg-[var(--textColor10)] rounded-lg py-[0.45rem] px-[0.75rem] mr-2 mb-2 font-medium"
               >
-                <FontAwesomeIcon icon={faGithub} className="text-lg" />
-              </Link>
-            ) : null}
-
-            {project.url ? (
-              <Link
-                href={project.url}
-                target="_blank"
-                className="app__icon_btn"
-                style={{
-                  padding: "0.75rem",
-                }}
-              >
-                <FontAwesomeIcon icon={faEye} className="text-lg" />
-              </Link>
-            ) : null}
-          </Row>
-        </Column>
-
-        <Column classes="w-full mt-12">
-          <p>{project.description}</p>
-
-          <Row classes="w-full items-center justify-center flex-wrap mt-4">
-            {project.tags.map((tag, i) => {
-              return (
-                <small
-                  key={`tag-${i}`}
-                  className="bg-[var(--textColor10)] rounded-lg py-[0.45rem] px-[0.75rem] mr-2 mb-2 font-medium"
-                >
-                  {tag}
-                </small>
-              );
-            })}
-          </Row>
-        </Column>
+                {tag}
+              </small>
+            );
+          })}
+        </Row>
       </Column>
     </Column>
   );

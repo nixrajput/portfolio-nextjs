@@ -15,6 +15,11 @@ const navMenus = [
     section: "experiences",
   },
   {
+    title: "Skills",
+    path: "/#skills",
+    section: "skills",
+  },
+  {
     title: "Projects",
     path: "/#projects",
     section: "projects",

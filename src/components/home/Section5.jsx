@@ -1,84 +1,43 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import ResponsiveBox from "@/components/common/ResponsiveBox";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
+import ResponsiveBox from "@/components/common/ResponsiveBox";
 import WrappedBox from "@/components/common/WrappedBox";
-import Column from "@/components/common/Column";
-import Row from "@/components/common/Row";
-import socialLinks from "@/data/socialLinks";
+import ProjectItem from "@/components/common/ProjectItem";
 import useIsInViewport from "@/hooks/useIsInViewport";
+import projects from "@/data/projects";
 
 const HomeSection5 = ({ current, setCurrent }) => {
-  const contactRef = useRef(null);
+  const projectsRef = useRef(null);
 
-  const isInView = useIsInViewport(contactRef);
-
-  const onHandleClickUrl = (url) => {
-    if (typeof window === "undefined" || !url) return;
-
-    window.open(url, "_blank");
-  };
+  const isInView = useIsInViewport(projectsRef);
 
   useEffect(() => {
-    if (isInView && current !== "contact") setCurrent("contact");
+    if (isInView && current !== "projects") setCurrent("projects");
 
     return () => {
-      if (isInView && current === "contact") setCurrent(null);
+      if (isInView && current === "projects") setCurrent(null);
     };
   }, [isInView, current, setCurrent]);
 
   return (
     <ResponsiveBox
-      classNames="bg-[var(--dialogColor)] min-h-[90vh] items-center justify-center"
-      id="contact"
-      elementRef={contactRef}
+      classNames="bg-[var(--dialogColor)] min-h-[100vh] items-center justify-center"
+      animateReverse
+      id="projects"
+      elementRef={projectsRef}
     >
-      <ConstraintedBox classNames="p-4 py-12">
+      <ConstraintedBox classNames="p-4 py-16">
         <h2 className="text-center mx-auto">
-          Contact <span className="text-[var(--primaryColor)]">Me</span>
+          Recent <span className="text-[var(--primaryColor)]">Projects</span>
         </h2>
 
-        <Column classes="mt-12 w-full">
-          <WrappedBox classes="sm:grid-cols-2 w-full mx-auto gap-4">
-            <Row
-              classes="bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center text-center justify-center cursor-pointer animated__hover"
-              onClick={() =>
-                onHandleClickUrl("mailto:nkr.nikhil.nkr@gmail.com")
-              }
-            >
-              <span className="text-xl">
-                <FontAwesomeIcon icon={faEnvelope} />
-              </span>
-
-              <p className="text-lg font-semibold ml-2">
-                nkr.nikhil.nkr@gmail.com
-              </p>
-            </Row>
-
-            {socialLinks.map((link, index) => {
-              return (
-                <Row
-                  classes="bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center text-center justify-center cursor-pointer animated__hover"
-                  key={`social-link-${index}`}
-                  onClick={() => onHandleClickUrl(link.url)}
-                >
-                  <span className="text-xl">{link.icon}</span>
-
-                  <p className="text-lg font-semibold ml-2">{link.text}</p>
-                </Row>
-              );
-            })}
-          </WrappedBox>
-
-          <h3 className="text-center mx-auto mt-12">
-            I&apos;m{" "}
-            <span className="text-[var(--primaryColor)]">Available</span> for
-            freelancing.
-          </h3>
-        </Column>
+        <WrappedBox classes="justify-items-center sm:grid-cols-2 mt-12">
+          {projects.map((project, index) => {
+            return <ProjectItem key={`service-${index}`} project={project} />;
+          })}
+        </WrappedBox>
       </ConstraintedBox>
     </ResponsiveBox>
   );

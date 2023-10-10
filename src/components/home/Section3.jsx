@@ -1,13 +1,14 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
 import WrappedBox from "@/components/common/WrappedBox";
 import Column from "@/components/common/Column";
 import useIsInViewport from "@/hooks/useIsInViewport";
-import skills from "@/data/skills";
+import experiences from "@/data/experiences";
 
 const HomeSection3 = ({ current, setCurrent }) => {
   const experiencesRef = useRef(null);
@@ -30,38 +31,35 @@ const HomeSection3 = ({ current, setCurrent }) => {
     >
       <ConstraintedBox classNames="p-4 py-12">
         <h2 className="text-center mx-auto">
-          Skills <span className="text-[var(--primaryColor)]">I Know</span>
+          Experiences{" "}
+          <span className="text-[var(--primaryColor)]">I Possess</span>
         </h2>
 
-        <WrappedBox classes="justify-items-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 mt-12">
-          {skills.map((service, index) => {
+        <WrappedBox classes="justify-items-center grid-cols-1 sm:grid-cols-1 lg:grid-cols-1 mt-12">
+          {experiences.map((exp, index) => {
             return (
               <Column
                 key={`service-${index}`}
-                classes="bg-[var(--textColor10)] p-4 px-8 rounded-[var(--borderRadius)] items-center text-center min-w-[10rem]"
+                classes="bg-[var(--textColor10)] p-4 px-8 rounded-[var(--borderRadius)] w-full"
               >
-                <Image
-                  src={service.icon}
-                  alt={`service-${index}`}
-                  width={100}
-                  height={100}
-                  sizes="100%"
-                  priority
-                  placeholder="blur"
-                  blurDataURL={service.icon}
-                  style={{
-                    objectFit: "cover",
-                    width: "4rem",
-                    height: "4rem",
-                    aspectRatio: "1 / 1",
-                  }}
+                <FontAwesomeIcon
+                  icon={faTrophy}
+                  className="text-2xl md:text-3xl"
                 />
 
-                <h5 className="font-bold mt-4">{service.title}</h5>
-
-                <small className="mt-4 flex flex-row items-center">
-                  {service.level}
+                <small className="font-bold mt-4 text-[var(--textColorLight)]">
+                  {exp.duration}
                 </small>
+
+                <h4 className="font-bold mt-1">{exp.designation}</h4>
+
+                <p className="mt-1 text-[var(--textColorLight)] font-bold">
+                  @ {exp.company}
+                </p>
+
+                <p className="mt-4 text-[var(--textColorLight)]">
+                  {exp.description}
+                </p>
               </Column>
             );
           })}
