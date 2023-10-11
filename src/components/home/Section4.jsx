@@ -46,7 +46,6 @@ const HomeSection4 = ({ current, setCurrent }) => {
                   width={100}
                   height={100}
                   sizes="100%"
-                  priority={false}
                   loading="lazy"
                   placeholder="blur"
                   blurDataURL={service.icon}

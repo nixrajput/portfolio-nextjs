@@ -47,12 +47,12 @@ const HomeSection2 = ({ current, setCurrent }) => {
                   width={100}
                   height={100}
                   sizes="100%"
-                  priority
+                  loading="lazy"
                   placeholder="blur"
                   blurDataURL={service.image}
                   style={{
                     width: "5rem",
-                    height: "5rem",
+                    height: "auto",
                     aspectRatio: "1 / 1",
                   }}
                 />
