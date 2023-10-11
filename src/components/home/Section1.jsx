@@ -87,6 +87,7 @@ const HomeSection1 = ({ current, setCurrent }) => {
                 height={400}
                 sizes="100%"
                 priority
+                fetchPriority="high"
                 placeholder="blur"
                 blurDataURL={About.avatarUrl}
                 style={{

@@ -17,7 +17,7 @@ const ProjectItem = ({ project }) => {
             width={100}
             height={100}
             sizes="100%"
-            priority
+            loading="lazy"
             placeholder="blur"
             blurDataURL={project.icon}
             style={{
@@ -56,6 +56,7 @@ const ProjectItem = ({ project }) => {
           {project.githubUrl ? (
             <Link
               href={project.githubUrl}
+              aria-label={`${project.title} GitHub URL`}
               target="_blank"
               className="app__icon_btn"
               style={{
@@ -69,6 +70,7 @@ const ProjectItem = ({ project }) => {
           {project.url ? (
             <Link
               href={project.url}
+              aria-label={`${project.title} Project URL`}
               target="_blank"
               className="app__icon_btn"
               style={{
