@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -78,15 +77,7 @@ const NavBar = ({ current }) => {
   useOnClickOutside(navRef, hideMobileMenu);
 
   return (
-    <motion.div
-      initial={{ y: "-100%", opacity: 0 }}
-      whileInView={{ y: 0, opacity: 1 }}
-      transition={{
-        type: "spring",
-        duration: 0.8,
-        bounce: 0.4,
-        stiffness: 100,
-      }}
+    <div
       className="fixed w-screen h-auto z-[1000] top-0 bg-[var(--dialogColor)]"
       ref={navRef}
     >
@@ -130,6 +121,7 @@ const NavBar = ({ current }) => {
             <button
               type="button"
               name="menu-btn"
+              aria-label="menu button"
               className="outline-none menu-button"
               onClick={(_) => toggleMenu()}
             >
@@ -171,7 +163,7 @@ const NavBar = ({ current }) => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

@@ -45,7 +45,7 @@ const HomeSection3 = ({ current, setCurrent }) => {
               >
                 <FontAwesomeIcon
                   icon={faTrophy}
-                  className="text-2xl md:text-3xl"
+                  className="text-2xl md:text-3xl text-[var(--primaryColor)]"
                 />
 
                 <small className="font-bold mt-4 text-[var(--textColorLight)]">

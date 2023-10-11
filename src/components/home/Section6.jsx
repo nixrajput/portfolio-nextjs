@@ -36,7 +36,7 @@ const HomeSection6 = ({ current, setCurrent }) => {
       id="contact"
       elementRef={contactRef}
     >
-      <ConstraintedBox classNames="p-4 py-12" animateReverse>
+      <ConstraintedBox classNames="p-4 py-12">
         <h2 className="text-center mx-auto">
           Contact <span className="text-[var(--primaryColor)]">Me</span>
         </h2>

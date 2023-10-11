@@ -29,7 +29,7 @@ const HomeSection2 = ({ current, setCurrent }) => {
       id="services"
       elementRef={servicesRef}
     >
-      <ConstraintedBox classNames="p-4 py-16" animateReverse>
+      <ConstraintedBox classNames="p-4 py-16">
         <h2 className="text-center mx-auto">
           What <span className="text-[var(--primaryColor)]">I Do</span>
         </h2>

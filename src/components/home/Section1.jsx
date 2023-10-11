@@ -68,6 +68,7 @@ const HomeSection1 = ({ current, setCurrent }) => {
                       href={link.url}
                       target="_blank"
                       className="app__icon_btn p-3 lg:p-4"
+                      aria-label={`${link.name}`}
                     >
                       <span className="text-xl"> {link.icon}</span>
                     </Link>

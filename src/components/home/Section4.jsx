@@ -28,7 +28,7 @@ const HomeSection4 = ({ current, setCurrent }) => {
       id="skills"
       elementRef={skillsRef}
     >
-      <ConstraintedBox classNames="p-4 py-12" animateReverse>
+      <ConstraintedBox classNames="p-4 py-12">
         <h2 className="text-center mx-auto">
           Skills <span className="text-[var(--primaryColor)]">I Know</span>
         </h2>
@@ -37,7 +37,7 @@ const HomeSection4 = ({ current, setCurrent }) => {
           {skills.map((service, index) => {
             return (
               <Column
-                key={`service-${index}`}
+                key={`skill-${index}`}
                 classes="bg-[var(--textColor10)] p-4 px-8 rounded-[var(--borderRadius)] items-center text-center min-w-[10rem]"
               >
                 <Image
@@ -46,13 +46,14 @@ const HomeSection4 = ({ current, setCurrent }) => {
                   width={100}
                   height={100}
                   sizes="100%"
-                  priority
+                  priority={false}
+                  loading="lazy"
                   placeholder="blur"
                   blurDataURL={service.icon}
                   style={{
                     objectFit: "cover",
                     width: "4rem",
-                    height: "4rem",
+                    height: "auto",
                     aspectRatio: "1 / 1",
                   }}
                 />
