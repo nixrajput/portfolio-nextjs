@@ -7,8 +7,8 @@ const useIsInViewport = (
   const options = useMemo(
     () => ({
       root: root || null,
-      rootMargin: rootMargin || "40px",
-      threshold: threshold || 0.25,
+      rootMargin: rootMargin || "20px",
+      threshold: threshold || 0.3,
     }),
     [root, rootMargin, threshold]
   );
