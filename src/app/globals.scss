@@ -864,3 +864,34 @@ h6 {
     }
   }
 }
+
+// Scroll To Top
+.topToBottom {
+  position: relative;
+}
+
+.iconPosition {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 1.5rem;
+  z-index: 20;
+}
+
+.iconStyle {
+  background-color: var(--whiteColor);
+  border: 2px solid var(--bgColor);
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  padding: 0.5rem;
+  color: var(--dialogColor);
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.iconStyle:hover {
+  animation: none;
+  background: var(--bgColor);
+  color: var(--whiteColor);
+  border: 2px solid var(--whiteColor);
+}

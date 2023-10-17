@@ -1,3 +1,4 @@
+import ScrollToTop from "@/components/common/ScrollToTop";
 import "./globals.scss";
 import { Poppins } from "next/font/google";
 
@@ -17,7 +18,9 @@ export const metadata = {
 const RootLayout = ({ children }) => {
   return (
     <html lang="en" className={poppins.className}>
-      <body>{children}</body>
+      <body>
+        <ScrollToTop /> {children}
+      </body>
     </html>
   );
 };
