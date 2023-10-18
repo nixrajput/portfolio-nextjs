@@ -140,5 +140,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [twitter]: https://twitter.com/nixrajput07
 [instagram]: https://instagram.com/nixrajput
 [linkedin]: https://linkedin.com/in/nixrajput
-[telegram]: "https://telegram.me/nixrajput"
+[telegram]: https://telegram.me/nixrajput
 [gmail]: mailto:nkr.nikhil.nkr@gmail.com
