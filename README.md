@@ -7,6 +7,7 @@ This repository contains the source code for a portfolio website built using Nex
 - [Portfolio Website with Next.js and Sass](#portfolio-website-with-nextjs-and-sass)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
+  - [Sceenshots](#sceenshots)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
@@ -25,6 +26,15 @@ This repository contains the source code for a portfolio website built using Nex
 - A customizable portfolio section to showcase your projects.
 - An about section to introduce yourself.
 - Easily customizable with Sass for styling.
+
+## Sceenshots
+
+![About](/screenshots/portfolio-1.png)
+![About](/screenshots/portfolio-2.png)
+![About](/screenshots/portfolio-3.png)
+![About](/screenshots/portfolio-4.png)
+![About](/screenshots/portfolio-5.png)
+![About](/screenshots/portfolio-6.png)
 
 ## Getting Started
 
