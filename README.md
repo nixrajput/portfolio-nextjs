@@ -30,11 +30,11 @@ This repository contains the source code for a portfolio website built using Nex
 ## Sceenshots
 
 ![About](/screenshots/portfolio-1.png)
-![About](/screenshots/portfolio-2.png)
-![About](/screenshots/portfolio-3.png)
-![About](/screenshots/portfolio-4.png)
-![About](/screenshots/portfolio-5.png)
-![About](/screenshots/portfolio-6.png)
+![Services](/screenshots/portfolio-2.png)
+![Experiences](/screenshots/portfolio-3.png)
+![Skills](/screenshots/portfolio-4.png)
+![Projects](/screenshots/portfolio-5.png)
+![Contact](/screenshots/portfolio-6.png)
 
 ## Getting Started
 
