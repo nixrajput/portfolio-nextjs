@@ -19,6 +19,10 @@ class Strings {
   static twitterLink = "https://www.twitter.com/nixrajput07";
   static twitterUsername = "nixrajput07";
 
+  static email = "Email";
+  static primaryEmailLink = "mailto:nkr.nikhil.nkr@gmail.com";
+  static primaryEmail = "nkr.nikhil.nkr@gmail.com";
+
   static fullName = "Nikhil Rajput";
   static shortName = "nixrajput";
 }

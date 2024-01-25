@@ -2,14 +2,14 @@
 
 import PropTypes from "prop-types";
 
-const AppFilledButton = (props) => {
+const AppOutlinedButton = (props) => {
   const { label, onClick, className, name } = props;
 
   return (
     <button
-      name={name || "filled-btn"}
+      name={name || "outlined-btn"}
       type="button"
-      className={`app__filled_btn ${className}`}
+      className={`app__outlined_btn ${className}`}
       onClick={onClick}
     >
       {label}
@@ -17,11 +17,11 @@ const AppFilledButton = (props) => {
   );
 };
 
-AppFilledButton.propTypes = {
+AppOutlinedButton.propTypes = {
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   className: PropTypes.string,
   name: PropTypes.string,
 };
 
-export default AppFilledButton;
+export default AppOutlinedButton;

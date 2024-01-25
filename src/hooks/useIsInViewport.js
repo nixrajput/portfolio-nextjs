@@ -4,6 +4,9 @@ const useIsInViewport = (
   ref,
   { root = null, rootMargin = null, threshold = null } = {}
 ) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [visibleSection, setVisibleSection] = useState("");
+
   const options = useMemo(
     () => ({
       root: root || null,
@@ -13,26 +16,25 @@ const useIsInViewport = (
     [root, rootMargin, threshold]
   );
 
-  const [isIntersecting, setIsIntersecting] = useState(false);
+  const observer = useMemo(
+    () =>
+      new IntersectionObserver(([entry]) => {
+        setIsVisible(entry.isIntersecting);
+        setVisibleSection(entry.target.id);
+      }, options),
+    [options]
+  );
 
   useEffect(() => {
-    const callbackFunction = (entries) => {
-      const [entry] = entries;
-      setIsIntersecting(entry.isIntersecting);
-    };
+    if (!ref.current) return;
 
-    const value = ref?.current;
+    observer.observe(ref.current);
 
-    const observer = new IntersectionObserver(callbackFunction, options);
+    return () => observer.disconnect();
+  }, [ref, observer]);
 
-    if (value) observer.observe(ref.current);
-
-    return () => {
-      if (value) observer.disconnect();
-    };
-  }, [ref, options]);
-
-  return isIntersecting;
+  console.log(`visibleSection: ${visibleSection}`);
+  return { isVisible, visibleSection };
 };
 
 export default useIsInViewport;

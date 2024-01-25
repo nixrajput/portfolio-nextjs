@@ -1,5 +1,5 @@
-import ScrollToTop from "@/components/common/ScrollToTop";
 import "./globals.scss";
+import ScrollToTop from "@/components/common/ScrollToTop";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
@@ -7,19 +7,44 @@ const poppins = Poppins({
   style: ["normal", "italic"],
   subsets: ["devanagari", "latin"],
   display: "swap",
+  variable: "--font-poppins",
 });
 
 export const metadata = {
   title: "Nikhil Rajput",
   description:
     "Nikhil Rajput is a proficient Full Stack Developer, skilled in seamlessly integrating front-end and back-end technologies while excelling in design.",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  icons: [
+    {
+      url: "/favicon.ico",
+      rel: "icon",
+      sizes: "any",
+      type: "image/svg+xml",
+    },
+  ],
 };
 
 const RootLayout = ({ children }) => {
   return (
-    <html lang="en" className={poppins.className}>
-      <body>
-        <ScrollToTop /> {children}
+    <html lang="en" className={[poppins.variable].join(" ")}>
+      <body
+        className={`bg-[var(--bgColor)] ${
+          process.env.NODE_ENV === "development" ? "debug-screens" : ""
+        }`}
+      >
+        {children}
+        <ScrollToTop />
       </body>
     </html>
   );

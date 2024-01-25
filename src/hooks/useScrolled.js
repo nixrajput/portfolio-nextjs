@@ -36,7 +36,7 @@ const useScrolled = (offset) => {
     window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", () => {});
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [offset]);
 

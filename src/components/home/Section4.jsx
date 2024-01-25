@@ -1,32 +1,15 @@
-"use client";
-
-import { useRef, useEffect } from "react";
 import Image from "next/image";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
 import WrappedBox from "@/components/common/WrappedBox";
 import Column from "@/components/common/Column";
-import useIsInViewport from "@/hooks/useIsInViewport";
 import skills from "@/data/skills";
 
-const HomeSection4 = ({ current, setCurrent }) => {
-  const skillsRef = useRef(null);
-
-  const isInView = useIsInViewport(skillsRef);
-
-  useEffect(() => {
-    if (isInView && current !== "skills") setCurrent("skills");
-
-    return () => {
-      if (isInView && current === "skills") setCurrent(null);
-    };
-  }, [isInView, current, setCurrent]);
-
+const HomeSection4 = ({ id }) => {
   return (
     <ResponsiveBox
       classNames="bg-[var(--bgColor)] min-h-[100vh] items-center justify-center"
-      id="skills"
-      elementRef={skillsRef}
+      id={id}
     >
       <ConstraintedBox classNames="p-4 py-12">
         <h2 className="text-center mx-auto">

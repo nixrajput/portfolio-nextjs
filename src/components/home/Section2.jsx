@@ -1,33 +1,16 @@
-"use client";
-
-import { useRef, useEffect } from "react";
 import Image from "next/image";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
 import ReadMoreText from "@/components/common/ReadMoreText";
 import WrappedBox from "@/components/common/WrappedBox";
-import Column from "@/components/common/Column";
-import useIsInViewport from "@/hooks/useIsInViewport";
+import CardBox from "@/components/common/CardBox";
 import services from "@/data/services";
 
-const HomeSection2 = ({ current, setCurrent }) => {
-  const servicesRef = useRef(null);
-
-  const isInView = useIsInViewport(servicesRef);
-
-  useEffect(() => {
-    if (isInView && current !== "services") setCurrent("services");
-
-    return () => {
-      if (isInView && current === "services") setCurrent(null);
-    };
-  }, [isInView, current, setCurrent]);
-
+const HomeSection2 = ({ id }) => {
   return (
     <ResponsiveBox
-      classNames="bg-[var(--bgColor)] min-h-[100vh] items-center justify-center"
-      id="services"
-      elementRef={servicesRef}
+      classNames="bg-gradient-to-tl from-zinc-900 via-zinc-400/10 to-zinc-900 min-h-[100vh] items-center justify-center"
+      id={id}
     >
       <ConstraintedBox classNames="p-4 py-16">
         <h2 className="text-center mx-auto">
@@ -37,9 +20,9 @@ const HomeSection2 = ({ current, setCurrent }) => {
         <WrappedBox classes="justify-items-center sm:grid-cols-2 mt-12">
           {services.map((service, index) => {
             return (
-              <Column
+              <CardBox
                 key={`service-${index}`}
-                classes="bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center text-center"
+                classes="p-4 items-center text-center bg-[var(--textColor10)]"
               >
                 <Image
                   src={service.image}
@@ -57,14 +40,14 @@ const HomeSection2 = ({ current, setCurrent }) => {
                   }}
                 />
 
-                <h5 className="font-bold mt-4">{service.title}</h5>
+                <h5 className="font-bold">{service.title}</h5>
 
-                <span className="w-[3rem] h-[0.125rem] bg-[var(--primaryColor)] mx-auto mt-4"></span>
+                <span className="w-[3rem] h-[0.125rem] bg-[var(--primaryColor)] mx-auto"></span>
 
-                <ReadMoreText className="mt-8" visibleTextCount={120}>
+                <ReadMoreText visibleTextCount={120}>
                   {service.description}
                 </ReadMoreText>
-              </Column>
+              </CardBox>
             );
           })}
         </WrappedBox>

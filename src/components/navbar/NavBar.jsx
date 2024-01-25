@@ -8,10 +8,13 @@ import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import useOnClickOutside from "@/hooks/useOnClickOutside";
 import navMenus from "@/data/navMenus";
 import MenuItems from "@/components/navbar/MenuItems";
+import useVisibleSection from "@/hooks/useVisibleSection";
 
-const NavBar = ({ current }) => {
+const NavBar = () => {
   const mobileMenuRef = useRef(null);
   const navRef = useRef();
+
+  const visibleSection = useVisibleSection();
 
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
 
@@ -74,7 +77,7 @@ const NavBar = ({ current }) => {
     setMobileMenuVisible(false);
   };
 
-  useOnClickOutside(navRef, hideMobileMenu);
+  // useOnClickOutside(navRef, hideMobileMenu);
 
   return (
     <div
@@ -85,7 +88,7 @@ const NavBar = ({ current }) => {
         <div className="w-full flex justify-between items-center">
           <Link
             href="/"
-            className="w-fit h-fit text-2xl lg:text-3xl font-bold text-white flex flex-row items-center"
+            className="w-fit h-fit flex flex-row items-center justify-center"
           >
             <Image
               src="/icon.png"
@@ -98,26 +101,25 @@ const NavBar = ({ current }) => {
               blurDataURL="/icon.png"
               className="w-8 lg:w-10 h-auto mr-1"
             />
-            Portfolio
           </Link>
 
-          <div className="w-full hidden lg:flex items-center justify-end flex-1 list-none">
+          {/* <div className="w-full hidden lg:flex items-center justify-end flex-1 list-none gap-2">
             {navMenus.map((menu, index) => {
               const depthLevel = 0;
               return (
                 <MenuItems
                   items={menu}
-                  key={index}
-                  mobileNav={mobileMenuVisible}
+                  key={`menu-item-${index}`}
                   depthLevel={depthLevel}
+                  mobileNav={mobileMenuVisible}
                   handleCloseMobileMenu={hideMobileMenu}
-                  current={current}
+                  current={visibleSection}
                 />
               );
             })}
-          </div>
+          </div> */}
 
-          <div className="lg:hidden flex justify-end">
+          <div className="flex justify-end lg:relative">
             <button
               type="button"
               name="menu-btn"
@@ -137,30 +139,53 @@ const NavBar = ({ current }) => {
                 />
               )}
             </button>
-          </div>
-        </div>
 
-        {/* Mobile Menu */}
+            {/*  Menu Items */}
 
-        <div
-          className="mobile-menu text-center flex-col m-0 w-[50%] md:w-[25%] bg-[var(--dialogColor)] h-screen absolute top-full right-0 transition duration-300 ease-in-out drop_out hidden opacity-0 z-0 invisible nav_shadow lg:hidden"
-          ref={mobileMenuRef}
-        >
-          <div className="flex flex-col list-none">
-            {navMenus.map((menu, index) => {
-              const depthLevel = 0;
-              return (
-                <MenuItems
-                  items={menu}
-                  key={index}
-                  mobileNav={mobileMenuVisible}
-                  depthLevel={depthLevel}
-                  handleCloseMobileMenu={hideMobileMenu}
-                  current={current}
-                />
-              );
-            })}
+            <div
+              className="flex-col justify-center lg:justify-start items-center m-0 p-4 text-center bg-[var(--dialogColor)] w-screen lg:max-w-xs h-screen lg:max-h-[50vh] absolute top-full lg:top-[calc(100%+1rem)] right-0 transition duration-300 ease-in-out drop_out hidden opacity-0 z-0 invisible overflow-hidden lg:border-[1px] lg:rounded-[var(--borderRadius)]"
+              ref={mobileMenuRef}
+            >
+              <div className="w-full flex flex-col list-none justify-center lg:justify-start items-center gap-4">
+                {navMenus.map((menu, index) => {
+                  const depthLevel = 0;
+                  return (
+                    <MenuItems
+                      items={menu}
+                      key={`mobile-menu-item-${index}`}
+                      depthLevel={depthLevel}
+                      mobileNav={mobileMenuVisible}
+                      handleCloseMobileMenu={hideMobileMenu}
+                      current={visibleSection}
+                    />
+                  );
+                })}
+              </div>
+            </div>
           </div>
+
+          {/*  Mobile Menu Items */}
+
+          {/* <div
+            className="mobile-menu text-center flex-col justify-center items-center m-0 p-0 bg-[var(--dialogColor)] w-screen h-screen absolute top-full right-0 transition duration-300 ease-in-out drop_out hidden opacity-0 z-0 invisible lg:hidden"
+            ref={mobileMenuRef}
+          >
+            <div className="w-full lg:w-auto flex flex-col list-none p-4 lg:p-0 justify-center items-center gap-4">
+              {navMenus.map((menu, index) => {
+                const depthLevel = 0;
+                return (
+                  <MenuItems
+                    items={menu}
+                    key={`mobile-menu-item-${index}`}
+                    depthLevel={depthLevel}
+                    mobileNav={mobileMenuVisible}
+                    handleCloseMobileMenu={hideMobileMenu}
+                    current={visibleSection}
+                  />
+                );
+              })}
+            </div>
+          </div> */}
         </div>
       </div>
     </div>

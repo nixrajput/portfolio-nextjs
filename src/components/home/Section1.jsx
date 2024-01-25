@@ -1,43 +1,19 @@
-"use client";
-
-import { useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
 import WrappedBox from "@/components/common/WrappedBox";
-import FilledButton from "@/components/common/FilledButton";
 import Column from "@/components/common/Column";
 import Row from "@/components/common/Row";
 import socialLinks from "@/data/socialLinks";
-import Strings from "@/constants/strings";
 import About from "@/data/about";
-import useIsInViewport from "@/hooks/useIsInViewport";
+import TalkButton from "./components/TalkButton";
 
-const HomeSection1 = ({ current, setCurrent }) => {
-  const homeRef = useRef(null);
-
-  const isInView = useIsInViewport(homeRef);
-
-  const onHandleClickTalkBtn = () => {
-    if (typeof window === "undefined") return;
-
-    window.open(Strings.telegramLink, "_blank");
-  };
-
-  useEffect(() => {
-    if (isInView && current !== "about") setCurrent("about");
-
-    return () => {
-      if (isInView && current === "about") setCurrent(null);
-    };
-  }, [isInView, current, setCurrent]);
-
+const HomeSection1 = ({ id }) => {
   return (
     <ResponsiveBox
-      classNames="bg-[var(--dialogColor)] min-h-[90vh] items-center justify-center"
-      id="about"
-      elementRef={homeRef}
+      classNames="bg-[var(--dialogColor)] from-zinc-900 via-zinc-400/10 to-zinc-900 min-h-[90vh] items-center justify-center"
+      id={id}
     >
       <ConstraintedBox classNames="p-4 pb-16 pt-8 sm:pt-16">
         <WrappedBox classes="justify-items-stretch">
@@ -52,11 +28,7 @@ const HomeSection1 = ({ current, setCurrent }) => {
               {About.description}
             </p>
 
-            <FilledButton
-              label="Let's Talk"
-              onClick={onHandleClickTalkBtn}
-              className="mt-8 min-w-[10rem]"
-            />
+            <TalkButton />
 
             <Column classes="mt-8">
               <p className="text-md font-semibold">{About.followText}</p>

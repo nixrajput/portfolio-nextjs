@@ -25,8 +25,8 @@ const useMobileNav = () => {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("load", () => {});
-      window.removeEventListener("resize", () => {});
+      window.removeEventListener("load", handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [showMobileMenu, mobileNav]);
 

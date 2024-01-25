@@ -1,6 +1,3 @@
-"use client";
-
-import { useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
@@ -8,27 +5,13 @@ import ResponsiveBox from "@/components/common/ResponsiveBox";
 import ReadMoreText from "@/components/common/ReadMoreText";
 import WrappedBox from "@/components/common/WrappedBox";
 import Column from "@/components/common/Column";
-import useIsInViewport from "@/hooks/useIsInViewport";
 import experiences from "@/data/experiences";
 
-const HomeSection3 = ({ current, setCurrent }) => {
-  const experiencesRef = useRef(null);
-
-  const isInView = useIsInViewport(experiencesRef);
-
-  useEffect(() => {
-    if (isInView && current !== "experiences") setCurrent("experiences");
-
-    return () => {
-      if (isInView && current === "experiences") setCurrent(null);
-    };
-  }, [isInView, current, setCurrent]);
-
+const HomeSection3 = ({ id }) => {
   return (
     <ResponsiveBox
       classNames="bg-[var(--dialogColor)] min-h-[100vh] items-center justify-center"
-      id="experiences"
-      elementRef={experiencesRef}
+      id={id}
     >
       <ConstraintedBox classNames="p-4 py-12">
         <h2 className="text-center mx-auto">

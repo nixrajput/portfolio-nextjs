@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import PropTypes from "prop-types";
 import Dropdown from "@/components/navbar/Dropdown";
 
 const MenuItems = (props) => {
@@ -32,8 +33,10 @@ const MenuItems = (props) => {
         setDropdown(false);
       }
     };
+
     document.addEventListener("mousedown", handler);
     document.addEventListener("touchstart", handler);
+
     return () => {
       document.removeEventListener("mousedown", handler);
       document.removeEventListener("touchstart", handler);
@@ -50,7 +53,7 @@ const MenuItems = (props) => {
 
   return (
     <li
-      className="menu-items"
+      className="menu-items w-full"
       ref={ref}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -61,7 +64,7 @@ const MenuItems = (props) => {
             type="button"
             aria-haspopup="menu"
             aria-expanded={dropdown ? "true" : "false"}
-            className={current === items.section ? `selected` : ""}
+            className={current === items.id ? `selected` : ""}
             onClick={() => setDropdown((prev) => !prev)}
           >
             <p>{items.title}</p>
@@ -79,10 +82,10 @@ const MenuItems = (props) => {
       ) : (
         <button
           type="button"
-          className={current === items.section ? `selected` : ""}
+          className={current === items.id ? `selected` : ""}
           onClick={() => {
             handleCloseMobileMenu();
-            handleScroll(items.section);
+            handleScroll(items.id);
           }}
         >
           <p>{items.title}</p>
@@ -90,6 +93,14 @@ const MenuItems = (props) => {
       )}{" "}
     </li>
   );
+};
+
+MenuItems.propTypes = {
+  items: PropTypes.any.isRequired,
+  current: PropTypes.string,
+  depthLevel: PropTypes.number,
+  mobileNav: PropTypes.bool.isRequired,
+  handleCloseMobileMenu: PropTypes.func.isRequired,
 };
 
 export default MenuItems;

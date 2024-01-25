@@ -7,7 +7,7 @@ const Error = ({ error, reset }) => {
     >
       <h2>Something went wrong!</h2>
       <p className="mt-4 text-[var(--errorColor)]">{error.message}</p>
-      <button className="app__outlined_btn mt-8" onClick={() => reset()}>
+      <button className="app__text_btn mt-8" onClick={() => reset()}>
         Try again
       </button>
     </div>
