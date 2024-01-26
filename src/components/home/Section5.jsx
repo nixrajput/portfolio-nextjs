@@ -1,7 +1,7 @@
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
 import WrappedBox from "@/components/common/WrappedBox";
-import ProjectItem from "@/components/common/ProjectItem";
+import ProjectItem from "@/components/home/components/ProjectItem";
 import projects from "@/data/projects";
 
 const HomeSection5 = ({ id }) => {
@@ -13,7 +13,7 @@ const HomeSection5 = ({ id }) => {
     >
       <ConstraintedBox classNames="p-4 py-16">
         <h2 className="text-center mx-auto">
-          Recent <span className="text-[var(--primaryColor)]">Projects</span>
+          Recent Works
         </h2>
 
         <WrappedBox classes="justify-items-center sm:grid-cols-2 mt-12">

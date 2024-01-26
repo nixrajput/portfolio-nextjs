@@ -13,7 +13,7 @@ const HomeSection6 = ({ id }) => {
     >
       <ConstraintedBox classNames="p-4 py-12">
         <h2 className="text-center mx-auto">
-          Contact <span className="text-[var(--primaryColor)]">Me</span>
+          Get in Touch
         </h2>
 
         <Column classes="mt-12 w-full">

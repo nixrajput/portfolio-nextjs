@@ -163,29 +163,6 @@ const NavBar = () => {
               </div>
             </div>
           </div>
-
-          {/*  Mobile Menu Items */}
-
-          {/* <div
-            className="mobile-menu text-center flex-col justify-center items-center m-0 p-0 bg-[var(--dialogColor)] w-screen h-screen absolute top-full right-0 transition duration-300 ease-in-out drop_out hidden opacity-0 z-0 invisible lg:hidden"
-            ref={mobileMenuRef}
-          >
-            <div className="w-full lg:w-auto flex flex-col list-none p-4 lg:p-0 justify-center items-center gap-4">
-              {navMenus.map((menu, index) => {
-                const depthLevel = 0;
-                return (
-                  <MenuItems
-                    items={menu}
-                    key={`mobile-menu-item-${index}`}
-                    depthLevel={depthLevel}
-                    mobileNav={mobileMenuVisible}
-                    handleCloseMobileMenu={hideMobileMenu}
-                    current={visibleSection}
-                  />
-                );
-              })}
-            </div>
-          </div> */}
         </div>
       </div>
     </div>

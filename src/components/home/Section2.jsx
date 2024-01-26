@@ -14,7 +14,7 @@ const HomeSection2 = ({ id }) => {
     >
       <ConstraintedBox classNames="p-4 py-16">
         <h2 className="text-center mx-auto">
-          What <span className="text-[var(--primaryColor)]">I Do</span>
+          My Services
         </h2>
 
         <WrappedBox classes="justify-items-center sm:grid-cols-2 mt-12">
