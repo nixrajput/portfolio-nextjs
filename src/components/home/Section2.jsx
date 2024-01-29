@@ -1,10 +1,8 @@
-import Image from "next/image";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
-import ReadMoreText from "@/components/common/ReadMoreText";
 import WrappedBox from "@/components/common/WrappedBox";
-import CardBox from "@/components/common/CardBox";
 import services from "@/data/services";
+import ServiceItem from "./components/ServiceItem";
 
 const HomeSection2 = ({ id }) => {
   return (
@@ -20,34 +18,10 @@ const HomeSection2 = ({ id }) => {
         <WrappedBox classes="justify-items-center sm:grid-cols-2 mt-12">
           {services.map((service, index) => {
             return (
-              <CardBox
+              <ServiceItem
                 key={`service-${index}`}
-                classes="p-4 items-center text-center bg-[var(--textColor10)]"
-              >
-                <Image
-                  src={service.image}
-                  alt={`service-${index}`}
-                  width={100}
-                  height={100}
-                  sizes="100%"
-                  loading="lazy"
-                  placeholder="blur"
-                  blurDataURL={service.image}
-                  style={{
-                    width: "5rem",
-                    height: "auto",
-                    aspectRatio: "1 / 1",
-                  }}
-                />
-
-                <h5 className="font-bold">{service.title}</h5>
-
-                <span className="w-[3rem] h-[0.125rem] bg-[var(--primaryColor)] mx-auto"></span>
-
-                <ReadMoreText visibleTextCount={120}>
-                  {service.description}
-                </ReadMoreText>
-              </CardBox>
+                data={service}
+              />
             );
           })}
         </WrappedBox>

@@ -35,7 +35,7 @@ const ExperienceItem = ({ data }) => {
 
       <p className="text-base font-normal mt-4">{data.shortDescription}</p>
 
-      <button
+      {/* <button
         type="button"
         className="app__text_btn"
         style={{
@@ -43,7 +43,7 @@ const ExperienceItem = ({ data }) => {
         }}
       >
         View More
-      </button>
+      </button> */}
 
       {/* <ReadMoreText className="mt-4 text-[var(--textColorLight)]">
         {data.description}

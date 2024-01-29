@@ -5,7 +5,7 @@ const WrappedBox = (props) => {
 
   return (
     <div
-      className={`relative w-full grid grid-cols-1 sm:grid-cols-2 gap-8 transition duration-300 ease-in-out ${classes}`}
+      className={`relative w-full grid grid-cols-1 sm:grid-cols-2 gap-4 transition duration-300 ease-in-out ${classes}`}
       onClick={onClick}
       id={id}
       ref={elementRef}
