@@ -1,23 +1,16 @@
-"use client";
-
-import Row from "@/components/common/Row";
+import Link from "next/link";
 
 const SocialButton = ({ text, icon, url }) => {
-  const onHandleClickUrl = (url) => {
-    if (typeof window === "undefined" || !url) return;
-
-    window.open(url, "_blank");
-  };
-
   return (
-    <Row
-      classes="bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center text-center justify-center cursor-pointer animated__hover"
-      onClick={() => onHandleClickUrl(url)}
+    <Link
+      className="relative flex flex-row bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center text-center justify-center gap-2 cursor-pointer animated__hover"
+      href={url}
+      target="_blank"
     >
-      <span className="text-xl">{icon}</span>
+      <span className="text-xl/6 text-[var(--textColor)]">{icon}</span>
 
-      <p className="text-lg font-semibold ml-2">{text}</p>
-    </Row>
+      <p className="text-lg/6 font-semibold text-[var(--textColor)]">{text}</p>
+    </Link>
   );
 };
 

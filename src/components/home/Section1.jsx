@@ -9,40 +9,44 @@ import socialLinks from "@/data/socialLinks";
 import About from "@/data/about";
 import TalkButton from "./components/TalkButton";
 
+// from-zinc-900 via-zinc-400/10 to-zinc-900
 const HomeSection1 = ({ id }) => {
   return (
     <ResponsiveBox
-      classNames="bg-[var(--dialogColor)] from-zinc-900 via-zinc-400/10 to-zinc-900 min-h-[90vh] items-center justify-center"
+      classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center"
       id={id}
     >
-      <ConstraintedBox classNames="p-4 pb-16 pt-8 sm:pt-16">
+      <ConstraintedBox classNames="px-4 py-8">
         <WrappedBox classes="justify-items-stretch">
-          <Column classes="justify-center">
-            <p className="max-w-sm">{About.welcomeText}</p>
+          <Column classes="justify-center max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
+            <p className="text-base/6">{About.welcomeText}</p>
 
-            <h1 className="text-[var(--primaryColor)]">{About.fullName}</h1>
-
-            <p className="font-semibold max-w-sm">{About.designation}</p>
-
-            <p className="mt-8 max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
-              {About.description}
+            <p className="text-[var(--primaryColor)] text-4xl/6 md:text-5xl/6 font-semibold my-2">
+              {About.fullName}
             </p>
+
+            <p className="text-base/6 font-medium">{About.designation}</p>
+
+            <p className="mt-8 text-base/6">{About.description}</p>
 
             <TalkButton />
 
-            <Column classes="mt-8">
-              <p className="text-md font-semibold">{About.followText}</p>
+            <Column classes="mt-8 md:mt-16">
+              <p className="text-base font-semibold">{About.followText}</p>
+
               <Row classes="mt-2 gap-2">
-                {socialLinks.map((link, index) => {
+                {socialLinks.slice(0, 5).map((link, index) => {
                   return (
                     <Link
                       key={`social-link-${index}`}
                       href={link.url}
                       target="_blank"
-                      className="app__icon_btn p-3 lg:p-4"
+                      className="app__outlined_btn !rounded-full !p-3 lg:!p-4 !aspect-square !border-[var(--textColor)]"
                       aria-label={`${link.name}`}
                     >
-                      <span className="text-xl"> {link.icon}</span>
+                      <span className="text-xl text-[var(--whiteColor)]">
+                        {link.icon}
+                      </span>
                     </Link>
                   );
                 })}

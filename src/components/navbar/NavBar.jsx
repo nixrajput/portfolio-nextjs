@@ -9,12 +9,14 @@ import useOnClickOutside from "@/hooks/useOnClickOutside";
 import navMenus from "@/data/navMenus";
 import MenuItems from "@/components/navbar/MenuItems";
 import useVisibleSection from "@/hooks/useVisibleSection";
+import useScrolled from "@/hooks/useScrolled";
 
 const NavBar = () => {
   const mobileMenuRef = useRef(null);
   const navRef = useRef();
 
   const visibleSection = useVisibleSection();
+  const isScrolled = useScrolled();
 
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
 
@@ -77,11 +79,15 @@ const NavBar = () => {
     setMobileMenuVisible(false);
   };
 
-  // useOnClickOutside(navRef, hideMobileMenu);
+  useOnClickOutside(navRef, hideMobileMenu);
 
   return (
     <div
-      className="fixed w-screen h-auto z-[1000] top-0 bg-[var(--dialogColor)]"
+      className={`fixed w-screen h-[5rem] z-[1000] top-0 ${
+        isScrolled ? "bg-[var(--dialogColor50)]" : "bg-[var(--dialogColor)]"
+      } ${isScrolled ? "backdrop-blur-sm" : "backdrop-blur-0"} ${
+        isScrolled ? "shadow-[0_4px_30px_rgba(0,0,0,0.1)]" : "shadow-none"
+      }`}
       ref={navRef}
     >
       <div className="h-full flex mx-auto px-4 py-6 constrained-width">
@@ -102,22 +108,6 @@ const NavBar = () => {
               className="w-8 lg:w-10 h-auto mr-1"
             />
           </Link>
-
-          {/* <div className="w-full hidden lg:flex items-center justify-end flex-1 list-none gap-2">
-            {navMenus.map((menu, index) => {
-              const depthLevel = 0;
-              return (
-                <MenuItems
-                  items={menu}
-                  key={`menu-item-${index}`}
-                  depthLevel={depthLevel}
-                  mobileNav={mobileMenuVisible}
-                  handleCloseMobileMenu={hideMobileMenu}
-                  current={visibleSection}
-                />
-              );
-            })}
-          </div> */}
 
           <div className="flex justify-end lg:relative">
             <button

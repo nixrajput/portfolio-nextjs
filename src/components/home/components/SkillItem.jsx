@@ -1,9 +1,9 @@
 import Image from "next/image";
-import Column from "@/components/common/Column";
+import CardBox from "@/components/common/CardBox";
 
 const SkillItem = ({ item }) => {
   return (
-    <Column classes="bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center justify-center text-center w-full min-w-[10rem] aspect-square overflow-hidden">
+    <CardBox classes="p-4 items-center justify-center text-center bg-[var(--textColor10)] w-full min-w-[10rem] aspect-square group">
       <Image
         src={item.icon}
         alt={`skill-${item.title}`}
@@ -16,8 +16,8 @@ const SkillItem = ({ item }) => {
         className="w-12 lg:w-16 h-auto aspect-square object-cover"
       />
 
-      <h5 className="font-bold mt-8">{item.title}</h5>
-    </Column>
+      <p className="text-lg/6 font-bold mt-8">{item.title}</p>
+    </CardBox>
   );
 };
 

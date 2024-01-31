@@ -13,7 +13,18 @@
   --borderRadius: 0.5rem;
   --defaultRadius: 0.5rem;
 
+  --dialogColor10: rgba(32, 39, 47, 0.1);
+  --dialogColor20: rgba(32, 39, 47, 0.2);
+  --dialogColor30: rgba(32, 39, 47, 0.3);
+  --dialogColor40: rgba(32, 39, 47, 0.4);
+  --dialogColor50: rgba(32, 39, 47, 0.5);
+  --dialogColor60: rgba(32, 39, 47, 0.6);
+  --dialogColor70: rgba(32, 39, 47, 0.7);
+  --dialogColor80: rgba(32, 39, 47, 0.8);
+  --dialogColor90: rgba(32, 39, 47, 0.9);
+  --dialogColor100: rgba(32, 39, 47, 1);
   --dialogColor: rgba(32, 39, 47, 1);
+
   --bgColor: rgba(23, 28, 34, 1);
   --lightGrayColor: #ebebeb;
   --lighterGrayColor: #e1e1e1;
@@ -214,157 +225,54 @@ button {
   cursor: pointer;
 }
 
-p {
-  font-size: 1rem;
-  font-weight: 400;
-  font-family: inherit;
-  transition: all 0.5s ease-in-out;
-
-  @media screen and (min-width: 1600px) {
-    font-size: 1.015rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.925rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 0.905rem;
-  }
-}
-
 small {
-  font-size: 0.8rem;
+  line-height: 1.5;
   font-weight: 300;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
-  display: block;
+}
 
-  @media screen and (min-width: 1600px) {
-    font-size: 0.815rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.775rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 0.755rem;
-  }
+p {
+  line-height: 1.5;
+  font-weight: 400;
+  font-family: inherit;
+  transition: all 0.5s ease-in-out;
 }
 
 h1 {
-  font-size: 3rem;
-  font-weight: 600;
+  line-height: 1.5;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
-
-  @media screen and (min-width: 1600px) {
-    font-size: 3.125rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 2.225rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 2rem;
-  }
 }
 
 h2 {
-  font-size: 2.5rem;
-  font-weight: 600;
+  line-height: 1.5;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
-
-  @media screen and (min-width: 1600px) {
-    font-size: 2.725rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 2.275rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 1.875rem;
-  }
 }
 
 h3 {
-  font-size: 1.75rem;
-  font-weight: 600;
+  line-height: 1.5;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
-
-  @media screen and (min-width: 1600px) {
-    font-size: 1.775rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 1.655rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 1.625rem;
-  }
 }
 
 h4 {
-  font-size: 1.25rem;
-  font-weight: 500;
+  line-height: 1.5;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
-
-  @media screen and (min-width: 1600px) {
-    font-size: 1.275rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 1.115rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 1.105rem;
-  }
 }
 
 h5 {
-  font-size: 1.05rem;
-  font-weight: 500;
+  line-height: 1.5;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
-
-  @media screen and (min-width: 1600px) {
-    font-size: 1.075rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 1.025rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 1rem;
-  }
 }
 
 h6 {
-  font-size: 0.875rem;
-  font-weight: 500;
+  line-height: 1.5;
   font-family: inherit;
   transition: all 0.5s ease-in-out;
-
-  @media screen and (min-width: 1600px) {
-    font-size: 0.9rem;
-  }
-
-  @media screen and (max-width: 768px) {
-    font-size: 0.8rem;
-  }
-
-  @media screen and (max-width: 480px) {
-    font-size: 0.75rem;
-  }
 }
 
 .app__outlined_btn {
@@ -896,7 +804,7 @@ h6 {
 
 .iconPosition {
   position: fixed;
-  bottom: 2rem;
+  bottom: 1rem;
   right: 1rem;
   z-index: 20;
 }
@@ -905,8 +813,8 @@ h6 {
   background-color: var(--bgColor);
   border: 2px solid var(--whiteColor);
   border-radius: 50%;
-  height: 2rem;
-  width: 2rem;
+  height: 1.5rem;
+  width: 1.5rem;
   padding: 0.5rem;
   color: var(--whiteColor);
   cursor: pointer;
@@ -915,5 +823,5 @@ h6 {
 
 .iconStyle:hover {
   animation: none;
-  background: var(--whiteColor50);
+  background: var(--primaryColor);
 }

@@ -39,7 +39,7 @@ const projects = [
     icon: "/logo/nodejs.webp",
     sceenshots: [],
     githubUrl: "https://github.com/nixrajput/social-media-api-nodejs",
-    repoType: "private",
+    repoType: "public",
     tags: ["Node.js", "Express.js", "MongoDB", "WebSocket"],
   },
   {
