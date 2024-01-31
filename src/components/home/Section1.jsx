@@ -9,7 +9,6 @@ import socialLinks from "@/data/socialLinks";
 import About from "@/data/about";
 import TalkButton from "./components/TalkButton";
 
-// from-zinc-900 via-zinc-400/10 to-zinc-900
 const HomeSection1 = ({ id }) => {
   return (
     <ResponsiveBox
@@ -19,19 +18,23 @@ const HomeSection1 = ({ id }) => {
       <ConstraintedBox classNames="px-4 py-8">
         <WrappedBox classes="justify-items-stretch">
           <Column classes="justify-center max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
-            <p className="text-base/6">{About.welcomeText}</p>
+            <Column classes="max-w-full">
+              <p className="text-base/6 drop_in">{About.welcomeText}</p>
 
-            <p className="text-[var(--primaryColor)] text-4xl/6 md:text-5xl/6 font-semibold my-2">
-              {About.fullName}
-            </p>
+              <p className="text-4xl/6 md:text-5xl/6 font-semibold my-4 text-[var(--primaryColor)] drop_in">
+                {About.fullName}
+              </p>
 
-            <p className="text-base/6 font-medium">{About.designation}</p>
+              <p className="text-base/6 font-medium mt-2 drop_in">
+                {About.designation}
+              </p>
+            </Column>
 
-            <p className="mt-8 text-base/6">{About.description}</p>
+            <p className="text-base/6 mt-8 drop_in">{About.description}</p>
 
             <TalkButton />
 
-            <Column classes="mt-8 md:mt-16">
+            <Column classes="mt-8 md:mt-16 drop_out">
               <p className="text-base font-semibold">{About.followText}</p>
 
               <Row classes="mt-2 gap-2">
@@ -54,7 +57,7 @@ const HomeSection1 = ({ id }) => {
             </Column>
           </Column>
 
-          <Row classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end items-center justify-center rounded-full bg-transparent border-2 border-[var(--primaryColor60)] aspect-sqaure overflow-hidden my-auto">
+          <Row classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end items-center justify-center rounded-full bg-transparent border-2 border-[var(--primaryColor60)] aspect-sqaure overflow-hidden my-auto drop_out">
             <Row classes="w-full h-auto items-center justify-center rounded-full bg-transparent border-[0.8rem] border-[var(--primaryColor30)] aspect-sqaure overflow-hidden pointer-events-none">
               <Image
                 src={About.avatarUrl}

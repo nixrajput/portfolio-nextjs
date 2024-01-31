@@ -7,6 +7,18 @@ const poppins = Poppins({
   style: ["normal", "italic"],
   subsets: ["devanagari", "latin"],
   display: "swap",
+  preload: true,
+  fallback: [
+    "system-ui",
+    "arial",
+    "BlinkMacSystemFont",
+    "Segoe UI",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Fira Sans",
+    "Droid Sans",
+  ],
   variable: "--font-poppins",
 });
 
