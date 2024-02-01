@@ -16,23 +16,23 @@ const HomeSection1 = ({ id }) => {
       id={id}
     >
       <ConstraintedBox classNames="px-4 py-8">
-        <WrappedBox classes="justify-items-stretch">
+        <WrappedBox classes="justify-items-stretch gap-16 lg:gap-8">
           <Column classes="justify-center max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
             <Column classes="max-w-full">
               <p className="text-base/6 drop_in">{About.welcomeText}</p>
 
-              <p className="text-4xl/6 md:text-5xl/6 font-semibold text-[var(--primaryColor)] drop_in">
+              <p className="text-4xl/6 md:text-5xl/6 font-bold text-[var(--primaryColor)] mt-2 mb-5 drop_in">
                 {About.fullName}
               </p>
 
               <p className="text-base/6 font-medium drop_in">
                 {About.designation}
               </p>
+
+              <p className="text-base/6 mt-8 drop_in">{About.description}</p>
+
+              <TalkButton />
             </Column>
-
-            <p className="text-base/6 mt-8 drop_in">{About.description}</p>
-
-            <TalkButton />
 
             <Column classes="mt-8 md:mt-16 drop_out">
               <p className="text-base/6 font-semibold">{About.followText}</p>
