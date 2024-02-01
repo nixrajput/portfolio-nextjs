@@ -33,7 +33,7 @@ const ProjectItem = ({ project }) => {
         <p className="text-lg/6 font-bold mt-4">{project.title}</p>
 
         <div
-          className={`flex flex-row items-center justify-center rounded-full py-[0.15rem] px-[0.5rem] mt-4 capitalize text-center ${
+          className={`flex flex-row items-center justify-center rounded-full py-[0.05] px-[0.5rem] mt-4 capitalize text-center ${
             project.repoType.toLowerCase() === "private"
               ? "text-[var(--errorColor)]"
               : "text-[var(--successColor)]"
@@ -59,7 +59,7 @@ const ProjectItem = ({ project }) => {
             >
               <FontAwesomeIcon
                 icon={faGithub}
-                className="text-md/6 text-[var(--textColor)]"
+                className="text-base/6 text-[var(--textColor)]"
               />
             </Link>
           ) : null}
@@ -73,7 +73,7 @@ const ProjectItem = ({ project }) => {
             >
               <FontAwesomeIcon
                 icon={faEye}
-                className="text-md/6 text-[var(--textColor)]"
+                className="text-base/6 text-[var(--textColor)]"
               />
             </Link>
           ) : null}

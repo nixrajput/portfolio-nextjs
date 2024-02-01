@@ -21,11 +21,11 @@ const HomeSection1 = ({ id }) => {
             <Column classes="max-w-full">
               <p className="text-base/6 drop_in">{About.welcomeText}</p>
 
-              <p className="text-4xl/6 md:text-5xl/6 font-semibold my-4 text-[var(--primaryColor)] drop_in">
+              <p className="text-4xl/6 md:text-5xl/6 font-semibold text-[var(--primaryColor)] drop_in">
                 {About.fullName}
               </p>
 
-              <p className="text-base/6 font-medium mt-2 drop_in">
+              <p className="text-base/6 font-medium drop_in">
                 {About.designation}
               </p>
             </Column>
@@ -35,7 +35,7 @@ const HomeSection1 = ({ id }) => {
             <TalkButton />
 
             <Column classes="mt-8 md:mt-16 drop_out">
-              <p className="text-base font-semibold">{About.followText}</p>
+              <p className="text-base/6 font-semibold">{About.followText}</p>
 
               <Row classes="mt-2 gap-2">
                 {socialLinks.slice(0, 5).map((link, index) => {
@@ -44,10 +44,10 @@ const HomeSection1 = ({ id }) => {
                       key={`social-link-${index}`}
                       href={link.url}
                       target="_blank"
-                      className="app__outlined_btn !rounded-full !p-3 lg:!p-4 !aspect-square !border-[var(--textColor)]"
+                      className="app__outlined_btn !rounded-full !p-2 lg:!p-3 !aspect-square !border-[var(--textColor)]"
                       aria-label={`${link.name}`}
                     >
-                      <span className="text-xl text-[var(--whiteColor)]">
+                      <span className="text-base/6 text-[var(--whiteColor)]">
                         {link.icon}
                       </span>
                     </Link>

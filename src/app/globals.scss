@@ -184,22 +184,23 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 0.5rem;
+  width: 0.25rem;
+  height: 0.25rem;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #b6b6b6;
+  background: var(--bgColor);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--primaryColor60);
+  background: var(--textColor70);
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primaryColor80);
+  background: var(--textColor80);
 }
 
 /* Chrome, Safari, Edge, Opera */
@@ -652,6 +653,10 @@ h6 {
 
   cursor: pointer;
   width: 100%;
+  max-width: 16rem;
+
+  margin: 0 auto;
+
   transition: all 0.15s ease-in-out;
 }
 

@@ -115,17 +115,17 @@ const NavBar = () => {
               name="menu-btn"
               aria-label="menu button"
               className="outline-none menu-button"
-              onClick={(_) => toggleMenu()}
+              onClick={toggleMenu}
             >
               {mobileMenuVisible ? (
                 <FontAwesomeIcon
                   icon={faXmark}
-                  className="text-2xl xs:text-xl hover:scale-110 transition duration-300 ease-in-out"
+                  className="text-2xl/6 md:text-3xl/6 hover:scale-110 transition duration-300 ease-in-out"
                 />
               ) : (
                 <FontAwesomeIcon
                   icon={faBars}
-                  className="text-2xl xs:text-xl hover:scale-110 transition duration-300 ease-in-out"
+                  className="text-2xl/6 md:text-3xl/6 hover:scale-110 transition duration-300 ease-in-out"
                 />
               )}
             </button>
@@ -133,9 +133,22 @@ const NavBar = () => {
             {/*  Menu Items */}
 
             <div
-              className="flex-col justify-center lg:justify-start items-center m-0 p-4 text-center bg-[var(--dialogColor)] w-screen lg:max-w-xs h-screen lg:max-h-[50vh] absolute top-full lg:top-[calc(100%+1rem)] right-0 transition duration-300 ease-in-out drop_out hidden opacity-0 z-0 invisible overflow-hidden lg:border-[1px] lg:rounded-[var(--borderRadius)]"
+              className="flex-col justify-center lg:justify-start items-center m-0 p-4 text-center bg-[var(--dialogColor)] w-screen lg:max-w-[16rem] h-screen lg:max-h-[22rem] absolute top-0 lg:top-[calc(100%+1rem)] right-0 transition duration-300 ease-in-out drop_out hidden opacity-0 z-0 invisible overflow-hidden lg:border-[1px] lg:rounded-[var(--borderRadius)]"
               ref={mobileMenuRef}
             >
+              <button
+                type="button"
+                name="close-mobile-menu-btn"
+                aria-label="close-mobile-menu-btn"
+                className="outline-none lg:hidden absolute top-4 right-4 z-[1001] group"
+                onClick={toggleMenu}
+              >
+                <FontAwesomeIcon
+                  icon={faXmark}
+                  className="text-2xl/6 md:text-3xl/6 hover:scale-110 transition duration-300 ease-in-out"
+                />
+              </button>
+
               <div className="w-full flex flex-col list-none justify-center lg:justify-start items-center gap-4">
                 {navMenus.map((menu, index) => {
                   const depthLevel = 0;
