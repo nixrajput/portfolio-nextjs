@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Balancer } from "react-wrap-balancer";
 import ConstraintedBox from "@/components/common/ConstraintedBox";
 import ResponsiveBox from "@/components/common/ResponsiveBox";
 import WrappedBox from "@/components/common/WrappedBox";
@@ -21,7 +22,7 @@ const HomeSection1 = ({ id }) => {
             <Column classes="max-w-full">
               <p className="text-base/6 drop_in">{About.welcomeText}</p>
 
-              <p className="text-4xl/6 md:text-5xl/6 font-bold text-[var(--primaryColor)] mt-2 mb-5 drop_in">
+              <p className="text-4xl/6 md:text-5xl/6 font-bold text-[var(--primaryColor)] mt-1 sm:mt-2 mb-3 sm:mb-5 drop_in">
                 {About.fullName}
               </p>
 
@@ -29,7 +30,9 @@ const HomeSection1 = ({ id }) => {
                 {About.designation}
               </p>
 
-              <p className="text-base/6 mt-8 drop_in">{About.description}</p>
+              <p className="text-base/6 mt-8 drop_in">
+                <Balancer>{About.description}</Balancer>
+              </p>
 
               <TalkButton />
             </Column>

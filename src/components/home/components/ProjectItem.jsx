@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Balancer } from "react-wrap-balancer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
@@ -33,18 +34,11 @@ const ProjectItem = ({ project }) => {
         <p className="text-lg/6 font-bold mt-4">{project.title}</p>
 
         <div
-          className={`flex flex-row items-center justify-center rounded-full py-[0.05] px-[0.5rem] mt-4 capitalize text-center ${
+          className={`flex flex-row items-center justify-center rounded-full py-[0.05] px-[0.5rem] mt-4 capitalize text-center border ${
             project.repoType.toLowerCase() === "private"
-              ? "text-[var(--errorColor)]"
-              : "text-[var(--successColor)]"
+              ? "text-[var(--errorColor)] border-[var(--errorColor50)]"
+              : "text-[var(--successColor)] border-[var(--successColor50)]"
           }`}
-          style={{
-            border: `1px solid ${
-              project.repoType.toLowerCase() === "private"
-                ? "var(--errorColor50)"
-                : "var(--successColor50)"
-            }`,
-          }}
         >
           <p className="text-xs/6 font-semibold">{project.repoType}</p>
         </div>
@@ -81,14 +75,16 @@ const ProjectItem = ({ project }) => {
       </Column>
 
       <Column classes="w-full mt-8 items-center">
-        <p className="text-center text-base/6">{project.description}</p>
+        <p className="text-center text-base/6">
+          <Balancer>{project.description}</Balancer>
+        </p>
 
         <Row classes="w-full items-center justify-center flex-wrap mt-4">
           {project.tags.map((tag, i) => {
             return (
               <p
                 key={`tag-${i}`}
-                className="bg-[var(--textColor10)] rounded-lg py-[0.45rem] px-[0.9rem] mr-2 mb-2 text-sm/6 font-medium"
+                className="rounded-[var(--borderRadius)] border border-[var(--textColor50)] py-[.125rem] px-2 mr-2 mb-2 text-xs/6 font-normal"
               >
                 {tag}
               </p>

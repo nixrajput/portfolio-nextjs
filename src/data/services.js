@@ -1,7 +1,15 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMobileButton,
+  faLaptopCode,
+  faServer,
+  faBrain,
+} from "@fortawesome/free-solid-svg-icons";
+
 const services = [
   {
     title: "Mobile App Development",
-    image: "/icons/mobile-dev.webp",
+    icon: <FontAwesomeIcon icon={faMobileButton} />,
     shortDescription:
       "I specialize in creating captivating mobile applications that engage your audience.",
     description:
@@ -9,7 +17,7 @@ const services = [
   },
   {
     title: "Web Development",
-    image: "/icons/web-dev.webp",
+    icon: <FontAwesomeIcon icon={faLaptopCode} />,
     shortDescription:
       "I deliver visually stunning and user-friendly websites to help you establish a strong online presence.",
     description:
@@ -17,7 +25,7 @@ const services = [
   },
   {
     title: "Backend Development",
-    image: "/icons/backend-dev.webp",
+    icon: <FontAwesomeIcon icon={faServer} />,
     shortDescription:
       "I enhance your digital applications with a robust and scalable backend infrastructure.",
     description:
@@ -25,7 +33,7 @@ const services = [
   },
   {
     title: "Product Strategy",
-    image: "/icons/backend-dev.webp",
+    icon: <FontAwesomeIcon icon={faBrain} />,
     shortDescription:
       "I collaborate with you to define clear goals, target audiences, and a roadmap for success.",
     description:

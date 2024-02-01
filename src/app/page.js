@@ -1,4 +1,3 @@
-import { Provider as WrapBalancerProvider } from "react-wrap-balancer";
 import Script from "next/script";
 import PageBox from "@/components/common/PageBox";
 import NavBar from "@/components/navbar/NavBar";
@@ -30,14 +29,12 @@ export default function Home() {
       </Script>
 
       <NavBar />
-      <WrapBalancerProvider>
-        <HomeSection1 id="about" />
-        <HomeSection2 id="services" />
-        <HomeSection3 id="experiences" />
-        <HomeSection4 id="skills" />
-        <HomeSection5 id="projects" />
-        <HomeSection6 id="contact" />
-      </WrapBalancerProvider>
+      <HomeSection1 id="about" />
+      <HomeSection2 id="services" />
+      <HomeSection3 id="experiences" />
+      <HomeSection4 id="skills" />
+      <HomeSection5 id="projects" />
+      <HomeSection6 id="contact" />
     </PageBox>
   );
 }
