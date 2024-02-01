@@ -20,13 +20,13 @@ const HomeSection1 = ({ id }) => {
         <WrappedBox classes="justify-items-stretch gap-16 lg:gap-8">
           <Column classes="justify-center max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
             <Column classes="max-w-full">
-              <p className="text-base/normal drop_in">{About.welcomeText}</p>
+              <p className="text-base/6 drop_in">{About.welcomeText}</p>
 
               <p className="text-4xl/normal md:text-5xl/normal font-bold text-[var(--primaryColor)] drop_in">
                 {About.fullName}
               </p>
 
-              <p className="text-base/normal font-medium text-[var(--textColorLight)] drop_in">
+              <p className="text-base/6 font-medium text-[var(--textColorLight)] drop_in">
                 {About.designation}
               </p>
 
