@@ -27,6 +27,8 @@
   "devDependencies": {
     "@babel/core": "^7.23.9",
     "@tailwindcss/typography": "^0.5.10",
+    "@types/node": "20.11.16",
+    "@types/react": "18.2.51",
     "autoprefixer": "10.4.17",
     "eslint": "8.56.0",
     "eslint-config-next": "14.1.0",
