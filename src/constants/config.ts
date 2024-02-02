@@ -1,4 +1,4 @@
-const LocalConfig= {
+const LocalConfig = {
     values:{
         TZ: process.env.TZ,
         NODE_ENV: process.env.NODE_ENV,
