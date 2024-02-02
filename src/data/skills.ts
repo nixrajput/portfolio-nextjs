@@ -1,4 +1,6 @@
-const skills = [
+import { SkillItem } from "@/types";
+
+const skills: SkillItem[] = [
   {
     title: "Flutter",
     level: "⭐⭐⭐",

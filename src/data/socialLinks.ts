@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGithub,
   faLinkedin,
@@ -8,42 +7,43 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Strings from "@/constants/strings";
+import { SocialLinkItem } from "@/types";
 
-const socialLinks = [
+const socialLinks: SocialLinkItem[] = [
   {
     name: Strings.github,
     url: Strings.githubLink,
-    icon: <FontAwesomeIcon icon={faGithub} />,
+    icon: faGithub,
     text: Strings.githubUsername,
   },
   {
     name: Strings.linkedIn,
     url: Strings.linkedInLink,
-    icon: <FontAwesomeIcon icon={faLinkedin} />,
+    icon: faLinkedin,
     text: Strings.linkedInUsername,
   },
   {
     name: Strings.telegram,
     url: Strings.telegramLink,
-    icon: <FontAwesomeIcon icon={faTelegram} />,
+    icon: faTelegram,
     text: Strings.telegramUsername,
   },
   {
     name: Strings.instagram,
     url: Strings.instagramLink,
-    icon: <FontAwesomeIcon icon={faInstagram} />,
+    icon: faInstagram,
     text: Strings.instagramUsername,
   },
   {
     name: Strings.twitter,
     url: Strings.twitterLink,
-    icon: <FontAwesomeIcon icon={faXTwitter} />,
+    icon: faXTwitter,
     text: Strings.twitterUsername,
   },
   {
     name: Strings.email,
     url: Strings.primaryEmailLink,
-    icon: <FontAwesomeIcon icon={faEnvelope} />,
+    icon: faEnvelope,
     text: Strings.primaryEmail,
   },
 ];

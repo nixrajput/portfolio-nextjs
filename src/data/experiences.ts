@@ -1,4 +1,6 @@
-const experiences = [
+import { ExperienceItem } from "@/types";
+
+const experiences: ExperienceItem[] = [
   {
     designation: "Full Stack Developer",
     company: "Merito",

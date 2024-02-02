@@ -1,4 +1,6 @@
-const projects = [
+import { ProjectItem } from "@/types";
+
+const projects: ProjectItem[] = [
   {
     title: "Social Media App",
     description:
@@ -39,6 +41,7 @@ const projects = [
     icon: "/logo/nodejs.webp",
     sceenshots: [],
     githubUrl: "https://github.com/nixrajput/social-media-api-nodejs",
+    url: "",
     repoType: "public",
     tags: ["Node.js", "Express.js", "MongoDB", "WebSocket"],
   },
@@ -60,6 +63,7 @@ const projects = [
     icon: "/logo/nodejs.webp",
     sceenshots: [],
     githubUrl: "https://github.com/nixrajput/ecommerce-api-nodejs",
+    url: "",
     repoType: "public",
     tags: ["Node.js", "Express.js", "MongoDB", "Stripe"],
   },

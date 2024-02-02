@@ -1,15 +1,15 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMobileButton,
   faLaptopCode,
   faServer,
   faBrain,
 } from "@fortawesome/free-solid-svg-icons";
+import { ServiceItem } from "@/types";
 
-const services = [
+const services: ServiceItem[] = [
   {
     title: "Mobile App Development",
-    icon: <FontAwesomeIcon icon={faMobileButton} />,
+    icon: faMobileButton,
     shortDescription:
       "I specialize in creating captivating mobile applications that engage your audience.",
     description:
@@ -17,7 +17,7 @@ const services = [
   },
   {
     title: "Web Development",
-    icon: <FontAwesomeIcon icon={faLaptopCode} />,
+    icon: faLaptopCode,
     shortDescription:
       "I deliver visually stunning and user-friendly websites to help you establish a strong online presence.",
     description:
@@ -25,7 +25,7 @@ const services = [
   },
   {
     title: "Backend Development",
-    icon: <FontAwesomeIcon icon={faServer} />,
+    icon: faServer,
     shortDescription:
       "I enhance your digital applications with a robust and scalable backend infrastructure.",
     description:
@@ -33,7 +33,7 @@ const services = [
   },
   {
     title: "Product Strategy",
-    icon: <FontAwesomeIcon icon={faBrain} />,
+    icon: faBrain,
     shortDescription:
       "I collaborate with you to define clear goals, target audiences, and a roadmap for success.",
     description:
