@@ -2,17 +2,22 @@
 
 import { motion, useMotionTemplate, useSpring } from "framer-motion";
 import PropTypes from "prop-types";
+import { MouseEvent, ReactNode } from "react";
 
-const CardBox = (props) => {
+const CardBox = (props: {
+  children: ReactNode,
+  classes: string
+}) => {
   const { children, classes } = props;
 
   const mouseX = useSpring(0, { stiffness: 500, damping: 100 });
   const mouseY = useSpring(0, { stiffness: 500, damping: 100 });
 
-  function onMouseMove({ currentTarget, clientX, clientY }) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
+  function onMouseMove(e: MouseEvent<HTMLDivElement>) {
+    if (!e.currentTarget) return
+    const { left, top } = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - left);
+    mouseY.set(e.clientY - top);
   }
   let maskImage = useMotionTemplate`radial-gradient(240px at ${mouseX}px ${mouseY}px, white, transparent)`;
   let style = { maskImage, WebkitMaskImage: maskImage };

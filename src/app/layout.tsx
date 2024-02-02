@@ -1,6 +1,7 @@
 import "./globals.scss";
 import ScrollToTop from "@/components/common/ScrollToTop";
 import { Poppins } from "next/font/google";
+import { ReactNode } from "react";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -47,7 +48,7 @@ export const metadata = {
   ],
 };
 
-const RootLayout = ({ children }: {children: React.ReactNode}) => {
+const RootLayout = ({ children }: {children: ReactNode}) => {
   return (
     <html lang="en" className={[poppins.variable].join(" ")}>
       <body

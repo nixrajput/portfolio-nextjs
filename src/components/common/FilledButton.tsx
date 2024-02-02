@@ -1,8 +1,9 @@
 "use client";
 
+import { ButtonComponentProps } from "@/types";
 import PropTypes from "prop-types";
 
-const AppFilledButton = (props) => {
+const AppFilledButton = (props: ButtonComponentProps) => {
   const { label, onClick, className, name } = props;
 
   return (

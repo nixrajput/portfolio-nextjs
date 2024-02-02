@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
+import { ReactNode } from "react";
 
-const PageBox = (props) => {
+const PageBox = (props: {
+  children: ReactNode,
+  classes: string
+}) => {
   const { children, classes } = props;
 
   return (

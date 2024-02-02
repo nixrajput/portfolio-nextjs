@@ -1,6 +1,8 @@
+import { ComponentsCommonProps } from "@/types";
 import PropTypes from "prop-types";
+import { MouseEventHandler, RefObject, ReactNode } from "react";
 
-const Column = (props) => {
+const Column = (props: ComponentsCommonProps) => {
   const { children, classes, onClick, id, elementRef } = props;
 
   return (

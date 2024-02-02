@@ -3,7 +3,15 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const ReadMoreText = ({ children, className, visibleTextCount = 150 }) => {
+const ReadMoreText = ({ 
+  children, 
+  className, 
+  visibleTextCount = 150 
+}: {
+  children: string,
+  className: string,
+  visibleTextCount: number
+}) => {
   const text = children;
 
   const [isReadMore, setIsReadMore] = useState(true);

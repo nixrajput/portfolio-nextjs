@@ -1,4 +1,5 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core"
+import { MouseEventHandler, ReactNode, RefObject } from "react"
 
 export interface navMenuItem {
   id: string
@@ -61,4 +62,19 @@ export interface SocialLinkItem {
   url: string
   icon: IconDefinition
   text: string
+}
+
+export interface ButtonComponentProps {
+  label: string,
+  onClick: MouseEventHandler<HTMLButtonElement>
+  className: string,
+  name: string
+}
+
+export interface ComponentsCommonProps {
+  children: ReactNode,
+  classes: string,
+  onClick: MouseEventHandler<HTMLDivElement>,
+  id: string,
+  elementRef: RefObject<HTMLDivElement>
 }

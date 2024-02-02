@@ -1,6 +1,12 @@
 import PropTypes from "prop-types";
+import { ReactNode, RefObject } from "react";
 
-const ResponsiveBox = (props) => {
+const ResponsiveBox = (props: {
+  children: ReactNode,
+  classNames: string,
+  id: string,
+  elementRef: RefObject<HTMLDivElement>
+}) => {
   const { children, classNames, id, elementRef } = props;
 
   return (

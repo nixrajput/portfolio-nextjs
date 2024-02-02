@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
-const Popover = ({ button, content }) => {
+const Popover = ({ button, content }: {button: ReactNode, content: ReactNode}) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
