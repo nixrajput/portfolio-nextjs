@@ -5,15 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import Dropdown from "@/components/navbar/Dropdown";
-import { navMenuItem } from "@/types";
+import { MenutItemProps } from "@/types";
 
-const MenuItems = (props: {
-  items: navMenuItem,
-  depthLevel: number,
-  mobileNav: boolean,
-  handleCloseMobileMenu: () => void,
-  current?: string
-}) => {
+const MenuItems = (props: MenutItemProps) => {
   const { items, depthLevel, mobileNav, handleCloseMobileMenu, current } =
     props;
 
