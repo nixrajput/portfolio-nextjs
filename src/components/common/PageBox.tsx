@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 const PageBox = (props: {
   children: ReactNode,
-  classes: string
+  classes?: string
 }) => {
   const { children, classes } = props;
 
