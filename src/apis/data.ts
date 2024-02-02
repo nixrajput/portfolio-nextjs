@@ -6,46 +6,46 @@ const HOURS_1 = 60 * 60;
 const HOURS_12 = 60 * 60 * 12;
 
 // TODO: Implement option to switch between info for authenticated user and other users.
-export async function getUser(username) {
+export async function getUser(username: string) {
   console.log("Fetching user data for", username);
   console.time("getUser");
   const res = await fetch("https://api.github.com/users/" + username, {
     headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
-    next: { revalidate },
+    next: { revalidate: revalidate },
   });
   console.timeEnd("getUser");
   return res.json();
 }
 
-export async function getRepos(username) {
+export async function getRepos(username: string) {
   console.log("Fetching repos for", username);
   console.time("getRepos");
   const res = await fetch(
     "https://api.github.com/users/" + username + "/repos",
     {
       headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
-      next: { revalidate },
+      next: { revalidate: revalidate },
     }
   );
   console.timeEnd("getRepos");
   return res.json();
 }
 
-export async function getSocialAccounts(username) {
+export async function getSocialAccounts(username: string) {
   console.log("Fetching social accounts for", username);
   console.time("getSocialAccounts");
   const res = await fetch(
     "https://api.github.com/users/" + username + "/social_accounts",
     {
       headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
-      next: { MINUTES_5 },
+      next: { revalidate: MINUTES_5 },
     }
   );
   console.timeEnd("getSocialAccounts");
   return res.json();
 }
 
-export const getPinnedRepos = cache(async (username) => {
+export const getPinnedRepos = cache(async (username: string) => {
   console.log("Fetching pinned repos for", username);
   console.time("getPinnedRepos");
   const res = await fetch("https://api.github.com/graphql", {
@@ -57,15 +57,15 @@ export const getPinnedRepos = cache(async (username) => {
   });
   const pinned = await res.json();
   console.timeEnd("getPinnedRepos");
-  const names = pinned.data.user.pinnedItems.nodes.map((node) => node.name);
+  const names = pinned.data.user.pinnedItems.nodes.map((node: any) => node.name);
   return names;
 });
 
-export const getUserOrganizations = async (username) => {
+export const getUserOrganizations = async (username: string) => {
   console.log("Fetching organizations for", username);
   console.time("getUserOrganizations");
   const res = await fetch("https://api.github.com/graphql", {
-    next: { MINUTES_5 },
+    next: { revalidate: MINUTES_5 },
     method: "POST",
     headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
     body: JSON.stringify({
@@ -110,6 +110,7 @@ export const getNextjsLatestRelease = cache(async () => {
 				}
 			}`,
     }),
+    next: { revalidate: HOURS_12 }
   });
   if (!res.ok) {
     console.error("GitHub API returned an error.", res.status, res.statusText);
@@ -125,9 +126,9 @@ export const getNextjsLatestRelease = cache(async () => {
     updatedAt: nextjsLatest.data.repository.latestRelease.updatedAt,
   };
   return result;
-}, HOURS_12);
+});
 
-export const getRepositoryPackageJson = cache(async (username, reponame) => {
+export const getRepositoryPackageJson = cache(async (username: string, reponame: string) => {
   const res = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
@@ -142,6 +143,7 @@ export const getRepositoryPackageJson = cache(async (username, reponame) => {
 				}
 			}`,
     }),
+    next: {revalidate: HOURS_12}
   });
   const response = await res.json();
   try {
@@ -151,23 +153,24 @@ export const getRepositoryPackageJson = cache(async (username, reponame) => {
     console.error("Error parsing package.json", error);
     return {};
   }
-}, HOURS_12);
+});
 
-export const getRecentUserActivity = cache(async (username) => {
+export const getRecentUserActivity = cache(async (username: string) => {
   console.log("Fetching recent activity for", username);
   console.time("getRecentUserActivity");
   const res = await fetch(
     "https://api.github.com/users/" + username + "/events",
     {
       headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
-    }
+      next: {revalidate: HOURS_12}
+    },
   );
   const response = await res.json();
   console.timeEnd("getRecentUserActivity");
   return response;
-}, HOURS_12);
+});
 
-export const getTrafficPageViews = async (username, reponame) => {
+export const getTrafficPageViews = async (username: string, reponame: string) => {
   const res = await fetch(
     "https://api.github.com/repos/" +
       username +
@@ -187,13 +190,13 @@ export const getTrafficPageViews = async (username, reponame) => {
   const today = new Date().toISOString().slice(0, 10);
   // Last day with at least one view.
   const todayUniques =
-    response.views?.find((day) => day.timestamp.startsWith(today))?.uniques ||
+    response.views?.find((day: any) => day.timestamp.startsWith(today))?.uniques ||
     0;
 
   return { sumUniques, todayUniques };
 };
 
-export const getDependabotAlerts = cache(async (username, reponame) => {
+export const getDependabotAlerts = cache(async (username: string, reponame: string) => {
   const res = await fetch(
     "https://api.github.com/repos/" +
       username +
@@ -202,6 +205,7 @@ export const getDependabotAlerts = cache(async (username, reponame) => {
       "/dependabot/alerts",
     {
       headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+      next: {revalidate: HOURS_12}
     }
   );
 
@@ -211,7 +215,7 @@ export const getDependabotAlerts = cache(async (username, reponame) => {
   if (response.length === undefined) {
     return [];
   }
-  const openAlertsBySeverity = response.reduce((acc, alert) => {
+  const openAlertsBySeverity = response.reduce((acc: any, alert: any) => {
     if (alert.state === "open") {
       acc[alert.security_advisory.severity] = acc[
         alert.security_advisory.severity
@@ -223,7 +227,7 @@ export const getDependabotAlerts = cache(async (username, reponame) => {
   }, {});
 
   return openAlertsBySeverity;
-}, HOURS_12);
+});
 
 /**
  * Determines if a repository is using Next.js App Router or legacy pages/_app.jsx. Or both.
@@ -231,38 +235,60 @@ export const getDependabotAlerts = cache(async (username, reponame) => {
  * @param {string} repoName repository name
  * @returns Object with two booleans: isRouterPages and isRouterApp
  */
-export async function checkAppJsxExistence(repoOwner, repoName) {
-  const urlPagesApp = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/pages/_app.jsx`;
+export async function checkAppJsxTsxExistence(repoOwner: string, repoName: string) {
+  const urlPagesAppJSX = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/pages/_app.jsx`;
   // TODO: Add more possible ways to check for App Router.
-  const urlAppLayout = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/app/layout.jsx`;
+  const urlAppLayoutJSX = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/app/layout.jsx`;
+
+  const urlPagesAppTSX = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/pages/_app.tsx`;
+  const urlAppLayoutTSX = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/app/layout.tsx`;
 
   const res = {
-    isRouterPages: false,
-    isRouterApp: false,
+    isRouterPagesJSX: false,
+    isRouterAppJSX: false,
+    isRouterPagesTSX: false,
+    isRouterAppTSX: false
   };
 
   try {
-    const [isPagesRes, isAppLayoutRes] = await Promise.all([
-      fetch(urlPagesApp, {
+    const [isPagesResJSX, isAppLayoutResJSX, isPagesResTSX, isAppLayoutResTSX] = await Promise.all([
+      fetch(urlPagesAppJSX, {
         headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
-        next: { HOURS_12 },
+        next: { revalidate: HOURS_12 },
       }),
-      fetch(urlAppLayout, {
+      fetch(urlAppLayoutJSX, {
         headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
-        next: { HOURS_12 },
+        next: { revalidate: HOURS_12 },
+      }),
+      fetch(urlPagesAppTSX, {
+        headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+        next: { revalidate: HOURS_12 },
+      }),
+      fetch(urlAppLayoutTSX, {
+        headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+        next: { revalidate: HOURS_12 },
       }),
     ]);
 
-    if (isPagesRes.status === 200) {
-      res.isRouterPages = true;
+    if (isPagesResJSX.status === 200) {
+      res.isRouterPagesJSX = true;
     }
 
-    if (isAppLayoutRes.status === 200) {
-      res.isRouterApp = true;
+    if (isAppLayoutResJSX.status === 200) {
+      res.isRouterAppJSX = true;
     }
-  } catch (error) {
+
+    if (isPagesResTSX.status === 200) {
+      res.isRouterPagesJSX = true;
+    }
+
+    if (isAppLayoutResTSX.status === 200) {
+      res.isRouterAppJSX = true;
+    }
+
+  } catch (error: any) {
     console.error(
-      `Error checking _app.jsx existence in ${repoName}: ${error.message}`
+      `Error checking _app.jsx(tsx) existence in ${repoName}: ${error.message}`
     );
   }
 
