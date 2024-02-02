@@ -1,4 +1,6 @@
-const navMenus = [
+import { navMenuItem } from "@/types";
+
+const navMenus: navMenuItem[] = [
   {
     id: "about",
     title: "About",

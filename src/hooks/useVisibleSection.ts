@@ -5,14 +5,14 @@ import navMenus from "@/data/navMenus";
 function useVisibleSection(sections = navMenus) {
   const [visibleSectionId, setVisibleSectionId] = useState(sections[0].id);
 
-  const isSectionVisible = (elementId) => {
+  const isSectionVisible = (elementId: string) => {
     const section = document.getElementById(elementId);
 
     if (!section) return false;
 
     let sectionPosition = section.getBoundingClientRect();
 
-    const vWidth = window.innerWidth || document.documentElement.clientWidth;
+    // const vWidth = window.innerWidth || document.documentElement.clientWidth;
     const vHeight = window.innerHeight || document.documentElement.clientHeight;
 
     // const horInView =

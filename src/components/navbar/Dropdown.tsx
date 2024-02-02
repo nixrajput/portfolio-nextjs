@@ -1,7 +1,14 @@
 import PropTypes from "prop-types";
 import MenuItems from "@/components/navbar/MenuItems";
+import { navMenuItem } from "@/types";
 
-const Dropdown = (props) => {
+const Dropdown = (props: {
+  submenus: navMenuItem[],
+  dropdown: boolean,
+  depthLevel: number,
+  mobileNav: boolean,
+  handleCloseMobileMenu: () => void
+}) => {
   let {
     submenus,
     dropdown,

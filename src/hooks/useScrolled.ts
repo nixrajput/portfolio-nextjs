@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useScrolled = (offset) => {
+const useScrolled = (offset?: number) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {

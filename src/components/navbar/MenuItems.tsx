@@ -5,16 +5,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import Dropdown from "@/components/navbar/Dropdown";
+import { navMenuItem } from "@/types";
 
-const MenuItems = (props) => {
+const MenuItems = (props: {
+  items: navMenuItem,
+  depthLevel: number,
+  mobileNav: boolean,
+  handleCloseMobileMenu: () => void,
+  current?: string
+}) => {
   const { items, depthLevel, mobileNav, handleCloseMobileMenu, current } =
     props;
 
   const [dropdown, setDropdown] = useState(false);
 
-  let ref = useRef();
+  let ref = useRef<HTMLLIElement>(null);
 
-  const handleScroll = (id) => {
+  const handleScroll = (id: string) => {
     if (!id) return;
     const element = document.getElementById(id);
     if (!element) return;
@@ -28,8 +35,8 @@ const MenuItems = (props) => {
   };
 
   useEffect(() => {
-    const handler = (event) => {
-      if (dropdown && ref.current && !ref.current.contains(event.target)) {
+    const handler = (event: MouseEvent | TouchEvent) => {
+      if (dropdown && ref.current && !ref.current.contains((event.target as Node))) {
         setDropdown(false);
       }
     };

@@ -47,7 +47,7 @@ export const metadata = {
   ],
 };
 
-const RootLayout = ({ children }) => {
+const RootLayout = ({ children }: {children: React.ReactNode}) => {
   return (
     <html lang="en" className={[poppins.variable].join(" ")}>
       <body

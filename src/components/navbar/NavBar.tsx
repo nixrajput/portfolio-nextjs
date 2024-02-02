@@ -12,8 +12,8 @@ import useVisibleSection from "@/hooks/useVisibleSection";
 import useScrolled from "@/hooks/useScrolled";
 
 const NavBar = () => {
-  const mobileMenuRef = useRef(null);
-  const navRef = useRef();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
 
   const visibleSection = useVisibleSection();
   const isScrolled = useScrolled();
@@ -21,8 +21,8 @@ const NavBar = () => {
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
 
   const toggleMenu = () => {
+    if (!mobileMenuRef.current) return;
     const cList = mobileMenuRef.current.classList;
-
     if (
       cList.contains("flex") &&
       cList.contains("opacity-1") &&
@@ -36,6 +36,7 @@ const NavBar = () => {
   };
 
   const showMobileMenu = () => {
+    if (!mobileMenuRef.current) return;
     const cList = mobileMenuRef.current.classList;
 
     if (
@@ -58,6 +59,7 @@ const NavBar = () => {
   };
 
   const hideMobileMenu = () => {
+    if (!mobileMenuRef.current) return;
     const cList = mobileMenuRef.current.classList;
 
     if (
