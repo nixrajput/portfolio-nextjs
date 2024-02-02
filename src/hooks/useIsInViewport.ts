@@ -1,7 +1,7 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, RefObject } from "react";
 
 const useIsInViewport = (
-  ref,
+  ref: RefObject<HTMLElement>,
   { root = null, rootMargin = null, threshold = null } = {}
 ) => {
   const [isVisible, setIsVisible] = useState(false);
