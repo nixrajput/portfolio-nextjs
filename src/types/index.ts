@@ -58,10 +58,10 @@ export interface SkillItem {
 }
 
 export interface SocialLinkItem {
-  name: string
   url: string
   icon: IconDefinition
   text: string
+  name?: string
 }
 
 export interface ButtonComponentProps {

@@ -4,7 +4,7 @@ import WrappedBox from "@/components/common/WrappedBox";
 import ExperienceItem from "./components/ExperienceItem";
 import experiences from "@/data/experiences";
 
-const HomeSection3 = ({ id }) => {
+const HomeSection3 = ({ id }: {id: string}) => {
   return (
     <ResponsiveBox
       classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center"

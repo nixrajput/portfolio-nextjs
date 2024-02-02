@@ -5,7 +5,7 @@ import Column from "@/components/common/Column";
 import socialLinks from "@/data/socialLinks";
 import SocialButton from "./components/SocialButton";
 
-const HomeSection6 = ({ id }) => {
+const HomeSection6 = ({ id }: {id: string}) => {
   return (
     <ResponsiveBox
       classNames="bg-[var(--bgColor)] min-h-[calc(100vh-5rem)] items-center justify-center"

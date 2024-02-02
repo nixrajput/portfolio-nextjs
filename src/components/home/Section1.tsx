@@ -9,8 +9,9 @@ import Row from "@/components/common/Row";
 import socialLinks from "@/data/socialLinks";
 import About from "@/data/about";
 import TalkButton from "./components/TalkButton";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const HomeSection1 = ({ id }) => {
+const HomeSection1 = ({ id }: {id: string}) => {
   return (
     <ResponsiveBox
       classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center"
@@ -51,7 +52,7 @@ const HomeSection1 = ({ id }) => {
                       aria-label={`${link.name}`}
                     >
                       <span className="text-base/6 text-[var(--whiteColor)]">
-                        {link.icon}
+                        <FontAwesomeIcon icon={link.icon} />
                       </span>
                     </Link>
                   );

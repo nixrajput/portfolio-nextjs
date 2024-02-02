@@ -4,9 +4,9 @@ import { MouseEventHandler, RefObject, ReactNode } from "react";
 const ConstraintedBox = (props: {
   children: ReactNode,
   classNames: string,
-  onClick: MouseEventHandler<HTMLDivElement>
-  id: string
-  elementRef: RefObject<HTMLDivElement>
+  onClick?: MouseEventHandler<HTMLDivElement>
+  id?: string
+  elementRef?: RefObject<HTMLDivElement>
 }) => {
   const { children, classNames, onClick, id, elementRef } = props;
 

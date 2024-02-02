@@ -5,7 +5,7 @@ const ResponsiveBox = (props: {
   children: ReactNode,
   classNames: string,
   id: string,
-  elementRef: RefObject<HTMLDivElement>
+  elementRef?: RefObject<HTMLDivElement>
 }) => {
   const { children, classNames, id, elementRef } = props;
 
