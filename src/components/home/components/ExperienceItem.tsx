@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
 import CardBox from "@/components/common/CardBox";
 import Column from "@/components/common/Column";
+import { ExperienceItem } from "@/types";
 
-const ExperienceItem = ({ data }) => {
+const ExperienceItem = ({ data }: {data: ExperienceItem}) => {
   return (
     <CardBox classes="p-4 items-center text-center bg-[var(--textColor10)] group min-h-80">
       <Column classes="items-center justify-between w-full h-full gap-12">

@@ -7,8 +7,9 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import Column from "@/components/common/Column";
 import Row from "@/components/common/Row";
 import CardBox from "@/components/common/CardBox";
+import { ProjectItem } from "@/types";
 
-const ProjectItem = ({ project }) => {
+const ProjectItem = ({ project }: {project: ProjectItem}) => {
   return (
     <CardBox classes="p-4 items-center justify-between text-center bg-[var(--textColor10)] group">
       <Column classes="w-full items-center justify-center">

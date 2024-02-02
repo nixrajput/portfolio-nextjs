@@ -68,13 +68,13 @@ export interface ButtonComponentProps {
   label: string,
   onClick: MouseEventHandler<HTMLButtonElement>
   className: string,
-  name: string
+  name?: string
 }
 
 export interface ComponentsCommonProps {
   children: ReactNode,
   classes: string,
-  onClick: MouseEventHandler<HTMLDivElement>,
-  id: string,
-  elementRef: RefObject<HTMLDivElement>
+  onClick?: MouseEventHandler<HTMLDivElement>,
+  id?: string,
+  elementRef?: RefObject<HTMLDivElement>
 }

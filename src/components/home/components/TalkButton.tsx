@@ -1,6 +1,7 @@
 "use client";
 
 import AppOutlinedButton from "@/components/common/OutlinedButton";
+import Strings from "@/constants/strings";
 
 const TalkButton = () => {
   const onHandleClickTalkBtn = () => {

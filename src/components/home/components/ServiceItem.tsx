@@ -1,14 +1,16 @@
 import { Balancer } from "react-wrap-balancer";
 import CardBox from "@/components/common/CardBox";
 import Column from "@/components/common/Column";
+import { ServiceItem } from "@/types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ServiceItem = ({ data }) => {
+const ServiceItem = ({ data }: {data: ServiceItem}) => {
   return (
     <CardBox classes="p-4 items-center text-center bg-[var(--textColor10)] group min-h-80">
       <Column classes="items-center justify-between w-full h-full gap-12">
         <Column classes="items-center justify-start">
           <span className="text-4xl/6 md:text-5xl/6 text-[var(--primaryColor)]">
-            {data.icon}
+            <FontAwesomeIcon icon={data.icon} />
           </span>
 
           <p className="text-lg/6 font-bold mt-4">{data.title}</p>
