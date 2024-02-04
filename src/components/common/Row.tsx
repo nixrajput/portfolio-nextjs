@@ -1,6 +1,4 @@
-import { ComponentsCommonProps } from "@/types";
-import PropTypes from "prop-types";
-import { MouseEventHandler, ReactNode, RefObject } from "react";
+import type { ComponentsCommonProps } from "@/types";
 
 const Row = (props: ComponentsCommonProps) => {
   const { children, classes, onClick, id, elementRef } = props;
@@ -15,14 +13,6 @@ const Row = (props: ComponentsCommonProps) => {
       {children}
     </div>
   );
-};
-
-Row.propTypes = {
-  children: PropTypes.node,
-  classes: PropTypes.string,
-  onClick: PropTypes.func,
-  id: PropTypes.string,
-  elementRef: PropTypes.any,
 };
 
 export default Row;

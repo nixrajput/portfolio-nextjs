@@ -1,11 +1,11 @@
 "use client";
 
-const Error = ({ 
+const Error = ({
   error,
-  reset 
+  reset,
 }: {
-  error: Error & { digest?: string }
-  reset: () => void
+  error: Error & { digest?: string };
+  reset: () => void;
 }) => {
   return (
     <div

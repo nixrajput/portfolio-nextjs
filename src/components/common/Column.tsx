@@ -1,6 +1,4 @@
-import { ComponentsCommonProps } from "@/types";
-import PropTypes from "prop-types";
-import { MouseEventHandler, RefObject, ReactNode } from "react";
+import type { ComponentsCommonProps } from "@/types";
 
 const Column = (props: ComponentsCommonProps) => {
   const { children, classes, onClick, id, elementRef } = props;
@@ -15,14 +13,6 @@ const Column = (props: ComponentsCommonProps) => {
       {children}
     </div>
   );
-};
-
-Column.propTypes = {
-  children: PropTypes.node,
-  classes: PropTypes.string,
-  onClick: PropTypes.func,
-  id: PropTypes.string,
-  elementRef: PropTypes.any,
 };
 
 export default Column;

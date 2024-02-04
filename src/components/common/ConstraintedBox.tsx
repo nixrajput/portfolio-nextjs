@@ -1,12 +1,11 @@
-import PropTypes from "prop-types";
-import { MouseEventHandler, RefObject, ReactNode } from "react";
+import type { MouseEventHandler, RefObject, ReactNode } from "react";
 
 const ConstraintedBox = (props: {
-  children: ReactNode,
-  classNames: string,
-  onClick?: MouseEventHandler<HTMLDivElement>
-  id?: string
-  elementRef?: RefObject<HTMLDivElement>
+  children: ReactNode;
+  classNames?: string;
+  onClick?: MouseEventHandler<HTMLDivElement>;
+  id?: string;
+  elementRef?: RefObject<HTMLDivElement>;
 }) => {
   const { children, classNames, onClick, id, elementRef } = props;
 
@@ -20,14 +19,6 @@ const ConstraintedBox = (props: {
       {children}
     </div>
   );
-};
-
-ConstraintedBox.propTypes = {
-  children: PropTypes.node,
-  classNames: PropTypes.string,
-  onClick: PropTypes.func,
-  id: PropTypes.string,
-  elementRef: PropTypes.any,
 };
 
 export default ConstraintedBox;

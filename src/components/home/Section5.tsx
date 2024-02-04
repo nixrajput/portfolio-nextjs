@@ -4,7 +4,7 @@ import WrappedBox from "@/components/common/WrappedBox";
 import ProjectItem from "@/components/home/components/ProjectItem";
 import projects from "@/data/projects";
 
-const HomeSection5 = ({ id }: {id: string}) => {
+const HomeSection5 = ({ id }: { id: string }) => {
   return (
     <ResponsiveBox
       classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center"

@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import MenuItems from "@/components/navbar/MenuItems";
 import { DropdownMenuProps } from "@/types";
 
@@ -30,14 +29,6 @@ const Dropdown = (props: DropdownMenuProps) => {
       ))}
     </ul>
   );
-};
-
-Dropdown.propTypes = {
-  submenus: PropTypes.array.isRequired,
-  dropdown: PropTypes.bool,
-  depthLevel: PropTypes.number,
-  mobileNav: PropTypes.bool.isRequired,
-  handleCloseMobileMenu: PropTypes.func.isRequired,
 };
 
 export default Dropdown;

@@ -1,20 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import PropTypes from "prop-types";
 
-const ReadMoreText = ({ 
-  children, 
-  className, 
-  visibleTextCount = 150 
+const ReadMoreText = ({
+  children,
+  className,
+  visibleTextCount = 150,
 }: {
-  children: string,
-  className: string,
-  visibleTextCount: number
+  children: string;
+  className: string;
+  visibleTextCount: number;
 }) => {
   const text = children;
 
-  const [isReadMore, setIsReadMore] = useState(true);
+  const [isReadMore, setIsReadMore] = useState<boolean>(true);
 
   const toggleReadMore = () => {
     setIsReadMore(!isReadMore);
@@ -33,12 +32,6 @@ const ReadMoreText = ({
       </span>
     </p>
   );
-};
-
-ReadMoreText.propTypes = {
-  children: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  visibleTextCount: PropTypes.number,
 };
 
 export default ReadMoreText;

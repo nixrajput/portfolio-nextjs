@@ -1,5 +1,4 @@
-import { ComponentsCommonProps } from "@/types";
-import PropTypes from "prop-types";
+import type { ComponentsCommonProps } from "@/types";
 
 const WrappedBox = (props: ComponentsCommonProps) => {
   const { children, classes, onClick, id, elementRef } = props;
@@ -14,14 +13,6 @@ const WrappedBox = (props: ComponentsCommonProps) => {
       {children}
     </div>
   );
-};
-
-WrappedBox.propTypes = {
-  children: PropTypes.node,
-  classes: PropTypes.string,
-  onClick: PropTypes.func,
-  id: PropTypes.string,
-  elementRef: PropTypes.any,
 };
 
 export default WrappedBox;

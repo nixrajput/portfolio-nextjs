@@ -1,11 +1,10 @@
-import PropTypes from "prop-types";
-import { ReactNode, RefObject } from "react";
+import type { ReactNode, RefObject } from "react";
 
 const ResponsiveBox = (props: {
-  children: ReactNode,
-  classNames: string,
-  id: string,
-  elementRef?: RefObject<HTMLDivElement>
+  children: ReactNode;
+  classNames: string;
+  id: string;
+  elementRef?: RefObject<HTMLDivElement>;
 }) => {
   const { children, classNames, id, elementRef } = props;
 
@@ -18,13 +17,6 @@ const ResponsiveBox = (props: {
       {children}
     </div>
   );
-};
-
-ResponsiveBox.propTypes = {
-  children: PropTypes.node,
-  classNames: PropTypes.string,
-  id: PropTypes.string,
-  elementRef: PropTypes.any,
 };
 
 export default ResponsiveBox;

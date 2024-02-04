@@ -11,7 +11,7 @@ import About from "@/data/about";
 import TalkButton from "./components/TalkButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const HomeSection1 = ({ id }: {id: string}) => {
+const HomeSection1 = ({ id }: { id: string }) => {
   return (
     <ResponsiveBox
       classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center"
@@ -70,7 +70,6 @@ const HomeSection1 = ({ id }: {id: string}) => {
                 height={400}
                 sizes="100%"
                 priority
-                fetchPriority="high"
                 placeholder="blur"
                 blurDataURL={About.avatarUrl}
                 style={{

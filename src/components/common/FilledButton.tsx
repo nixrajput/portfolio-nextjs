@@ -1,7 +1,6 @@
 "use client";
 
-import { ButtonComponentProps } from "@/types";
-import PropTypes from "prop-types";
+import type { ButtonComponentProps } from "@/types";
 
 const AppFilledButton = (props: ButtonComponentProps) => {
   const { label, onClick, className, name } = props;
@@ -16,13 +15,6 @@ const AppFilledButton = (props: ButtonComponentProps) => {
       {label}
     </button>
   );
-};
-
-AppFilledButton.propTypes = {
-  label: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
-  className: PropTypes.string,
-  name: PropTypes.string,
 };
 
 export default AppFilledButton;

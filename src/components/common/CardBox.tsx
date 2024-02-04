@@ -1,20 +1,16 @@
 "use client";
 
 import { motion, useMotionTemplate, useSpring } from "framer-motion";
-import PropTypes from "prop-types";
-import { MouseEvent, ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 
-const CardBox = (props: {
-  children: ReactNode,
-  classes: string
-}) => {
+const CardBox = (props: { children: ReactNode; classes: string }) => {
   const { children, classes } = props;
 
   const mouseX = useSpring(0, { stiffness: 500, damping: 100 });
   const mouseY = useSpring(0, { stiffness: 500, damping: 100 });
 
   function onMouseMove(e: MouseEvent<HTMLDivElement>) {
-    if (!e.currentTarget) return
+    if (!e.currentTarget) return;
     const { left, top } = e.currentTarget.getBoundingClientRect();
     mouseX.set(e.clientX - left);
     mouseY.set(e.clientY - top);
@@ -41,11 +37,6 @@ const CardBox = (props: {
       {children}
     </div>
   );
-};
-
-CardBox.propTypes = {
-  children: PropTypes.node,
-  classes: PropTypes.string,
 };
 
 export default CardBox;

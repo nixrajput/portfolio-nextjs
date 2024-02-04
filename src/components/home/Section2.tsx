@@ -4,7 +4,7 @@ import WrappedBox from "@/components/common/WrappedBox";
 import services from "@/data/services";
 import ServiceItem from "./components/ServiceItem";
 
-const HomeSection2 = ({ id }: {id: string}) => {
+const HomeSection2 = ({ id }: { id: string }) => {
   return (
     <ResponsiveBox
       classNames="min-h-[calc(100vh-5rem)] items-center justify-center"

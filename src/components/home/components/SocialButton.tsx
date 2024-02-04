@@ -1,4 +1,4 @@
-import { SocialLinkItem } from "@/types";
+import type { SocialLinkItem } from "@/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 

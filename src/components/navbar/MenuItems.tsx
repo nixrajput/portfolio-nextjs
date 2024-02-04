@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import PropTypes from "prop-types";
 import Dropdown from "@/components/navbar/Dropdown";
 import { MenutItemProps } from "@/types";
 
@@ -30,7 +29,11 @@ const MenuItems = (props: MenutItemProps) => {
 
   useEffect(() => {
     const handler = (event: MouseEvent | TouchEvent) => {
-      if (dropdown && ref.current && !ref.current.contains((event.target as Node))) {
+      if (
+        dropdown &&
+        ref.current &&
+        !ref.current.contains(event.target as Node)
+      ) {
         setDropdown(false);
       }
     };
@@ -94,14 +97,6 @@ const MenuItems = (props: MenutItemProps) => {
       )}{" "}
     </li>
   );
-};
-
-MenuItems.propTypes = {
-  items: PropTypes.any.isRequired,
-  current: PropTypes.string,
-  depthLevel: PropTypes.number,
-  mobileNav: PropTypes.bool.isRequired,
-  handleCloseMobileMenu: PropTypes.func.isRequired,
 };
 
 export default MenuItems;
