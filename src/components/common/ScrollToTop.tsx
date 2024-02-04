@@ -3,18 +3,23 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpLong } from "@fortawesome/free-solid-svg-icons";
+import styles from "@/app/scroll.module.scss";
 
 const ScrollToTop = () => {
   const [showTopBtn, setShowTopBtn] = useState<boolean>(false);
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 200) {
+    const handleShowBtn = () => {
+      if (window.scrollY > 400) {
         setShowTopBtn(true);
       } else {
         setShowTopBtn(false);
       }
-    });
+    };
+
+    window.addEventListener("scroll", handleShowBtn);
+
+    return () => window.removeEventListener("scroll", handleShowBtn);
   }, []);
 
   const goToTop = () => {
@@ -25,16 +30,12 @@ const ScrollToTop = () => {
   };
 
   return (
-    <div className={"topToBottom"}>
-      {" "}
-      {showTopBtn && (
-        <button onClick={goToTop} className="">
-          <FontAwesomeIcon
-            icon={faArrowUpLong}
-            className="iconPosition iconStyle"
-          />
+    <div className={styles.topToBottom}>
+      {showTopBtn ? (
+        <button onClick={goToTop} className={styles.btnStyle}>
+          <FontAwesomeIcon icon={faArrowUpLong} className={styles.iconStyle} />
         </button>
-      )}{" "}
+      ) : null}
     </div>
   );
 };

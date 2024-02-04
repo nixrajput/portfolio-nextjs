@@ -3,24 +3,17 @@ import { throttle } from "lodash";
 import navMenus from "@/data/navMenus";
 
 function useVisibleSection(sections = navMenus) {
-  const [visibleSectionId, setVisibleSectionId] = useState(sections[0].id);
+  const [visibleSectionId, setVisibleSectionId] = useState<string>(
+    sections[0].id
+  );
 
   const isSectionVisible = (elementId: string) => {
     const section = document.getElementById(elementId);
 
     if (!section) return false;
 
-    let sectionPosition = section.getBoundingClientRect();
-
-    // const vWidth = window.innerWidth || document.documentElement.clientWidth;
+    const sectionPosition = section.getBoundingClientRect();
     const vHeight = window.innerHeight || document.documentElement.clientHeight;
-
-    // const horInView =
-    //   sectionPosition.left <= vWidth &&
-    //   sectionPosition.left + sectionPosition.width >= 0;
-
-    // Calculate the height of the element
-    // var elementHeight = sectionPosition.bottom - sectionPosition.top;
 
     // Calculate the threshold for more than 50% visibility
     var threshold = vHeight * 0.5;
@@ -64,7 +57,6 @@ function useVisibleSection(sections = navMenus) {
     };
   }, [checkVisibility]);
 
-  console.log(`hooks-active: ${visibleSectionId}`);
   return visibleSectionId;
 }
 

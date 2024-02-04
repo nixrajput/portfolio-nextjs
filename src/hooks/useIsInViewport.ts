@@ -1,40 +1,40 @@
+"use client";
+
+import type { ViewportProps } from "@/types";
 import { useEffect, useState, useMemo, RefObject } from "react";
 
-const useIsInViewport = (
-  ref: RefObject<HTMLElement>,
-  { root = null, rootMargin = null, threshold = null } = {}
+const useInViewport = (
+  ref: RefObject<HTMLDataElement>,
+  options?: ViewportProps
 ) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [visibleSection, setVisibleSection] = useState("");
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
-  const options = useMemo(
+  const vOptions = useMemo(
     () => ({
-      root: root || null,
-      rootMargin: rootMargin || "20px",
-      threshold: threshold || 0.3,
+      root: options?.root,
+      rootMargin: options?.rootMargin || "20px",
+      threshold: options?.threshold || 0.3,
     }),
-    [root, rootMargin, threshold]
+    [options]
   );
 
   const observer = useMemo(
     () =>
       new IntersectionObserver(([entry]) => {
         setIsVisible(entry.isIntersecting);
-        setVisibleSection(entry.target.id);
-      }, options),
-    [options]
+      }, vOptions),
+    [vOptions]
   );
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref || !ref.current) return;
 
     observer.observe(ref.current);
 
     return () => observer.disconnect();
   }, [ref, observer]);
 
-  console.log(`visibleSection: ${visibleSection}`);
-  return { isVisible, visibleSection };
+  return isVisible;
 };
 
-export default useIsInViewport;
+export default useInViewport;

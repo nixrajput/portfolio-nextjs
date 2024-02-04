@@ -84,3 +84,9 @@ export interface ComponentsCommonProps {
   id?: string;
   elementRef?: RefObject<HTMLDivElement>;
 }
+
+export interface ViewportProps {
+  root?: null | undefined;
+  rootMargin?: string | undefined;
+  threshold?: number | undefined;
+}

@@ -801,32 +801,3 @@ h6 {
     }
   }
 }
-
-// Scroll To Top
-.topToBottom {
-  position: relative;
-}
-
-.iconPosition {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 20;
-}
-
-.iconStyle {
-  background-color: var(--bgColor);
-  border: 2px solid var(--whiteColor);
-  border-radius: 50%;
-  height: 1.5rem;
-  width: 1.5rem;
-  padding: 0.5rem;
-  color: var(--whiteColor);
-  cursor: pointer;
-  transition: all 0.25s ease-in-out;
-}
-
-.iconStyle:hover {
-  animation: none;
-  background: var(--primaryColor);
-}

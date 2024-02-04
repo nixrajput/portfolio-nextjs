@@ -1,0 +1,51 @@
+.topToBottom {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 20;
+}
+
+.btnStyle {
+  background-color: var(--bgColor);
+  border: 2px solid var(--whiteColor);
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+  color: var(--whiteColor);
+  cursor: pointer;
+  animation: upDown 3s ease-in-out infinite;
+  transition: all 0.25s ease-in-out;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnStyle:hover {
+  animation: none;
+  background-color: var(--whiteColor);
+  color: var(--bgColor);
+}
+
+.iconStyle {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+@keyframes upDown {
+  0% {
+    transform: translateY(0px);
+  }
+  25% {
+    transform: translateY(8px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  75% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}

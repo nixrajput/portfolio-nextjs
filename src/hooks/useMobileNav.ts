@@ -1,13 +1,15 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 const useMobileNav = () => {
-  const [mobileNav, setMobileNav] = useState(false);
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [mobileNav, setMobileNav] = useState<boolean>(false);
+  const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
 
   useEffect(() => {
     const handleResize = () => {
       const innerWidth = window.innerWidth;
-      if (innerWidth > 1080) {
+      if (innerWidth > 900) {
         setMobileNav(false);
         if (showMobileMenu) {
           setShowMobileMenu(false);
@@ -17,9 +19,7 @@ const useMobileNav = () => {
       }
     };
 
-    if (document.readyState === "complete") {
-      handleResize();
-    }
+    if (document.readyState === "complete") handleResize();
 
     window.addEventListener("load", handleResize);
     window.addEventListener("resize", handleResize);
