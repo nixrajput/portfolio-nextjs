@@ -12,7 +12,7 @@ const HomeSection6 = ({ id }: { id: string }) => {
       id={id}
     >
       <ConstraintedBox classNames="p-4 py-16">
-        <p className="text-center mx-auto text-3xl/6 md:text-4xl/6 font-semibold">
+        <p className="text-center mx-auto text-3xl/6 md:text-4xl/6 font-bold">
           Get in Touch
         </p>
 

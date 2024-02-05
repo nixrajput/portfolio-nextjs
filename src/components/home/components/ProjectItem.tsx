@@ -32,7 +32,7 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
           />
         </Row>
 
-        <p className="text-lg/6 font-bold mt-4">{project.title}</p>
+        <p className="text-lg/6 font-semibold mt-4">{project.title}</p>
 
         <div
           className={`flex flex-row items-center justify-center rounded-full py-[0.05] px-[0.5rem] mt-4 capitalize text-center border ${

@@ -17,7 +17,7 @@ const SkillItem = ({ item }: { item: ISkillItem }) => {
         className="w-12 lg:w-16 h-auto aspect-square object-cover"
       />
 
-      <p className="text-lg/6 font-bold mt-8">{item.title}</p>
+      <p className="text-lg/6 font-semibold mt-8">{item.title}</p>
     </CardBox>
   );
 };
