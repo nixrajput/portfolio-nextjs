@@ -1,15 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Balancer } from "react-wrap-balancer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ConstraintedBox from "@/components/core/ConstraintedBox";
 import ResponsiveBox from "@/components/core/ResponsiveBox";
 import GridBox from "@/components/core/GridBox";
 import Column from "@/components/core/Column";
 import Row from "@/components/core/Row";
-import socialLinks from "@/data/socialLinks";
-import About from "@/data/about";
 import TalkButton from "./components/TalkButton";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import socialLinks from "@/data/socialLinks";
 
 const HomeSection1 = ({ id }: { id: string }) => {
   return (
@@ -21,25 +20,31 @@ const HomeSection1 = ({ id }: { id: string }) => {
         <GridBox classNames="justify-items-stretch !gap-16 lg:!gap-8">
           <Column classNames="justify-center max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
             <Column classNames="max-w-full">
-              <p className="text-base/6 drop_in">{About.welcomeText}</p>
+              <p className="text-base/6 drop_in">Hi 👋 I&apos;m</p>
 
               <p className="text-4xl/normal md:text-5xl/normal font-bold text-[var(--primaryColor)] drop_in">
-                {About.fullName}
+                Nikhil Rajput
               </p>
 
-              <p className="text-base/6 font-medium text-[var(--textColorLight)] drop_in">
-                {About.designation}
+              <p className="text-sm/6 font-medium text-[var(--textColorLight)] drop_in">
+                Software Enginner & Full Stack Developer
               </p>
 
               <p className="text-base/normal mt-8 drop_in">
-                <Balancer>{About.description}</Balancer>
+                <Balancer>
+                  Welcome to my portfolio! I am a passionate full-stack
+                  developer with 1+ years of experience. I specialize in
+                  creating user-centric software, proficient in both front-end
+                  and back-end development across various platforms. I integrate
+                  cutting-edge technology seamlessly while prioritizing design.
+                </Balancer>
               </p>
 
               <TalkButton />
             </Column>
 
             <Column classNames="mt-8 md:mt-16 drop_out">
-              <p className="text-base/6 font-semibold">{About.followText}</p>
+              <p className="text-base/6 font-semibold">Follow me here</p>
 
               <Row classNames="mt-2 gap-2">
                 {socialLinks.slice(0, 5).map((link, index) => {
@@ -64,14 +69,14 @@ const HomeSection1 = ({ id }: { id: string }) => {
           <Row classNames="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end items-center justify-center rounded-full bg-transparent border-2 border-[var(--primaryColor60)] aspect-sqaure overflow-hidden my-auto drop_out">
             <Row classNames="w-full h-auto items-center justify-center rounded-full bg-transparent border-[0.8rem] border-[var(--primaryColor30)] aspect-sqaure overflow-hidden pointer-events-none">
               <Image
-                src={About.avatarUrl}
+                src="/images/profile.webp"
                 alt="profile"
                 width={400}
                 height={400}
                 sizes="100%"
                 priority
                 placeholder="blur"
-                blurDataURL={About.avatarUrl}
+                blurDataURL="/images/profile.webp"
                 style={{
                   objectFit: "cover",
                   width: "100%",
