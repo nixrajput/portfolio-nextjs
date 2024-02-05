@@ -115,12 +115,12 @@ You can customize various aspects of the portfolio website to make it your own.
 
 1. Update the content in the `data` directory:
 
-   - Edit the `projects.js` file to add or modify project details.
-   - Edit the `services.js` file to add or modify services you provide.
-   - Edit the `about.js` file to update your personal information.
-   - Edit the `experiences.js` file to add or modify experiences you have.
-   - Edit the `skills.js` file to add or modify skills you know.
-   - Edit the `socialLinks.js` file to add or modify socila media links.
+   - Edit the `projects.ts` file to add or modify project details.
+   - Edit the `services.ts` file to add or modify services you provide.
+   - Edit the `about.ts` file to update your personal information.
+   - Edit the `experiences.ts` file to add or modify experiences you have.
+   - Edit the `skills.ts` file to add or modify skills you know.
+   - Edit the `socialLinks.ts` file to add or modify socila media links.
 
 2. Replace or add images in the `public/images` directory to match your projects and profile picture.
 
