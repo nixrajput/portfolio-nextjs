@@ -1,19 +1,19 @@
-import Image from "next/image";
-import Link from "next/link";
+import type { IProjectItem } from "@/types";
 import { Balancer } from "react-wrap-balancer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-import Column from "@/components/common/Column";
-import Row from "@/components/common/Row";
-import CardBox from "@/components/common/CardBox";
-import type { ProjectItem } from "@/types";
+import Image from "next/image";
+import Link from "next/link";
+import Column from "@/components/core/Column";
+import Row from "@/components/core/Row";
+import CardBox from "@/components/core/CardBox";
 
-const ProjectItem = ({ project }: { project: ProjectItem }) => {
+const ProjectItem = ({ project }: { project: IProjectItem }) => {
   return (
-    <CardBox classes="p-4 items-center justify-between text-center bg-[var(--textColor10)] group">
-      <Column classes="w-full items-center justify-center">
-        <Row classes="w-[2.5rem] md:w-[3rem] aspect-square items-center justify-center">
+    <CardBox classNames="p-4 items-center justify-between text-center bg-[var(--textColor10)] group">
+      <Column classNames="w-full items-center justify-center">
+        <Row classNames="w-[2.5rem] md:w-[3rem] aspect-square items-center justify-center">
           <Image
             src={project.icon}
             alt={`project-${project.title}`}
@@ -44,7 +44,7 @@ const ProjectItem = ({ project }: { project: ProjectItem }) => {
           <p className="text-xs/6 font-semibold">{project.repoType}</p>
         </div>
 
-        <Row classes="w-full items-center justify-center mt-4 gap-2">
+        <Row classNames="w-full items-center justify-center mt-4 gap-2">
           {project.githubUrl ? (
             <Link
               href={project.githubUrl}
@@ -75,12 +75,12 @@ const ProjectItem = ({ project }: { project: ProjectItem }) => {
         </Row>
       </Column>
 
-      <Column classes="w-full mt-8 items-center">
+      <Column classNames="w-full mt-8 items-center">
         <p className="text-center text-base/6">
           <Balancer>{project.description}</Balancer>
         </p>
 
-        <Row classes="w-full items-center justify-center flex-wrap mt-4">
+        <Row classNames="w-full items-center justify-center flex-wrap mt-4">
           {project.tags.map((tag, i) => {
             return (
               <p

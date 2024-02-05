@@ -7,9 +7,9 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Strings from "@/constants/strings";
-import type { SocialLinkItem } from "@/types";
+import type { ISocialLinkItem } from "@/types";
 
-const socialLinks: SocialLinkItem[] = [
+const socialLinks: ISocialLinkItem[] = [
   {
     name: Strings.github,
     url: Strings.githubLink,

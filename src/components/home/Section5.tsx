@@ -1,7 +1,7 @@
-import ConstraintedBox from "@/components/common/ConstraintedBox";
-import ResponsiveBox from "@/components/common/ResponsiveBox";
-import WrappedBox from "@/components/common/WrappedBox";
-import ProjectItem from "@/components/home/components/ProjectItem";
+import ConstraintedBox from "@/components/core/ConstraintedBox";
+import ResponsiveBox from "@/components/core/ResponsiveBox";
+import GridBox from "@/components/core/GridBox";
+import ProjectItem from "./components/ProjectItem";
 import projects from "@/data/projects";
 
 const HomeSection5 = ({ id }: { id: string }) => {
@@ -15,11 +15,11 @@ const HomeSection5 = ({ id }: { id: string }) => {
           Recent Works
         </p>
 
-        <WrappedBox classes="justify-items-center sm:grid-cols-2 lg:grid-cols-3 mt-16">
+        <GridBox classNames="justify-items-center sm:grid-cols-2 lg:grid-cols-3 mt-16">
           {projects.map((project, index) => {
             return <ProjectItem key={`service-${index}`} project={project} />;
           })}
-        </WrappedBox>
+        </GridBox>
       </ConstraintedBox>
     </ResponsiveBox>
   );

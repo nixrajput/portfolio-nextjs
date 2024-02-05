@@ -1,6 +1,6 @@
-import { ExperienceItem } from "@/types";
+import { IExperienceItem } from "@/types";
 
-const experiences: ExperienceItem[] = [
+const experiences: IExperienceItem[] = [
   {
     designation: "Full Stack Developer",
     company: "Merito",

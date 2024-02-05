@@ -1,5 +1,5 @@
 import Script from "next/script";
-import PageBox from "@/components/common/PageBox";
+import PageBox from "@/components/core/PageBox";
 import NavBar from "@/components/navbar/NavBar";
 import HomeSection1 from "@/components/home/Section1";
 import HomeSection2 from "@/components/home/Section2";

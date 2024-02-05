@@ -1,9 +1,9 @@
-import ResponsiveBox from "@/components/common/ResponsiveBox";
-import ConstraintedBox from "@/components/common/ConstraintedBox";
-import WrappedBox from "@/components/common/WrappedBox";
-import Column from "@/components/common/Column";
-import socialLinks from "@/data/socialLinks";
+import ResponsiveBox from "@/components/core/ResponsiveBox";
+import ConstraintedBox from "@/components/core/ConstraintedBox";
+import GridBox from "@/components/core/GridBox";
+import Column from "@/components/core/Column";
 import SocialButton from "./components/SocialButton";
+import socialLinks from "@/data/socialLinks";
 
 const HomeSection6 = ({ id }: { id: string }) => {
   return (
@@ -16,8 +16,8 @@ const HomeSection6 = ({ id }: { id: string }) => {
           Get in Touch
         </p>
 
-        <Column classes="mt-16 w-full">
-          <WrappedBox classes="sm:grid-cols-2 w-full mx-auto gap-4">
+        <Column classNames="mt-16 w-full">
+          <GridBox classNames="sm:grid-cols-2 w-full mx-auto gap-4">
             {socialLinks.map((link, index) => {
               return (
                 <SocialButton
@@ -28,7 +28,7 @@ const HomeSection6 = ({ id }: { id: string }) => {
                 />
               );
             })}
-          </WrappedBox>
+          </GridBox>
 
           <p className="text-center mx-auto mt-16 text-2xl/6 font-semibold">
             I&apos;m{" "}

@@ -1,19 +1,19 @@
+import type { IServiceItem } from "@/types";
 import { Balancer } from "react-wrap-balancer";
-import CardBox from "@/components/common/CardBox";
-import Column from "@/components/common/Column";
-import type { ServiceItem } from "@/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CardBox from "@/components/core/CardBox";
+import Column from "@/components/core/Column";
 
-const ServiceItem = ({ data }: { data: ServiceItem }) => {
+const ServiceItem = ({ data }: { data: IServiceItem }) => {
   return (
-    <CardBox classes="p-4 items-center text-center bg-[var(--textColor10)] group min-h-80">
-      <Column classes="items-center justify-between w-full h-full gap-12">
-        <Column classes="items-center justify-start">
-          <span className="text-4xl/6 md:text-5xl/6 text-[var(--primaryColor)]">
+    <CardBox classNames="p-4 items-center text-center bg-[var(--textColor10)] group min-h-80">
+      <Column classNames="items-center justify-between w-full h-full gap-12">
+        <Column classNames="items-center justify-start">
+          <span className="text-3xl/6 md:text-4xl/6 text-[var(--primaryColor)]">
             <FontAwesomeIcon icon={data.icon} />
           </span>
 
-          <p className="text-lg/6 font-bold mt-4">{data.title}</p>
+          <p className="text-lg/6 font-semibold mt-4">{data.title}</p>
         </Column>
 
         <span className="w-8 h-1 bg-[var(--primaryColor)] rounded-full"></span>

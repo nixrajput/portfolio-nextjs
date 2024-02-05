@@ -14,7 +14,7 @@ const TalkButton = () => {
     <AppOutlinedButton
       label="Let's Talk"
       onClick={onHandleClickTalkBtn}
-      className="mt-8 min-w-[10rem]"
+      classNames="mt-8 min-w-[10rem]"
     />
   );
 };

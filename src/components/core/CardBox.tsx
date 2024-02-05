@@ -1,10 +1,11 @@
 "use client";
 
+import type { MouseEvent } from "react";
+import type { CoreComponentsProps } from "@/types";
 import { motion, useMotionTemplate, useSpring } from "framer-motion";
-import type { MouseEvent, ReactNode } from "react";
 
-const CardBox = (props: { children: ReactNode; classes: string }) => {
-  const { children, classes } = props;
+const CardBox = (props: Readonly<CoreComponentsProps>) => {
+  const { children, classNames } = props;
 
   const mouseX = useSpring(0, { stiffness: 500, damping: 100 });
   const mouseY = useSpring(0, { stiffness: 500, damping: 100 });
@@ -21,7 +22,7 @@ const CardBox = (props: { children: ReactNode; classes: string }) => {
   return (
     <div
       onMouseMove={onMouseMove}
-      className={`relative w-full flex flex-col justify-start items-start duration-500 border rounded-[var(--borderRadius)] hover:bg-zinc-800/10 hover:border-zinc-400/50 border-zinc-600 overflow-hidden group ${classes}`}
+      className={`relative w-full flex flex-col justify-start items-start duration-500 border rounded-[var(--borderRadius)] hover:bg-zinc-800/10 hover:border-zinc-400/50 border-zinc-600 overflow-hidden group ${classNames}`}
     >
       <div className="pointer-events-none">
         <div className="absolute inset-0 z-0 transition duration-1000 [mask-image:linear-gradient(black,transparent)]" />

@@ -4,9 +4,9 @@ import {
   faServer,
   faBrain,
 } from "@fortawesome/free-solid-svg-icons";
-import { ServiceItem } from "@/types";
+import { IServiceItem } from "@/types";
 
-const services: ServiceItem[] = [
+const services: IServiceItem[] = [
   {
     title: "Mobile App Development",
     icon: faMobileButton,

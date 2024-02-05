@@ -1,34 +1,15 @@
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import type {
-  HTMLAttributes,
-  MouseEventHandler,
-  ReactNode,
-  RefObject,
-} from "react";
+import type { MouseEventHandler, ReactNode, RefObject } from "react";
 
-export interface navMenuItem {
+export interface INavMenuItem {
   id: string;
   title: string;
   path: string;
   section: string;
-  submenu?: navMenuItem[];
+  submenu?: INavMenuItem[];
 }
 
-export interface MenutItemProps {
-  items: navMenuItem;
-  depthLevel: number;
-  mobileNav: boolean;
-  handleCloseMobileMenu: () => void;
-  current?: string;
-}
-
-export interface DropdownMenuProps
-  extends Omit<MenutItemProps, "items" | "current"> {
-  submenus: navMenuItem[];
-  dropdown: boolean;
-}
-
-export interface ExperienceItem {
+export interface IExperienceItem {
   designation: string;
   company: string;
   startDate: string;
@@ -39,7 +20,7 @@ export interface ExperienceItem {
   description: string;
 }
 
-export interface ProjectItem {
+export interface IProjectItem {
   title: string;
   description: string;
   icon: string;
@@ -50,36 +31,50 @@ export interface ProjectItem {
   tags: string[];
 }
 
-export interface ServiceItem {
+export interface IServiceItem {
   title: string;
   icon: IconDefinition;
   shortDescription: string;
   description: string;
 }
 
-export interface SkillItem {
+export interface ISkillItem {
   title: string;
   level: string;
   icon: string;
 }
 
-export interface SocialLinkItem {
+export interface ISocialLinkItem {
   url: string;
   icon: IconDefinition;
   text: string;
   name?: string;
 }
 
+export interface MenutItemProps {
+  items: INavMenuItem;
+  depthLevel: number;
+  mobileNav: boolean;
+  handleCloseMobileMenu: () => void;
+  current?: string;
+}
+
+export interface DropdownMenuProps
+  extends Omit<MenutItemProps, "items" | "current"> {
+  submenus: INavMenuItem[];
+  dropdown: boolean;
+}
+
 export interface ButtonComponentProps {
   label: string;
   onClick: MouseEventHandler<HTMLButtonElement>;
-  className?: string;
+  classNames?: string;
   name?: string;
 }
 
-export interface ComponentsCommonProps {
+export interface CoreComponentsProps {
   children: ReactNode;
-  classes?: string;
+  classNames?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
   id?: string;
   elementRef?: RefObject<HTMLDivElement>;

@@ -1,6 +1,6 @@
-import { navMenuItem } from "@/types";
+import { INavMenuItem } from "@/types";
 
-const navMenus: navMenuItem[] = [
+const navMenus: INavMenuItem[] = [
   {
     id: "about",
     title: "About",

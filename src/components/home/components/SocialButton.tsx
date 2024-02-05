@@ -1,8 +1,8 @@
-import type { SocialLinkItem } from "@/types";
+import type { ISocialLinkItem } from "@/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
-const SocialButton = ({ text, icon, url }: SocialLinkItem) => {
+const SocialButton = ({ text, icon, url }: ISocialLinkItem) => {
   return (
     <Link
       className="relative flex flex-row bg-[var(--textColor10)] p-4 rounded-[var(--borderRadius)] items-center text-center justify-center gap-2 cursor-pointer animated__hover"

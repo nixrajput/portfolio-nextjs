@@ -1,6 +1,6 @@
-import { ProjectItem } from "@/types";
+import { IProjectItem } from "@/types";
 
-const projects: ProjectItem[] = [
+const projects: IProjectItem[] = [
   {
     title: "Social Media App",
     description:

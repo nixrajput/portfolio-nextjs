@@ -1,10 +1,10 @@
+import type { ISkillItem } from "@/types";
 import Image from "next/image";
-import CardBox from "@/components/common/CardBox";
-import type { SkillItem } from "@/types";
+import CardBox from "@/components/core/CardBox";
 
-const SkillItem = ({ item }: { item: SkillItem }) => {
+const SkillItem = ({ item }: { item: ISkillItem }) => {
   return (
-    <CardBox classes="p-4 items-center justify-center text-center bg-[var(--textColor10)] w-full min-w-[10rem] aspect-square group">
+    <CardBox classNames="p-4 items-center justify-center text-center bg-[var(--textColor10)] w-full min-w-[10rem] aspect-square group">
       <Image
         src={item.icon}
         alt={`skill-${item.title}`}

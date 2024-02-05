@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Balancer } from "react-wrap-balancer";
-import ConstraintedBox from "@/components/common/ConstraintedBox";
-import ResponsiveBox from "@/components/common/ResponsiveBox";
-import WrappedBox from "@/components/common/WrappedBox";
-import Column from "@/components/common/Column";
-import Row from "@/components/common/Row";
+import ConstraintedBox from "@/components/core/ConstraintedBox";
+import ResponsiveBox from "@/components/core/ResponsiveBox";
+import GridBox from "@/components/core/GridBox";
+import Column from "@/components/core/Column";
+import Row from "@/components/core/Row";
 import socialLinks from "@/data/socialLinks";
 import About from "@/data/about";
 import TalkButton from "./components/TalkButton";
@@ -18,16 +18,16 @@ const HomeSection1 = ({ id }: { id: string }) => {
       id={id}
     >
       <ConstraintedBox classNames="px-4 py-8">
-        <WrappedBox classes="justify-items-stretch !gap-16 lg:!gap-8">
-          <Column classes="justify-center max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
-            <Column classes="max-w-full">
+        <GridBox classNames="justify-items-stretch !gap-16 lg:!gap-8">
+          <Column classNames="justify-center max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
+            <Column classNames="max-w-full">
               <p className="text-base/6 drop_in">{About.welcomeText}</p>
 
               <p className="text-4xl/normal md:text-5xl/normal font-bold text-[var(--primaryColor)] drop_in">
                 {About.fullName}
               </p>
 
-              <p className="text-base/6 font-medium text-[var(--textColorLight)] drop_in">
+              <p className="text-base/6 text-[var(--textColorLight)] drop_in">
                 {About.designation}
               </p>
 
@@ -38,10 +38,10 @@ const HomeSection1 = ({ id }: { id: string }) => {
               <TalkButton />
             </Column>
 
-            <Column classes="mt-8 md:mt-16 drop_out">
+            <Column classNames="mt-8 md:mt-16 drop_out">
               <p className="text-base/6 font-semibold">{About.followText}</p>
 
-              <Row classes="mt-2 gap-2">
+              <Row classNames="mt-2 gap-2">
                 {socialLinks.slice(0, 5).map((link, index) => {
                   return (
                     <Link
@@ -61,8 +61,8 @@ const HomeSection1 = ({ id }: { id: string }) => {
             </Column>
           </Column>
 
-          <Row classes="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end items-center justify-center rounded-full bg-transparent border-2 border-[var(--primaryColor60)] aspect-sqaure overflow-hidden my-auto drop_out">
-            <Row classes="w-full h-auto items-center justify-center rounded-full bg-transparent border-[0.8rem] border-[var(--primaryColor30)] aspect-sqaure overflow-hidden pointer-events-none">
+          <Row classNames="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end items-center justify-center rounded-full bg-transparent border-2 border-[var(--primaryColor60)] aspect-sqaure overflow-hidden my-auto drop_out">
+            <Row classNames="w-full h-auto items-center justify-center rounded-full bg-transparent border-[0.8rem] border-[var(--primaryColor30)] aspect-sqaure overflow-hidden pointer-events-none">
               <Image
                 src={About.avatarUrl}
                 alt="profile"
@@ -81,7 +81,7 @@ const HomeSection1 = ({ id }: { id: string }) => {
               />
             </Row>
           </Row>
-        </WrappedBox>
+        </GridBox>
       </ConstraintedBox>
     </ResponsiveBox>
   );
