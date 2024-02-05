@@ -27,7 +27,7 @@ const HomeSection1 = ({ id }: { id: string }) => {
                 {About.fullName}
               </p>
 
-              <p className="text-base/6 text-[var(--textColorLight)] drop_in">
+              <p className="text-base/6 font-medium text-[var(--textColorLight)] drop_in">
                 {About.designation}
               </p>
 
