@@ -801,3 +801,39 @@ h6 {
     }
   }
 }
+
+// Shooting Stars CSS
+
+#sky {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+#shootingstars {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  transform: translatex(calc(50vw - 50%)) translatey(calc(50vh - 50%))
+    rotate(120deg);
+}
+
+.wish {
+  height: 2px;
+  top: 300px;
+  width: 100px;
+  margin: 0;
+  opacity: 0;
+  padding: 0;
+  background-color: var(--whiteColor);
+  position: absolute;
+  background: linear-gradient(-45deg, var(--whiteColor), rgba(0, 0, 255, 0));
+  filter: drop-shadow(0 0 6px var(--whiteColor));
+  overflow: hidden;
+}

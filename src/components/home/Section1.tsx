@@ -7,15 +7,18 @@ import ResponsiveBox from "@/components/core/ResponsiveBox";
 import GridBox from "@/components/core/GridBox";
 import Column from "@/components/core/Column";
 import Row from "@/components/core/Row";
+import ShootingStarEffect from "@/components/common/ShootingStar";
 import TalkButton from "./components/TalkButton";
 import socialLinks from "@/data/socialLinks";
 
 const HomeSection1 = ({ id }: { id: string }) => {
   return (
     <ResponsiveBox
-      classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center"
+      classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center relative"
       id={id}
     >
+      <ShootingStarEffect />
+      
       <ConstraintedBox classNames="px-4 py-8">
         <GridBox classNames="justify-items-stretch !gap-16 lg:!gap-8">
           <Column classNames="justify-center max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">

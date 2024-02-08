@@ -85,3 +85,8 @@ export interface ViewportProps {
   rootMargin?: string | undefined;
   threshold?: number | undefined;
 }
+
+export interface ShootingStarProps {
+  vw: number;
+  vh: number;
+}
