@@ -107,7 +107,7 @@ const NavBar = () => {
               priority
               placeholder="blur"
               blurDataURL="/icon.png"
-              className="w-12 lg:w-14 h-auto"
+              className="w-10 lg:w-12 h-auto"
             />
           </Link>
 

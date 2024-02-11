@@ -25,16 +25,35 @@
   --dialogColor100: rgba(32, 39, 47, 1);
   --dialogColor: rgba(32, 39, 47, 1);
 
+  --bgColor10: rgba(23, 28, 34, 0.1);
+  --bgColor20: rgba(23, 28, 34, 0.2);
+  --bgColor30: rgba(23, 28, 34, 0.3);
+  --bgColor40: rgba(23, 28, 34, 0.4);
+  --bgColor50: rgba(23, 28, 34, 0.5);
+  --bgColor60: rgba(23, 28, 34, 0.6);
+  --bgColor70: rgba(23, 28, 34, 0.7);
+  --bgColor80: rgba(23, 28, 34, 0.8);
+  --bgColor90: rgba(23, 28, 34, 0.9);
   --bgColor: rgba(23, 28, 34, 1);
+
   --lightGrayColor: #ebebeb;
   --lighterGrayColor: #e1e1e1;
 
   --borderColor: rgba(220, 220, 220, 1);
   --darkGrayColor: rgb(160, 160, 160);
 
-  --linkColor: #0071ff;
+  --linkColor10: rgba(0, 113, 255, 0.1);
+  --linkColor20: rgba(0, 113, 255, 0.2);
+  --linkColor30: rgba(0, 113, 255, 0.3);
+  --linkColor40: rgba(0, 113, 255, 0.4);
+  --linkColor50: rgba(0, 113, 255, 0.5);
+  --linkColor60: rgba(0, 113, 255, 0.6);
+  --linkColor70: rgba(0, 113, 255, 0.7);
+  --linkColor80: rgba(0, 113, 255, 0.8);
+  --linkColor90: rgba(0, 113, 255, 0.9);
+  --linkColor100: rgba(0, 113, 255, 1);
+  --linkColor: rgba(0, 113, 255, 1);
 
-  --primaryColor: rgba(227, 9, 111, 1);
   --primaryColor10: rgba(227, 9, 111, 0.1);
   --primaryColor20: rgba(227, 9, 111, 0.2);
   --primaryColor30: rgba(227, 9, 111, 0.3);
@@ -45,20 +64,20 @@
   --primaryColor80: rgba(227, 9, 111, 0.8);
   --primaryColor90: rgba(227, 9, 111, 0.9);
   --primaryColor100: rgba(227, 9, 111, 1);
+  --primaryColor: rgba(227, 9, 111, 1);
 
-  --secondaryColor: rgba(236, 185, 130, 1);
-  --secondaryColor10: rgba(236, 185, 130, 0.1);
-  --secondaryColor20: rgba(236, 185, 130, 0.2);
-  --secondaryColor30: rgba(236, 185, 130, 0.3);
-  --secondaryColor40: rgba(236, 185, 130, 0.4);
-  --secondaryColor50: rgba(236, 185, 130, 0.5);
-  --secondaryColor60: rgba(236, 185, 130, 0.6);
-  --secondaryColor70: rgba(236, 185, 130, 0.7);
-  --secondaryColor80: rgba(236, 185, 130, 0.8);
-  --secondaryColor90: rgba(236, 185, 130, 0.9);
-  --secondaryColor100: rgba(236, 185, 130, 1);
+  --secondaryColor10: rgba(184, 53, 143, 0.1);
+  --secondaryColor20: rgba(184, 53, 143, 0.2);
+  --secondaryColor30: rgba(184, 53, 143, 0.3);
+  --secondaryColor40: rgba(184, 53, 143, 0.4);
+  --secondaryColor50: rgba(184, 53, 143, 0.5);
+  --secondaryColor60: rgba(184, 53, 143, 0.6);
+  --secondaryColor70: rgba(184, 53, 143, 0.7);
+  --secondaryColor80: rgba(184, 53, 143, 0.8);
+  --secondaryColor90: rgba(184, 53, 143, 0.9);
+  --secondaryColor100: rgba(184, 53, 143, 1);
+  --secondaryColor: rgba(184, 53, 143, 1);
 
-  --successColor: rgba(30, 180, 80, 1);
   --successColor10: rgba(30, 180, 80, 0.1);
   --successColor20: rgba(30, 180, 80, 0.2);
   --successColor30: rgba(30, 180, 80, 0.3);
@@ -69,8 +88,8 @@
   --successColor80: rgba(30, 180, 80, 0.8);
   --successColor90: rgba(30, 180, 80, 0.9);
   --successColor100: rgba(30, 180, 80, 1);
+  --successColor: rgba(30, 180, 80, 1);
 
-  --errorColor: rgba(244, 67, 54, 1);
   --errorColor10: rgba(244, 67, 54, 0.1);
   --errorColor20: rgba(244, 67, 54, 0.2);
   --errorColor30: rgba(244, 67, 54, 0.3);
@@ -81,8 +100,8 @@
   --errorColor80: rgba(244, 67, 54, 0.8);
   --errorColor90: rgba(244, 67, 54, 0.9);
   --errorColor100: rgba(244, 67, 54, 1);
+  --errorColor: rgba(244, 67, 54, 1);
 
-  --warningColor: rgba(240, 156, 0, 1);
   --warningColor10: rgba(240, 156, 0, 0.1);
   --warningColor20: rgba(240, 156, 0, 0.2);
   --warningColor30: rgba(240, 156, 0, 0.3);
@@ -93,8 +112,8 @@
   --warningColor80: rgba(240, 156, 0, 0.8);
   --warningColor90: rgba(240, 156, 0, 0.9);
   --warningColor100: rgba(240, 156, 0, 1);
+  --warningColor: rgba(240, 156, 0, 1);
 
-  --textColor: rgba(248, 248, 248, 1);
   --textColor10: rgba(248, 248, 248, 0.1);
   --textColor20: rgba(248, 248, 248, 0.2);
   --textColor30: rgba(248, 248, 248, 0.3);
@@ -105,8 +124,8 @@
   --textColor80: rgba(248, 248, 248, 0.8);
   --textColor90: rgba(248, 248, 248, 0.9);
   --textColor100: rgba(248, 248, 248, 1);
+  --textColor: rgba(248, 248, 248, 1);
 
-  --textColorLight: rgba(180, 180, 180, 1);
   --textColorLight10: rgba(180, 180, 180, 0.1);
   --textColorLight20: rgba(180, 180, 180, 0.2);
   --textColorLight30: rgba(180, 180, 180, 0.3);
@@ -117,8 +136,8 @@
   --textColorLight80: rgba(180, 180, 180, 0.8);
   --textColorLight90: rgba(180, 180, 180, 0.9);
   --textColorLight100: rgba(180, 180, 180, 1);
+  --textColorLight: rgba(180, 180, 180, 1);
 
-  --blackColor: rgba(0, 0, 0, 1);
   --blackColor10: rgba(0, 0, 0, 0.1);
   --blackColor20: rgba(0, 0, 0, 0.2);
   --blackColor30: rgba(0, 0, 0, 0.3);
@@ -129,8 +148,8 @@
   --blackColor80: rgba(0, 0, 0, 0.8);
   --blackColor90: rgba(0, 0, 0, 0.9);
   --blackColor100: rgba(0, 0, 0, 1);
+  --blackColor: rgba(0, 0, 0, 1);
 
-  --whiteColor: rgba(255, 255, 255, 1);
   --whiteColor10: rgba(255, 255, 255, 0.1);
   --whiteColor20: rgba(255, 255, 255, 0.2);
   --whiteColor30: rgba(255, 255, 255, 0.3);
@@ -141,11 +160,12 @@
   --whiteColor80: rgba(255, 255, 255, 0.8);
   --whiteColor90: rgba(255, 255, 255, 0.9);
   --whiteColor100: rgba(255, 255, 255, 1);
+  --whiteColor: rgba(255, 255, 255, 1);
 
-  --boxGrad1: linear-gradient(
+  --primaryGrad: linear-gradient(
     118.18deg,
-    rgb(237, 212, 178) 0.99%,
-    rgb(234, 185, 120) 100%
+    var(--primaryColor) 0.99%,
+    var(--secondaryColor) 100%
   );
 
   --boxShadow: 0px 4px 12px -6px rgba(0, 0, 0, 0.1),
@@ -318,7 +338,7 @@ h6 {
     top: 0;
     left: -100%;
     background: var(--primaryColor);
-    transition: all 0.6s ease;
+    transition: all 0.5s ease;
     z-index: -1;
   }
 
@@ -371,9 +391,7 @@ h6 {
   border: none;
   padding: 0.75rem 1.5rem;
 
-  background: var(--primaryColor50);
-  -webkit-backdrop-filter: blur(0.5rem);
-  backdrop-filter: blur(0.5rem);
+  background: var(--primaryColor);
   border-radius: var(--borderRadius);
 
   color: var(--whiteColor);
@@ -399,8 +417,8 @@ h6 {
     position: absolute;
     top: 0;
     left: -100%;
-    background: var(--primaryColor);
-    transition: all 0.6s ease;
+    background: var(--secondaryColor);
+    transition: all 0.5s ease;
     z-index: -1;
   }
 
@@ -514,7 +532,7 @@ h6 {
     top: 0;
     left: -100%;
     background: var(--primaryColor);
-    transition: all 0.6s ease;
+    transition: all 0.5s ease;
     z-index: -1;
   }
 
