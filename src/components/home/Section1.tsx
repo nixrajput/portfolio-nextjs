@@ -9,6 +9,7 @@ import Column from "@/components/core/Column";
 import Row from "@/components/core/Row";
 import ShootingStarEffect from "@/components/common/ShootingStar";
 import TalkButton from "./components/TalkButton";
+import ResumeButton from "./components/ResumeButton";
 import socialLinks from "@/data/socialLinks";
 
 const HomeSection1 = ({ id }: { id: string }) => {
@@ -18,7 +19,7 @@ const HomeSection1 = ({ id }: { id: string }) => {
       id={id}
     >
       <ShootingStarEffect />
-      
+
       <ConstraintedBox classNames="px-4 py-8 z-[5]">
         <GridBox classNames="justify-items-stretch !gap-16 lg:!gap-8">
           <Column classNames="justify-center max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
@@ -43,10 +44,13 @@ const HomeSection1 = ({ id }: { id: string }) => {
                 </Balancer>
               </p>
 
-              <TalkButton />
+              <Column classNames="gap-4 mt-8 lg:mt-16 lg:flex-row">
+                <TalkButton />
+                <ResumeButton />
+              </Column>
             </Column>
 
-            <Column classNames="mt-8 md:mt-16 drop_out">
+            <Column classNames="mt-8 lg:mt-16 drop_out">
               <p className="text-base/6 font-semibold">Follow me here</p>
 
               <Row classNames="mt-2 gap-2">

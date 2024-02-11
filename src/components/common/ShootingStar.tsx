@@ -44,21 +44,12 @@ class ShootingStarEffect extends Component<{}, ShootingStarProps> {
           value: "1",
         },
       ],
-      width: [
-        {
-          value: "160px",
-        },
-        {
-          value: "0px",
-        },
-      ],
+      width: [{ value: "10rem" }, { value: "0" }],
       translateX: 350,
     });
   };
 
-  randomRadius = () => {
-    return Math.random() * 0.7 + 0.6;
-  };
+  randomRadius = () => Math.random() * 0.7 + 0.6;
 
   getRandomX = () => {
     return Math.floor(Math.random() * Math.floor(this.state.vw)).toString();
@@ -70,14 +61,8 @@ class ShootingStarEffect extends Component<{}, ShootingStarProps> {
 
   updateWindowDimensions = () => {
     this.setState({
-      vw: Math.max(
-        document.documentElement.clientWidth,
-        window.innerWidth || 0
-      ),
-      vh: Math.max(
-        document.documentElement.clientHeight,
-        window.innerHeight || 0
-      ),
+      vw: Math.max(document.documentElement.clientWidth, window.innerWidth),
+      vh: Math.max(document.documentElement.clientHeight, window.innerHeight),
     });
   };
 

@@ -1,7 +1,7 @@
 import "./globals.scss";
-import ScrollToTop from "@/components/common/ScrollToTop";
 import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
+import ScrollToTop from "@/components/common/ScrollToTop";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -50,7 +50,7 @@ export const metadata = {
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <html lang="en" className={[poppins.variable].join(" ")}>
+    <html lang="en" className={[poppins.variable, "Poppins"].join(" ")}>
       <body
         className={`bg-[var(--bgColor)] ${
           process.env.NODE_ENV === "development" ? "debug-screens" : ""

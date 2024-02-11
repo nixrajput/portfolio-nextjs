@@ -1,21 +1,15 @@
-"use client";
-
-import AppOutlinedButton from "@/components/common/OutlinedButton";
+import Link from "next/link";
 import Strings from "@/constants/strings";
 
 const TalkButton = () => {
-  const onHandleClickTalkBtn = () => {
-    if (typeof window === "undefined") return;
-
-    window.open(Strings.telegramLink, "_blank");
-  };
-
   return (
-    <AppOutlinedButton
-      label="Let's Talk"
-      onClick={onHandleClickTalkBtn}
-      classNames="mt-8 min-w-[10rem]"
-    />
+    <Link
+      className="app__filled_btn min-w-[12rem]"
+      href={Strings.telegramLink}
+      target="_blank"
+    >
+      Let&apos;s Talk
+    </Link>
   );
 };
 

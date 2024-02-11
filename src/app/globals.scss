@@ -170,7 +170,7 @@ body {
 
 body {
   background-color: var(--bgColor);
-  font-family: var(--font-poppins), Poppins, system-ui, -apple-system,
+  font-family: --font-poppins, Poppins, system-ui, -apple-system,
     BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
     Droid Sans, Helvetica Neue, sans-serif;
   font-size: 1rem;
@@ -805,34 +805,43 @@ h6 {
 // Shooting Stars CSS
 
 #sky {
+  position: absolute;
+
   width: 100%;
   height: 100%;
-  position: absolute;
-  overflow: hidden;
+
   margin: 0;
   padding: 0;
+
+  overflow: hidden;
 }
 
 #shootingstars {
+  position: absolute;
+
   margin: 0;
   padding: 0;
+
   width: 100%;
   height: 100%;
-  position: absolute;
-  overflow: hidden;
+
   transform: translatex(calc(50vw - 50%)) translatey(calc(50vh - 50%))
     rotate(120deg);
+  overflow: hidden;
 }
 
 .wish {
+  position: absolute;
+  top: 20rem;
+
+  width: 5rem;
   height: 2px;
-  top: 300px;
-  width: 100px;
+
   margin: 0;
   opacity: 0;
   padding: 0;
+
   background-color: var(--whiteColor);
-  position: absolute;
   background: linear-gradient(-45deg, var(--whiteColor), rgba(0, 0, 255, 0));
   filter: drop-shadow(0 0 6px var(--whiteColor));
   overflow: hidden;
