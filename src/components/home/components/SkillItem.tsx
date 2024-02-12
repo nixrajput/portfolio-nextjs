@@ -9,7 +9,7 @@ const SkillItem = ({ data }: { data: ISkillListItem }) => {
       <p className="text-lg/6 font-semibold text-center">{data.title}</p>
 
       {data.items.length > 0 ? (
-        <Row classNames="gap-4 mt-8 flex-wrap justify-center items-center">
+        <Row classNames="gap-2 mt-8 flex-wrap justify-center items-center">
           {data.items.map((skill, index) => {
             return (
               <Row

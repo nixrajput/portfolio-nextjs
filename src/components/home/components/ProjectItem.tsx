@@ -11,7 +11,7 @@ import CardBox from "@/components/core/CardBox";
 
 const ProjectItem = ({ project }: { project: IProjectItem }) => {
   return (
-    <CardBox classNames="p-4 items-center justify-between text-center bg-[var(--textColor10)] group">
+    <CardBox classNames="p-4 items-center justify-between text-center bg-[var(--textColor10)] group slide_in">
       <Column classNames="w-full items-center justify-center">
         <Row classNames="w-[2.5rem] md:w-[3rem] aspect-square items-center justify-center">
           <Image
