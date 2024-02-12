@@ -38,10 +38,21 @@ export interface IServiceItem {
   description: string;
 }
 
+export interface ISkillListItem {
+  title: string;
+  items: ISkillItem[];
+}
+
+export enum SkillLevel {
+  Expert,
+  Intermediate,
+  Begginer,
+}
+
 export interface ISkillItem {
   title: string;
-  level: string;
-  icon: string;
+  level?: SkillLevel;
+  icon?: string;
 }
 
 export interface ISocialLinkItem {

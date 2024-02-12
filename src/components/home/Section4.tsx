@@ -15,9 +15,9 @@ const HomeSection4 = ({ id }: { id: string }) => {
           Skills
         </p>
 
-        <GridBox classNames="justify-items-center grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-16">
+        <GridBox classNames="justify-items-center grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-16">
           {skills.map((skill, index) => {
-            return <SkillItem key={`skill-${index}`} item={skill} />;
+            return <SkillItem key={`skill-${index}`} data={skill} />;
           })}
         </GridBox>
       </ConstraintedBox>

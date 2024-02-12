@@ -5,7 +5,7 @@ const projects: IProjectItem[] = [
     title: "Social Media App",
     description:
       "A social media mobile application developed using Flutter, GetX, Firebase Notifications and Hive.",
-    icon: "/logo/flutter.webp",
+    icon: "/skills/flutter.svg",
     sceenshots: [],
     githubUrl: "https://github.com/nixrajput/social-media-app-flutter",
     url: "https://www.nixlab.co.in/projects/com.nixlab.rippl",
@@ -16,7 +16,7 @@ const projects: IProjectItem[] = [
     title: "E-commerce App",
     description:
       "An e-commerce web application developed using React.js, Material UI, Redux, and Stripe.",
-    icon: "/logo/reactjs.webp",
+    icon: "/skills/react.svg",
     sceenshots: [],
     githubUrl: "https://github.com/nixrajput/ecommerce-web-reactjs",
     url: "https://nixlab-shop.cyclic.app",
@@ -27,7 +27,7 @@ const projects: IProjectItem[] = [
     title: "Video Calling App",
     description:
       "A video calling mobile application developed using Flutter and Agora SDK that allows users to call each other face to face.",
-    icon: "/logo/flutter.webp",
+    icon: "/skills/flutter.svg",
     sceenshots: [],
     githubUrl: "https://github.com/nixrajput/video-calling-app-flutter",
     url: "https://www.nixlab.co.in/projects/livebox-app",
@@ -38,7 +38,7 @@ const projects: IProjectItem[] = [
     title: "Social Media API",
     description:
       "An RESTful API developed using Node.js, Express.js and MongoDB to integrate backend and frontend with ease.",
-    icon: "/logo/nodejs.webp",
+    icon: "/skills/nestjs.svg",
     sceenshots: [],
     githubUrl: "https://github.com/nixrajput/social-media-api-nodejs",
     url: "",
@@ -49,7 +49,7 @@ const projects: IProjectItem[] = [
     title: "Grocery List Maker App",
     description:
       "A grocery list maker mobile application developed using Flutter, BloC, Hive DB and PDF.",
-    icon: "/logo/flutter.webp",
+    icon: "/skills/flutter.svg",
     sceenshots: [],
     githubUrl: "https://github.com/nixrajput/grocery-list-maker-flutter",
     url: "https://github.com/nixrajput/grocery-list-maker-flutter/releases/latest",
@@ -60,7 +60,7 @@ const projects: IProjectItem[] = [
     title: "E-commerce API",
     description:
       "An RESTful API developed using Node.js, Express.js, MongoDB, and Stripe to integrate e-commerce backend.",
-    icon: "/logo/nodejs.webp",
+    icon: "/skills/nodejs.svg",
     sceenshots: [],
     githubUrl: "https://github.com/nixrajput/ecommerce-api-nodejs",
     url: "",
