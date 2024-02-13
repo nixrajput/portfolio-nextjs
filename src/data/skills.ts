@@ -128,8 +128,19 @@ const skills: ISkillListItem[] = [
         icon: "/skills/redux.svg",
       },
       {
+        title: "AWS",
+        level: SkillLevel.Intermediate,
+        icon: "/skills/aws.svg",
+      },
+      {
+        title: "Firebase",
+        level: SkillLevel.Intermediate,
+        icon: "/skills/firebase.svg",
+      },
+      {
         title: "Ubuntu",
         level: SkillLevel.Intermediate,
+        icon: "/skills/ubuntu.png",
       },
     ],
   },
@@ -144,10 +155,12 @@ const skills: ISkillListItem[] = [
       {
         title: "Collaboration",
         level: SkillLevel.Expert,
+        icon: "/images/collaboration.png",
       },
       {
         title: "Analytical Skills",
         level: SkillLevel.Expert,
+        icon: "/images/analytical-skills.png",
       },
     ],
   },
