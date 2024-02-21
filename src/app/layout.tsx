@@ -1,7 +1,11 @@
 import "./globals.scss";
 import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
+import { Metadata } from "next";
+import Script from "next/script";
+import NavBar from "@/components/navbar/NavBar";
 import ScrollToTop from "@/components/common/ScrollToTop";
+import LocalConfig from "@/constants/config";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -20,10 +24,9 @@ const poppins = Poppins({
     "Fira Sans",
     "Droid Sans",
   ],
-  variable: "--font-poppins",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Nikhil Rajput",
   description:
     "Nikhil Rajput is a proficient Full Stack Developer, skilled in seamlessly integrating front-end and back-end technologies while excelling in design.",
@@ -50,13 +53,32 @@ export const metadata = {
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <html lang="en" className={[poppins.variable, "Poppins"].join(" ")}>
+    <html lang="en" className={poppins.className}>
+      <head>
+        <Script
+          strategy="worker"
+          src={`https://www.googletagmanager.com/gtag/js?id=${LocalConfig.values.NEXT_PUBLIC_GTAG_ID}`}
+        />
+
+        <Script id="google-analytics" strategy="worker">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${LocalConfig.values.NEXT_PUBLIC_GTAG_ID}', {
+            page_path: window.location.pathname,
+          });
+        `}
+        </Script>
+      </head>
+
       <body
-        className={`bg-[var(--bgColor)] ${
+        className={
           process.env.NODE_ENV === "development" ? "debug-screens" : ""
-        }`}
+        }
       >
-        {children}
+        <NavBar />
+        <main>{children}</main>
         <ScrollToTop />
       </body>
     </html>

@@ -1,4 +1,7 @@
-import type { IProjectItem } from "@/types";
+"use client";
+
+import { useRouter } from "next/navigation";
+import { RepoType, type IProjectItem } from "@/types";
 import { Balancer } from "react-wrap-balancer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -10,9 +13,20 @@ import Row from "@/components/core/Row";
 import CardBox from "@/components/core/CardBox";
 
 const ProjectItem = ({ project }: { project: IProjectItem }) => {
+  const router = useRouter();
+
+  const _handleNavigateToPage = (id: string) => {
+    if (!id || id.length < 1) return;
+
+    router.push(`/projects?id=${id}`);
+  };
+
   return (
-    <CardBox classNames="p-4 items-center justify-between text-center bg-[var(--textColor10)] group slide_in">
-      <Column classNames="w-full items-center justify-center">
+    <CardBox
+      classNames="min-w-[25rem] min-h-[28rem] p-4 gap-8 items-center justify-between bg-[var(--textColor10)] group slide_in cursor-pointer"
+      // onClick={() => _handleNavigateToPage(project.id)}
+    >
+      <Column classNames="w-full items-center justify-start">
         <Row classNames="w-[2.5rem] md:w-[3rem] aspect-square items-center justify-center">
           <Image
             src={project.icon}
@@ -23,12 +37,7 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
             loading="lazy"
             placeholder="blur"
             blurDataURL={project.icon}
-            style={{
-              objectFit: "cover",
-              width: "100%",
-              height: "100%",
-              aspectRatio: "1 / 1",
-            }}
+            className="w-full h-full object-cover aspect-square"
           />
         </Row>
 
@@ -36,12 +45,14 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
 
         <div
           className={`flex flex-row items-center justify-center rounded-full py-[0.05] px-[0.5rem] mt-4 capitalize text-center border ${
-            project.repoType.toLowerCase() === "private"
+            project.repoType === RepoType.Private
               ? "text-[var(--errorColor)] border-[var(--errorColor50)]"
               : "text-[var(--successColor)] border-[var(--successColor50)]"
           }`}
         >
-          <p className="text-xs/6 font-semibold">{project.repoType}</p>
+          <p className="text-xs/6 font-semibold">
+            {project.repoType === RepoType.Private ? "Private" : "Public"}
+          </p>
         </div>
 
         <Row classNames="w-full items-center justify-center mt-4 gap-2">
@@ -75,23 +86,25 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
         </Row>
       </Column>
 
-      <Column classNames="w-full mt-8 items-center">
+      <Column classNames="w-full items-center">
         <p className="text-center text-base/6">
           <Balancer>{project.description}</Balancer>
         </p>
 
-        <Row classNames="w-full items-center justify-center flex-wrap mt-4">
-          {project.tags.map((tag, i) => {
-            return (
-              <p
-                key={`tag-${i}`}
-                className="rounded-[var(--borderRadius)] border border-[var(--textColor50)] py-[.125rem] px-2 mr-2 mb-2 text-xs/6 font-normal"
-              >
-                {tag}
-              </p>
-            );
-          })}
-        </Row>
+        {project.tags && project.tags.length > 0 ? (
+          <Row classNames="w-full items-center justify-center flex-wrap mt-4">
+            {project.tags.map((tag, i) => {
+              return (
+                <p
+                  key={`tag-${i}`}
+                  className="rounded-[var(--borderRadius)] border border-[var(--textColor50)] py-[.125rem] px-2 mr-2 mb-2 text-xs/6 font-normal"
+                >
+                  {tag}
+                </p>
+              );
+            })}
+          </Row>
+        ) : null}
       </Column>
     </CardBox>
   );

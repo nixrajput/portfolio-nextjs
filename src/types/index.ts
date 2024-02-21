@@ -20,15 +20,21 @@ export interface IExperienceItem {
   description: string;
 }
 
+export enum RepoType {
+  Public,
+  Private,
+}
+
 export interface IProjectItem {
+  id: string;
   title: string;
   description: string;
   icon: string;
-  sceenshots: string[];
-  githubUrl: string;
-  url: string;
-  repoType: string;
-  tags: string[];
+  repoType: RepoType;
+  githubUrl?: string;
+  url?: string;
+  tags?: string[];
+  sceenshots?: string[];
 }
 
 export interface IServiceItem {

@@ -114,14 +114,16 @@ const skills: ISkillListItem[] = [
   {
     title: "Miscellaneous",
     items: [
-      {
-        title: "WebSockets",
-        level: SkillLevel.Intermediate,
-      },
-      {
-        title: "GetX",
-        level: SkillLevel.Expert,
-      },
+      // {
+      //   title: "WebSockets",
+      //   level: SkillLevel.Intermediate,
+      //   icon: "/images/logical-thinking.png",
+      // },
+      // {
+      //   title: "GetX",
+      //   level: SkillLevel.Expert,
+      //   icon: "/images/logical-thinking.png",
+      // },
       {
         title: "Redux",
         level: SkillLevel.Expert,

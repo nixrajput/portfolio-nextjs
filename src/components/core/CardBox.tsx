@@ -5,7 +5,7 @@ import type { CoreComponentsProps } from "@/types";
 import { motion, useMotionTemplate, useSpring } from "framer-motion";
 
 const CardBox = (props: Readonly<CoreComponentsProps>) => {
-  const { children, classNames } = props;
+  const { children, classNames, onClick, id, elementRef } = props;
 
   const mouseX = useSpring(0, { stiffness: 500, damping: 100 });
   const mouseY = useSpring(0, { stiffness: 500, damping: 100 });
@@ -21,10 +21,13 @@ const CardBox = (props: Readonly<CoreComponentsProps>) => {
 
   return (
     <div
+      id={id}
       onMouseMove={onMouseMove}
+      onClick={onClick}
+      ref={elementRef}
       className={`relative w-full flex flex-col justify-start items-start duration-500 border rounded-[var(--borderRadius)] hover:bg-zinc-800/10 hover:border-zinc-400/50 border-zinc-600 overflow-hidden group ${classNames}`}
     >
-      <div className="pointer-events-none">
+      <div className="pointer-events-none absolute">
         <div className="absolute inset-0 z-0 transition duration-1000 [mask-image:linear-gradient(black,transparent)]" />
         <motion.div
           className="absolute inset-0 z-10 bg-gradient-to-br opacity-100 via-zinc-100/10 transition duration-1000 group-hover:opacity-50"

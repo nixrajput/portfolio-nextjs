@@ -2,6 +2,7 @@ import ResponsiveBox from "@/components/core/ResponsiveBox";
 import ConstraintedBox from "@/components/core/ConstraintedBox";
 import GridBox from "@/components/core/GridBox";
 import Column from "@/components/core/Column";
+import SectionTitle from "@/components/common/SectionTitle";
 import SocialButton from "./components/SocialButton";
 import socialLinks from "@/data/socialLinks";
 
@@ -12,9 +13,7 @@ const HomeSection6 = ({ id }: { id: string }) => {
       id={id}
     >
       <ConstraintedBox classNames="p-4 py-16">
-        <p className="text-center mx-auto text-3xl/6 md:text-4xl/6 font-bold">
-          Get in Touch
-        </p>
+        <SectionTitle>Get in Touch</SectionTitle>
 
         <Column classNames="mt-16 w-full">
           <GridBox classNames="sm:grid-cols-2 w-full mx-auto gap-4">

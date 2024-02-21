@@ -1,70 +1,68 @@
-import { IProjectItem } from "@/types";
+import { IProjectItem, RepoType } from "@/types";
 
 const projects: IProjectItem[] = [
   {
+    id: "social-media-app-flutter",
     title: "Social Media App",
     description:
       "A social media mobile application developed using Flutter, GetX, Firebase Notifications and Hive.",
     icon: "/skills/flutter.svg",
-    sceenshots: [],
+    repoType: RepoType.Public,
     githubUrl: "https://github.com/nixrajput/social-media-app-flutter",
     url: "https://www.nixlab.co.in/projects/com.nixlab.rippl",
-    repoType: "public",
     tags: ["Flutter", "Dart", "GetX", "Hive"],
   },
   {
+    id: "e-commerce-app-mern",
     title: "E-commerce App",
     description:
       "An e-commerce web application developed using React.js, Material UI, Redux, and Stripe.",
     icon: "/skills/react.svg",
-    sceenshots: [],
+    repoType: RepoType.Public,
     githubUrl: "https://github.com/nixrajput/ecommerce-web-reactjs",
     url: "https://nixlab-shop.cyclic.app",
-    repoType: "public",
     tags: ["React.js", "Redux", "Material UI", "Stripe"],
   },
   {
+    id: "video-calling-app-flutter",
     title: "Video Calling App",
     description:
       "A video calling mobile application developed using Flutter and Agora SDK that allows users to call each other face to face.",
     icon: "/skills/flutter.svg",
-    sceenshots: [],
+    repoType: RepoType.Public,
     githubUrl: "https://github.com/nixrajput/video-calling-app-flutter",
     url: "https://www.nixlab.co.in/projects/livebox-app",
-    repoType: "public",
     tags: ["Flutter", "Dart", "GetX", "Agora SDK"],
   },
   {
+    id: "social-media-api-nodejs",
     title: "Social Media API",
     description:
       "An RESTful API developed using Node.js, Express.js and MongoDB to integrate backend and frontend with ease.",
     icon: "/skills/nestjs.svg",
-    sceenshots: [],
+    repoType: RepoType.Public,
     githubUrl: "https://github.com/nixrajput/social-media-api-nodejs",
-    url: "",
-    repoType: "public",
     tags: ["Node.js", "Express.js", "MongoDB", "WebSocket"],
   },
   {
+    id: "grocery-list-maker-app-flutter",
     title: "Grocery List Maker App",
     description:
       "A grocery list maker mobile application developed using Flutter, BloC, Hive DB and PDF.",
     icon: "/skills/flutter.svg",
-    sceenshots: [],
+    repoType: RepoType.Public,
     githubUrl: "https://github.com/nixrajput/grocery-list-maker-flutter",
     url: "https://github.com/nixrajput/grocery-list-maker-flutter/releases/latest",
-    repoType: "public",
     tags: ["Flutter", "Dart", "BLoC", "PDF", "Hive"],
   },
   {
+    id: "e-commerce-api-nodejs",
     title: "E-commerce API",
     description:
       "An RESTful API developed using Node.js, Express.js, MongoDB, and Stripe to integrate e-commerce backend.",
     icon: "/skills/nodejs.svg",
-    sceenshots: [],
+    repoType: RepoType.Public,
     githubUrl: "https://github.com/nixrajput/ecommerce-api-nodejs",
-    url: "",
-    repoType: "public",
     tags: ["Node.js", "Express.js", "MongoDB", "Stripe"],
   },
 ];

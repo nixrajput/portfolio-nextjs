@@ -2,6 +2,7 @@ import type { ISkillListItem } from "@/types";
 import Image from "next/image";
 import CardBox from "@/components/core/CardBox";
 import Row from "@/components/core/Row";
+import Column from "@/components/core/Column";
 
 const SkillItem = ({ data }: { data: ISkillListItem }) => {
   return (
@@ -9,12 +10,12 @@ const SkillItem = ({ data }: { data: ISkillListItem }) => {
       <p className="text-lg/6 font-semibold text-center">{data.title}</p>
 
       {data.items.length > 0 ? (
-        <Row classNames="gap-2 mt-8 flex-wrap justify-center items-center">
+        <Row classNames="gap-4 mt-8 flex-wrap justify-center items-center">
           {data.items.map((skill, index) => {
             return (
-              <Row
+              <Column
                 key={`skill-item-${index}`}
-                classNames="items-center gap-1 px-2 py-0.5 border border-[var(--textColor)] text-[var(--textColor)] rounded-[var(--borderRadius)]"
+                classNames="items-center gap-1 text-[var(--textColor)]"
               >
                 {skill.icon ? (
                   <Image
@@ -26,12 +27,12 @@ const SkillItem = ({ data }: { data: ISkillListItem }) => {
                     loading="lazy"
                     placeholder="blur"
                     blurDataURL="/images/logical-thinking.png"
-                    className="w-4 lg:w-6 h-auto aspect-square object-cover"
+                    className="w-12 lg:w-14 h-auto aspect-square object-cover"
                   />
                 ) : null}
 
                 <p className="text-xs/6 font-normal">{skill.title}</p>
-              </Row>
+              </Column>
             );
           })}
         </Row>
