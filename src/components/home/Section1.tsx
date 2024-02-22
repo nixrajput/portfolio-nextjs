@@ -12,7 +12,7 @@ import TalkButton from "./components/TalkButton";
 import ResumeButton from "./components/ResumeButton";
 import socialLinks from "@/data/socialLinks";
 
-const HomeSection1 = ({ id }: { id: string }) => {
+const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
   return (
     <ResponsiveBox
       classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center relative"

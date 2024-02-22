@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   ],
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
     <html lang="en" className={poppins.className}>
       <head>

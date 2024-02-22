@@ -68,3 +68,19 @@ const projects: IProjectItem[] = [
 ];
 
 export default projects;
+
+export function getProjectName(id: string) {
+  const item = projects.find((e) => e.id === id);
+
+  if (!item) return null;
+
+  return item.title;
+}
+
+export function getProjectDetails(id: string): IProjectItem | null {
+  const item = projects.find((e) => e.id === id);
+
+  if (!item) return null;
+
+  return item;
+}

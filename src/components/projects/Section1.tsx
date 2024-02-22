@@ -1,9 +1,24 @@
-import React from 'react'
+"use client";
 
-const ProjectsSection1 = () => {
+import { useSearchParams } from "next/navigation";
+import ResponsiveBox from "@/components/core/ResponsiveBox";
+import ConstraintedBox from "@/components/core/ConstraintedBox";
+import AppBar from "@/components/common/AppBar";
+import { getProjectName } from "@/data/projects";
+
+const ProjectsSection1 = ({ id }: Readonly<{ id?: string }>) => {
+  const searchParams = useSearchParams();
+
   return (
-    <div>ProjectsSection1</div>
-  )
-}
+    <ResponsiveBox
+      classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)]"
+      id={id}
+    >
+      <ConstraintedBox classNames="px-4 py-8">
+        <AppBar>{getProjectName(searchParams.get("id")!) || ""}</AppBar>
+      </ConstraintedBox>
+    </ResponsiveBox>
+  );
+};
 
 export default ProjectsSection1;
