@@ -14,7 +14,7 @@ const ProjectsSection1 = ({ id }: Readonly<{ id?: string }>) => {
       classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)]"
       id={id}
     >
-      <ConstraintedBox classNames="px-4 py-8">
+      <ConstraintedBox classNames="px-4 pt-4 py-8">
         <AppBar>{getProjectName(searchParams.get("id")!) || ""}</AppBar>
       </ConstraintedBox>
     </ResponsiveBox>
