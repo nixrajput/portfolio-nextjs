@@ -56,11 +56,11 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <html lang="en" className={poppins.className}>
       <head>
         <Script
-          strategy="worker"
+          strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${LocalConfig.values.NEXT_PUBLIC_GTAG_ID}`}
         />
 
-        <Script id="google-analytics" strategy="worker">
+        <Script id="google-analytics" strategy="afterInteractive">
           {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
