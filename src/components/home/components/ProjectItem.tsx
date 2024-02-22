@@ -23,7 +23,7 @@ const ProjectItem = ({ project }: { project: IProjectItem }) => {
 
   return (
     <CardBox
-      classNames="min-w-[calc(100%-2rem)] md:min-w-[calc(100%-4rem)] max-w-[25rem] aspect-[3/5] max-h-[28rem] p-4 gap-8 items-center justify-between bg-[var(--textColor10)] group slide_in cursor-pointer"
+      classNames="min-w-[calc(100%-2rem)] sm:min-w-[25rem] md:min-w-[28rem] aspect-[3/5] max-h-[30rem] p-4 gap-8 items-center justify-between bg-[var(--textColor10)] group slide_in cursor-pointer"
       onClick={() => _handleNavigateToPage(project.id)}
     >
       <Column classNames="w-full items-center justify-start">

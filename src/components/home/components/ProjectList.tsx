@@ -12,14 +12,18 @@ const ProjectList = ({ projects }: Readonly<{ projects: IProjectItem[] }>) => {
   const _handleOnClickPrev = () => {
     if (!carouselRef || carouselRef.current === null) return;
 
-    const offset = window.innerWidth - 100;
+    let offset = 400;
+    if (window.innerWidth < 480) offset = 280;
+
     carouselRef.current.scrollLeft -= offset;
   };
 
   const _handleOnClickNext = () => {
     if (!carouselRef || carouselRef.current === null) return;
 
-    const offset = window.innerWidth - 100;
+    let offset = 400;
+    if (window.innerWidth < 480) offset = 280;
+
     carouselRef.current.scrollLeft += offset;
   };
 
