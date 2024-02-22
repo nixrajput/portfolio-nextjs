@@ -1,10 +1,17 @@
+import { Suspense } from "react";
 import PageBox from "@/components/core/PageBox";
-import NavBar from "@/components/navbar/NavBar";
+import AppBar from "@/components/common/AppBar";
+import ProjectsSection1 from "@/components/projects/Section1";
 
-export default function Home() {
+const ProjectDetails = () => {
   return (
     <PageBox>
-      <NavBar />
+      <Suspense>
+        <AppBar>Project</AppBar>
+        <ProjectsSection1 />
+      </Suspense>
     </PageBox>
   );
-}
+};
+
+export default ProjectDetails;

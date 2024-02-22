@@ -12,13 +12,15 @@ const ProjectList = ({ projects }: Readonly<{ projects: IProjectItem[] }>) => {
   const _handleOnClickPrev = () => {
     if (!carouselRef || carouselRef.current === null) return;
 
-    carouselRef.current.scrollLeft -= 400;
+    const offset = window.innerWidth - 100;
+    carouselRef.current.scrollLeft -= offset;
   };
 
   const _handleOnClickNext = () => {
     if (!carouselRef || carouselRef.current === null) return;
 
-    carouselRef.current.scrollLeft += 400;
+    const offset = window.innerWidth - 100;
+    carouselRef.current.scrollLeft += offset;
   };
 
   return (
@@ -28,7 +30,7 @@ const ProjectList = ({ projects }: Readonly<{ projects: IProjectItem[] }>) => {
         elementRef={carouselRef}
       >
         {projects.map((item, index) => {
-          return <ProjectItem key={`project-${index}`} project={item} />;
+          return <ProjectItem key={`project-item-${index}`} project={item} />;
         })}
       </Row>
 
