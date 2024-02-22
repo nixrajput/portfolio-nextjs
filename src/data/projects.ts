@@ -11,6 +11,11 @@ const projects: IProjectItem[] = [
     githubUrl: "https://github.com/nixrajput/social-media-app-flutter",
     url: "https://www.nixlab.co.in/projects/com.nixlab.rippl",
     tags: ["Flutter", "Dart", "GetX", "Hive"],
+    sceenshots: [
+      "/screenshots/rippl.png",
+      "/screenshots/merito.png",
+      "/screenshots/meritohub.png",
+    ],
   },
   {
     id: "e-commerce-app-mern",

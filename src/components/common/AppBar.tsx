@@ -5,18 +5,15 @@ import Row from "@/components/core/Row";
 
 const AppBar = ({ children }: Readonly<{ children: string }>) => {
   return (
-    <Row classNames="items-center p-0 m-0 gap-2">
-      <Link
-        href="/"
-        className="app__outlined_btn !rounded-full !p-2 lg:!p-3 !aspect-square !border-[var(--textColor)]"
-      >
+    <Row classNames="gap-4">
+      <Link href="/" className="p-0 m-0">
         <FontAwesomeIcon
           icon={faArrowLeft}
-          className="text-lg/6 text-[var(--textColor)]"
+          className="text-2xl/6 md:text-3xl/6 text-[var(--textColor)]"
         />
       </Link>
 
-      <p className="text-xl/6 font-bold">{children}</p>
+      <p className="text-2xl/6 md:text-3xl/6 font-bold">{children}</p>
     </Row>
   );
 };
