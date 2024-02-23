@@ -22,7 +22,9 @@ const Modal = ({
           />
         </Link>
 
-        <Column classNames="w-full h-full p-4 mt-8 overflow-hidden">{children}</Column>
+        <Column classNames="w-full h-full p-4 mt-8 overflow-hidden">
+          {children}
+        </Column>
       </div>
     </div>
   );

@@ -25,16 +25,24 @@ export enum RepoType {
   Private,
 }
 
+export enum ProjectType {
+  Personal,
+  JobWork,
+  Freelance,
+}
+
 export interface IProjectItem {
   id: string;
   title: string;
   description: string;
   icon: string;
   repoType: RepoType;
+  projectType?: ProjectType;
   githubUrl?: string;
   url?: string;
   tags?: string[];
   sceenshots?: string[];
+  about?: string;
 }
 
 export interface IServiceItem {

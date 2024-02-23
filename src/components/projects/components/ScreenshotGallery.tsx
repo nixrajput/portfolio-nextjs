@@ -14,19 +14,12 @@ const ScreenshotGallery = ({
 
   return (
     <Column classNames="w-full mt-4">
-      <Row classNames="w-full gap-4 overflow-x-auto no-scrollbar items-center justify-center">
+      <Row classNames="w-full gap-4 overflow-y-hidden overflow-x-auto no-scrollbar items-center">
         {imageList.map((img, index) => {
           return (
             <Link
               key={`screenshot-${index}`}
-              className="hover:scale-105"
-              style={{
-                position: "relative",
-                width: "auto",
-                height: "auto",
-                transition: "all 0.5s ease-in-out",
-                animation: "drop-in 1s ease 500ms backwards",
-              }}
+              className="relative min-w-[10rem] lg:min-w-[12rem] max-w-[10rem] lg:max-w-[12rem] aspect-[9/16] border border-[var(--textColor30)] rounded-[var(--defaultRadius)] overflow-hidden drop_in"
               href={{
                 pathname: pathname,
                 query: { id: searchParams.get("id"), imgSrc: img },
@@ -36,14 +29,13 @@ const ScreenshotGallery = ({
               <Image
                 src={img}
                 alt={`screenshot-${index}`}
-                width={400}
-                height={400}
+                fill
                 sizes="100%"
                 priority={false}
                 loading="lazy"
                 placeholder="blur"
                 blurDataURL="/images/placeholder.png"
-                className="w-auto h-auto max-h-[25rem] object-contain"
+                className="w-full h-full object-contain py-4 px-2"
               />
             </Link>
           );
