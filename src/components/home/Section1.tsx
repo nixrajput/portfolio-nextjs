@@ -36,11 +36,10 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
 
               <p className="text-base/normal mt-8 drop_in">
                 <Balancer>
-                  Welcome to my portfolio! I am a passionate full-stack
-                  developer with 1+ years of experience. I specialize in
-                  creating user-centric software, proficient in both front-end
-                  and back-end development across various platforms. I integrate
-                  cutting-edge technology seamlessly while prioritizing design.
+                  Welcome to my portfolio! I am a goal-oriented and results-driven Full Stack Developer with 2+ years of experience in developing dynamic web
+                  applications and robust backend APIs. I am skilled in both front-end and back-end development using modern technologies
+                  such as Node.js, React.js, Next.js, MongoDB, Express, Flutter, and Redux Toolkit. I demonstrates a quick learning ability and a
+                  passion for keeping up with industry advancements. I am a strong problem-solver who excels in collaborative team settings.
                 </Balancer>
               </p>
 
