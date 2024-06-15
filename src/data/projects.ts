@@ -10,7 +10,8 @@ const projects: IProjectItem[] = [
     repoType: RepoType.Public,
     projectType: ProjectType.Personal,
     githubUrl: "https://github.com/nixrajput/social-media-app-flutter",
-    url: "https://www.nixlab.co.in/projects/com.nixlab.rippl",
+    // url: "https://www.nixlab.co.in/projects/com.nixlab.rippl",
+    url: "https://github.com/nixrajput/social-media-app-flutter/releases",
     tags: ["Flutter", "Dart", "GetX", "Hive"],
     sceenshots: ["/screenshots/rippl.png"],
   },
@@ -23,7 +24,7 @@ const projects: IProjectItem[] = [
     repoType: RepoType.Public,
     projectType: ProjectType.Personal,
     githubUrl: "https://github.com/nixrajput/ecommerce-web-reactjs",
-    url: "https://nixlab-shop.cyclic.app",
+    url: "https://nixlab-shop.vercel.app",
     tags: ["React.js", "Redux", "Material UI", "Stripe"],
   },
   {
@@ -35,7 +36,7 @@ const projects: IProjectItem[] = [
     repoType: RepoType.Public,
     projectType: ProjectType.Personal,
     githubUrl: "https://github.com/nixrajput/video-calling-app-flutter",
-    url: "https://www.nixlab.co.in/projects/livebox-app",
+    url: "https://github.com/nixrajput/video-calling-app-flutter/releases",
     tags: ["Flutter", "Dart", "GetX", "Agora SDK"],
   },
   {
@@ -58,7 +59,8 @@ const projects: IProjectItem[] = [
     repoType: RepoType.Public,
     projectType: ProjectType.Personal,
     githubUrl: "https://github.com/nixrajput/grocery-list-maker-flutter",
-    url: "https://github.com/nixrajput/grocery-list-maker-flutter/releases/latest",
+    url:
+      "https://github.com/nixrajput/grocery-list-maker-flutter/releases/latest",
     tags: ["Flutter", "Dart", "BLoC", "PDF", "Hive"],
   },
   {

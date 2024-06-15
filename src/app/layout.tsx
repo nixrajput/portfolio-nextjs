@@ -29,7 +29,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Nikhil Rajput",
   description:
-    "Nikhil Rajput is a proficient Full Stack Developer, skilled in seamlessly integrating front-end and back-end technologies while excelling in design.",
+    "Nikhil Rajput is a proficient Software Engineer and Full Stack Developer from India, skilled in front-end and back-end development using modern tech stacks.",
   robots: {
     index: true,
     follow: true,
@@ -48,6 +48,18 @@ export const metadata: Metadata = {
       sizes: "any",
       type: "image/svg+xml",
     },
+  ],
+  keywords: [
+    "nikhil rajput",
+    "nikhil",
+    "nixrajput",
+    "nikhil-rajput",
+    "rajput nikhil",
+    "founder of nixlab",
+    "nixlab founder",
+    "full stack developer",
+    "indian developer",
+    "nixrajput github",
   ],
 };
 

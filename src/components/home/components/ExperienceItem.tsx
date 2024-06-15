@@ -23,10 +23,7 @@ const ExperienceItem = ({ data }: { data: IExperienceItem }) => {
         </Column>
 
         <div
-          className={`flex flex-row relative gap-1 items-center justify-center px-2 py-0.5 border ${
-            data.isCurrentJob
-              ? "border-[var(--primaryColor)] text-[var(--primaryColor)]"
-              : "border-[var(--textColor)] text-[var(--textColor)]"
+          className={`flex flex-row relative gap-1 items-center justify-center px-2 py-0.5 border border-[var(--textColor)] text-[var(--textColor)]"
           } rounded-[var(--borderRadius)]`}
         >
           <p className="text-xs/6 font-medium uppercase">{data.startDate}</p>

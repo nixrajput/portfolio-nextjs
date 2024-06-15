@@ -1,16 +1,16 @@
+import ShootingStarEffect from "@/components/common/ShootingStar";
+import Column from "@/components/core/Column";
+import ConstraintedBox from "@/components/core/ConstraintedBox";
+import GridBox from "@/components/core/GridBox";
+import ResponsiveBox from "@/components/core/ResponsiveBox";
+import Row from "@/components/core/Row";
+import socialLinks from "@/data/socialLinks";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { Balancer } from "react-wrap-balancer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ConstraintedBox from "@/components/core/ConstraintedBox";
-import ResponsiveBox from "@/components/core/ResponsiveBox";
-import GridBox from "@/components/core/GridBox";
-import Column from "@/components/core/Column";
-import Row from "@/components/core/Row";
-import ShootingStarEffect from "@/components/common/ShootingStar";
-import TalkButton from "./components/TalkButton";
 import ResumeButton from "./components/ResumeButton";
-import socialLinks from "@/data/socialLinks";
+import TalkButton from "./components/TalkButton";
 
 const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
   return (
@@ -36,10 +36,15 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
 
               <p className="text-base/normal mt-8 drop_in">
                 <Balancer>
-                  Welcome to my portfolio! I am a goal-oriented and results-driven Full Stack Developer with 2+ years of experience in developing dynamic web
-                  applications and robust backend APIs. I am skilled in both front-end and back-end development using modern technologies
-                  such as Node.js, React.js, Next.js, MongoDB, Express, Flutter, and Redux Toolkit. I demonstrates a quick learning ability and a
-                  passion for keeping up with industry advancements. I am a strong problem-solver who excels in collaborative team settings.
+                  Welcome to my portfolio! I am a goal-oriented and
+                  results-driven Full Stack Developer from India with 2+ years
+                  of experience in developing dynamic web applications and
+                  robust backend APIs. I am skilled in front-end and back-end
+                  development using modern technologies such as Node.js,
+                  React.js, Next.js, Express.js, Flutter, GetX and Redux
+                  Toolkit. I demonstrate a quick learning ability and a passion
+                  for keeping up with industry advancements. I am a strong
+                  problem-solver who excels in collaborative team settings.
                 </Balancer>
               </p>
 

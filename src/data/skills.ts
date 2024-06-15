@@ -35,11 +35,6 @@ const skills: ISkillListItem[] = [
         icon: "/skills/react.svg",
       },
       {
-        title: "Flutter",
-        level: SkillLevel.Expert,
-        icon: "/skills/flutter.svg",
-      },
-      {
         title: "HTML",
         level: SkillLevel.Expert,
         icon: "/skills/html.svg",
@@ -54,6 +49,11 @@ const skills: ISkillListItem[] = [
         level: SkillLevel.Intermediate,
         icon: "/skills/sass.svg",
       },
+      {
+        title: "Redux Toolkit",
+        level: SkillLevel.Expert,
+        icon: "/skills/redux.svg",
+      },
     ],
   },
   {
@@ -65,14 +65,34 @@ const skills: ISkillListItem[] = [
         icon: "/skills/nodejs.svg",
       },
       {
-        title: "Express",
+        title: "Express.js",
         level: SkillLevel.Expert,
         icon: "/skills/express.svg",
       },
       {
-        title: "Nest.js",
-        level: SkillLevel.Begginer,
-        icon: "/skills/nestjs.svg",
+        title: "Socket.io",
+        level: SkillLevel.Intermediate,
+        icon: "/skills/socket-io.png",
+      },
+      // {
+      //   title: "Nest.js",
+      //   level: SkillLevel.Begginer,
+      //   icon: "/skills/nestjs.svg",
+      // },
+    ],
+  },
+  {
+    title: "Mobile App Development",
+    items: [
+      {
+        title: "Flutter",
+        level: SkillLevel.Expert,
+        icon: "/skills/flutter.svg",
+      },
+      {
+        title: "GetX",
+        level: SkillLevel.Expert,
+        icon: "/skills/getx.png",
       },
     ],
   },
@@ -97,8 +117,18 @@ const skills: ISkillListItem[] = [
     ],
   },
   {
-    title: "Version Control Systems",
+    title: "DevOps/VCS",
     items: [
+      {
+        title: "Docker",
+        level: SkillLevel.Begginer,
+        icon: "/skills/docker.png",
+      },
+      {
+        title: "AWS",
+        level: SkillLevel.Intermediate,
+        icon: "/skills/aws.svg",
+      },
       {
         title: "Git",
         level: SkillLevel.Expert,
@@ -114,26 +144,6 @@ const skills: ISkillListItem[] = [
   {
     title: "Miscellaneous",
     items: [
-      // {
-      //   title: "WebSockets",
-      //   level: SkillLevel.Intermediate,
-      //   icon: "/images/logical-thinking.png",
-      // },
-      // {
-      //   title: "GetX",
-      //   level: SkillLevel.Expert,
-      //   icon: "/images/logical-thinking.png",
-      // },
-      {
-        title: "Redux",
-        level: SkillLevel.Expert,
-        icon: "/skills/redux.svg",
-      },
-      {
-        title: "AWS",
-        level: SkillLevel.Intermediate,
-        icon: "/skills/aws.svg",
-      },
       {
         title: "Firebase",
         level: SkillLevel.Intermediate,
