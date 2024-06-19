@@ -3,9 +3,10 @@ import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
 import { Metadata } from "next";
 import Script from "next/script";
-import NavBar from "@/components/navbar/NavBar";
 import ScrollToTop from "@/components/common/ScrollToTop";
 import LocalConfig from "@/constants/config";
+import { FloatingNav } from "@/components/navbar/NavbarNew";
+import { menuItems } from "@/data/navMenus";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -89,7 +90,8 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
           process.env.NODE_ENV === "development" ? "debug-screens" : ""
         }
       >
-        <NavBar />
+        <FloatingNav className="app_nav" navItems={menuItems} />
+        {/* <NavBar /> */}
         <main>{children}</main>
         <ScrollToTop />
       </body>

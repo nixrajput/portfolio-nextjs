@@ -1,4 +1,14 @@
 import { INavMenuItem } from "@/types";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import {
+  faHome,
+  faUser,
+  faBriefcase,
+  faTimeline,
+  faAward,
+  faLaptopCode,
+  faEnvelope,
+} from "@fortawesome/free-solid-svg-icons";
 
 const navMenus: INavMenuItem[] = [
   {
@@ -40,3 +50,45 @@ const navMenus: INavMenuItem[] = [
 ];
 
 export default navMenus;
+
+export const menuItems: {
+  name: string;
+  link: string;
+  icon?: IconDefinition;
+}[] = [
+  // {
+  //   name: "Home",
+  //   link: "/#hero",
+  //   icon: faHome,
+  // },
+  {
+    name: "About",
+    link: "/#about",
+    icon: faUser,
+  },
+  {
+    name: "Services",
+    link: "/#services",
+    icon: faBriefcase,
+  },
+  {
+    name: "Experiences",
+    link: "/#experiences",
+    icon: faTimeline,
+  },
+  {
+    name: "Skills",
+    link: "/#skills",
+    icon: faAward,
+  },
+  {
+    name: "Projects",
+    link: "/#projects",
+    icon: faLaptopCode,
+  },
+  {
+    name: "Contact",
+    link: "/#contact",
+    icon: faEnvelope,
+  },
+];

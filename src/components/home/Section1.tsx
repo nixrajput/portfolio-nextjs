@@ -20,7 +20,7 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
     >
       <ShootingStarEffect />
 
-      <ConstraintedBox classNames="px-4 py-8 z-[5]">
+      <ConstraintedBox classNames="px-4 py-8 pt-24 z-[5]">
         <GridBox classNames="justify-items-stretch !gap-16 lg:!gap-8">
           <Column classNames="justify-center max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
             <Column classNames="max-w-full">
