@@ -9,21 +9,25 @@
 }
 
 @layer utilities {
+
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 }
 
 :root {
   --maxWidth: 1200px;
-  --borderRadius: 1rem;
-  --defaultRadius: 1rem;
+  --borderRadius: 1.5rem;
+  --defaultRadius: 1.5rem;
 
   --dialogColor10: rgba(32, 39, 47, 0.1);
   --dialogColor20: rgba(32, 39, 47, 0.2);
@@ -66,29 +70,29 @@
   --linkColor100: rgba(0, 113, 255, 1);
   --linkColor: rgba(0, 113, 255, 1);
 
-  --primaryColor10: rgba(227, 9, 111, 0.1);
-  --primaryColor20: rgba(227, 9, 111, 0.2);
-  --primaryColor30: rgba(227, 9, 111, 0.3);
-  --primaryColor40: rgba(227, 9, 111, 0.4);
-  --primaryColor50: rgba(227, 9, 111, 0.5);
-  --primaryColor60: rgba(227, 9, 111, 0.6);
-  --primaryColor70: rgba(227, 9, 111, 0.7);
-  --primaryColor80: rgba(227, 9, 111, 0.8);
-  --primaryColor90: rgba(227, 9, 111, 0.9);
-  --primaryColor100: rgba(227, 9, 111, 1);
-  --primaryColor: rgba(227, 9, 111, 1);
+  --primaryColor10: rgba(0, 177, 113, 0.1);
+  --primaryColor20: rgba(0, 177, 113, 0.2);
+  --primaryColor30: rgba(0, 177, 113, 0.3);
+  --primaryColor40: rgba(0, 177, 113, 0.4);
+  --primaryColor50: rgba(0, 177, 113, 0.5);
+  --primaryColor60: rgba(0, 177, 113, 0.6);
+  --primaryColor70: rgba(0, 177, 113, 0.7);
+  --primaryColor80: rgba(0, 177, 113, 0.8);
+  --primaryColor90: rgba(0, 177, 113, 0.9);
+  --primaryColor100: rgba(0, 177, 113, 1);
+  --primaryColor: rgba(0, 177, 113, 1);
 
-  --secondaryColor10: rgba(184, 53, 143, 0.1);
-  --secondaryColor20: rgba(184, 53, 143, 0.2);
-  --secondaryColor30: rgba(184, 53, 143, 0.3);
-  --secondaryColor40: rgba(184, 53, 143, 0.4);
-  --secondaryColor50: rgba(184, 53, 143, 0.5);
-  --secondaryColor60: rgba(184, 53, 143, 0.6);
-  --secondaryColor70: rgba(184, 53, 143, 0.7);
-  --secondaryColor80: rgba(184, 53, 143, 0.8);
-  --secondaryColor90: rgba(184, 53, 143, 0.9);
-  --secondaryColor100: rgba(184, 53, 143, 1);
-  --secondaryColor: rgba(184, 53, 143, 1);
+  --secondaryColor10: rgba(0, 237, 138, 0.1);
+  --secondaryColor20: rgba(0, 237, 138, 0.2);
+  --secondaryColor30: rgba(0, 237, 138, 0.3);
+  --secondaryColor40: rgba(0, 237, 138, 0.4);
+  --secondaryColor50: rgba(0, 237, 138, 0.5);
+  --secondaryColor60: rgba(0, 237, 138, 0.6);
+  --secondaryColor70: rgba(0, 237, 138, 0.7);
+  --secondaryColor80: rgba(0, 237, 138, 0.8);
+  --secondaryColor90: rgba(0, 237, 138, 0.9);
+  --secondaryColor100: rgba(0, 237, 138, 1);
+  --secondaryColor: rgba(35, 230, 134, 1);
 
   --successColor10: rgba(30, 180, 80, 0.1);
   --successColor20: rgba(30, 180, 80, 0.2);
@@ -174,11 +178,9 @@
   --whiteColor100: rgba(255, 255, 255, 1);
   --whiteColor: rgba(255, 255, 255, 1);
 
-  --primaryGrad: linear-gradient(
-    118.18deg,
-    var(--primaryColor) 0.99%,
-    var(--secondaryColor) 100%
-  );
+  --primaryGrad: linear-gradient(118.18deg,
+      var(--primaryColor) 0.99%,
+      var(--secondaryColor) 100%);
 
   --boxShadow: 0px 4px 12px -6px rgba(0, 0, 0, 0.1),
     0px -4px 12px -6px rgba(0, 0, 0, 0.1), -4px 0px 12px -6px rgba(0, 0, 0, 0.1),
@@ -584,6 +586,7 @@ h6 {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -594,6 +597,7 @@ h6 {
     opacity: 0;
     transform: translateX(-100px);
   }
+
   to {
     opacity: 1;
     transform: translate(0px);
@@ -605,6 +609,7 @@ h6 {
     opacity: 0;
     transform: translateX(100px);
   }
+
   to {
     opacity: 1;
     transform: translate(0px);
@@ -616,6 +621,7 @@ h6 {
     opacity: 0;
     transform: translateY(-100px);
   }
+
   to {
     opacity: 1;
     transform: translate(0px);
@@ -627,6 +633,7 @@ h6 {
     opacity: 0;
     transform: translateY(100px);
   }
+
   to {
     opacity: 1;
     transform: translate(0px);
@@ -859,8 +866,7 @@ h6 {
   width: 100%;
   height: 100%;
 
-  transform: translatex(calc(50vw - 50%)) translatey(calc(50vh - 50%))
-    rotate(120deg);
+  transform: translatex(calc(50vw - 50%)) translatey(calc(50vh - 50%)) rotate(120deg);
   overflow: hidden;
 }
 

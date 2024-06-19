@@ -1,12 +1,10 @@
 /** @type {import('next').NextConfig} */
 const path = require("path");
+const { withSentryConfig } = require("@sentry/nextjs");
 
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  sassOptions: {
-    includePaths: [path.join(__dirname, "styles")],
-  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "**.githubusercontent.com" },
@@ -15,4 +13,9 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withSentryConfig(nextConfig, {
+  org: "nixlab-technologies",
+  project: "portfolio-nextjs",
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  silent: false,
+});
