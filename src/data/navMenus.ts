@@ -1,5 +1,4 @@
-import { INavMenuItem } from "@/types";
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { INavItem, INavMenuItem } from "@/types";
 import {
   faHome,
   faUser,
@@ -51,11 +50,7 @@ const navMenus: INavMenuItem[] = [
 
 export default navMenus;
 
-export const menuItems: {
-  name: string;
-  link: string;
-  icon?: IconDefinition;
-}[] = [
+export const menuItems: INavItem[] = [
   // {
   //   name: "Home",
   //   link: "/#hero",

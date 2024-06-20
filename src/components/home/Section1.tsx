@@ -15,7 +15,7 @@ import TalkButton from "./components/TalkButton";
 const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
   return (
     <ResponsiveBox
-      classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center relative"
+      classNames="bg-[var(--dialogColor)] min-h-screen items-center justify-center relative"
       id={id}
     >
       <ShootingStarEffect />

@@ -1,4 +1,4 @@
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { IconDefinition, IconProp } from "@fortawesome/fontawesome-svg-core";
 import type { MouseEventHandler, ReactNode, RefObject } from "react";
 
 export interface INavMenuItem {
@@ -7,6 +7,12 @@ export interface INavMenuItem {
   path: string;
   section: string;
   submenu?: INavMenuItem[];
+}
+
+export interface INavItem {
+  name: string;
+  link: string;
+  icon: IconProp;
 }
 
 export interface IExperienceItem {

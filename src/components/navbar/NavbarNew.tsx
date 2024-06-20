@@ -3,19 +3,15 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/utils/cn";
 import Link from "next/link";
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
+import { INavItem } from "@/types";
 
-export const FloatingNav = ({
+const FloatingNav = ({
   navItems,
   className,
 }: {
-  navItems: {
-    name: string;
-    link: string;
-    icon?: IconDefinition;
-  }[];
+  navItems: INavItem[];
   className?: string;
 }) => {
   return (
@@ -37,7 +33,7 @@ export const FloatingNav = ({
           className
         )}
       >
-        {navItems.map((navItem: any, idx: number) => (
+        {navItems.map((navItem: INavItem, idx: number) => (
           <Link
             key={`link=${idx}`}
             href={navItem.link}
@@ -46,7 +42,11 @@ export const FloatingNav = ({
             )}
           >
             <span className="block sm:hidden">
-              <FontAwesomeIcon icon={navItem.icon} title={navItem.name} />
+              <FontAwesomeIcon
+                id={`nav-item-icon${idx}`}
+                icon={navItem.icon}
+                title={navItem.name}
+              />
             </span>
             <span className="hidden sm:block text-sm/6 lg:text-base">
               {navItem.name}
@@ -68,3 +68,5 @@ export const FloatingNav = ({
     </AnimatePresence>
   );
 };
+
+export default FloatingNav;
