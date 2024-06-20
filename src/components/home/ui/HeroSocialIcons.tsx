@@ -11,7 +11,7 @@ const HeroSocialIcons = () => {
     <motion.div
       className="mt-12 lg:mt-16 w-full flex flex-col items-center"
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
       transition={{
         duration: 0.5,
         ease: "linear",

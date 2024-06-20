@@ -9,7 +9,7 @@ const HeroButtons = () => {
     <motion.div
       className="gap-4 mt-12 lg:mt-16 flex flex-col md:flex-row"
       initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
+      animate={{ opacity: 1 }}
       transition={{
         duration: 0.5,
         ease: "linear",

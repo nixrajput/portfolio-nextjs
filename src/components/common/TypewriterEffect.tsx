@@ -74,12 +74,8 @@ export const TypewriterEffect = ({
   return (
     <motion.div
       className={cn("overflow-hidden", className)}
-      initial={{
-        width: "0%",
-      }}
-      whileInView={{
-        width: "fit-content",
-      }}
+      initial={{ width: "0%" }}
+      animate={{ width: "fit-content" }}
       transition={{
         duration: duration || 2,
         ease: "linear",
@@ -147,7 +143,7 @@ export const TypewriterEffectSmooth = ({
     <motion.div
       className={cn("relative overflow-hidden", className)}
       initial={{ width: "0%" }}
-      whileInView={{ width: "fit-content" }}
+      animate={{ width: "fit-content" }}
       transition={{
         duration: duration || 2,
         ease: "linear",
