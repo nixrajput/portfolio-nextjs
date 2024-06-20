@@ -9,23 +9,33 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
   const text_1 = [
     {
       text: "Hi",
+      classname:
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--textColor)] dark:text-[var(--textColor)]",
     },
     {
       text: "there,",
+      classname:
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--textColor)] dark:text-[var(--textColor)]",
     },
     {
       text: "I",
+      classname:
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--textColor)] dark:text-[var(--textColor)]",
     },
     {
       text: "am",
+      classname:
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--textColor)] dark:text-[var(--textColor)]",
     },
     {
       text: "Nikhil",
-      className: "text-[var(--primaryColor)] dark:text-[var(--primaryColor)]",
+      className:
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--primaryColor)] dark:text-[var(--primaryColor)]",
     },
     {
       text: "Rajput",
-      className: "text-[var(--primaryColor)] dark:text-[var(--primaryColor)]",
+      className:
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--primaryColor)] dark:text-[var(--primaryColor)]",
     },
   ];
 
@@ -70,7 +80,11 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
       <ConstraintedBox classNames="px-4 py-8 z-10 w-full items-center justify-center">
         <Column classNames="w-full items-center justify-center">
           <TypewriterEffectSmooth words={text_1} delay={0} />
-          <TypewriterEffectSmooth words={text_2} delay={3} className="-mt-3 sm:-mt-4 md:-mt-6 lg:-mt-9 xl:-mt-12" />
+          <TypewriterEffectSmooth
+            words={text_2}
+            delay={3}
+            className="-mt-3 sm:-mt-4 md:-mt-6 lg:-mt-9 xl:-mt-12"
+          />
 
           <HeroButtons />
         </Column>
