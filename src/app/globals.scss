@@ -653,3 +653,31 @@ h6 {
 .slide_out {
   animation: slide-out 1s ease 200ms backwards;
 }
+
+.constrained-width {
+  width: 100%;
+}
+
+@media screen and (max-width: 1920px) {
+  .constrained-width {
+    max-width: 1440px;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .constrained-width {
+    max-width: 1200px;
+  }
+}
+
+@media screen and (max-width: 1367px) {
+  .constrained-width {
+    max-width: 1080px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .constrained-width {
+    max-width: 100%;
+  }
+}
