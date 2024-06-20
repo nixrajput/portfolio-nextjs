@@ -2,7 +2,7 @@ import ConstraintedBox from "@/components/core/ConstraintedBox";
 import ResponsiveBox from "@/components/core/ResponsiveBox";
 import GridBox from "@/components/core/GridBox";
 import SectionTitle from "@/components/common/SectionTitle";
-import ExperienceItem from "./components/ExperienceItem";
+import ExperienceItem from "./ui/ExperienceItem";
 import experiences from "@/data/experiences";
 
 const HomeSection3 = ({ id }: { id: string }) => {

@@ -1,103 +1,81 @@
-import ShootingStarEffect from "@/components/common/ShootingStar";
 import Column from "@/components/core/Column";
 import ConstraintedBox from "@/components/core/ConstraintedBox";
-import GridBox from "@/components/core/GridBox";
 import ResponsiveBox from "@/components/core/ResponsiveBox";
-import Row from "@/components/core/Row";
-import socialLinks from "@/data/socialLinks";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Image from "next/image";
-import Link from "next/link";
-import { Balancer } from "react-wrap-balancer";
-import ResumeButton from "./components/ResumeButton";
-import TalkButton from "./components/TalkButton";
+import { TypewriterEffectSmooth } from "@/components/common/TypewriterEffect";
+import HeroButtons from "./ui/HeroButtons";
+import HeroSocialIcons from "./ui/HeroSocialIcons";
 
 const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
+  const text_1 = [
+    {
+      text: "Hi",
+    },
+    {
+      text: "there,",
+    },
+    {
+      text: "I",
+    },
+    {
+      text: "am",
+    },
+    {
+      text: "Nikhil",
+      className: "text-[var(--primaryColor)] dark:text-[var(--primaryColor)]",
+    },
+    {
+      text: "Rajput",
+      className: "text-[var(--primaryColor)] dark:text-[var(--primaryColor)]",
+    },
+  ];
+
+  const text_2 = [
+    {
+      text: "Software",
+      className:
+        "text-xs/normal sm:text-sm/normal md:text-base/normal font-medium text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+    },
+    {
+      text: "Enginner",
+      className:
+        "text-xs/normal sm:text-sm/normal md:text-base/normal font-medium text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+    },
+    {
+      text: "&",
+      className:
+        "text-xs/normal sm:text-sm/normal md:text-base/normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+    },
+    {
+      text: "Full",
+      className:
+        "text-xs/normal sm:text-sm/normal md:text-base/normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+    },
+    {
+      text: "Stack",
+      className:
+        "text-xs/normal sm:text-sm/normal md:text-base/normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+    },
+    {
+      text: "Developer",
+      className:
+        "text-xs/normal sm:text-sm/normal md:text-base/normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+    },
+  ];
+
   return (
     <ResponsiveBox
-      classNames="bg-[var(--dialogColor)] min-h-screen items-center justify-center relative"
+      classNames="bg-[var(--dialogColor)] min-h-screen items-center justify-center relative overflow-hidden rounded-md"
       id={id}
     >
-      <ShootingStarEffect />
+      <ConstraintedBox classNames="px-4 py-8 z-10 w-full items-center justify-center">
+        <Column classNames="w-full items-center justify-center">
+          <TypewriterEffectSmooth words={text_1} delay={0.5} />
+          <TypewriterEffectSmooth words={text_2} delay={3} className="-mt-3 sm:-mt-4 md:-mt-6 lg:-mt-9 xl:-mt-12" />
 
-      <ConstraintedBox classNames="px-4 py-8 pt-24 z-[5]">
-        <GridBox classNames="justify-items-stretch !gap-16 lg:!gap-8">
-          <Column classNames="justify-center max-w-full sm:max-w-sm md:max-w-md lg:max-w-lg">
-            <Column classNames="max-w-full">
-              <p className="text-base/6 drop_in">Hi 👋 I&apos;m</p>
+          <HeroButtons />
+        </Column>
 
-              <p className="text-4xl/normal md:text-5xl/normal font-bold text-[var(--primaryColor)] drop_in">
-                Nikhil Rajput
-              </p>
-
-              <p className="text-sm/6 font-medium text-[var(--textColorLight)] drop_in">
-                Software Enginner & Full Stack Developer
-              </p>
-
-              <p className="text-base/normal mt-8 drop_in">
-                <Balancer>
-                  Welcome to my portfolio! I am a goal-oriented and
-                  results-driven Full Stack Developer from India with 2+ years
-                  of experience in developing dynamic web applications and
-                  robust backend APIs. I am skilled in front-end and back-end
-                  development using modern technologies such as Node.js,
-                  React.js, Next.js, Express.js, Flutter, GetX and Redux
-                  Toolkit. I demonstrate a quick learning ability and a passion
-                  for keeping up with industry advancements. I am a strong
-                  problem-solver who excels in collaborative team settings.
-                </Balancer>
-              </p>
-
-              <Column classNames="gap-4 mt-8 lg:mt-16 lg:flex-row">
-                <TalkButton />
-                <ResumeButton />
-              </Column>
-            </Column>
-
-            <Column classNames="mt-8 lg:mt-16 drop_out">
-              <p className="text-base/6 font-semibold">Follow me here</p>
-
-              <Row classNames="mt-2 gap-2">
-                {socialLinks.slice(0, 5).map((link, index) => {
-                  return (
-                    <Link
-                      key={`social-link-${index}`}
-                      href={link.url}
-                      target="_blank"
-                      className="app__outlined_btn !rounded-full !p-2 lg:!p-3 !aspect-square !border-[var(--textColor)]"
-                      aria-label={`${link.name}`}
-                    >
-                      <span className="text-base/6 text-[var(--whiteColor)]">
-                        <FontAwesomeIcon icon={link.icon} />
-                      </span>
-                    </Link>
-                  );
-                })}
-              </Row>
-            </Column>
-          </Column>
-
-          <Row classNames="w-[20rem] h-[20rem] lg:w-[25rem] lg:h-[25rem] pointer-events-none justify-self-center sm:justify-self-end items-center justify-center rounded-full bg-transparent border-2 border-[var(--primaryColor60)] aspect-sqaure overflow-hidden my-auto drop_out">
-            <Row classNames="w-full h-auto items-center justify-center rounded-full bg-transparent border-[0.8rem] border-[var(--primaryColor30)] aspect-sqaure overflow-hidden pointer-events-none">
-              <Image
-                src="/images/profile.webp"
-                alt="profile"
-                width={400}
-                height={400}
-                sizes="100%"
-                priority
-                placeholder="blur"
-                blurDataURL="/images/profile.webp"
-                style={{
-                  objectFit: "cover",
-                  width: "100%",
-                  height: "100%",
-                  aspectRatio: "1 / 1",
-                }}
-              />
-            </Row>
-          </Row>
-        </GridBox>
+        <HeroSocialIcons />
       </ConstraintedBox>
     </ResponsiveBox>
   );
