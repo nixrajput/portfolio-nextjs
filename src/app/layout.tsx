@@ -1,19 +1,10 @@
 import "./globals.scss";
-import dynamic from "next/dynamic";
 import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
 import { Metadata } from "next";
 import Script from "next/script";
 import LocalConfig from "@/constants/config";
-import { menuItems } from "@/data/navMenus";
 import { WebVitals } from "@/components/common/WebVitals";
-
-const ScrollToTop = dynamic(() => import("@/components/common/ScrollToTop"), {
-  ssr: false,
-});
-const FloatingNav = dynamic(() => import("@/components/navbar/NavbarNew"), {
-  ssr: false,
-});
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -98,9 +89,7 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
         }
       >
         {process.env.NODE_ENV === "development" ? <WebVitals /> : null}
-        <FloatingNav className="app_nav" navItems={menuItems} />
         <main>{children}</main>
-        <ScrollToTop />
       </body>
     </html>
   );

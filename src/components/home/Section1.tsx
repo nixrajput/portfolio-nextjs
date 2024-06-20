@@ -74,9 +74,11 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
 
   return (
     <ResponsiveBox
-      classNames="bg-[var(--dialogColor)] min-h-screen items-center justify-center relative overflow-hidden rounded-md"
+      classNames="dark:bg-[var(--dialogColor)] bg-[var(--dialogColor)] dark:bg-grid-small-white/[0.2] bg-grid-small-white/[0.2] min-h-screen items-center justify-center relative overflow-hidden rounded-md"
       id={id}
     >
+      <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+
       <ConstraintedBox classNames="px-4 py-8 z-10 w-full items-center justify-center">
         <Column classNames="w-full items-center justify-center">
           <TypewriterEffectSmooth words={text_1} delay={0} />
