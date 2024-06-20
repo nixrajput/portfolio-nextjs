@@ -69,7 +69,7 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
     >
       <ConstraintedBox classNames="px-4 py-8 z-10 w-full items-center justify-center">
         <Column classNames="w-full items-center justify-center">
-          <TypewriterEffectSmooth words={text_1} delay={0.5} />
+          <TypewriterEffectSmooth words={text_1} delay={0} />
           <TypewriterEffectSmooth words={text_2} delay={3} className="-mt-3 sm:-mt-4 md:-mt-6 lg:-mt-9 xl:-mt-12" />
 
           <HeroButtons />
