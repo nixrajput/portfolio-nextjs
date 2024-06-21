@@ -1,3 +1,4 @@
+import DialogSkeleton from "@/components/common/DialogSkeleton";
 import { IconDefinition, IconProp } from "@fortawesome/fontawesome-svg-core";
 import type { MouseEventHandler, ReactNode, RefObject } from "react";
 
@@ -51,12 +52,14 @@ export interface IProjectItem {
   about?: string;
 }
 
-export interface IServiceItem {
+export type IServiceItem = {
+  id: number | string;
   title: string;
   icon: IconDefinition;
   shortDescription: string;
   description: string;
-}
+  className: string;
+};
 
 export interface ISkillListItem {
   title: string;
