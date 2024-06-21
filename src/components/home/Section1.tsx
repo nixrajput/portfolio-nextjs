@@ -1,9 +1,9 @@
-import Column from "@/components/core/Column";
-import ConstraintedBox from "@/components/core/ConstraintedBox";
-import ResponsiveBox from "@/components/core/ResponsiveBox";
-import { TypewriterEffectSmooth } from "@/components/common/TypewriterEffect";
-import HeroButtons from "./ui/HeroButtons";
-import HeroSocialIcons from "./ui/HeroSocialIcons";
+import Column from "@/components/core/Column"
+import ConstraintedBox from "@/components/core/ConstraintedBox"
+import ResponsiveBox from "@/components/core/ResponsiveBox"
+import { TypewriterEffectSmooth } from "@/components/common/TypewriterEffect"
+import HeroButtons from "./ui/HeroButtons"
+import HeroSocialIcons from "./ui/HeroSocialIcons"
 
 const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
   const text_1 = [
@@ -37,7 +37,7 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
       className:
         "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--primaryColor)] dark:text-[var(--primaryColor)]",
     },
-  ];
+  ]
 
   const text_2 = [
     {
@@ -46,7 +46,7 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
         "text-xs/normal sm:text-sm/normal md:text-base/normal font-medium text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
     },
     {
-      text: "Enginner",
+      text: "Engineer",
       className:
         "text-xs/normal sm:text-sm/normal md:text-base/normal font-medium text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
     },
@@ -70,7 +70,7 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
       className:
         "text-xs/normal sm:text-sm/normal md:text-base/normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
     },
-  ];
+  ]
 
   return (
     <ResponsiveBox
@@ -94,7 +94,7 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
         <HeroSocialIcons />
       </ConstraintedBox>
     </ResponsiveBox>
-  );
-};
+  )
+}
 
-export default HomeSection1;
+export default HomeSection1
