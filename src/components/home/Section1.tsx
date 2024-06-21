@@ -1,76 +1,76 @@
-import Column from "@/components/core/Column"
-import ConstraintedBox from "@/components/core/ConstraintedBox"
-import ResponsiveBox from "@/components/core/ResponsiveBox"
-import { TypewriterEffectSmooth } from "@/components/common/TypewriterEffect"
-import HeroButtons from "./ui/HeroButtons"
-import HeroSocialIcons from "./ui/HeroSocialIcons"
+import Column from "@/components/core/Column";
+import ConstraintedBox from "@/components/core/ConstraintedBox";
+import ResponsiveBox from "@/components/core/ResponsiveBox";
+import { TypewriterEffectSmooth } from "@/components/common/TypewriterEffect";
+import HeroButtons from "./ui/HeroButtons";
+import HeroSocialIcons from "./ui/HeroSocialIcons";
 
 const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
   const text_1 = [
     {
       text: "Hi",
       classname:
-        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--textColor)] dark:text-[var(--textColor)]",
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal dark:text-[var(--textColor)] text-[var(--textColor)]",
     },
     {
       text: "there,",
       classname:
-        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--textColor)] dark:text-[var(--textColor)]",
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal dark:text-[var(--textColor)] text-[var(--textColor)]",
     },
     {
       text: "I",
       classname:
-        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--textColor)] dark:text-[var(--textColor)]",
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal dark:text-[var(--textColor)] text-[var(--textColor)]",
     },
     {
       text: "am",
       classname:
-        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--textColor)] dark:text-[var(--textColor)]",
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal dark:text-[var(--textColor)] text-[var(--textColor)]",
     },
     {
       text: "Nikhil",
       className:
-        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--primaryColor)] dark:text-[var(--primaryColor)]",
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal dark:text-[var(--primaryColor)] text-[var(--primaryColor)]",
     },
     {
       text: "Rajput",
       className:
-        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal text-[var(--primaryColor)] dark:text-[var(--primaryColor)]",
+        "text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal dark:text-[var(--primaryColor)] text-[var(--primaryColor)]",
     },
-  ]
+  ];
 
   const text_2 = [
     {
       text: "Software",
       className:
-        "text-xs/normal sm:text-sm/normal md:text-base/normal font-medium text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+        "text-xs/normal sm:text-sm/normal md:text-base/normal font-medium dark:text-[var(--textColorLight)] text-[var(--textColorLight)]",
     },
     {
       text: "Engineer",
       className:
-        "text-xs/normal sm:text-sm/normal md:text-base/normal font-medium text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+        "text-xs/normal sm:text-sm/normal md:text-base/normal font-medium dark:text-[var(--textColorLight)] text-[var(--textColorLight)]",
     },
     {
       text: "&",
       className:
-        "text-xs/normal sm:text-sm/normal md:text-base/normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+        "text-xs/normal sm:text-sm/normal md:text-base/normal dark:text-[var(--textColorLight)] text-[var(--textColorLight)]",
     },
     {
       text: "Full",
       className:
-        "text-xs/normal sm:text-sm/normal md:text-base/normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+        "text-xs/normal sm:text-sm/normal md:text-base/normal dark:text-[var(--textColorLight)] text-[var(--textColorLight)]",
     },
     {
       text: "Stack",
       className:
-        "text-xs/normal sm:text-sm/normal md:text-base/normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+        "text-xs/normal sm:text-sm/normal md:text-base/normal dark:text-[var(--textColorLight)] text-[var(--textColorLight)]",
     },
     {
       text: "Developer",
       className:
-        "text-xs/normal sm:text-sm/normal md:text-base/normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)]",
+        "text-xs/normal sm:text-sm/normal md:text-base/normal dark:text-[var(--textColorLight)] text-[var(--textColorLight)]",
     },
-  ]
+  ];
 
   return (
     <ResponsiveBox
@@ -94,7 +94,7 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
         <HeroSocialIcons />
       </ConstraintedBox>
     </ResponsiveBox>
-  )
-}
+  );
+};
 
-export default HomeSection1
+export default HomeSection1;
