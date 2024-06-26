@@ -55,10 +55,10 @@ export interface IProjectItem {
 export type IServiceItem = {
   id: number | string;
   title: string;
-  icon: IconDefinition;
+  icon?: IconDefinition;
   shortDescription: string;
   description: string;
-  className: string;
+  icons: string[];
 };
 
 export interface ISkillListItem {

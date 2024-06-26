@@ -1,8 +1,7 @@
 import ConstraintedBox from "@/components/core/ConstraintedBox";
 import ResponsiveBox from "@/components/core/ResponsiveBox";
 import SectionTitle from "@/components/common/SectionTitle";
-import ServiceItem from "./ui/ServiceItem";
-import { LayoutGrid } from "@/components/common/LayoutGrid";
+import { HoverLayoutGrid } from "@/components/common/HoverLayoutGrid";
 import services from "@/data/services";
 
 const HomeSection2 = ({ id }: { id: string }) => {
@@ -15,13 +14,7 @@ const HomeSection2 = ({ id }: { id: string }) => {
 
       <ConstraintedBox classNames="p-4 py-16 z-20">
         <SectionTitle>Services</SectionTitle>
-
-        {/* <GridBox classNames="justify-items-center sm:grid-cols-2 lg:grid-cols-3 mt-16">
-          {services.map((service, index) => {
-            return <ServiceItem key={`service-${index}`} data={service} />;
-          })}
-        </GridBox> */}
-        <LayoutGrid cards={services} />
+        <HoverLayoutGrid cards={services} />
       </ConstraintedBox>
     </ResponsiveBox>
   );

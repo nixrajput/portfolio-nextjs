@@ -27,7 +27,7 @@ const skills: ISkillListItem[] = [
       {
         title: "Next.js",
         level: SkillLevel.Expert,
-        icon: "/skills/nextjs.svg",
+        icon: "/skills/nextjs.png",
       },
       {
         title: "React.js",
