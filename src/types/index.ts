@@ -1,4 +1,3 @@
-import DialogSkeleton from "@/components/common/DialogSkeleton";
 import { IconDefinition, IconProp } from "@fortawesome/fontawesome-svg-core";
 import type { MouseEventHandler, ReactNode, RefObject } from "react";
 
