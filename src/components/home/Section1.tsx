@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Column from "@/components/core/Column";
@@ -12,7 +10,6 @@ import TalkButton from "./ui/TalkButton";
 import { FlipWords } from "../common/FlipWords";
 
 const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
-
   return (
     <ResponsiveBox
       classNames="dark:bg-[var(--bgColor)] bg-[var(--bgColor)] dark:bg-grid-small-white/[0.2] bg-grid-small-white/[0.2] min-h-screen items-center justify-center relative overflow-hidden rounded-md"
@@ -29,7 +26,6 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
             <FlipWords
               words={["Nikhil Rajput", "@nixrajput"]}
               className="text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal dark:text-[var(--primaryColor)] text-[var(--primaryColor)] font-bold text-center"
-              duration={5000}
             />
           </div>
           <p className="text-xs/normal sm:text-sm/normal md:text-base/normal dark:text-[var(--textColorLight)] text-[var(--textColorLight)]">
@@ -43,7 +39,7 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
         </Column>
 
         <div className="mt-12 lg:mt-16 w-full flex flex-col items-center">
-          <p className="text-base/6 font-semibold">Follow me here</p>
+          <p className="text-base/6 font-medium">Follow me here</p>
 
           <Row classNames="mt-2 gap-2">
             {socialLinks.slice(0, 5).map((link, index) => {

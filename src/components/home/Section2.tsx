@@ -14,7 +14,7 @@ const HomeSection2 = ({ id }: { id: string }) => {
       <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
 
       <ConstraintedBox classNames="p-4 py-16 z-20">
-        <SectionTitle>My Services</SectionTitle>
+        <SectionTitle>Services</SectionTitle>
 
         {/* <GridBox classNames="justify-items-center sm:grid-cols-2 lg:grid-cols-3 mt-16">
           {services.map((service, index) => {
