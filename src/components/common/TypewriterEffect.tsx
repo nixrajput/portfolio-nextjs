@@ -9,6 +9,7 @@ export const TypewriterEffect = ({
   className,
   delay,
   duration,
+  cursorClassName,
 }: {
   words: {
     text: string;
@@ -17,6 +18,7 @@ export const TypewriterEffect = ({
   className?: string;
   delay?: number;
   duration?: number;
+  cursorClassName?: string;
 }) => {
   // split text inside of words into array of characters
   const wordsArray = words.map((word) => {
@@ -28,6 +30,7 @@ export const TypewriterEffect = ({
 
   const [scope, animate] = useAnimate();
   const isInView = useInView(scope);
+
   useEffect(() => {
     if (isInView) {
       animate(
@@ -38,7 +41,7 @@ export const TypewriterEffect = ({
           width: "fit-content",
         },
         {
-          duration: 0.3,
+          duration: 0.5,
           delay: stagger(0.1),
           ease: "easeInOut",
         }
@@ -48,10 +51,10 @@ export const TypewriterEffect = ({
 
   const renderWords = () => {
     return (
-      <motion.div ref={scope} className="inline">
+      <motion.span ref={scope} className="inline">
         {wordsArray.map((word, idx) => {
           return (
-            <div key={`word-${idx}`} className="inline-block">
+            <span key={`word-${idx}`} className="inline-block">
               {word.text.map((char, index) => (
                 <motion.span
                   initial={{}}
@@ -65,33 +68,39 @@ export const TypewriterEffect = ({
                 </motion.span>
               ))}
               &nbsp;
-            </div>
+            </span>
           );
         })}
-      </motion.div>
+      </motion.span>
     );
   };
   return (
-    <motion.div
-      className={cn("overflow-hidden", className)}
-      initial={{ width: "0%" }}
-      animate={{ width: "fit-content" }}
-      transition={{
-        duration: duration || 2,
-        ease: "linear",
-        delay: delay || 1,
-      }}
+    <span
+      className={cn(
+        "text-2xl/normal sm:text-3xl/normal md:text-4xl/normal lg:text-5xl/normal xl:text-6xl/normal font-bold",
+        className
+      )}
+      style={{ whiteSpace: "nowrap" }}
     >
-      <div
+      {renderWords()}
+      <motion.span
+        initial={{
+          opacity: 0,
+        }}
+        animate={{
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.9,
+          repeat: Infinity,
+          repeatType: "reverse",
+        }}
         className={cn(
-          "text-2xl/normal sm:text-3xl/normal md:text-4xl/normal lg:text-5xl/normal xl:text-6xl/normal font-bold",
-          className
+          "inline-block rounded-sm h-[4px] md:h-[5px] lg:h-[6px] w-4 md:w-6 lg:w-10 bg-[var(--textColor)]",
+          cursorClassName
         )}
-        style={{ whiteSpace: "nowrap" }}
-      >
-        {renderWords()}
-      </div>
-    </motion.div>
+      ></motion.span>
+    </span>
   );
 };
 
@@ -119,10 +128,10 @@ export const TypewriterEffectSmooth = ({
 
   const renderWords = () => {
     return (
-      <div className="relative">
+      <span className="relative">
         {wordsArray.map((word, idx) => {
           return (
-            <div key={`word-${idx}`} className="inline-block">
+            <span key={`word-${idx}`} className="inline-block">
               {word.text.map((char, index) => (
                 <span
                   key={`char-${index}`}
@@ -135,16 +144,16 @@ export const TypewriterEffectSmooth = ({
                 </span>
               ))}
               &nbsp;
-            </div>
+            </span>
           );
         })}
-      </div>
+      </span>
     );
   };
 
   return (
-    <motion.div
-      className={cn("relative overflow-hidden", className)}
+    <motion.span
+      className={cn("relative inline-block overflow-hidden", className)}
       initial={{ width: "0%" }}
       animate={{ width: "fit-content" }}
       transition={{
@@ -153,12 +162,12 @@ export const TypewriterEffectSmooth = ({
         delay: delay || 1,
       }}
     >
-      <div
+      <span
         className="text-2xl/normal sm:text-3xl/normal md:text-4xl/normal lg:text-5xl/normal xl:text-6xl/normal font-bold text-center"
         style={{ whiteSpace: "nowrap" }}
       >
         {renderWords()}
-      </div>
-    </motion.div>
+      </span>
+    </motion.span>
   );
 };
