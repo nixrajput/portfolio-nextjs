@@ -31,7 +31,7 @@ export const HoverLayoutGrid = ({
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 h-full w-full bg-slate-800/[0.8] dark:bg-slate-800/[0.8] block  rounded-[var(--borderRadius)]"
+                className="absolute inset-0 h-full w-full bg-slate-800/[0.8] dark:bg-slate-800/[0.8] block rounded-[var(--borderRadius)]"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{

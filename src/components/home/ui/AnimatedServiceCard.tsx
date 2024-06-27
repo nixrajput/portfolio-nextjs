@@ -10,7 +10,7 @@ export function AnimatedServiceCard({
   item,
 }: Readonly<{ item: IServiceItem }>) {
   return (
-    <Card>
+    <Card className="z-20">
       <CardSkeletonContainer>
         <IconSkeleton item={item} />
       </CardSkeletonContainer>
@@ -80,7 +80,7 @@ const IconSkeleton = ({ item }: Readonly<{ item: IServiceItem }>) => {
         <IconContainer className="h-8 w-8 circle-1">
           <Image
             src={item.icons[0]}
-            alt={`icon-${item.id}`}
+            alt={`icon-1`}
             width={144}
             height={144}
             sizes="100%"
@@ -93,7 +93,7 @@ const IconSkeleton = ({ item }: Readonly<{ item: IServiceItem }>) => {
         <IconContainer className="h-12 w-12 circle-2">
           <Image
             src={item.icons[1]}
-            alt={`icon-${item.id}`}
+            alt={`icon-2`}
             width={144}
             height={144}
             sizes="100%"
@@ -106,7 +106,7 @@ const IconSkeleton = ({ item }: Readonly<{ item: IServiceItem }>) => {
         <IconContainer className="circle-3">
           <Image
             src={item.icons[2]}
-            alt={`icon-${item.id}`}
+            alt={`icon-3`}
             width={144}
             height={144}
             sizes="100%"
@@ -119,7 +119,7 @@ const IconSkeleton = ({ item }: Readonly<{ item: IServiceItem }>) => {
         <IconContainer className="h-12 w-12 circle-4">
           <Image
             src={item.icons[3]}
-            alt={`icon-${item.id}`}
+            alt={`icon-4`}
             width={144}
             height={144}
             sizes="100%"
@@ -132,7 +132,7 @@ const IconSkeleton = ({ item }: Readonly<{ item: IServiceItem }>) => {
         <IconContainer className="h-8 w-8 circle-5">
           <Image
             src={item.icons[4]}
-            alt={`icon-${item.id}`}
+            alt={`icon-5`}
             width={144}
             height={144}
             sizes="100%"
@@ -144,7 +144,7 @@ const IconSkeleton = ({ item }: Readonly<{ item: IServiceItem }>) => {
         </IconContainer>
       </div>
 
-      <div className="h-40 w-px absolute top-20 m-auto z-40 bg-gradient-to-b from-transparent via-cyan-500 to-transparent animate-move">
+      <div className="h-40 w-px absolute top-20 m-auto z-40 bg-gradient-to-b from-transparent via-[var(--primaryColor)] to-transparent animate-move">
         <div className="w-10 h-32 top-1/2 -translate-y-1/2 absolute -left-10">
           <Sparkles />
         </div>
@@ -182,7 +182,7 @@ const Sparkles = () => {
             borderRadius: "50%",
             zIndex: 1,
           }}
-          className="inline-block bg-black dark:bg-white"
+          className="inline-block bg-white"
         ></motion.span>
       ))}
     </div>
@@ -199,11 +199,13 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "w-full h-full mx-auto p-8 rounded-[var(--borderRadius)] border border-[rgba(255,255,255,0.10)] dark:bg-[rgba(40,40,40,0.70)] bg-bg-[rgba(40,40,40,0.70)] shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group",
+        "relative w-full h-full mx-auto p-4 overflow-hidden rounded-[var(--borderRadius)] border border-[rgba(255,255,255,0.10)] dark:bg-[rgba(40,40,40,0.70)] bg-bg-[rgba(40,40,40,0.70)] shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group",
         className
       )}
     >
-      {children}
+      <div className="relative z-50">
+        <div className="p-4">{children}</div>
+      </div>
     </div>
   );
 };
@@ -218,7 +220,7 @@ export const CardTitle = ({
   return (
     <h3
       className={cn(
-        "text-lg lg:text-xl xl:text-2xl font-semibold text-[var(--textColor)] dark:text-[var(--textColor)] py-2",
+        "text-lg lg:text-xl xl:text-2xl font-semibold text-[var(--textColor)] dark:text-[var(--textColor)] py-2 tracking-wide",
         className
       )}
     >
@@ -237,7 +239,7 @@ export const CardDescription = ({
   return (
     <p
       className={cn(
-        "text-sm lg:text-base/5 font-normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)] max-w-sm",
+        "text-sm/6 lg:text-base/6 font-normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)] tracking-wide",
         className
       )}
     >

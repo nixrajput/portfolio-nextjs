@@ -12,9 +12,9 @@ const services: IServiceItem[] = [
       "/skills/firebase.svg",
     ],
     shortDescription:
-      "I specialize in creating captivating mobile applications that engage your audience.",
+      "I create engaging mobile applications for your audience.",
     description:
-      "I specialize in creating captivating mobile applications that engage your audience. From concept to deployment, I develop native and cross-platform apps for iOS and Android. With cutting-edge technologies, I ensure seamless performance, intuitive interfaces, and robust functionality that aligns perfectly with your business goals.",
+      "I create captivating mobile apps from concept to deployment for iOS and Android. Using cutting-edge technologies, I ensure seamless performance, intuitive interfaces, and robust functionality that align with your business goals. Enjoy a flawless user experience and outstanding results.",
   },
   {
     id: 2,
@@ -26,10 +26,9 @@ const services: IServiceItem[] = [
       "/skills/html.svg",
       "/skills/css.svg",
     ],
-    shortDescription:
-      "I deliver visually stunning and user-friendly websites to help you establish a strong online presence.",
+    shortDescription: "I build visually stunning and user-friendly websites.",
     description:
-      "I deliver visually stunning and user-friendly websites to help you establish a strong online presence. Whether it's a simple informational site or a complex e-commerce platform, I provide tailored web development solutions. Using the latest frameworks and technologies, I create responsive, SEO-friendly websites that offer a seamless browsing experience on all devices.",
+      "I deliver stunning, user-friendly websites to establish your online presence. From simple sites to complex e-commerce platforms, I provide tailored solutions using the latest frameworks and technologies for a seamless, responsive, and SEO-friendly browsing experience. Enhance your online identity with quality.",
   },
   {
     id: 3,
@@ -41,10 +40,9 @@ const services: IServiceItem[] = [
       "/skills/express.svg",
       "/skills/aws.svg",
     ],
-    shortDescription:
-      "I enhance your digital applications with a robust and scalable backend infrastructure.",
+    shortDescription: "I create robust and scalable backend infrastructures.",
     description:
-      "I enhance your digital applications with a robust and scalable backend infrastructure. With expertise in backend development, I create efficient database structures, develop APIs, and configure servers to ensure optimal performance, security, and scalability. My solutions empower your applications to seamlessly handle high traffic and complex data management.",
+      "I enhance digital applications with robust, scalable backend infrastructures. I develop efficient database structures, APIs, and configure servers for optimal performance, security, and scalability, ensuring your applications handle high traffic and complex data management seamlessly. Rely on strong backend solutions.",
   },
   {
     id: 4,
@@ -53,13 +51,41 @@ const services: IServiceItem[] = [
       "/skills/git.svg",
       "/images/collaboration.png",
       "/images/logical-thinking.png",
-     "/images/analytical-skills.png",
+      "/images/analytical-skills.png",
       "/skills/ubuntu.png",
     ],
     shortDescription:
-      "I collaborate with you to define clear goals, target audiences, and a roadmap for success.",
+      "I define goals, target audiences, and roadmaps for success.",
     description:
-      "I collaborate with you to define clear goals, target audiences, and a roadmap for success. My expertise in product ideation and market analysis ensures that your product not only meets user needs but also aligns with your business strategy for long-term growth and full potential of your digital products with effective product strategy.",
+      "I collaborate to define clear goals, target audiences, and a success roadmap. My expertise in product ideation and market analysis ensures your product meets user needs and aligns with your business strategy for long-term growth and full potential realization. Drive your product's success with strategic planning.",
+  },
+  {
+    id: 5,
+    title: "DevOps",
+    icons: [
+      "/skills/docker.svg",
+      "/skills/kubernetes.svg",
+      "/skills/aws.svg",
+      "/skills/jenkins.svg",
+      "/skills/terraform.svg",
+    ],
+    shortDescription: "I streamline development and operations processes.",
+    description:
+      "I streamline development and operations processes through effective DevOps practices. I implement continuous integration and deployment pipelines, manage cloud infrastructure, and use containerization to ensure efficient, reliable, and scalable software delivery. Improve your workflow with DevOps solutions.",
+  },
+  {
+    id: 6,
+    title: "Database Management",
+    icons: [
+      "/skills/mysql.svg",
+      "/skills/postgresql.svg",
+      "/skills/mongodb.svg",
+      "/skills/redis.svg",
+      "/skills/sqlite.svg",
+    ],
+    shortDescription: "I manage and optimize your database systems.",
+    description:
+      "I manage and optimize your database systems for performance, reliability, and scalability. With expertise in SQL and NoSQL databases, I design schemas, write complex queries, and implement best practices for data integrity and security. Ensure your data is managed effectively and efficiently.",
   },
 ];
 
