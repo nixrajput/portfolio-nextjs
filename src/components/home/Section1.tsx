@@ -17,7 +17,7 @@ const HomeSection1 = ({ id }: Readonly<{ id: string }>) => {
     >
       {/* <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div> */}
 
-      <ConstraintedBox classNames="px-4 py-8 pt-20 z-20 items-center justify-center">
+      <ConstraintedBox classNames="px-4 py-8 pt-16 z-20 items-center justify-center">
         <Column classNames="w-full items-center justify-center">
           <div className="inline-flex items-center">
             <p className="text-2xl/normal sm:text-3xl/normal md:text-5xl/normal lg:text-6xl/normal xl:text-7xl/normal dark:text-[var(--textColor)] text-[var(--textColor)] font-bold text-center">
