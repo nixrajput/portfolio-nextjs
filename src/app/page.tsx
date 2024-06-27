@@ -1,9 +1,10 @@
-import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import PageBox from "@/components/core/PageBox";
 import { menuItems } from "@/data/navMenus";
 
-const FloatingNav = dynamic(() => import("@/components/navbar/NavbarNew"));
+const FloatingNavbar = dynamic(() =>
+  import("@/components/navbar/FloatingNavbar")
+);
 
 const HomeSection1 = dynamic(() => import("@/components/home/Section1"));
 const HomeSection2 = dynamic(() => import("@/components/home/Section2"));
@@ -17,7 +18,7 @@ const ScrollToTop = dynamic(() => import("@/components/common/ScrollToTop"));
 const Home = () => {
   return (
     <PageBox>
-      <FloatingNav className="app_nav" navItems={menuItems} />
+      <FloatingNavbar className="app_nav" navItems={menuItems} />
       <HomeSection1 id="hero" />
       <HomeSection2 id="services" />
       <HomeSection3 id="experiences" />

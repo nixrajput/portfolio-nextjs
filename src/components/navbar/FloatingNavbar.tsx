@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
 import { INavItem } from "@/types";
 
-const FloatingNav = ({
+const FloatingNavbar = ({
   navItems,
   className,
 }: {
@@ -69,4 +69,4 @@ const FloatingNav = ({
   );
 };
 
-export default FloatingNav;
+export default FloatingNavbar;
