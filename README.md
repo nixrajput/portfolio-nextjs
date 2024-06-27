@@ -41,7 +41,6 @@ This repository contains the source code for a portfolio website built using Nex
 ## Sceenshots
 
 ![Screenshot 1](/screenshot-desktop.png)
-![Screenshot 2](/screenshot-mobile.png)
 
 ## Getting Started
 
