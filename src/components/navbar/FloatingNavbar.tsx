@@ -52,7 +52,7 @@ const FloatingNavbar = ({
                 </span>
                 <span className="hidden sm:block text-sm/6 lg:text-base relative overflow-hidden">
                   <span className="relative z-10">{navItem.name}</span>
-                  <span className="absolute inset-0 text-[var(--primaryColor)] transition-transform transform translate-y-full group-hover:translate-y-0 duration-500 ease-in-out z-10">
+                  <span className="absolute inset-0 text-[var(--primaryColor)] transition-transform transform translate-y-full group-hover:translate-y-0 duration-300 ease-in-out z-10">
                     {navItem.name}
                   </span>
                 </span>

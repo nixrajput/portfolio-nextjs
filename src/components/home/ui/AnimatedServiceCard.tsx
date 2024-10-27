@@ -66,12 +66,12 @@ const IconSkeleton = ({ item }: Readonly<{ item: IServiceItem }>) => {
     ],
   ];
 
-  useEffect(() => {
-    animate(sequence, {
-      repeat: Infinity,
-      repeatDelay: 1,
-    });
-  }, []);
+  // useEffect(() => {
+  //   animate(sequence, {
+  //     repeat: Infinity,
+  //     repeatDelay: 1,
+  //   });
+  // }, []);
 
   return (
     <div className="overflow-hidden h-full relative flex items-center justify-center">
