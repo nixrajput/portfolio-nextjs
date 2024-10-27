@@ -67,7 +67,6 @@ const IconSkeleton = ({ item }: Readonly<{ item: IServiceItem }>) => {
   ];
 
   useEffect(() => {
-    // @ts-ignore
     animate(sequence, {
       repeat: Infinity,
       repeatDelay: 1,
@@ -199,7 +198,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "relative w-full h-full mx-auto p-4 overflow-hidden rounded-[var(--borderRadius)] border border-[rgba(255,255,255,0.10)] dark:bg-[rgba(40,40,40,0.70)] bg-bg-[rgba(40,40,40,0.70)] shadow-[2px_4px_16px_0px_rgba(248,248,248,0.06)_inset] group",
+        "relative w-full h-full mx-auto overflow-hidden rounded-[var(--borderRadius)] border border-[rgba(255,255,255,0.10)] dark:bg-[var(--primaryColor5)] bg-[var(--primaryColor5)] shadow-[2px_4px_16px_0px_rgba(100,100,100,0.06)_inset] group",
         className
       )}
     >
@@ -220,7 +219,7 @@ export const CardTitle = ({
   return (
     <h3
       className={cn(
-        "text-lg lg:text-xl xl:text-2xl font-semibold text-[var(--textColor)] dark:text-[var(--textColor)] py-2 tracking-wide",
+        "text-lg lg:text-xl xl:text-2xl font-semibold text-[var(--primaryColor)] dark:text-[var(--primaryColor)] py-2 tracking-wide",
         className
       )}
     >
@@ -239,7 +238,7 @@ export const CardDescription = ({
   return (
     <p
       className={cn(
-        "text-sm/6 lg:text-base/6 font-normal text-[var(--textColorLight)] dark:text-[var(--textColorLight)] tracking-wide",
+        "text-sm/6 lg:text-base/6 font-normal tracking-wide",
         className
       )}
     >
@@ -260,7 +259,7 @@ export const CardSkeletonContainer = ({
   return (
     <div
       className={cn(
-        "h-[12rem] md:h-[18rem] rounded-[var(--borderRadius)] z-40",
+        "rounded-[var(--borderRadius)] z-40 mb-4",
         className,
         showGradient &&
           "bg-bg-[rgba(40,40,40,0.70)] dark:bg-[rgba(40,40,40,0.70)] [mask-image:radial-gradient(50%_50%_at_50%_50%,white_0%,transparent_100%)]"

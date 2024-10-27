@@ -13,7 +13,7 @@ const projects: IProjectItem[] = [
     // url: "https://www.nixlab.co.in/projects/com.nixlab.rippl",
     url: "https://github.com/nixrajput/social-media-app-flutter/releases",
     tags: ["Flutter", "Dart", "GetX", "Hive"],
-    sceenshots: ["/screenshots/rippl.png"],
+    screenshots: ["/screenshots/rippl.png"],
   },
   {
     id: "e-commerce-app-mern",

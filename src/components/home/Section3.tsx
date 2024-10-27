@@ -1,27 +1,26 @@
-import ConstraintedBox from "@/components/core/ConstraintedBox";
+import ConstrainedBox from "@/components/core/constrained-box";
 import ResponsiveBox from "@/components/core/ResponsiveBox";
-import GridBox from "@/components/core/GridBox";
 import SectionTitle from "@/components/common/SectionTitle";
+import { Timeline } from "@/components/common/timeline";
 import ExperienceItem from "./ui/ExperienceItem";
 import experiences from "@/data/experiences";
 
 const HomeSection3 = ({ id }: { id: string }) => {
   return (
     <ResponsiveBox
-      classNames="bg-[var(--dialogColor)] min-h-[calc(100vh-5rem)] items-center justify-center"
+      classNames="dark:bg-[var(--bgColor)] bg-[var(--bgColor)] dark:bg-grid-small-white/[0.2] bg-grid-small-white/[0.2] min-h-screen items-center justify-center"
       id={id}
     >
-      <ConstraintedBox classNames="p-4 py-16">
+      <ConstrainedBox classNames="p-4 py-16">
         <SectionTitle>Experiences</SectionTitle>
 
-        <GridBox classNames="justify-items-center grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 md:grid-cols-2 mt-16">
-          {experiences.map((experience, index) => {
-            return (
-              <ExperienceItem key={`experience-${index}`} data={experience} />
-            );
-          })}
-        </GridBox>
-      </ConstraintedBox>
+        <Timeline
+          data={experiences.map((exp, i) => ({
+            title: exp.startDate + " - " + (exp.endDate || "Present"),
+            content: <ExperienceItem key={`experience-${i}`} data={exp} />,
+          }))}
+        />
+      </ConstrainedBox>
     </ResponsiveBox>
   );
 };

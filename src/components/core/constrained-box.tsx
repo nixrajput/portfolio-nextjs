@@ -1,6 +1,6 @@
 import type { CoreComponentsProps } from "@/types";
 
-const ConstraintedBox = (props: Readonly<CoreComponentsProps>) => {
+const ConstrainedBox = (props: Readonly<CoreComponentsProps>) => {
   const { children, classNames, onClick, id, elementRef } = props;
 
   return (
@@ -15,4 +15,4 @@ const ConstraintedBox = (props: Readonly<CoreComponentsProps>) => {
   );
 };
 
-export default ConstraintedBox;
+export default ConstrainedBox;

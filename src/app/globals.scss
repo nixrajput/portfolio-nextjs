@@ -9,7 +9,6 @@
 }
 
 @layer utilities {
-
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -26,8 +25,8 @@
 
 :root {
   --maxWidth: 1200px;
-  --borderRadius: 1.5rem;
-  --defaultRadius: 1.5rem;
+  --borderRadius: 0.5rem;
+  --defaultRadius: 0.5rem;
 
   --dialogColor10: rgba(18, 22, 27, 0.1);
   --dialogColor20: rgba(18, 22, 27, 0.2);
@@ -70,6 +69,7 @@
   --linkColor100: rgba(0, 113, 255, 1);
   --linkColor: rgba(0, 113, 255, 1);
 
+  --primaryColor5: rgba(0, 177, 113, 0.05);
   --primaryColor10: rgba(0, 177, 113, 0.1);
   --primaryColor20: rgba(0, 177, 113, 0.2);
   --primaryColor30: rgba(0, 177, 113, 0.3);
@@ -92,7 +92,7 @@
   --secondaryColor80: rgba(0, 237, 138, 0.8);
   --secondaryColor90: rgba(0, 237, 138, 0.9);
   --secondaryColor100: rgba(0, 237, 138, 1);
-  --secondaryColor: rgba(35, 230, 134, 1);
+  --secondaryColor: rgba(0, 237, 138, 1);
 
   --successColor10: rgba(30, 180, 80, 0.1);
   --successColor20: rgba(30, 180, 80, 0.2);
@@ -178,9 +178,11 @@
   --whiteColor100: rgba(255, 255, 255, 1);
   --whiteColor: rgba(255, 255, 255, 1);
 
-  --primaryGrad: linear-gradient(118.18deg,
-      var(--primaryColor) 0.99%,
-      var(--secondaryColor) 100%);
+  --primaryGrad: linear-gradient(
+    118.18deg,
+    var(--primaryColor) 0.99%,
+    var(--secondaryColor) 100%
+  );
 
   --boxShadow: 0px 4px 12px -6px rgba(0, 0, 0, 0.1),
     0px -4px 12px -6px rgba(0, 0, 0, 0.1), -4px 0px 12px -6px rgba(0, 0, 0, 0.1),
@@ -325,15 +327,15 @@ h6 {
   outline: none;
   background-color: transparent;
   border: 1px solid var(--primaryColor);
-  border-radius: var(--borderRadius);
-  padding: 0.75rem 1.5rem;
+  border-radius: calc(var(--defaultRadius) - 2px);
+  padding: 0.5rem 1rem;
 
   color: var(--primaryColor);
   text-decoration: none;
   font-size: 1rem;
   font-family: inherit;
   text-transform: capitalize;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.5rem;
 
   overflow: hidden;
@@ -402,17 +404,17 @@ h6 {
   width: fit-content;
   outline: none;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1rem;
 
   background: var(--primaryColor);
-  border-radius: var(--borderRadius);
+  border-radius: calc(var(--defaultRadius) - 2px);
 
   color: var(--whiteColor);
   text-decoration: none;
   font-size: 1rem;
   font-family: inherit;
   text-transform: capitalize;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.5rem;
 
   overflow: hidden;
@@ -463,6 +465,42 @@ h6 {
   }
 }
 
+.white__filled_btn {
+  background: var(--whiteColor);
+  border-radius: calc(var(--defaultRadius) - 2px);
+
+  color: var(--blackColor);
+
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    background: var(--primaryColor30);
+    transition: all 0.5s ease;
+    z-index: -1;
+  }
+
+  &:hover:before {
+    top: 0;
+    left: 0;
+    border: 0px;
+    transform: translateX(0);
+  }
+
+  &:disabled {
+    &:hover:before {
+      top: 0;
+      left: 0;
+      border: 0px;
+      transform: translateX(-100%);
+    }
+  }
+}
+
 .app__text_btn {
   display: flex;
   flex-direction: row;
@@ -484,7 +522,7 @@ h6 {
   font-size: 1rem;
   font-family: inherit;
   text-transform: none;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.5rem;
 
   cursor: pointer;
@@ -577,7 +615,7 @@ h6 {
 }
 
 .small__btn {
-  padding: 0.5rem 1rem;
+  padding: 0.45rem 0.9rem;
 }
 
 @keyframes animate {

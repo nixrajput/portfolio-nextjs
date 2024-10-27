@@ -4,9 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import Dropdown from "@/components/navbar/Dropdown";
-import { MenutItemProps } from "@/types";
+import { MenuItemProps } from "@/types";
 
-const MenuItems = (props: MenutItemProps) => {
+const MenuItems = (props: MenuItemProps) => {
   const { items, depthLevel, mobileNav, handleCloseMobileMenu, current } =
     props;
 

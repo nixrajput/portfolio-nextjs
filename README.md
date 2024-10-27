@@ -10,14 +10,14 @@ This repository contains the source code for a portfolio website built using Nex
 [![GitHub last commit](https://img.shields.io/github/last-commit/nixrajput/portfolio-nextjs?label=Last+Commit&style=flat)][repo]
 [![GitHub issues](https://img.shields.io/github/issues/nixrajput/portfolio-nextjs?label=Issues&style=flat)][issues]
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/nixrajput/portfolio-nextjs?label=Pull+Requests&style=flat)][pulls]
-[![GitHub Licence](https://img.shields.io/github/license/nixrajput/portfolio-nextjs?label=Licence&style=flat)][license]
+[![GitHub License](https://img.shields.io/github/license/nixrajput/portfolio-nextjs?label=License&style=flat)][license]
 
 ## Table of Contents
 
 - [Portfolio Website with Next.js and Sass](#portfolio-website-with-nextjs-and-sass)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
-  - [Sceenshots](#sceenshots)
+  - [Screenshots](#screenshots)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
@@ -38,7 +38,7 @@ This repository contains the source code for a portfolio website built using Nex
 - An about section to introduce yourself.
 - Easily customizable with Sass for styling.
 
-## Sceenshots
+## Screenshots
 
 ![Screenshot 1](/screenshot-desktop.png)
 
@@ -115,7 +115,7 @@ You can customize various aspects of the portfolio website to make it your own.
    - Edit the `services.ts` file to add or modify services you provide.
    - Edit the `experiences.ts` file to add or modify experiences you have.
    - Edit the `skills.ts` file to add or modify skills you know.
-   - Edit the `socialLinks.ts` file to add or modify socila media links.
+   - Edit the `socialLinks.ts` file to add or modify social media links.
 
 2. Replace or add images in the `public/images` directory to match your projects and profile picture.
 
@@ -168,7 +168,6 @@ Thank you for considering sponsoring my work!
 [linkedin]: https://linkedin.com/in/nixrajput
 [telegram]: https://telegram.me/nixrajput
 [gmail]: mailto:nkr.nikhil.nkr@gmail.com
-
 [repo]: https://github.com/nixrajput/portfolio-nextjs
 [issues]: https://github.com/nixrajput/portfolio-nextjs/issues
 [pulls]: https://github.com/nixrajput/portfolio-nextjs/pulls

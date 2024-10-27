@@ -17,7 +17,7 @@ export const HoverLayoutGrid = ({
   return (
     <div
       className={cn(
-        "w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-16 gap-4",
+        "w-full grid grid-cols-1 md:grid-cols-2 mt-16 gap-4",
         className
       )}
     >
@@ -31,7 +31,7 @@ export const HoverLayoutGrid = ({
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 h-full w-full bg-slate-800/[0.8] dark:bg-slate-800/[0.8] block rounded-[var(--borderRadius)]"
+                className="absolute inset-0 h-full w-full bg-slate-800/[0.5] dark:bg-slate-800/[0.5] block rounded-[var(--borderRadius)]"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{

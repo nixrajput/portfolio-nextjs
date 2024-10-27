@@ -111,7 +111,7 @@ const skills: ISkillListItem[] = [
       },
       {
         title: "MySQL",
-        level: SkillLevel.Begginer,
+        level: SkillLevel.Beginner,
         icon: "/skills/mysql.svg",
       },
     ],
@@ -121,7 +121,7 @@ const skills: ISkillListItem[] = [
     items: [
       {
         title: "Docker",
-        level: SkillLevel.Begginer,
+        level: SkillLevel.Beginner,
         icon: "/skills/docker.png",
       },
       {

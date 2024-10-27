@@ -11,4 +11,10 @@
         <changefreq>yearly</changefreq>
         <priority>1</priority>
     </url>
+    <url>
+        <loc>https://www.nixrajput.com/payment</loc>
+        <lastmod>2024-06-11T15:02:24.021Z</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>1</priority>
+    </url>
 </urlset>

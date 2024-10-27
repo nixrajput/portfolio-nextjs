@@ -38,7 +38,7 @@ const ProjectList = ({ projects }: Readonly<{ projects: IProjectItem[] }>) => {
         })}
       </Row>
 
-      <Row classNames="w-full items-center justify-center gap-4 mt-8">
+      <Row classNames="w-full items-center justify-center gap-4 mt-16">
         <button
           type="button"
           className="app__filled_btn !px-4 !py-2 !text-base/6 !font-normal"

@@ -19,11 +19,11 @@ export interface IExperienceItem {
   designation: string;
   company: string;
   startDate: string;
-  endDate: string;
+  endDate?: string;
   isCurrentJob: boolean;
   location: string;
-  shortDescription: string;
-  description: string;
+  shortDescription?: string;
+  description: string[];
 }
 
 export enum RepoType {
@@ -47,7 +47,7 @@ export interface IProjectItem {
   githubUrl?: string;
   url?: string;
   tags?: string[];
-  sceenshots?: string[];
+  screenshots?: string[];
   about?: string;
 }
 
@@ -68,7 +68,7 @@ export interface ISkillListItem {
 export enum SkillLevel {
   Expert,
   Intermediate,
-  Begginer,
+  Beginner,
 }
 
 export interface ISkillItem {
@@ -79,12 +79,12 @@ export interface ISkillItem {
 
 export interface ISocialLinkItem {
   url: string;
-  icon: IconDefinition;
+  icon: IconDefinition | string;
   text: string;
   name?: string;
 }
 
-export interface MenutItemProps {
+export interface MenuItemProps {
   items: INavMenuItem;
   depthLevel: number;
   mobileNav: boolean;
@@ -93,7 +93,7 @@ export interface MenutItemProps {
 }
 
 export interface DropdownMenuProps
-  extends Omit<MenutItemProps, "items" | "current"> {
+  extends Omit<MenuItemProps, "items" | "current"> {
   submenus: INavMenuItem[];
   dropdown: boolean;
 }
@@ -122,4 +122,16 @@ export interface ViewportProps {
 export interface ShootingStarProps {
   vw: number;
   vh: number;
+}
+
+export interface TimelineEntry {
+  title: string;
+  content: React.ReactNode;
+}
+
+export interface BulletedTextProps {
+  children: ReactNode;
+  classNames?: string;
+  iconSize?: string | number;
+  bulletColor?: string;
 }

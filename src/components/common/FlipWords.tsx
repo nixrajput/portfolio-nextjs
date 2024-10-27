@@ -6,7 +6,7 @@ import { cn } from "@/utils/cn";
 
 export const FlipWords = ({
   words,
-  duration = 3000,
+  duration = 5000,
   className,
 }: {
   words: string[];
@@ -45,7 +45,7 @@ export const FlipWords = ({
           y: 0,
         }}
         transition={{
-          duration: 0.4,
+          duration: 0.5,
           ease: "easeInOut",
           type: "spring",
           stiffness: 100,
@@ -72,7 +72,7 @@ export const FlipWords = ({
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{
               delay: index * 0.08,
-              duration: 0.4,
+              duration: 1,
             }}
             className="inline-block mr-2"
           >
