@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import PageBox from "@/components/core/PageBox";
-import { menuItems } from "@/data/navMenus";
+import { navMenus } from "@/data/navMenus";
 import { Suspense } from "react";
 import Loading from "./loading";
 
@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <PageBox>
       <Suspense fallback={<Loading />}>
-        <FloatingNavbar className="app_nav" navItems={menuItems} />
+        <FloatingNavbar className="app_nav" navItems={navMenus} />
         <HomeSection1 id="hero" />
         <HomeSection2 id="services" />
         <HomeSection3 id="experiences" />

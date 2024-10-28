@@ -1,10 +1,10 @@
 import { useEffect, useState, useCallback } from "react";
 import { throttle } from "lodash";
-import navMenus from "@/data/navMenus";
+import { navMenus } from "@/data/navMenus";
 
 function useVisibleSection(sections = navMenus) {
   const [visibleSectionId, setVisibleSectionId] = useState<string>(
-    sections[0].id
+    sections[0].name
   );
 
   const isSectionVisible = (elementId: string) => {
@@ -30,11 +30,11 @@ function useVisibleSection(sections = navMenus) {
   const checkVisibility = useCallback(() => {
     if (!sections || sections.length < 1) return;
 
-    sections.forEach(({ id }) => {
-      const isVisible = isSectionVisible(id);
+    sections.forEach(({ name }) => {
+      const isVisible = isSectionVisible(name);
 
       if (isVisible) {
-        setVisibleSectionId(id);
+        setVisibleSectionId(name);
       }
     });
   }, [sections]);

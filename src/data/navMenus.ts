@@ -1,4 +1,4 @@
-import { INavItem, INavMenuItem } from "@/types";
+import { INavItem } from "@/types";
 import {
   faHome,
   faUser,
@@ -7,50 +7,10 @@ import {
   faAward,
   faLaptopCode,
   faEnvelope,
+  faCreditCard,
 } from "@fortawesome/free-solid-svg-icons";
 
-const navMenus: INavMenuItem[] = [
-  {
-    id: "about",
-    title: "About",
-    path: "/#about",
-    section: "about",
-  },
-  {
-    id: "services",
-    title: "Services",
-    path: "/#services",
-    section: "services",
-  },
-  {
-    id: "experiences",
-    title: "Experiences",
-    path: "/#experiences",
-    section: "experiences",
-  },
-  {
-    id: "skills",
-    title: "Skills",
-    path: "/#skills",
-    section: "skills",
-  },
-  {
-    id: "projects",
-    title: "Projects",
-    path: "/#projects",
-    section: "projects",
-  },
-  {
-    id: "contact",
-    title: "Contact",
-    path: "/#contact",
-    section: "contact",
-  },
-];
-
-export default navMenus;
-
-export const menuItems: INavItem[] = [
+export const navMenus: INavItem[] = [
   // {
   //   name: "Home",
   //   link: "/#hero",
@@ -85,5 +45,10 @@ export const menuItems: INavItem[] = [
     name: "Contact",
     link: "/#contact",
     icon: faEnvelope,
+  },
+  {
+    name: "Payment",
+    link: "/payment",
+    icon: faCreditCard,
   },
 ];
