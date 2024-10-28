@@ -2,9 +2,8 @@ import "./globals.scss";
 import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
 import { Metadata } from "next";
-import Script from "next/script";
-import LocalConfig from "@/constants/config";
-import { WebVitals } from "@/components/common/WebVitals";
+import dynamic from "next/dynamic";
+import { navMenus } from "@/data/navMenus";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -62,34 +61,30 @@ export const metadata: Metadata = {
   ],
 };
 
+const GoogleAnalytics = dynamic(
+  () => import("@/components/common/GoogleAnalytics"),
+  { ssr: false }
+);
+const WebVitals = dynamic(() => import("@/components/common/WebVitals"), {
+  ssr: false,
+});
+const FloatingNavbar = dynamic(
+  () => import("@/components/navbar/FloatingNavbar")
+);
+const ScrollToTop = dynamic(() => import("@/components/common/ScrollToTop"));
+
+const isDebug = process.env.NODE_ENV === "development";
+
 const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
     <html lang="en" className={poppins.className}>
-      <head>
-        <Script
-          strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${LocalConfig.values.NEXT_PUBLIC_GTAG_ID}`}
-        />
+      {isDebug ? null : <GoogleAnalytics />}
 
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${LocalConfig.values.NEXT_PUBLIC_GTAG_ID}', {
-            page_path: window.location.pathname,
-          });
-        `}
-        </Script>
-      </head>
-
-      <body
-        className={
-          process.env.NODE_ENV === "development" ? "debug-screens" : ""
-        }
-      >
-        {process.env.NODE_ENV === "development" ? <WebVitals /> : null}
+      <body className={isDebug ? "debug-screens" : ""}>
+        {isDebug ? <WebVitals /> : null}
+        <FloatingNavbar className="app_nav" navItems={navMenus} />
         <main>{children}</main>
+        <ScrollToTop />
       </body>
     </html>
   );
