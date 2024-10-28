@@ -5,7 +5,7 @@ import RazorPayButton from "@/components/common/razor-pay-button";
 const PaymentMainSection = () => {
   return (
     <ResponsiveBox
-      classNames="dark:bg-[var(--bgColor)] bg-[var(--bgColor)] dark:bg-grid-small-white/[0.2] bg-grid-small-white/[0.2] min-h-screen items-center justify-center relative overflow-hidden rounded-md"
+      classNames="dark:bg-[var(--bgColor)] bg-[var(--bgColor)] dark:bg-grid-white/[0.1] bg-grid-white/[0.1] min-h-screen items-center justify-center relative overflow-hidden rounded-md"
       id="payment"
     >
       <ConstrainedBox classNames="px-4 py-8 z-20 items-center justify-center">
