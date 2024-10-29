@@ -55,7 +55,7 @@ const services: IServiceItem[] = [
       "/skills/ubuntu.png",
     ],
     shortDescription:
-      "I define goals, target audiences, and roadmaps for success.",
+      "I define goals, target audiences, and roadmap for success.",
     description:
       "I collaborate to define clear goals, target audiences, and a success roadmap. My expertise in product ideation and market analysis ensures your product meets user needs and aligns with your business strategy for long-term growth and full potential realization. Drive your product's success with strategic planning.",
   },
