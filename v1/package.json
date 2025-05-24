@@ -1,0 +1,50 @@
+{
+  "name": "portfolio-nextjs",
+  "version": "1.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 4000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "push": "git add -A && git commit -m \"Update Changes & Bug Fixes\" && git push origin master"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-brands-svg-icons": "^6.6.0",
+    "@fortawesome/free-regular-svg-icons": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@sentry/nextjs": "^8.35.0",
+    "@tsparticles/engine": "^3.5.0",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.5.0",
+    "animejs": "^3.2.2",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.11.10",
+    "lodash": "^4.17.21",
+    "mini-svg-data-uri": "^1.4.4",
+    "next": "^14.2.16",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-wrap-balancer": "^1.1.1",
+    "tailwind-merge": "^2.5.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/animejs": "^3.1.12",
+    "@types/lodash": "^4.17.12",
+    "@types/node": "^20.17.1",
+    "@types/react": "^18.3.12",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.13.0",
+    "eslint-config-next": "^14.2.16",
+    "postcss": "^8.4.47",
+    "postcss-nesting": "^12.1.5",
+    "sass": "^1.80.4",
+    "tailwindcss": "^3.4.14",
+    "tailwindcss-debug-screens": "^2.2.1",
+    "typescript": "^5.6.3"
+  }
+}

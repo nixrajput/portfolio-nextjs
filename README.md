@@ -1,6 +1,9 @@
-# Portfolio Website with Next.js and Sass
+# Portfolio Website Monorepo
 
-This repository contains the source code for a portfolio website built using Next.js and Sass. This README.md file provides an overview of the project and instructions on how to set it up and customize it for your own use.
+This repository contains the source code for two versions of my portfolio website. The repository is structured as a monorepo with both versions maintained in a single codebase but deployed to different domains.
+
+- **v1**: Original portfolio website built with Next.js 14 and Sass
+- **v2**: New redesigned portfolio website built with Next.js 15 and Tailwind CSS v4
 
 [![Stars](https://img.shields.io/github/stars/nixrajput/portfolio-nextjs?label=Stars&style=flat)][repo]
 [![Forks](https://img.shields.io/github/forks/nixrajput/portfolio-nextjs?label=Forks&style=flat)][repo]
@@ -14,29 +17,62 @@ This repository contains the source code for a portfolio website built using Nex
 
 ## Table of Contents
 
-- [Portfolio Website with Next.js and Sass](#portfolio-website-with-nextjs-and-sass)
+- [Portfolio Website Monorepo](#portfolio-website-monorepo)
   - [Table of Contents](#table-of-contents)
+  - [Repository Structure](#repository-structure)
   - [Features](#features)
+    - [v1 (Original Portfolio)](#v1-original-portfolio)
+    - [v2 (New Portfolio)](#v2-new-portfolio)
   - [Screenshots](#screenshots)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
   - [Usage](#usage)
+    - [Running v1](#running-v1)
+    - [Running v2](#running-v2)
   - [Customization](#customization)
     - [Changing Content](#changing-content)
+      - [For v1:](#for-v1)
+      - [For v2:](#for-v2)
   - [Deployment](#deployment)
+    - [Deploying v1](#deploying-v1)
+    - [Deploying v2](#deploying-v2)
   - [Contributing](#contributing)
   - [License](#license)
   - [Sponsor Me](#sponsor-me)
   - [Connect With Me](#connect-with-me)
   - [Activities](#activities)
 
+## Repository Structure
+
+This repository is organized as a monorepo with the following structure:
+
+```
+/
+├── v1/                  # Original portfolio website (Next.js 14)
+├── v2/                  # New portfolio website (Next.js 15)
+├── package.json         # Root package.json with workspace configuration
+├── README.md           # This file
+└── LICENSE             # MIT License
+```
+
 ## Features
 
-- Responsive design for various screen sizes.
-- A customizable portfolio section to showcase your projects.
-- An about section to introduce yourself.
-- Easily customizable with Sass for styling.
+### v1 (Original Portfolio)
+
+- Responsive design for various screen sizes
+- Portfolio section to showcase projects
+- About section with personal information
+- Customizable with Sass for styling
+- Built with Next.js 14 and React 18
+
+### v2 (New Portfolio)
+
+- Modern design with enhanced UI/UX
+- Built with Next.js 15 and React 19
+- Styled with Tailwind CSS v4
+- Improved performance and accessibility
+- Dark mode support
 
 ## Screenshots
 
@@ -91,39 +127,81 @@ You need to have the following software installed on your computer:
 
 ## Usage
 
-To start the development server and view the website locally, run the following command:
+The monorepo is set up to allow you to work with either version independently.
+
+### Running v1
+
+To start the development server for v1:
 
 ```bash
-npm run dev
-#or
-pnpm run dev
+npm run dev:v1
 # or
-yarn dev
+pnpm run dev:v1
+# or
+yarn dev:v1
 ```
 
-This will start the Next.js development server, and you can access the website in your web browser at `http://localhost:3000`.
+This will start the Next.js development server for v1, and you can access it at `http://localhost:4000`.
+
+### Running v2
+
+To start the development server for v2:
+
+```bash
+npm run dev:v2
+# or
+pnpm run dev:v2
+# or
+yarn dev:v2
+```
+
+This will start the Next.js development server for v2, and you can access it at `http://localhost:3000`.
 
 ## Customization
 
-You can customize various aspects of the portfolio website to make it your own.
+Both versions can be customized independently.
 
 ### Changing Content
 
-1. Update the content in the `data` directory:
+#### For v1:
 
-   - Edit the `projects.ts` file to add or modify project details.
-   - Edit the `services.ts` file to add or modify services you provide.
-   - Edit the `experiences.ts` file to add or modify experiences you have.
-   - Edit the `skills.ts` file to add or modify skills you know.
-   - Edit the `socialLinks.ts` file to add or modify social media links.
+1. Update the content in the `v1/src/data` directory:
+   - Edit the data files to modify project details, services, experiences, skills, and social links
+   - Replace or add images in the `v1/public/images` directory
 
-2. Replace or add images in the `public/images` directory to match your projects and profile picture.
+#### For v2:
+
+1. Update the content in the `v2/src/data` directory (if applicable)
+   - The v2 version uses a different structure, so refer to the specific files in the v2 directory
+   - Replace or add images in the `v2/public` directory
 
 ## Deployment
 
-To deploy the portfolio website to a hosting service of your choice, follow the deployment instructions for Next.js applications. Some popular hosting options include Vercel, Netlify, and GitHub Pages.
+Both versions can be deployed to separate domains on Vercel.
 
-Remember to configure environment variables for sensitive information like email credentials if needed.
+### Deploying v1
+
+1. Create a new project on Vercel and connect it to your GitHub repository
+2. Configure the following settings:
+   - Framework Preset: Next.js
+   - Root Directory: `v1`
+   - Build Command: `npm run build` or leave as default
+   - Output Directory: `.next`
+3. Set any required environment variables
+4. Deploy the project
+
+### Deploying v2
+
+1. Create another new project on Vercel and connect it to the same GitHub repository
+2. Configure the following settings:
+   - Framework Preset: Next.js
+   - Root Directory: `v2`
+   - Build Command: `npm run build` or leave as default
+   - Output Directory: `.next`
+3. Set any required environment variables
+4. Deploy the project
+
+With this setup, both versions will be deployed to different domains but maintained in the same repository.
 
 ## Contributing
 
