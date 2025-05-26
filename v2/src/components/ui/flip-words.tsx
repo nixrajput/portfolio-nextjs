@@ -1,11 +1,12 @@
 "use client";
+
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
 
 export const FlipWords = ({
   words,
-  duration = 3000,
+  duration = 5000,
   className,
 }: {
   words: string[];
@@ -45,28 +46,25 @@ export const FlipWords = ({
         }}
         transition={{
           type: "spring",
-          stiffness: 100,
+          stiffness: 300,
           damping: 10,
         }}
         exit={{
           opacity: 0,
           y: -40,
           x: 40,
-          filter: "blur(8px)",
+          filter: "blur(16px)",
           scale: 2,
           position: "absolute",
         }}
-        className={cn(
-          "z-10 inline-block relative text-left text-neutral-900 dark:text-neutral-100 px-2",
-          className
-        )}
+        className={cn("z-10 inline-block relative text-left px-2", className)}
         key={currentWord}
       >
         {currentWord.split(" ").map((word, wordIndex) => (
           <motion.span
             key={word + wordIndex}
-            initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{
               delay: wordIndex * 0.3,
               duration: 0.3,
@@ -76,8 +74,8 @@ export const FlipWords = ({
             {word.split("").map((letter, letterIndex) => (
               <motion.span
                 key={word + letterIndex}
-                initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{
                   delay: wordIndex * 0.3 + letterIndex * 0.05,
                   duration: 0.2,

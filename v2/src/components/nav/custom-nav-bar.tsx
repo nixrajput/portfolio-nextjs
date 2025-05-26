@@ -1,4 +1,5 @@
 "use client";
+
 import ThemeModeToggle from "@/components/theme-mode-toggle";
 import {
   MobileNav,
@@ -38,7 +39,6 @@ const CustomNavBar = ({ className }: { className?: string }) => {
         <NavbarLogo />
         <NavItems items={navItems} />
         <div className="flex items-center gap-4">
-          <NavbarButton variant="secondary">Login</NavbarButton>
           <NavbarButton variant="primary">Book a call</NavbarButton>
           <NavbarButton variant="primary" className="p-0">
             <ThemeModeToggle />
@@ -71,14 +71,6 @@ const CustomNavBar = ({ className }: { className?: string }) => {
             </a>
           ))}
           <div className="flex w-full flex-col gap-4">
-            <NavbarButton
-              onClick={() => setIsMobileMenuOpen(false)}
-              variant="primary"
-              className="w-full"
-            >
-              Login
-            </NavbarButton>
-
             <NavbarButton
               onClick={() => setIsMobileMenuOpen(false)}
               variant="primary"
