@@ -17,16 +17,28 @@ import { useState } from "react";
 const CustomNavBar = ({ className }: { className?: string }) => {
   const navItems = [
     {
-      name: "Features",
-      link: "#features",
+      name: "About",
+      link: "/about",
     },
     {
-      name: "Pricing",
-      link: "#pricing",
+      name: "Services",
+      link: "/services",
+    },
+    {
+      name: "Experiences",
+      link: "/experiences",
+    },
+    {
+      name: "Skills",
+      link: "/skills",
+    },
+    {
+      name: "Projects",
+      link: "/projects",
     },
     {
       name: "Contact",
-      link: "#contact",
+      link: "/contact",
     },
   ];
 
@@ -36,10 +48,12 @@ const CustomNavBar = ({ className }: { className?: string }) => {
     <Navbar className={className}>
       {/* Desktop Navigation */}
       <NavBody>
-        <NavbarLogo />
+        <NavbarLogo logoSrc="/icon.png" logoText="Nikhil Rajput" />
         <NavItems items={navItems} />
         <div className="flex items-center gap-4">
-          <NavbarButton variant="primary">Book a call</NavbarButton>
+          <NavbarButton href="/book-a-call" variant="primary">
+            Book a call
+          </NavbarButton>
           <NavbarButton variant="primary" className="p-0">
             <ThemeModeToggle />
           </NavbarButton>
@@ -49,7 +63,7 @@ const CustomNavBar = ({ className }: { className?: string }) => {
       {/* Mobile Navigation */}
       <MobileNav>
         <MobileNavHeader>
-          <NavbarLogo />
+          <NavbarLogo logoSrc="/icon.png" logoText="Nikhil Rajput" />
           <MobileNavToggle
             isOpen={isMobileMenuOpen}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -72,6 +86,7 @@ const CustomNavBar = ({ className }: { className?: string }) => {
           ))}
           <div className="flex w-full flex-col gap-4">
             <NavbarButton
+              href="/book-a-call"
               onClick={() => setIsMobileMenuOpen(false)}
               variant="primary"
               className="w-full"

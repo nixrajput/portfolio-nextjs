@@ -1,5 +1,6 @@
+import CustomNavBar from "@/components/nav/custom-nav-bar";
 import { ThemeProvider } from "@/components/theme-provider";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -13,36 +14,52 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+};
+
 export const metadata: Metadata = {
   title: "Nikhil Rajput",
   description:
     "Nikhil Rajput is a proficient Software Development Engineer from India with over 2 years of experience in building scalable and performant web applications and crafting high-quality software solutions.",
-  icons: [
-    {
-      url: "/favicon-16x16.ico",
-      rel: "icon",
-      sizes: "16x16",
-      type: "image/x-icon",
-    },
-    {
-      url: "/favicon-32x32.ico",
-      rel: "icon",
-      sizes: "32x32",
-      type: "image/x-icon",
-    },
-    {
-      url: "/favicon-48x48.ico",
-      rel: "icon",
-      sizes: "48x48",
-      type: "image/x-icon",
-    },
-    {
-      url: "/favicon-64x64.ico",
-      rel: "icon",
-      sizes: "64x64",
-      type: "image/x-icon",
-    },
-  ],
+  icons: {
+    icon: [
+      {
+        url: "/favicon-16x16.ico",
+        sizes: "16x16",
+        type: "image/x-icon",
+      },
+      {
+        url: "/favicon-32x32.ico",
+        sizes: "32x32",
+        type: "image/x-icon",
+      },
+      {
+        url: "/favicon-48x48.ico",
+        sizes: "48x48",
+        type: "image/x-icon",
+      },
+      {
+        url: "/favicon-64x64.ico",
+        sizes: "64x64",
+        type: "image/x-icon",
+      },
+    ],
+    apple: [
+      {
+        url: "/apple-icon.png",
+        sizes: "any",
+        type: "image/png",
+      },
+    ],
+  },
   metadataBase: new URL("https://nixrajput.com"),
   alternates: {
     canonical: "/",
@@ -71,6 +88,16 @@ export const metadata: Metadata = {
     "nixrajput github",
     "github nixrajput",
   ],
+  verification: {
+    google: "wtdOgaX__5Xlzs2PDlRweWqeYBzPrGUiXjP7s8U_4wg",
+    other: {
+      me: [
+        "nixrajput@gmail.com",
+        "nkr.nikhil.nkr@gmail.com",
+        "https://nixrajput.com",
+      ],
+    },
+  },
 };
 
 export default function RootLayout({
@@ -89,6 +116,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <CustomNavBar />
           {children}
         </ThemeProvider>
       </body>

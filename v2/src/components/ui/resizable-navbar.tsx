@@ -9,6 +9,7 @@ import {
   useScroll,
 } from "motion/react";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useRef, useState } from "react";
 
 interface NavbarProps {
@@ -68,8 +69,10 @@ export const Navbar = ({ children, className }: NavbarProps) => {
   return (
     <motion.div
       ref={ref}
-      // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
-      className={cn("fixed inset-x-0 top-5 z-100 w-full", className)}
+      className={cn(
+        "fixed inset-x-0 top-5 z-100 w-full max-w-screen",
+        className
+      )}
     >
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
@@ -91,7 +94,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         boxShadow: visible
           ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
           : "none",
-        width: visible ? "40%" : "100%",
+        width: visible ? "80%" : "100%",
         y: visible ? 20 : 0,
       }}
       transition={{
@@ -103,7 +106,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
         minWidth: "800px",
       }}
       className={cn(
-        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex dark:bg-transparent",
+        "relative z-[60] mx-auto hidden w-full max-w-screen flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex dark:bg-transparent",
         visible && "bg-white/80 dark:bg-neutral-950/80",
         className
       )}
@@ -229,17 +232,28 @@ export const MobileNavToggle = ({
   );
 };
 
-export const NavbarLogo = () => {
+export const NavbarLogo = ({
+  logoSrc,
+  logoText,
+  className,
+}: {
+  logoSrc: string;
+  logoText: string;
+  className?: string;
+}) => {
   return (
-    <a
-      href="#"
-      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-black"
+    <Link
+      href="/"
+      className={cn(
+        "relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-bold text-black",
+        className
+      )}
     >
-      <Image src="/icon.png" alt="logo" width={30} height={30} />
-      <span className="font-medium text-black dark:text-white">
-        Nikhil Rajput
-      </span>
-    </a>
+      <Image src={logoSrc} alt="logo" width={30} height={30} />
+      <div className="relative bg-clip-text text-transparent bg-no-repeat bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500">
+        <span className="text-sm font-bold">{logoText}</span>
+      </div>
+    </Link>
   );
 };
 
@@ -265,11 +279,11 @@ export const NavbarButton = ({
 
   const variantStyles = {
     primary:
-      "shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
+      "shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:shadow-[0_0_24px_rgba(220,_230,_240,_0.06),_0_1px_1px_rgba(255,_255,_255,_0.05),_0_0_0_1px_rgba(200,_215,_225,_0.04),_0_0_4px_rgba(200,_215,_225,_0.08),_0_16px_68px_rgba(200,_210,_220,_0.05),_0_1px_0_rgba(0,_0,_0,_0.1)_inset]",
     secondary: "bg-transparent shadow-none dark:text-white",
-    dark: "bg-black text-white shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
+    dark: "bg-black text-white shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset] dark:shadow-[0_0_24px_rgba(220,_230,_240,_0.06),_0_1px_1px_rgba(255,_255,_255,_0.05),_0_0_0_1px_rgba(200,_215,_225,_0.04),_0_0_4px_rgba(200,_215,_225,_0.08),_0_16px_68px_rgba(200,_210,_220,_0.05),_0_1px_0_rgba(0,_0,_0,_0.1)_inset]",
     gradient:
-      "bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]",
+      "bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset] dark:shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]",
   };
 
   return (
