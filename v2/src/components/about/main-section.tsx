@@ -1,9 +1,9 @@
 "use client";
 
+import SectionTitle from "@/components/common/section-title";
 import { motion } from "motion/react";
 import BioSkillsSection from "./bio-skills-section";
 import ProfileCard from "./profile-card";
-import SectionTitle from "./section-title";
 import StatsSection from "./stats-section";
 
 const MainSection = () => {
@@ -15,13 +15,37 @@ const MainSection = () => {
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(5)].map((_, i) => {
-          // Use deterministic values based on index instead of random
-          const positions = [
-            { x: "-30%", y: "-20%", scale: 0.8, duration: 15 },
-            { x: "20%", y: "-40%", scale: 0.7, duration: 18 },
-            { x: "-20%", y: "30%", scale: 0.6, duration: 13 },
-            { x: "40%", y: "30%", scale: 0.9, duration: 16 },
-            { x: "10%", y: "60%", scale: 0.7, duration: 14 },
+          const animations = [
+            {
+              initial: { x: "-30%", y: "-20%" },
+              animate: { x: "30%", y: "20%" },
+              scale: 0.8,
+              duration: 15,
+            },
+            {
+              initial: { x: "20%", y: "-40%" },
+              animate: { x: "-20%", y: "40%" },
+              scale: 0.7,
+              duration: 18,
+            },
+            {
+              initial: { x: "-20%", y: "30%" },
+              animate: { x: "20%", y: "-30%" },
+              scale: 0.6,
+              duration: 13,
+            },
+            {
+              initial: { x: "40%", y: "30%" },
+              animate: { x: "-40%", y: "-30%" },
+              scale: 0.9,
+              duration: 16,
+            },
+            {
+              initial: { x: "10%", y: "60%" },
+              animate: { x: "-10%", y: "-60%" },
+              scale: 0.7,
+              duration: 14,
+            },
           ];
 
           const sizes = [
@@ -37,37 +61,17 @@ const MainSection = () => {
               key={i}
               className="absolute bg-purple-500/5 dark:bg-purple-500/10 rounded-full"
               initial={{
-                x: positions[i].x,
-                y: positions[i].y,
-                scale: positions[i].scale,
+                ...animations[i].initial,
+                scale: animations[i].scale,
                 opacity: 0,
               }}
               animate={{
-                x:
-                  positions[i].x === "-30%"
-                    ? "30%"
-                    : positions[i].x === "30%"
-                    ? "-30%"
-                    : positions[i].x === "20%"
-                    ? "-20%"
-                    : positions[i].x === "-20%"
-                    ? "20%"
-                    : "0%",
-                y:
-                  positions[i].y === "-40%"
-                    ? "40%"
-                    : positions[i].y === "40%"
-                    ? "-40%"
-                    : positions[i].y === "30%"
-                    ? "-30%"
-                    : positions[i].y === "-30%"
-                    ? "30%"
-                    : "0%",
-                scale: positions[i].scale,
+                ...animations[i].animate,
+                scale: animations[i].scale,
                 opacity: 0.3,
               }}
               transition={{
-                duration: positions[i].duration,
+                duration: animations[i].duration,
                 repeat: Infinity,
                 repeatType: "reverse",
               }}
@@ -83,7 +87,10 @@ const MainSection = () => {
 
       <div className="container mx-auto max-w-6xl relative z-10">
         {/* Section title */}
-        <SectionTitle />
+        <SectionTitle
+          title="About"
+          highlightText="Me"
+        />
 
         {/* Main content */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

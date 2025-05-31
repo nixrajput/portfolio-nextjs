@@ -1,9 +1,10 @@
+import PageWrapper from "@/components/common/page-wrapper";
 import HeroSection from "@/components/home/hero-section";
 
 export default function HomePageComponent() {
   return (
-    <div className="relative w-full">
+    <PageWrapper>
       <HeroSection />
-    </div>
+    </PageWrapper>
   );
 }

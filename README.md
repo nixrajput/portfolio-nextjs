@@ -52,8 +52,8 @@ This repository is organized as a monorepo with the following structure:
 ├── v1/                  # Original portfolio website (Next.js 14)
 ├── v2/                  # New portfolio website (Next.js 15)
 ├── package.json         # Root package.json with workspace configuration
-├── README.md           # This file
-└── LICENSE             # MIT License
+├── README.md            # This file
+└── LICENSE              # MIT License
 ```
 
 ## Features

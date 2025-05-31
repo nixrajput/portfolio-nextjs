@@ -4,8 +4,8 @@ This is the original version (v1) of my portfolio website built with [Next.js 14
 
 This directory is part of a monorepo structure where:
 
-- `v1/` contains the original portfolio website
-- `v2/` (this directory) contains the new redesigned portfolio website
+- `v1/` (this directory) contains the original portfolio website
+- `v2/` contains the new redesigned portfolio website
 
 ## Getting Started
 

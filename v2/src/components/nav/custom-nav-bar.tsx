@@ -1,103 +1,84 @@
 "use client";
 
-import ThemeModeToggle from "@/components/theme-mode-toggle";
+import ThemeModeToggle from "@/components/theme/theme-mode-toggle";
 import {
   MobileNav,
   MobileNavHeader,
+  MobileNavItems,
   MobileNavMenu,
   MobileNavToggle,
   Navbar,
-  NavbarButton,
   NavbarLogo,
   NavBody,
   NavItems,
 } from "@/components/ui/resizable-navbar";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
-const CustomNavBar = ({ className }: { className?: string }) => {
-  const navItems = [
-    {
-      name: "About",
-      link: "/about",
-    },
-    {
-      name: "Services",
-      link: "/services",
-    },
-    {
-      name: "Experiences",
-      link: "/experiences",
-    },
-    {
-      name: "Skills",
-      link: "/skills",
-    },
-    {
-      name: "Projects",
-      link: "/projects",
-    },
-    {
-      name: "Contact",
-      link: "/contact",
-    },
-  ];
+interface NavItem {
+  name: string;
+  link: string;
+}
 
+interface CustomNavBarProps {
+  className?: string;
+  navItems?: NavItem[];
+  logoSrc?: string;
+  logoText?: string;
+}
+
+const defaultNavItems: NavItem[] = [
+  { name: "Home", link: "/" },
+  { name: "About", link: "/about" },
+  { name: "Services", link: "/services" },
+  { name: "Experiences", link: "/experiences" },
+  { name: "Skills", link: "/skills" },
+  { name: "Projects", link: "/projects" },
+  { name: "Contact", link: "/contact" },
+];
+
+const CustomNavBar = ({
+  className,
+  navItems = defaultNavItems,
+  logoSrc = "/icon.png",
+}: CustomNavBarProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <Navbar className={className}>
       {/* Desktop Navigation */}
       <NavBody>
-        <NavbarLogo logoSrc="/icon.png" logoText="Nikhil Rajput" />
-        <NavItems items={navItems} />
-        <div className="flex items-center gap-4">
-          <NavbarButton href="/book-a-call" variant="primary">
-            Book a call
-          </NavbarButton>
-          <NavbarButton variant="primary" className="p-0">
-            <ThemeModeToggle />
-          </NavbarButton>
+        <NavbarLogo logoSrc={logoSrc} logoSize={32} showLogoText={false} />
+        <NavItems items={navItems} activePath={pathname} />
+        <div className="relative hidden flex-row items-center transition duration-200 lg:flex ml-4">
+          <ThemeModeToggle />
         </div>
       </NavBody>
 
       {/* Mobile Navigation */}
       <MobileNav>
         <MobileNavHeader>
-          <NavbarLogo logoSrc="/icon.png" logoText="Nikhil Rajput" />
-          <MobileNavToggle
-            isOpen={isMobileMenuOpen}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          />
+          <NavbarLogo logoSrc={logoSrc} logoSize={32} showLogoText={false} />
+
+          <div className="flex items-center gap-4">
+            <ThemeModeToggle onClick={() => setIsMobileMenuOpen(false)} />
+            <MobileNavToggle
+              isOpen={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            />
+          </div>
         </MobileNavHeader>
 
         <MobileNavMenu
           isOpen={isMobileMenuOpen}
           onClose={() => setIsMobileMenuOpen(false)}
         >
-          {navItems.map((item, idx) => (
-            <a
-              key={`mobile-link-${idx}`}
-              href={item.link}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="relative text-neutral-600 dark:text-neutral-300"
-            >
-              <span className="block">{item.name}</span>
-            </a>
-          ))}
-          <div className="flex w-full flex-col gap-4">
-            <NavbarButton
-              href="/book-a-call"
-              onClick={() => setIsMobileMenuOpen(false)}
-              variant="primary"
-              className="w-full"
-            >
-              Book a call
-            </NavbarButton>
-
-            <NavbarButton variant="primary" className="w-full p-0">
-              <ThemeModeToggle />
-            </NavbarButton>
-          </div>
+          <MobileNavItems
+            items={navItems}
+            activePath={pathname}
+            onItemClick={() => setIsMobileMenuOpen(false)}
+          />
         </MobileNavMenu>
       </MobileNav>
     </Navbar>

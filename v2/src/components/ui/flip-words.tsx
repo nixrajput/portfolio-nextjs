@@ -23,11 +23,23 @@ export const FlipWords = ({
   }, [currentWord, words]);
 
   useEffect(() => {
-    if (!isAnimating)
-      setTimeout(() => {
+    let timeoutId: NodeJS.Timeout;
+    if (!isAnimating) {
+      timeoutId = setTimeout(() => {
         startAnimation();
       }, duration);
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [isAnimating, duration, startAnimation]);
+
+  if (!words || words.length === 0) {
+    return null;
+  }
 
   return (
     <AnimatePresence

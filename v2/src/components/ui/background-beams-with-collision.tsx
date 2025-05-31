@@ -155,9 +155,22 @@ const CollisionMechanism = React.forwardRef<
       }
     };
 
-    const animationInterval = setInterval(checkCollision, 50);
+    let animationFrameId: number;
 
-    return () => clearInterval(animationInterval);
+    const checkCollisionFrame = () => {
+      checkCollision();
+      if (!cycleCollisionDetected) {
+        animationFrameId = requestAnimationFrame(checkCollisionFrame);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(checkCollisionFrame);
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
   }, [cycleCollisionDetected, containerRef, parentRef]);
 
   useEffect(() => {

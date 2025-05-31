@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { IconArrowLeft } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 
 const BackButton = ({
   className,
@@ -27,11 +28,18 @@ const BackButton = ({
   showIcon?: boolean;
   onClick?: () => void;
 }) => {
+  const router = useRouter();
+
   const handleBack = () => {
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      window.location.replace("/");
+    try {
+      if (window.history.length > 1) {
+        router.back();
+      } else {
+        router.replace("/");
+      }
+    } catch (error) {
+      console.error("Navigation error:", error);
+      router.replace("/");
     }
   };
 

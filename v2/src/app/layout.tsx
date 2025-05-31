@@ -1,5 +1,5 @@
 import CustomNavBar from "@/components/nav/custom-nav-bar";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     "github nixrajput",
   ],
   verification: {
-    google: "wtdOgaX__5Xlzs2PDlRweWqeYBzPrGUiXjP7s8U_4wg",
+    google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION_TOKEN,
     other: {
       me: [
         "nixrajput@gmail.com",

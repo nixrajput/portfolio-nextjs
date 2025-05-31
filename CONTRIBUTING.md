@@ -1,6 +1,6 @@
 # Contributing to the Portfolio Monorepo
 
-We appreciate your interest in contributing to the Portfolio Monorepo built with Next.js and Sass. By contributing, you help make this project better and more accessible for others. Please take a moment to review the following guidelines to ensure a smooth and collaborative development process.
+We appreciate your interest in contributing to the Portfolio Monorepo project. By contributing, you help make this project better and more accessible for others. Please take a moment to review the following guidelines to ensure a smooth and collaborative development process.
 
 ## Code of Conduct
 

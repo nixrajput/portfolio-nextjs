@@ -29,37 +29,6 @@ export default function NotFound() {
       id="not-found"
       className="relative h-auto min-h-screen bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800 flex items-center w-full max-w-screen justify-center overflow-hidden p-4"
     >
-      <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute bg-purple-500/10 dark:bg-purple-500/5 rounded-full"
-            initial={{
-              x: Math.random() * 100 - 50 + "%",
-              y: Math.random() * 100 - 50 + "%",
-              scale: Math.random() * 0.5 + 0.5,
-              opacity: 0,
-            }}
-            animate={{
-              x: Math.random() * 100 - 50 + "%",
-              y: Math.random() * 100 - 50 + "%",
-              scale: Math.random() * 0.5 + 0.5,
-              opacity: 0.3,
-            }}
-            transition={{
-              duration: Math.random() * 10 + 10,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-            style={{
-              width: Math.random() * 300 + 50,
-              height: Math.random() * 300 + 50,
-              filter: "blur(40px)",
-            }}
-          />
-        ))}
-      </div>
-
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
