@@ -22,7 +22,7 @@ const SectionTitle = ({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
-      className={cn("text-center mb-16", className)}
+      className={cn("text-center", className)}
     >
       <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white">
         {title}{" "}

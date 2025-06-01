@@ -2,8 +2,8 @@
 
 import SectionTitle from "@/components/common/section-title";
 import { motion } from "motion/react";
-import BioSkillsSection from "./bio-skills-section";
 import ProfileCard from "./profile-card";
+import ProfileTabs from "./profile-tabs";
 import StatsSection from "./stats-section";
 
 const MainSection = () => {
@@ -85,20 +85,17 @@ const MainSection = () => {
         })}
       </div>
 
-      <div className="container mx-auto max-w-6xl relative z-10">
+      <div className="relative flex flex-col items-center mx-auto z-10 w-full max-w-screen gap-16">
         {/* Section title */}
-        <SectionTitle
-          title="About"
-          highlightText="Me"
-        />
+        <SectionTitle title="About" highlightText="Me" />
 
         {/* Main content */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="relative flex flex-col md:flex-row gap-8 items-center md:items-start w-full min-h-[20rem] md:min-h-[30rem]">
           {/* Profile card */}
           <ProfileCard />
 
-          {/* Bio and skills */}
-          <BioSkillsSection />
+          {/* Bio skills and experience */}
+          <ProfileTabs />
         </div>
 
         {/* Stats section */}

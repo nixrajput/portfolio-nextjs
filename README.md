@@ -2,8 +2,8 @@
 
 This repository contains the source code for two versions of my portfolio website. The repository is structured as a monorepo with both versions maintained in a single codebase but deployed to different domains.
 
-- **v1**: Original portfolio website built with Next.js 14 and Sass
-- **v2**: New redesigned portfolio website built with Next.js 15 and Tailwind CSS v4
+- **v1**: Old portfolio website built with Next.js 14, React 18, Aceternity UI, Tailwind CSS v3, and Sass
+- **v2**: New redesigned portfolio website built with Next.js 15, React 19, Tailwind CSS v4, shadcn/ui, and Aceternity UI
 
 [![Stars](https://img.shields.io/github/stars/nixrajput/portfolio-nextjs?label=Stars&style=flat)][repo]
 [![Forks](https://img.shields.io/github/forks/nixrajput/portfolio-nextjs?label=Forks&style=flat)][repo]
@@ -21,9 +21,11 @@ This repository contains the source code for two versions of my portfolio websit
   - [Table of Contents](#table-of-contents)
   - [Repository Structure](#repository-structure)
   - [Features](#features)
-    - [v1 (Original Portfolio)](#v1-original-portfolio)
+    - [v1 (Old Portfolio)](#v1-old-portfolio)
     - [v2 (New Portfolio)](#v2-new-portfolio)
   - [Screenshots](#screenshots)
+    - [v1 Portfolio](#v1-portfolio)
+    - [v2 Portfolio](#v2-portfolio)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
@@ -39,7 +41,7 @@ This repository contains the source code for two versions of my portfolio websit
     - [Deploying v2](#deploying-v2)
   - [Contributing](#contributing)
   - [License](#license)
-  - [Sponsor Me](#sponsor-me)
+  - [Support My Work](#support-my-work)
   - [Connect With Me](#connect-with-me)
   - [Activities](#activities)
 
@@ -49,34 +51,61 @@ This repository is organized as a monorepo with the following structure:
 
 ```
 /
-├── v1/                  # Original portfolio website (Next.js 14)
+├── .github/             # GitHub configuration files
+├── v1/                  # Old portfolio website (Next.js 14)
 ├── v2/                  # New portfolio website (Next.js 15)
+├── .gitignore           # Git ignore file
+├── bun.lock             # Bun lock file
+├── CODE_OF_CONDUCT.md   # Code of Conduct
+├── CONTRIBUTING.md      # Contributing Guidelines
+├── LICENSE              # MIT License
 ├── package.json         # Root package.json with workspace configuration
 ├── README.md            # This file
-└── LICENSE              # MIT License
+└── vercel.json          # Vercel configuration
 ```
 
 ## Features
 
-### v1 (Original Portfolio)
+### v1 (Old Portfolio)
 
-- Responsive design for various screen sizes
-- Portfolio section to showcase projects
-- About section with personal information
-- Customizable with Sass for styling
-- Built with Next.js 14 and React 18
+- **Technology Stack**: Next.js 14, React 18, Aceternity UI, Tailwind CSS v3, and Sass
+- **UI Components**: Custom animations, responsive cards, and interactive elements
+- **Layout**: Multi-section single page with smooth scrolling navigation
+- **Performance**: Optimized image loading and component rendering
+- **Content Management**: Data-driven content from structured JSON files
+- **Key Sections**:
+  - Hero section with animated introduction
+  - Projects gallery with filterable categories
+  - Skills showcase with proficiency indicators
+  - Experience timeline with detailed work history
+  - Contact form with validation
 
 ### v2 (New Portfolio)
 
-- Modern design with enhanced UI/UX
-- Built with Next.js 15 and React 19
-- Styled with Tailwind CSS v4
-- Improved performance and accessibility
-- Dark mode support
+- **Technology Stack**: Next.js 15, React 19, shadcn/ui, Aceternity UI, and Tailwind CSS v4
+- **UI Framework**: Component-based architecture with reusable UI patterns
+- **Design System**: Consistent typography, spacing, and color schemes
+- **Theming**: Dynamic dark/light mode with persistent user preference
+- **Animations**: Subtle micro-interactions and page transitions
+- **Performance Optimizations**:
+  - Server components for reduced client-side JavaScript
+  - Optimized asset loading with priority hints
+  - Efficient rendering with React 19 features
+- **Accessibility**: WCAG compliant with keyboard navigation and screen reader support
+- **SEO**: Enhanced metadata, structured data, and optimized for search engines
 
 ## Screenshots
 
-![Screenshot 1](/screenshot-desktop.png)
+### v1 Portfolio
+
+![v1 Portfolio Screenshot](/v1/screenshot-desktop.png)
+
+### v2 Portfolio
+
+_Note: Add a screenshot of your v2 portfolio here by capturing it and saving to `/v2/screenshot-desktop.png`_
+
+<!-- Once you have the v2 screenshot, replace the note above with: -->
+<!-- ![v2 Portfolio Screenshot](/v2/screenshot-desktop.png) -->
 
 ## Getting Started
 
@@ -139,6 +168,8 @@ npm run dev:v1
 pnpm run dev:v1
 # or
 yarn dev:v1
+# or
+bun dev:v1
 ```
 
 This will start the Next.js development server for v1, and you can access it at `http://localhost:4000`.
@@ -153,6 +184,8 @@ npm run dev:v2
 pnpm run dev:v2
 # or
 yarn dev:v2
+# or
+bun dev:v2
 ```
 
 This will start the Next.js development server for v2, and you can access it at `http://localhost:3000`.
@@ -211,15 +244,9 @@ If you would like to contribute to this project, feel free to fork the repositor
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Sponsor Me
+## Support My Work
 
-By sponsoring my efforts, you're not merely contributing to the development of my projects; you're investing in its growth and sustainability.
-
-Your support empowers me to dedicate more time and resources to improving the project's features, addressing issues, and ensuring its continued relevance in the rapidly evolving landscape of technology.
-
-Your sponsorship directly fuels innovation, fosters a vibrant community, and helps maintain the project's high standards of quality. Together, we can shape the future of the projects and make a lasting impact in the open-source community.
-
-Thank you for considering sponsoring my work!
+Your support helps me dedicate more time to developing high-quality, impactful projects in the open-source community. Sponsor me, and together, let’s bring even more innovation to life!
 
 [![Sponsor](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/nixrajput)
 
@@ -230,11 +257,11 @@ Thank you for considering sponsoring my work!
 ## Connect With Me
 
 [![GitHub: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=GitHub&logoColor=333&link=https://www.github.com/nixrajput)][github]
-[![Linkedin: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=LinkedIn&logoColor=blue&link=https://www.linkedin.com/in/nixrajput)][linkedin]
-[![Instagram: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=Instagram&link=https://www.instagram.com/nixrajput)][instagram]
-[![Twitter: nixrajput07](https://img.shields.io/badge/nixrajput-EFF7F6?logo=X&logoColor=333&link=https://x.com/nixrajput)][twitter]
-[![Telegram: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=Telegram&link=https://telegram.me/nixrajput)][telegram]
-[![Gmail: nkr.nikhi.nkr@gmail.com](https://img.shields.io/badge/nkr.nikhil.nkr@gmail.com-EFF7F6?logo=Gmail&link=mailto:nkr.nikhil.nkr@gmail.com)][gmail]
+[![Linkedin: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=LinkedIn&logoColor=333&link=https://www.linkedin.com/in/nixrajput)][linkedin]
+[![Instagram: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=Instagram&logoColor=333&link=https://www.instagram.com/nixrajput)][instagram]
+[![Twitter: nixrajput07](https://img.shields.io/badge/nixrajput07-EFF7F6?logo=X&logoColor=333&link=https://x.com/nixrajput07)][twitter]
+[![Telegram: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=Telegram&logoColor=333&link=https://telegram.me/nixrajput)][telegram]
+[![Gmail: nkr.nikhi.nkr@gmail.com](https://img.shields.io/badge/nkr.nikhil.nkr@gmail.com-EFF7F6?logo=Gmail&logoColor=333&link=mailto:nkr.nikhil.nkr@gmail.com)][gmail]
 
 ## Activities
 

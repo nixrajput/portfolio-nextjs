@@ -4,10 +4,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
+  IconArrowRight,
   IconBrandGithub,
   IconBrandLinkedin,
   IconBrandX,
-  IconDownload,
   IconMail,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
@@ -68,9 +68,9 @@ const ProfileCard = ({
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: 0.2 }}
       viewport={{ once: true }}
-      className="lg:col-span-4"
+      className="min-w-full md:min-w-[20rem] h-full"
     >
-      <Card className="overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm">
+      <Card className="overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm h-full">
         <CardContent className="p-0">
           <div className="relative h-48 w-full bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500">
             <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
@@ -102,15 +102,15 @@ const ProfileCard = ({
                     target={link.external ? "_blank" : "_self"}
                     rel="noopener noreferrer"
                   >
-                    <link.icon className="w-5 h-5" />
+                    <link.icon className="w-6 h-6" />
                   </Link>
                 </Button>
               ))}
             </div>
 
-            <Button className="w-full bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 hover:opacity-90 transition-opacity text-white">
-              <IconDownload className="mr-2 h-4 w-4" />
-              Download Resume
+            <Button className="min-w-40 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 hover:opacity-90 hover:-translate-y-0.5 transition-all text-white">
+              Let&apos;s Chat
+              <IconArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </div>
         </CardContent>

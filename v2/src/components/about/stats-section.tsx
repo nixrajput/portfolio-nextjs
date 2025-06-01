@@ -1,52 +1,48 @@
 "use client";
 
+import AnimatedCounter from "@/components/common/animated-counter";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "motion/react";
 
-const StatsSection = () => {
+interface Stat {
+  count: string;
+  label: string;
+}
+
+interface StatsSectionProps {
+  stats?: Stat[];
+}
+
+const defaultStats: Stat[] = [
+  { count: "2+", label: "Years Experience" },
+  { count: "50+", label: "Projects Completed" },
+  { count: "10+", label: "Happy Clients" },
+  { count: "10+", label: "Open Source Contributions" },
+];
+
+const StatsSection = ({ stats = defaultStats }: StatsSectionProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.6 }}
-      viewport={{ once: true }}
-      className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8"
+      className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 w-full"
     >
-      <Card className="border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm">
-        <CardContent className="p-6 text-center">
-          <h3 className="text-3xl font-bold text-purple-500 mb-1">5+</h3>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            Years Experience
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card className="border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm">
-        <CardContent className="p-6 text-center">
-          <h3 className="text-3xl font-bold text-purple-500 mb-1">50+</h3>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            Projects Completed
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card className="border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm">
-        <CardContent className="p-6 text-center">
-          <h3 className="text-3xl font-bold text-purple-500 mb-1">20+</h3>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            Happy Clients
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card className="border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm">
-        <CardContent className="p-6 text-center">
-          <h3 className="text-3xl font-bold text-purple-500 mb-1">15+</h3>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            Open Source Contributions
-          </p>
-        </CardContent>
-      </Card>
+      {stats.map((stat, index) => (
+        <Card
+          key={`stat-${index}`}
+          className="border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm hover:shadow-md hover:scale-105 transition-all duration-300"
+        >
+          <CardContent className="p-6 text-center">
+            <h3 className="text-3xl font-bold text-purple-500 mb-1">
+              <AnimatedCounter value={stat.count} />
+            </h3>
+            <p className="text-neutral-600 dark:text-neutral-400">
+              {stat.label}
+            </p>
+          </CardContent>
+        </Card>
+      ))}
     </motion.div>
   );
 };
