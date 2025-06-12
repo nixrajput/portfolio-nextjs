@@ -10,19 +10,21 @@ type Tab = {
   content?: string | React.ReactNode;
 };
 
+interface AnimatedTabsProps {
+  tabs: Tab[];
+  containerClassName?: string;
+  activeTabClassName?: string;
+  tabClassName?: string;
+  contentClassName?: string;
+}
+
 export const AnimatedTabs = ({
   tabs: propTabs,
   containerClassName,
   activeTabClassName,
   tabClassName,
   contentClassName,
-}: {
-  tabs: Tab[];
-  containerClassName?: string;
-  activeTabClassName?: string;
-  tabClassName?: string;
-  contentClassName?: string;
-}) => {
+}: AnimatedTabsProps) => {
   const [active, setActive] = useState<Tab>(propTabs[0]);
   const [tabs, setTabs] = useState<Tab[]>(propTabs);
 
@@ -77,9 +79,8 @@ export const AnimatedTabs = ({
       </div>
 
       <FadeInDiv
-        tabs={tabs}
-        active={active}
         key={active.value}
+        tabs={tabs}
         hovering={hovering}
         className={cn("mt-16", contentClassName)}
       />
@@ -95,12 +96,12 @@ export const FadeInDiv = ({
   className?: string;
   key?: string;
   tabs: Tab[];
-  active: Tab;
   hovering?: boolean;
 }) => {
   const isActive = (tab: Tab) => {
     return tab.value === tabs[0].value;
   };
+
   return (
     <div className="relative w-full h-full">
       {tabs.map((tab, idx) => (

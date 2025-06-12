@@ -3,21 +3,17 @@
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { Button } from "@/components/ui/button";
 import { FlipWords } from "@/components/ui/flip-words";
+import { names, roles } from "@/data";
 import { IconArrowRight } from "@tabler/icons-react";
 import { motion } from "motion/react";
-
-const names: string[] = ["Nikhil Rajput.", "@nixrajput."];
-const roles: string[] = [
-  "Software Development Engineer",
-  "Open Source Contributor",
-  "Full Stack Developer",
-];
 
 function HeroSection({ className }: { className?: string }) {
   return (
     <div
       id="hero"
       className="relative h-auto min-h-screen bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800 flex items-center w-full max-w-screen justify-center overflow-hidden"
+      role="banner"
+      aria-label="Hero section with introduction"
     >
       <BackgroundBeamsWithCollision className={className}>
         <div className="flex flex-col items-center justify-center">

@@ -34,11 +34,11 @@ This repository contains the source code for two versions of my portfolio websit
     - [Running v2](#running-v2)
   - [Customization](#customization)
     - [Changing Content](#changing-content)
-      - [For v1:](#for-v1)
-      - [For v2:](#for-v2)
+      - [For v1 (Old Portfolio)](#for-v1-old-portfolio)
+      - [For v2 (New Portfolio)](#for-v2-new-portfolio)
   - [Deployment](#deployment)
-    - [Deploying v1](#deploying-v1)
-    - [Deploying v2](#deploying-v2)
+    - [Deploying v1 (Old Portfolio)](#deploying-v1-old-portfolio)
+    - [Deploying v2 (New Portfolio)](#deploying-v2-new-portfolio)
   - [Contributing](#contributing)
   - [License](#license)
   - [Support My Work](#support-my-work)
@@ -49,8 +49,8 @@ This repository contains the source code for two versions of my portfolio websit
 
 This repository is organized as a monorepo with the following structure:
 
-```
-/
+```text
+.
 ├── .github/             # GitHub configuration files
 ├── v1/                  # Old portfolio website (Next.js 14)
 ├── v2/                  # New portfolio website (Next.js 15)
@@ -196,13 +196,13 @@ Both versions can be customized independently.
 
 ### Changing Content
 
-#### For v1:
+#### For v1 (Old Portfolio)
 
 1. Update the content in the `v1/src/data` directory:
    - Edit the data files to modify project details, services, experiences, skills, and social links
    - Replace or add images in the `v1/public/images` directory
 
-#### For v2:
+#### For v2 (New Portfolio)
 
 1. Update the content in the `v2/src/data` directory (if applicable)
    - The v2 version uses a different structure, so refer to the specific files in the v2 directory
@@ -212,7 +212,7 @@ Both versions can be customized independently.
 
 Both versions can be deployed to separate domains on Vercel.
 
-### Deploying v1
+### Deploying v1 (Old Portfolio)
 
 1. Create a new project on Vercel and connect it to your GitHub repository
 2. Configure the following settings:
@@ -223,7 +223,7 @@ Both versions can be deployed to separate domains on Vercel.
 3. Set any required environment variables
 4. Deploy the project
 
-### Deploying v2
+### Deploying v2 (New Portfolio)
 
 1. Create another new project on Vercel and connect it to the same GitHub repository
 2. Configure the following settings:

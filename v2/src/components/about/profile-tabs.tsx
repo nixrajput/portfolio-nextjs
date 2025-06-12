@@ -15,7 +15,7 @@ interface ProfileTabsProps {
   tabs?: Tab[];
 }
 
-const defaultTabs: Tab[] = [
+const defaultProfileTabs: Tab[] = [
   {
     title: "Biography",
     value: "bio",
@@ -47,7 +47,7 @@ const defaultTabs: Tab[] = [
   },
 ];
 
-const ProfileTabs = ({ tabs = defaultTabs }: ProfileTabsProps) => {
+const ProfileTabs = ({ tabs = defaultProfileTabs }: ProfileTabsProps) => {
   return (
     <div className="h-[20rem] md:h-[30rem] [perspective:1000px] relative flex flex-col flex-1 mx-auto w-full items-start justify-start">
       <AnimatedTabs tabs={tabs} />

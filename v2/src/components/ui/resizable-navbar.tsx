@@ -303,7 +303,6 @@ export const NavbarLogo = ({
   logoSize?: number;
   logoTextSize?: string;
   logoTextColor?: string;
-  logoTextFont?: string;
   logoTextFontWeight?: string;
   showLogoText?: boolean;
   className?: string;

@@ -16,10 +16,10 @@ const AnimatedCounter = ({ value, className }: AnimatedCounterProps) => {
 
   // Parse the value to get the number and suffix
   const parseValue = () => {
-    const match = value.match(/^(\d+)(\+?)$/);
+    const match = value.match(/^(\d+(?:\.\d+)?)(.*?)$/);
     if (match) {
       return {
-        number: parseInt(match[1], 10),
+        number: parseFloat(match[1]),
         suffix: match[2] || "",
       };
     }
@@ -74,7 +74,7 @@ const AnimatedCounter = ({ value, className }: AnimatedCounterProps) => {
           setCounter(number);
           clearInterval(interval);
         } else {
-          setCounter(Math.floor(currentCount));
+          setCounter(Math.round(currentCount));
         }
       }, (duration * 1000) / steps);
 

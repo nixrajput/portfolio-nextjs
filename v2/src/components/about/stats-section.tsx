@@ -2,23 +2,13 @@
 
 import AnimatedCounter from "@/components/common/animated-counter";
 import { Card, CardContent } from "@/components/ui/card";
+import { defaultStats } from "@/data";
+import type { Stat } from "@/types";
 import { motion } from "motion/react";
-
-interface Stat {
-  count: string;
-  label: string;
-}
 
 interface StatsSectionProps {
   stats?: Stat[];
 }
-
-const defaultStats: Stat[] = [
-  { count: "2+", label: "Years Experience" },
-  { count: "50+", label: "Projects Completed" },
-  { count: "10+", label: "Happy Clients" },
-  { count: "10+", label: "Open Source Contributions" },
-];
 
 const StatsSection = ({ stats = defaultStats }: StatsSectionProps) => {
   return (
@@ -35,7 +25,7 @@ const StatsSection = ({ stats = defaultStats }: StatsSectionProps) => {
         >
           <CardContent className="p-6 text-center">
             <h3 className="text-3xl font-bold text-purple-500 mb-1">
-              <AnimatedCounter value={stat.count} />
+              <AnimatedCounter value={stat.count.toString()} />
             </h3>
             <p className="text-neutral-600 dark:text-neutral-400">
               {stat.label}

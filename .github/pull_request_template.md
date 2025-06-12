@@ -38,26 +38,26 @@
 
 ### Testing
 
-**Functionality Tests**
+#### Functionality Tests
 
 - [ ] All pages load correctly and navigation works as expected
 - [ ] Components render properly across different screen sizes
 - [ ] Interactive elements (buttons, forms, links) function correctly
 
-**Theme and Styling**
+#### Theme and Styling
 
 - [ ] Dark/light mode toggle works correctly
 - [ ] Theme colors and typography are consistent across pages
 - [ ] Responsive design works on mobile, tablet, and desktop
 
-**Accessibility**
+#### Accessibility
 
 - [ ] All interactive elements are keyboard accessible
 - [ ] Images have appropriate alt text
 - [ ] Color contrast meets WCAG guidelines
 - [ ] Screen readers can navigate the content properly
 
-**Performance**
+#### Performance
 
 - [ ] Images are optimized and load efficiently
 - [ ] Page load times are reasonable

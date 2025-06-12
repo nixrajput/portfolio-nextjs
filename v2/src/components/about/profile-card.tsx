@@ -1,24 +1,14 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  IconArrowRight,
-  IconBrandGithub,
-  IconBrandLinkedin,
-  IconBrandX,
-  IconMail,
-} from "@tabler/icons-react";
+import { defaultSocialLinks } from "@/data";
+import type { SocialLink } from "@/types";
+import { IconArrowRight } from "@tabler/icons-react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import Link from "next/link";
-
-interface SocialLink {
-  href: string;
-  icon: React.ComponentType<{ className?: string }>;
-  label: string;
-  external?: boolean;
-}
 
 interface ProfileCardProps {
   name?: string;
@@ -27,33 +17,6 @@ interface ProfileCardProps {
   avatarAlt?: string;
   socialLinks?: SocialLink[];
 }
-
-const defaultSocialLinks: SocialLink[] = [
-  {
-    href: "https://github.com/nixrajput",
-    icon: IconBrandGithub,
-    label: "GitHub",
-    external: true,
-  },
-  {
-    href: "https://linkedin.com/in/nixrajput",
-    icon: IconBrandLinkedin,
-    label: "LinkedIn",
-    external: true,
-  },
-  {
-    href: "https://x.com/nixrajput07",
-    icon: IconBrandX,
-    label: "X",
-    external: true,
-  },
-  {
-    href: "mailto:nixrajput@gmail.com",
-    icon: IconMail,
-    label: "Email",
-    external: true,
-  },
-];
 
 const ProfileCard = ({
   name = "Nikhil Rajput",
@@ -75,7 +38,17 @@ const ProfileCard = ({
           <div className="relative h-48 w-full bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500">
             <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
               <Avatar className="h-32 w-32 border-4 border-white dark:border-neutral-900 shadow-lg">
-                <AvatarImage src={avatarSrc} alt={avatarAlt} />
+                <Image
+                  src={avatarSrc}
+                  alt={avatarAlt}
+                  placeholder="blur"
+                  blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjRjNGNEY2Ii8+Cjwvc3ZnPg=="
+                  width={128}
+                  height={128}
+                  sizes="100%"
+                  loading="lazy"
+                  className="w-32 h-32 rounded-full"
+                />
                 <AvatarFallback>NR</AvatarFallback>
               </Avatar>
             </div>
