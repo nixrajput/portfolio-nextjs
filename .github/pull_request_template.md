@@ -1,85 +1,189 @@
 # Portfolio Monorepo Pull Request
 
-## What does this PR do?
+## Overview
 
-<!-- **Please provide a clear and concise description of the changes in this PR.** Example: -->
+### Description
 
-<!--
+<!-- Provide a clear and concise description of the changes in this PR -->
 
-- Adds/improves portfolio functionality or components
-- Fixes bugs or issues in v1/v2
-- Adds new features like animations, project showcases, etc.
-- Optimizes performance or enhances accessibility
-- Updates content (projects, skills, experience, etc.)
+### Related Issues
 
--->
+<!-- Link to any related issues or tickets (e.g., "Fixes #123", "Addresses #456") -->
 
-## **Checklist**
+### Type of Change
+
+- [ ] 🚀 Feature (new functionality)
+- [ ] 🐛 Bug Fix
+- [ ] 📝 Documentation Update
+- [ ] ♻️ Code Refactoring
+- [ ] ⚡️ Performance Improvement
+- [ ] 🎨 Style Update
+- [ ] 🔧 Configuration Change
+- [ ] 🧪 Test Addition/Update
+- [ ] 📦 Dependency Update
+- [ ] 🔒 Security Enhancement
+
+## Technical Details
 
 ### Version Scope
 
-- [ ] This PR affects v1 of the portfolio
-- [ ] This PR affects v2 of the portfolio
-- [ ] This PR affects both versions
-- [ ] This PR affects monorepo configuration
+- [ ] v1 Portfolio
+- [ ] v2 Portfolio
+- [ ] Both Versions
+- [ ] Monorepo Configuration
+- [ ] Build System
+- [ ] CI/CD Pipeline
 
 ### Code Changes
 
-- [ ] I have added new features or components
-- [ ] I have fixed existing issues (e.g., performance, edge cases)
-- [ ] I have improved the overall structure or optimized the codebase
-- [ ] I have updated dependencies to their latest versions
+- [ ] New features or components added
+- [ ] Existing issues fixed
+- [ ] Code structure improved
+- [ ] Dependencies updated
+- [ ] TypeScript types added/updated
+- [ ] API integrations modified
+- [ ] State management changes
+- [ ] Routing changes
 
-### Documentation
+### Architecture Impact
 
-- [ ] I have updated the README file or relevant documentation with the changes
-- [ ] I have added comments for complex logic or components
-- [ ] I have updated version numbers in the appropriate `package.json` file(s)
+- [ ] Changes to component hierarchy
+- [ ] State management modifications
+- [ ] API integration changes
+- [ ] Build process modifications
+- [ ] Deployment pipeline changes
 
-### Testing
+## Quality Assurance
 
-#### Functionality Tests
+### Testing Coverage
 
-- [ ] All pages load correctly and navigation works as expected
-- [ ] Components render properly across different screen sizes
-- [ ] Interactive elements (buttons, forms, links) function correctly
+- [ ] Unit Tests
+  - [ ] Component tests
+  - [ ] Utility function tests
+  - [ ] Hook tests
+- [ ] Integration Tests
+  - [ ] API integration tests
+  - [ ] Component interaction tests
+- [ ] E2E Tests
+  - [ ] Critical user flows
+  - [ ] Cross-browser compatibility
+- [ ] Performance Tests
+  - [ ] Load time measurements
+  - [ ] Memory usage analysis
+  - [ ] Bundle size impact
 
-#### Theme and Styling
+### Accessibility (WCAG 2.1)
 
-- [ ] Dark/light mode toggle works correctly
-- [ ] Theme colors and typography are consistent across pages
-- [ ] Responsive design works on mobile, tablet, and desktop
+- [ ] Keyboard Navigation
+- [ ] Screen Reader Compatibility
+- [ ] Color Contrast (WCAG AA/AAA)
+- [ ] Focus Management
+- [ ] ARIA Attributes
+- [ ] Semantic HTML
 
-#### Accessibility
+### Cross-browser Testing
 
-- [ ] All interactive elements are keyboard accessible
-- [ ] Images have appropriate alt text
-- [ ] Color contrast meets WCAG guidelines
-- [ ] Screen readers can navigate the content properly
+- [ ] Chrome (latest)
+- [ ] Firefox (latest)
+- [ ] Safari (latest)
+- [ ] Edge (latest)
+- [ ] Mobile browsers
 
-#### Performance
+### Responsive Design
 
-- [ ] Images are optimized and load efficiently
-- [ ] Page load times are reasonable
-- [ ] No console errors or warnings
+- [ ] Mobile (< 768px)
+- [ ] Tablet (768px - 1024px)
+- [ ] Desktop (> 1024px)
+- [ ] Large Desktop (> 1440px)
 
-### Build & Deployment
+## Performance Metrics
 
-- [ ] I verified the build process works without errors (`npm run build:v1` or `npm run build:v2`)
-- [ ] I checked for any deployment-specific issues
-- [ ] I verified that SEO metadata is correctly implemented
+### Lighthouse Scores
 
-### How did you verify your code works?
+- [ ] Performance: [Score]
+- [ ] Accessibility: [Score]
+- [ ] Best Practices: [Score]
+- [ ] SEO: [Score]
 
-<!-- **Please explain how you tested the code changes.** Example: -->
+### Bundle Analysis
 
-<!--
+- [ ] Initial load size
+- [ ] Chunk sizes
+- [ ] Tree-shaking impact
+- [ ] Code splitting effectiveness
 
-- I manually tested the changes across different browsers (Chrome, Firefox, Safari)
-- I verified the portfolio on different devices and screen sizes
-- I checked that all animations and transitions work smoothly
-- I validated that all links and navigation elements work correctly
-- I confirmed that dark/light mode works properly
-- I ran Lighthouse tests to check performance, accessibility, and SEO
+## Documentation
 
--->
+### Code Documentation
+
+- [ ] JSDoc comments added/updated
+- [ ] Complex logic documented
+- [ ] Component props documented
+- [ ] Type definitions updated
+
+### Project Documentation
+
+- [ ] README updates
+- [ ] API documentation
+- [ ] Component documentation
+- [ ] Setup instructions
+- [ ] Deployment guide
+
+## Security
+
+### Security Checks
+
+- [ ] Dependency audit
+- [ ] Code security review
+- [ ] API security measures
+- [ ] Environment variables
+- [ ] Authentication/Authorization
+
+## Deployment
+
+### Build Process
+
+- [ ] Local build successful
+- [ ] CI pipeline passing
+- [ ] No build warnings
+- [ ] Environment variables configured
+
+### Deployment Checklist
+
+- [ ] Staging deployment verified
+- [ ] Production deployment plan
+- [ ] Rollback plan
+- [ ] Database migrations (if any)
+- [ ] Cache invalidation strategy
+
+## Review Process
+
+### Self-Review
+
+- [ ] Code follows project style guide
+- [ ] No console.log statements
+- [ ] No commented-out code
+- [ ] No hardcoded values
+- [ ] Error handling implemented
+- [ ] Loading states handled
+
+### Review Guidelines
+
+- [ ] PR size is manageable
+- [ ] Commits are atomic and well-described
+- [ ] Branch is up to date with main
+- [ ] No merge conflicts
+- [ ] All CI checks passing
+
+## Additional Notes
+
+<!-- Any additional context, screenshots, or information that would be helpful for reviewers -->
+
+## Checklist for Reviewers
+
+- [ ] Code follows best practices
+- [ ] Tests are comprehensive
+- [ ] Documentation is clear
+- [ ] Performance impact is acceptable
+- [ ] Security considerations addressed
+- [ ] Accessibility requirements met
