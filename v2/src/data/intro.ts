@@ -1,5 +1,9 @@
 export const names: string[] = ["Nikhil Rajput.", "@nixrajput."];
 
+export const defaultName = names[0];
+export const defaultAvatarSrc = "/images/profile.png";
+export const defaultAvatarAlt = "Nikhil Rajput";
+
 export const roles: string[] = [
   "Software Development Engineer",
   "Open Source Contributor",

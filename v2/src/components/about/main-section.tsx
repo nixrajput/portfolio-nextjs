@@ -10,7 +10,7 @@ const MainSection = () => {
   return (
     <div
       id="about"
-      className="relative h-auto py-20 md:py-32 bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800 flex flex-col items-center w-full max-w-screen justify-center overflow-hidden px-4 md:px-8"
+      className="relative h-auto py-20 md:py-32 bg-gradient-to-b from-neutral-200 to-neutral-50 dark:from-neutral-950 dark:to-neutral-800 flex flex-col items-center w-full max-w-screen justify-center overflow-hidden px-4 md:px-8"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">

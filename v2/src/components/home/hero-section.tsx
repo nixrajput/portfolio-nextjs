@@ -1,7 +1,7 @@
 "use client";
 
+import { LiquidGlassButton } from "@/components/common/liquid-glass-button";
 import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
-import { Button } from "@/components/ui/button";
 import { FlipWords } from "@/components/ui/flip-words";
 import { names, roles } from "@/data";
 import { IconArrowRight } from "@tabler/icons-react";
@@ -11,7 +11,7 @@ function HeroSection({ className }: { className?: string }) {
   return (
     <div
       id="hero"
-      className="relative h-auto min-h-screen bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800 flex items-center w-full max-w-screen justify-center overflow-hidden"
+      className="relative h-auto min-h-screen bg-gradient-to-b from-neutral-200 to-neutral-50 dark:from-neutral-950 dark:to-neutral-800 flex items-center w-full max-w-screen justify-center overflow-hidden"
       role="banner"
       aria-label="Hero section with introduction"
     >
@@ -54,14 +54,10 @@ function HeroSection({ className }: { className?: string }) {
             transition={{ delay: 0.75, duration: 0.5 }}
             className="bg-clip-text mt-6"
           >
-            <Button
-              variant="default"
-              size="lg"
-              className="min-w-40 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 hover:opacity-90 hover:-translate-y-0.5 transition-all text-white"
-            >
+            <LiquidGlassButton size="lg">
               Book a Call
               <IconArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+            </LiquidGlassButton>
           </motion.div>
         </div>
       </BackgroundBeamsWithCollision>

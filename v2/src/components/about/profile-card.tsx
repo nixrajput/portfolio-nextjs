@@ -1,9 +1,14 @@
 "use client";
 
+import { LiquidGlassButton } from "@/components/common/liquid-glass-button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { defaultSocialLinks } from "@/data";
+import {
+  defaultAvatarAlt,
+  defaultAvatarSrc,
+  defaultName,
+  defaultSocialLinks,
+} from "@/data";
 import type { SocialLink } from "@/types";
 import { IconArrowRight } from "@tabler/icons-react";
 import { motion } from "motion/react";
@@ -12,17 +17,15 @@ import Link from "next/link";
 
 interface ProfileCardProps {
   name?: string;
-  title?: string;
   avatarSrc?: string;
   avatarAlt?: string;
   socialLinks?: SocialLink[];
 }
 
 const ProfileCard = ({
-  name = "Nikhil Rajput",
-  title = "Full Stack Developer",
-  avatarSrc = "/images/profile.png",
-  avatarAlt = "Nikhil Rajput",
+  name = defaultName,
+  avatarSrc = defaultAvatarSrc,
+  avatarAlt = defaultAvatarAlt,
   socialLinks = defaultSocialLinks,
 }: ProfileCardProps) => {
   return (
@@ -33,11 +36,11 @@ const ProfileCard = ({
       viewport={{ once: true }}
       className="min-w-full md:min-w-[20rem] h-full"
     >
-      <Card className="overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm h-full">
-        <CardContent className="p-0">
+      <Card className="overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm h-full p-0">
+        <CardContent className="p-0 w-full h-full">
           <div className="relative h-48 w-full bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500">
             <div className="absolute -bottom-16 left-1/2 -translate-x-1/2">
-              <Avatar className="h-32 w-32 border-4 border-white dark:border-neutral-900 shadow-lg">
+              <Avatar className="h-40 w-40 border-4 border-white dark:border-neutral-900 shadow-lg">
                 <Image
                   src={avatarSrc}
                   alt={avatarAlt}
@@ -47,7 +50,7 @@ const ProfileCard = ({
                   height={128}
                   sizes="100%"
                   loading="lazy"
-                  className="w-32 h-32 rounded-full"
+                  className="w-40 h-40 rounded-full"
                 />
                 <AvatarFallback>NR</AvatarFallback>
               </Avatar>
@@ -55,21 +58,13 @@ const ProfileCard = ({
           </div>
 
           <div className="pt-20 pb-6 px-6 text-center">
-            <h3 className="text-2xl font-bold text-black dark:text-white mb-1">
+            <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
               {name}
             </h3>
-            <p className="text-neutral-600 dark:text-neutral-400 mb-4">
-              {title}
-            </p>
 
             <div className="flex justify-center gap-2 mb-6">
               {socialLinks.map((link, idx) => (
-                <Button
-                  key={`social-link-${idx}`}
-                  size="icon"
-                  variant="outline"
-                  asChild
-                >
+                <LiquidGlassButton key={`social-link-${idx}`} size="icon">
                   <Link
                     href={link.href}
                     target={link.external ? "_blank" : "_self"}
@@ -77,14 +72,14 @@ const ProfileCard = ({
                   >
                     <link.icon className="w-6 h-6" />
                   </Link>
-                </Button>
+                </LiquidGlassButton>
               ))}
             </div>
 
-            <Button className="min-w-40 bg-gradient-to-r from-purple-500 via-violet-500 to-pink-500 hover:opacity-90 hover:-translate-y-0.5 transition-all text-white">
+            <LiquidGlassButton size="lg">
               Let&apos;s Chat
               <IconArrowRight className="h-4 w-4 ml-2" />
-            </Button>
+            </LiquidGlassButton>
           </div>
         </CardContent>
       </Card>

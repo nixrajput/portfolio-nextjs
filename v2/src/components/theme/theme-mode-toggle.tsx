@@ -7,27 +7,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useTheme } from "@/hooks/use-theme";
 import { cn } from "@/lib/utils";
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
 
 interface ThemeModeToggleProps {
   className?: string;
-  onClick?: () => void;
   iconSize?: number;
 }
 
-function ThemeModeToggle({
-  className,
-  onClick,
-  iconSize = 16,
-}: ThemeModeToggleProps) {
+function ThemeModeToggle({ className, iconSize = 16 }: ThemeModeToggleProps) {
   const { setTheme } = useTheme();
-
-  const handleOnClick = (theme: string) => {
-    setTheme(theme);
-    if (onClick) onClick();
-  };
 
   return (
     <DropdownMenu>
@@ -50,13 +40,13 @@ function ThemeModeToggle({
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="z-[110]">
-        <DropdownMenuItem onClick={() => handleOnClick("light")}>
+        <DropdownMenuItem onClick={() => setTheme("light")}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleOnClick("dark")}>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleOnClick("system")}>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>
