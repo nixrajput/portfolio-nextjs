@@ -134,7 +134,7 @@ export const NavItems = ({
             onClick={onItemClick}
             key={`link-${idx}`}
             href={item.link}
-            className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+            className="relative px-4 py-2 text-primary dark:text-primary"
           >
             {(hovered === idx || isActive) && (
               <motion.div
@@ -142,12 +142,7 @@ export const NavItems = ({
                 className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
               />
             )}
-            <span
-              className={cn(
-                "relative z-20",
-                isActive && "font-bold text-primary dark:text-primary"
-              )}
-            >
+            <span className={cn("relative z-20", isActive && "font-bold")}>
               {item.name}
             </span>
           </Link>
@@ -251,7 +246,7 @@ export const MobileNavItems = ({
             onClick={onItemClick}
             key={`mobile-link-${idx}`}
             href={item.link}
-            className="relative px-4 py-2 text-neutral-600 dark:text-neutral-300"
+            className="relative px-4 py-2 text-primary dark:text-primary"
           >
             {(hovered === idx || isActive) && (
               <motion.div
@@ -259,12 +254,7 @@ export const MobileNavItems = ({
                 className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
               />
             )}
-            <span
-              className={cn(
-                "relative z-20",
-                isActive && "font-bold text-primary dark:text-primary"
-              )}
-            >
+            <span className={cn("relative z-20", isActive && "font-bold")}>
               {item.name}
             </span>
           </Link>

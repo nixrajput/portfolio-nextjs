@@ -20,7 +20,7 @@ const defaultProfileTabs: Tab[] = [
     title: "Biography",
     value: "bio",
     content: (
-      <div className="w-full overflow-y-scroll relative h-full rounded-2xl p-6 text-xl md:text-4xl font-bold bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm border border-neutral-200 dark:border-neutral-800">
+      <div className="w-full overflow-y-scroll relative h-full rounded-2xl p-6 text-base font-bold text-primary dark:text-primary bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm border border-neutral-200 dark:border-neutral-800">
         <BioTab />
       </div>
     ),
@@ -30,7 +30,7 @@ const defaultProfileTabs: Tab[] = [
     title: "Skills",
     value: "skills",
     content: (
-      <div className="w-full overflow-y-scroll relative h-full rounded-2xl p-6 text-xl md:text-4xl font-bold text-black dark:text-white bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm border border-neutral-200 dark:border-neutral-800">
+      <div className="w-full overflow-y-scroll relative h-full rounded-2xl p-6 text-base font-bold text-primary dark:text-primary bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm border border-neutral-200 dark:border-neutral-800">
         <SkillsTab />
       </div>
     ),
@@ -40,7 +40,7 @@ const defaultProfileTabs: Tab[] = [
     title: "Experience",
     value: "experience",
     content: (
-      <div className="w-full overflow-y-scroll relative h-full rounded-2xl p-6 text-xl md:text-4xl font-bold text-black dark:text-white bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm border border-neutral-200 dark:border-neutral-800">
+      <div className="w-full overflow-y-scroll relative h-full rounded-2xl p-6 text-base text-primary dark:text-primary bg-white/90 dark:bg-neutral-900/90 backdrop-blur-sm border border-neutral-200 dark:border-neutral-800">
         <ExperiencesTab />
       </div>
     ),

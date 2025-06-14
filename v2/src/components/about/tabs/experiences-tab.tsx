@@ -27,15 +27,15 @@ const ExperiencesTab = ({
             title: experience.date,
             content: (
               <div key={`experience-${experience.company}-${idx}`}>
-                <h3 className="text-lg font-semibold text-black dark:text-white">
+                <h3 className="text-lg font-semibold text-primary dark:text-primary">
                   {experience.title}
                 </h3>
 
-                <p className="text-purple-500 text-base font-normal">
+                <p className="text-base font-normal text-muted-foreground dark:text-muted-foreground">
                   {experience.company}
                 </p>
 
-                <p className="text-neutral-700 dark:text-neutral-300 mt-2 text-base font-normal">
+                <p className="mt-2 text-base font-normal text-primary dark:text-primary">
                   {experience.description}
                 </p>
               </div>

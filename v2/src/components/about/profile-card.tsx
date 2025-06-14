@@ -58,7 +58,7 @@ const ProfileCard = ({
           </div>
 
           <div className="pt-20 pb-6 px-6 text-center">
-            <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
+            <h3 className="text-2xl font-bold text-primary dark:text-primary mb-4">
               {name}
             </h3>
 

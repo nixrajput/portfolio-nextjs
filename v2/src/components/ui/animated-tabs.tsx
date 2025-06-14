@@ -65,13 +65,13 @@ export const AnimatedTabs = ({
                 layoutId="clicked-button"
                 transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
                 className={cn(
-                  "absolute inset-0 bg-gray-200 dark:bg-zinc-800 rounded-full",
+                  "absolute inset-0 bg-gray-100 dark:bg-neutral-800 rounded-full",
                   activeTabClassName
                 )}
               />
             )}
 
-            <span className="relative block text-black dark:text-white text-sm font-medium">
+            <span className="relative block text-primary dark:text-primary text-sm font-medium">
               {tab.title}
             </span>
           </button>

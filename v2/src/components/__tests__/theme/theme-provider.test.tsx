@@ -1,5 +1,5 @@
-import { render } from "@testing-library/react";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { render } from "@testing-library/react";
 import { ThemeProviderProps } from "next-themes";
 
 // Mock next-themes
