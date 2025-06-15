@@ -27,7 +27,7 @@ export default function NotFound() {
   return (
     <div
       id="not-found"
-      className="relative h-auto min-h-screen bg-gradient-to-b from-white to-neutral-100 dark:from-neutral-950 dark:to-neutral-800 flex items-center w-full max-w-screen justify-center overflow-hidden p-4"
+      className="relative h-auto min-h-screen flex items-center w-full max-w-screen justify-center overflow-hidden p-4"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}

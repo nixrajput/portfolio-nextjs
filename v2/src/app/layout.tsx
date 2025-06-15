@@ -1,3 +1,4 @@
+import { FuturisticBackground } from "@/components/common/futuristic-background";
 import CustomNavBar from "@/components/nav/custom-nav-bar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Analytics } from "@vercel/analytics/next";
@@ -112,14 +113,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <CustomNavBar />
-          {children}
+        <ThemeProvider defaultTheme="system">
+          <div className="relative w-full bg-gradient-to-b from-neutral-200 to-neutral-50 dark:from-neutral-950 dark:to-neutral-800 z-0">
+            <CustomNavBar />
+            <FuturisticBackground />
+            {children}
+          </div>
+
           <Analytics />
           <SpeedInsights />
         </ThemeProvider>

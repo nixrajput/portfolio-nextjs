@@ -1,17 +1,21 @@
 "use client";
 
 import { LiquidGlassButton } from "@/components/common/liquid-glass-button";
-import { BackgroundBeamsWithCollision } from "@/components/ui/background-beams-with-collision";
 import { FlipWords } from "@/components/ui/flip-words";
 import { names, roles } from "@/data";
+import { cn } from "@/lib/utils";
 import { IconArrowRight } from "@tabler/icons-react";
 import { motion } from "motion/react";
+import { BackgroundBeamsWithCollision } from "../ui/background-beams-with-collision";
 
 function HeroSection({ className }: { className?: string }) {
   return (
     <div
       id="hero"
-      className="relative h-auto min-h-screen bg-gradient-to-b from-neutral-200 to-neutral-50 dark:from-neutral-950 dark:to-neutral-800 flex items-center w-full max-w-screen justify-center overflow-hidden"
+      className={cn(
+        "relative h-auto min-h-screen flex items-center w-full max-w-screen justify-center overflow-hidden",
+        className
+      )}
       role="banner"
       aria-label="Hero section with introduction"
     >
