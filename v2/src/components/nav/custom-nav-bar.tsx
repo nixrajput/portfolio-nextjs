@@ -50,7 +50,7 @@ const CustomNavBar = ({
         <NavbarLogo logoSrc={logoSrc} logoSize={32} showLogoText={false} />
         <NavItems items={navItems} activePath={pathname} />
         <div className="relative hidden flex-row items-center transition duration-200 lg:flex ml-4">
-          <ThemeModeToggle />
+          <ThemeModeToggle onClick={() => setIsMobileMenuOpen(false)} />
         </div>
       </NavBody>
 

@@ -1,4 +1,4 @@
-import { ThemeProviderContext } from "@/store/theme";
+import { ThemeProviderContext } from "@/store";
 import { useContext, useEffect, useState } from "react";
 
 export type EffectiveTheme = "dark" | "light";

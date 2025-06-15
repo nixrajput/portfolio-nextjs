@@ -14,10 +14,20 @@ import { Moon, Sun } from "lucide-react";
 interface ThemeModeToggleProps {
   className?: string;
   iconSize?: number;
+  onClick?: () => void;
 }
 
-function ThemeModeToggle({ className, iconSize = 16 }: ThemeModeToggleProps) {
+function ThemeModeToggle({
+  className,
+  iconSize = 16,
+  onClick,
+}: ThemeModeToggleProps) {
   const { setTheme } = useTheme();
+
+  const handleSetTheme = (theme: "light" | "dark" | "system") => {
+    setTheme(theme);
+    onClick?.();
+  };
 
   return (
     <DropdownMenu>
@@ -40,13 +50,13 @@ function ThemeModeToggle({ className, iconSize = 16 }: ThemeModeToggleProps) {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="z-[110]">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem onClick={() => handleSetTheme("light")}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem onClick={() => handleSetTheme("dark")}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem onClick={() => handleSetTheme("system")}>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

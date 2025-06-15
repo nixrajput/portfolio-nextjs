@@ -1,5 +1,4 @@
-import type { Theme } from "@/components/theme/theme-provider";
-import { beforeEach, describe, expect, it, mock } from "bun:test";
+import { beforeEach, describe, expect, it, mock, spyOn } from "bun:test";
 
 // Store cleanup functions to run later
 const mockCleanupFns: Array<() => void> = [];
@@ -8,49 +7,85 @@ const mockCleanupFns: Array<() => void> = [];
 const mockSetEffectiveTheme = mock(() => {});
 
 // Mock setTheme function from context
-const mockSetTheme = mock((_theme: Theme) => {});
+const mockSetTheme = mock((_theme: "dark" | "light" | "system") => {});
+
+// Mock React hooks
+const mockUseState = mock();
+const mockUseContext = mock();
+const mockUseEffect = mock();
 
 // Mock theme context
 const mockThemeContext = {
-  theme: "light" as Theme,
+  theme: "light" as "dark" | "light" | "system",
   setTheme: mockSetTheme,
 };
 
 // Create a mock matchMedia function
 const createMatchMedia = (initialMatches: boolean) => {
-  const listeners: Array<(e: { matches: boolean }) => void> = [];
+  const listeners: Array<
+    (this: MediaQueryList, ev: MediaQueryListEvent) => void
+  > = [];
   let matches = initialMatches;
 
-  return {
+  const mockMediaQueryList: MediaQueryList & {
+    simulateChange: (newMatches: boolean) => void;
+  } = {
     get matches() {
       return matches;
     },
-    media: "",
+    media: "(prefers-color-scheme: dark)",
+    onchange: null,
     addEventListener: (
       type: string,
-      listener: (e: { matches: boolean }) => void
+      listener: EventListenerOrEventListenerObject,
+      _options?: boolean | AddEventListenerOptions
     ) => {
-      if (type === "change") {
-        listeners.push(listener);
+      if (type === "change" && typeof listener === "function") {
+        listeners.push(
+          listener as (this: MediaQueryList, ev: MediaQueryListEvent) => void
+        );
       }
     },
     removeEventListener: (
       type: string,
-      listener: (e: { matches: boolean }) => void
+      listener: EventListenerOrEventListenerObject,
+      _options?: boolean | EventListenerOptions
     ) => {
-      if (type === "change") {
-        const index = listeners.indexOf(listener);
+      if (type === "change" && typeof listener === "function") {
+        const index = listeners.indexOf(
+          listener as (this: MediaQueryList, ev: MediaQueryListEvent) => void
+        );
         if (index !== -1) {
           listeners.splice(index, 1);
         }
       }
     },
+    // Legacy methods for older browsers
+    addListener: (
+      listener: (this: MediaQueryList, ev: MediaQueryListEvent) => void
+    ) => {
+      listeners.push(listener);
+    },
+    removeListener: (
+      listener: (this: MediaQueryList, ev: MediaQueryListEvent) => void
+    ) => {
+      const index = listeners.indexOf(listener);
+      if (index !== -1) {
+        listeners.splice(index, 1);
+      }
+    },
+    dispatchEvent: (_event: Event) => {
+      return true;
+    },
     // Helper method for tests to simulate media query change
     simulateChange: (newMatches: boolean) => {
       matches = newMatches;
-      listeners.forEach((listener) => listener({ matches }));
+      const event = { matches } as MediaQueryListEvent;
+      listeners.forEach((listener) => listener.call(mockMediaQueryList, event));
     },
   };
+
+  return mockMediaQueryList;
 };
 
 // Mock window.matchMedia
@@ -58,17 +93,19 @@ let mockMatchMedia = createMatchMedia(false);
 
 // Mock React hooks before importing the hook
 mock.module("react", () => ({
-  useState: <T>(_initialState: T) => [
-    "dark" as unknown as T,
+  useState: mockUseState.mockImplementation(<T>(initialState: T) => [
+    initialState,
     mockSetEffectiveTheme,
-  ],
-  useContext: () => mockThemeContext,
-  useEffect: (effect: () => void | (() => void)) => {
-    const cleanup = effect();
-    if (typeof cleanup === "function") {
-      mockCleanupFns.push(cleanup);
+  ]),
+  useContext: mockUseContext.mockImplementation(() => mockThemeContext),
+  useEffect: mockUseEffect.mockImplementation(
+    (effect: () => void | (() => void)) => {
+      const cleanup = effect();
+      if (typeof cleanup === "function") {
+        mockCleanupFns.push(cleanup);
+      }
     }
-  },
+  ),
 }));
 
 // Mock ThemeProviderContext
@@ -78,12 +115,11 @@ mock.module("@/store/theme", () => ({
 
 // Mock window object if it doesn't exist
 if (typeof globalThis.window === "undefined") {
-  // @ts-expect-error - Mocking window for tests
+  // @ts-expect-error - Creating minimal window mock for tests
   globalThis.window = {
     matchMedia: (_query: string) => mockMatchMedia,
   };
 } else {
-  // @ts-expect-error - Adding matchMedia to window
   globalThis.window.matchMedia = (_query: string) => mockMatchMedia;
 }
 
@@ -93,7 +129,7 @@ import { useTheme } from "@/hooks/use-theme";
 describe("useTheme Hook", () => {
   beforeEach(() => {
     // Reset mocks before each test
-    mockSetState.mockReset();
+    mockSetEffectiveTheme.mockReset();
     mockSetTheme.mockReset();
     mockUseContext.mockReset();
     mockUseEffect.mockReset();
@@ -105,12 +141,25 @@ describe("useTheme Hook", () => {
     // Reset to default context
     mockUseContext.mockImplementation(() => mockThemeContext);
 
+    // Reset useState to return initial state and setter
+    mockUseState.mockImplementation(<T>(initialState: T) => [
+      initialState,
+      mockSetEffectiveTheme,
+    ]);
+
+    // Reset useEffect to execute effects immediately
+    mockUseEffect.mockImplementation((effect: () => void | (() => void)) => {
+      const cleanup = effect();
+      if (typeof cleanup === "function") {
+        mockCleanupFns.push(cleanup);
+      }
+    });
+
     // Create mock matchMedia
     mockMatchMedia = createMatchMedia(false);
 
     // Mock window.matchMedia
-    // @ts-expect-error - We're intentionally creating a simplified mock
-    window.matchMedia = (query: string) => mockMatchMedia;
+    globalThis.window.matchMedia = (_query: string) => mockMatchMedia;
   });
 
   it("throws error when used outside ThemeProvider", () => {
@@ -129,6 +178,9 @@ describe("useTheme Hook", () => {
       theme: "light",
       setTheme: mockSetTheme,
     }));
+
+    // Mock useState to return "light" as effective theme
+    mockUseState.mockImplementation(() => ["light", mockSetEffectiveTheme]);
 
     // Call the hook
     const result = useTheme();
@@ -151,8 +203,8 @@ describe("useTheme Hook", () => {
     // Call the hook
     useTheme();
 
-    // Verify setState was called with light theme
-    expect(mockSetState).toHaveBeenCalledWith("light");
+    // Verify setEffectiveTheme was called with light theme
+    expect(mockSetEffectiveTheme).toHaveBeenCalledWith("light");
   });
 
   it("uses explicit theme when theme is 'dark'", () => {
@@ -165,8 +217,8 @@ describe("useTheme Hook", () => {
     // Call the hook
     useTheme();
 
-    // Verify setState was called with dark theme
-    expect(mockSetState).toHaveBeenCalledWith("dark");
+    // Verify setEffectiveTheme was called with dark theme
+    expect(mockSetEffectiveTheme).toHaveBeenCalledWith("dark");
   });
 
   it("detects system theme when theme is 'system' and system prefers light", () => {
@@ -178,14 +230,13 @@ describe("useTheme Hook", () => {
 
     // Mock system preference as light
     mockMatchMedia = createMatchMedia(false);
-    // @ts-expect-error - We're intentionally creating a simplified mock
-    window.matchMedia = () => mockMatchMedia;
+    globalThis.window.matchMedia = () => mockMatchMedia;
 
     // Call the hook
     useTheme();
 
-    // Verify setState was called with light theme
-    expect(mockSetState).toHaveBeenCalledWith("light");
+    // Verify setEffectiveTheme was called with light theme
+    expect(mockSetEffectiveTheme).toHaveBeenCalledWith("light");
   });
 
   it("detects system theme when theme is 'system' and system prefers dark", () => {
@@ -197,14 +248,13 @@ describe("useTheme Hook", () => {
 
     // Mock system preference as dark
     mockMatchMedia = createMatchMedia(true);
-    // @ts-expect-error - We're intentionally creating a simplified mock
-    window.matchMedia = () => mockMatchMedia;
+    globalThis.window.matchMedia = () => mockMatchMedia;
 
     // Call the hook
     useTheme();
 
-    // Verify setState was called with dark theme
-    expect(mockSetState).toHaveBeenCalledWith("dark");
+    // Verify setEffectiveTheme was called with dark theme
+    expect(mockSetEffectiveTheme).toHaveBeenCalledWith("dark");
   });
 
   it("updates theme when system preference changes", () => {
@@ -216,20 +266,19 @@ describe("useTheme Hook", () => {
 
     // Mock system preference as light initially
     mockMatchMedia = createMatchMedia(false);
-    // @ts-expect-error - We're intentionally creating a simplified mock
-    window.matchMedia = () => mockMatchMedia;
+    globalThis.window.matchMedia = () => mockMatchMedia;
 
     // Call the hook
     useTheme();
 
-    // Reset setState mock to track new calls
-    mockSetState.mockReset();
+    // Reset setEffectiveTheme mock to track new calls
+    mockSetEffectiveTheme.mockReset();
 
     // Simulate system preference changing to dark
     mockMatchMedia.simulateChange(true);
 
-    // Verify setState was called with dark theme
-    expect(mockSetState).toHaveBeenCalledWith("dark");
+    // Verify setEffectiveTheme was called with dark theme
+    expect(mockSetEffectiveTheme).toHaveBeenCalledWith("dark");
   });
 
   it("cleans up event listener on unmount", () => {
@@ -241,8 +290,7 @@ describe("useTheme Hook", () => {
 
     // Mock system preference
     mockMatchMedia = createMatchMedia(false);
-    // @ts-expect-error - We're intentionally creating a simplified mock
-    window.matchMedia = () => mockMatchMedia;
+    globalThis.window.matchMedia = () => mockMatchMedia;
 
     // Spy on removeEventListener
     const removeEventListenerSpy = spyOn(mockMatchMedia, "removeEventListener");
@@ -263,7 +311,7 @@ describe("useTheme Hook", () => {
   it("updates effectiveTheme when context theme changes", () => {
     // Set up context with light theme initially
     const initialContext = {
-      theme: "light" as Theme,
+      theme: "light" as "dark" | "light" | "system",
       setTheme: mockSetTheme,
     };
     mockUseContext.mockImplementation(() => initialContext);
@@ -271,19 +319,21 @@ describe("useTheme Hook", () => {
     // Call the hook
     useTheme();
 
-    // Verify setState was called with light theme
-    expect(mockSetState).toHaveBeenCalledWith("light");
+    // Verify setEffectiveTheme was called with light theme
+    expect(mockSetEffectiveTheme).toHaveBeenCalledWith("light");
 
-    // Reset setState mock to track new calls
-    mockSetState.mockReset();
+    // Reset setEffectiveTheme mock to track new calls
+    mockSetEffectiveTheme.mockReset();
 
     // Update context theme to dark
     initialContext.theme = "dark";
 
     // Simulate dependency array change by calling effect again
-    mockUseEffect.mock.calls[0][0]();
+    if (mockUseEffect.mock.calls.length > 0) {
+      mockUseEffect.mock.calls[0][0]();
+    }
 
-    // Verify setState was called with dark theme
-    expect(mockSetState).toHaveBeenCalledWith("dark");
+    // Verify setEffectiveTheme was called with dark theme
+    expect(mockSetEffectiveTheme).toHaveBeenCalledWith("dark");
   });
 });
