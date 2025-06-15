@@ -1,60 +1,160 @@
 name: Bug Report
-description: File a bug report
+description: Report a bug or unexpected behavior
 title: "[Bug]: "
-labels: ["bug", "triage"]
+labels: ["bug", "needs-triage"]
 assignees: ["nixrajput"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out this template thoroughly to help us understand and reproduce the issue.
+
+        **Note:** Before submitting, please check if this bug has already been reported in an existing issue.
+
   - type: input
     id: contact
     attributes:
-      label: Contact Details
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. email@example.com
-    validations:
-      required: false
-  - type: textarea
-    id: what-happened
-    attributes:
-      label: What happened?
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
+      label: Contact Information
+      description: How can we reach you for follow-up questions? (Email, GitHub handle, etc.)
+      placeholder: ex. email@company.com or @github-handle
     validations:
       required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Bug Severity
+      description: How severe is this bug?
+      options:
+        - Critical - System crash or data loss
+        - High - Major functionality broken
+        - Medium - Minor functionality affected
+        - Low - Cosmetic or non-critical issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: Provide a clear and detailed description of the bug
+      placeholder: |
+        - What happened?
+        - What did you expect to happen?
+        - What was the actual behavior?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Provide detailed steps to reproduce the issue
+      placeholder: |
+        1. First step
+        2. Second step
+        3. And so on...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Environment
+      description: Select all environments where the bug occurs
+      multiple: true
+      options:
+        - Development
+        - Staging
+        - Production
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: Browser(s)
+      description: Select all browsers where the bug occurs
+      multiple: true
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other
+    validations:
+      required: true
+
   - type: dropdown
     id: devices
     attributes:
-      label: What devices are you seeing the problem on?
+      label: Device(s)
+      description: Select all devices where the bug occurs
       multiple: true
       options:
-        - Android
-        - iPhone
-        - Windows
-        - Mac
-        - Linux
+        - Desktop
+        - Mobile
+        - Tablet
+        - Other
     validations:
       required: true
+
   - type: input
     id: os
     attributes:
-      label: OS Version
-      description: On what version of OS is your device running?
-      placeholder: Android 12
+      label: Operating System
+      description: What operating system are you using?
+      placeholder: ex. macOS 12.0.1, Windows 11, Ubuntu 22.04
     validations:
       required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Application Version
+      description: What version of the application are you using?
+      placeholder: ex. 1.2.3
+    validations:
+      required: true
+
   - type: textarea
     id: logs
     attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      label: Relevant Logs
+      description: Please provide any relevant logs, error messages, or stack traces
       render: shell
+      placeholder: |
+        ```
+        [Paste your logs here]
+        ```
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots/Videos
+      description: If applicable, add screenshots or videos to help explain your problem
+      placeholder: |
+        - Screenshot 1: [description]
+        - Screenshot 2: [description]
+        - Video: [description]
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add any other context about the problem here
+      placeholder: |
+        - Related issues
+        - Recent changes that might be related
+        - Any other relevant information
+
   - type: checkboxes
     id: terms
     attributes:
-      label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/nixrajput/flutter_carousel_widget/CODE_OF_CONDUCT.md).
+      label: Code of Conduct and Contribution Guidelines
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/nixrajput/portfolio-nextjs/blob/master/CODE_OF_CONDUCT.md) and [Contribution Guidelines](https://github.com/nixrajput/portfolio-nextjs/blob/master/CONTRIBUTING.md).
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
-  - type: markdown
-    attributes:
-      value: "## Thanks for taking the time to fill out this bug report!"
+        - label: I have read and agree to the Contribution Guidelines
+          required: true

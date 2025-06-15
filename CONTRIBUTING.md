@@ -1,6 +1,6 @@
-# Contributing to the Portfolio Website
+# Contributing to the Portfolio Monorepo
 
-We appreciate your interest in contributing to the Portfolio Website built with Next.js and Sass. By contributing, you help make this project better and more accessible for others. Please take a moment to review the following guidelines to ensure a smooth and collaborative development process.
+We appreciate your interest in contributing to the Portfolio Monorepo project. By contributing, you help make this project better and more accessible for others. Please take a moment to review the following guidelines to ensure a smooth and collaborative development process.
 
 ## Code of Conduct
 
@@ -56,8 +56,8 @@ Here are the steps to contribute to this project:
 
 ## Reporting Issues
 
-If you encounter any issues or bugs while using the Portfolio Website, please report them on the [Issues](https://github.com/nixrajput/portfolio-nextjs/issues) page of the repository. Provide as much detail as possible to help us understand and address the problem.
+If you encounter any issues or bugs while using the Portfolio Monorepo, please report them on the [Issues](https://github.com/nixrajput/portfolio-nextjs/issues) page of the repository. Provide as much detail as possible to help us understand and address the problem.
 
 ## Thank You
 
-Thank you for contributing to the Portfolio Website project. Your contributions help make this project better and more valuable to its users. We appreciate your time and effort in making this project a success!
+Thank you for contributing to the Portfolio Monorepo project. Your contributions help make this project better and more valuable to its users. We appreciate your time and effort in making this project a success!

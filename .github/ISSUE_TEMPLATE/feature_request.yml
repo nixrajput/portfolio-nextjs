@@ -1,56 +1,114 @@
-name: Feature request
-description: Suggest an idea for this project
-title: "[Feature Request]: "
-labels: ["enhancement"]
-assignees:
-  - nixrajput
+name: Feature Request
+description: Propose a new feature or enhancement for the project
+title: "[Feature]: "
+labels: ["enhancement", "needs-triage"]
+assignees: ["nixrajput"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to propose a new feature! Please fill out this template thoroughly to help us understand your request better.
+
+        **Note:** Before submitting, please check if this feature has already been requested in an existing issue.
+
   - type: input
     id: contact
     attributes:
-      label: Contact Details
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. email@example.com
-    validations:
-      required: false
-  - type: textarea
-    id: feature
-    attributes:
-      label: Is your feature request related to a problem? Please describe.
-      description: A clear and concise description of what the problem is.
-      placeholder: Write here
+      label: Contact Information
+      description: How can we reach you for follow-up questions? (Email, GitHub handle, etc.)
+      placeholder: ex. email@company.com or @github-handle
     validations:
       required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority Level
+      description: How important is this feature to your workflow?
+      options:
+        - Critical - Blocking current work
+        - High - Important for future work
+        - Medium - Nice to have
+        - Low - Future consideration
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: Describe the problem or limitation you're facing. Be specific and include any relevant context.
+      placeholder: |
+        - What problem are you trying to solve?
+        - What is the current behavior?
+        - What is the impact of this problem?
+    validations:
+      required: true
+
   - type: textarea
     id: solution
     attributes:
-      label: Describe the solution you'd like
-      description: A clear and concise description of what you want to happen.
-      placeholder: Write here
+      label: Proposed Solution
+      description: Describe your proposed solution in detail. Include any technical considerations, APIs, or design patterns you think would be relevant.
+      placeholder: |
+        - How would you like this to work?
+        - What APIs or components would be involved?
+        - Any specific technical requirements?
     validations:
       required: true
+
   - type: textarea
     id: alternatives
     attributes:
-      label: Describe alternatives you've considered
-      description: A clear and concise description of any alternative solutions or features you've considered.
-      placeholder: Write here
+      label: Alternative Solutions
+      description: What alternatives have you considered? Why were they not suitable?
+      placeholder: |
+        - What other approaches have you tried?
+        - Why weren't they sufficient?
     validations:
       required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: List the specific requirements that would make this feature complete and successful.
+      placeholder: |
+        - Feature should...
+        - Must support...
+        - Should be compatible with...
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical-considerations
+    attributes:
+      label: Technical Considerations
+      description: Any technical constraints, dependencies, or considerations we should be aware of?
+      placeholder: |
+        - Performance implications
+        - Security considerations
+        - Integration points
+        - Dependencies required
+
   - type: textarea
     id: additional-context
     attributes:
-      label: Additional context
-      description: Add any other context or screenshots about the feature request here.
-      placeholder: Write here
+      label: Additional Context
+      description: Add any other context, mockups, or references that might help us understand your request better.
+      placeholder: |
+        - Links to similar features in other projects
+        - Mockups or wireframes
+        - Related documentation
+        - Any other relevant information
+
   - type: checkboxes
     id: terms
     attributes:
-      label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/nixrajput/flutter_carousel_widget/CODE_OF_CONDUCT.md).
+      label: Code of Conduct and Contribution Guidelines
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/nixrajput/portfolio-nextjs/blob/master/CODE_OF_CONDUCT.md) and [Contribution Guidelines](https://github.com/nixrajput/portfolio-nextjs/blob/master/CONTRIBUTING.md).
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
-  - type: markdown
-    attributes:
-      value: "## Thanks for taking the time to fill out this feature request form!"
+        - label: I have read and agree to the Contribution Guidelines
+          required: true
