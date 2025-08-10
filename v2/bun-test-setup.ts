@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { beforeAll } from "bun:test";
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { JSDOM } from "jsdom";
 
 // Set up DOM environment for testing

@@ -14,12 +14,21 @@
     "start:v1": "cd v1 && npm run start",
     "start:v2": "cd v2 && npm run start",
     "lint:v1": "cd v1 && npm run lint",
-    "lint:v2": "cd v2 && npm run lint"
+    "lint:v2": "cd v2 && npm run lint",
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nixrajput/portfolio-nextjs.git"
   },
   "author": "Nikhil Rajput",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.3.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "jsdom": "^26.1.0",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
+  }
 }

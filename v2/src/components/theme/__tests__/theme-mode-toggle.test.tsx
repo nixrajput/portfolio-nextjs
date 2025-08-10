@@ -1,12 +1,12 @@
 import type { Theme } from "@/components/theme/theme-provider";
-import { beforeEach, describe, expect, it, mock } from "bun:test";
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import * as React from "react";
 
 // Create mocks for the components and hooks we need to test
-const mockSetTheme = mock((_theme: Theme) => {});
+const mockSetTheme = vi.fn((_theme: Theme) => {});
 
 // Mock the useTheme hook from next-themes
-const mockUseTheme = mock(() => ({
+const mockUseTheme = vi.fn(() => ({
   theme: "light",
   setTheme: mockSetTheme,
 }));
@@ -266,7 +266,7 @@ describe("ThemeModeToggle", () => {
 
   it("calls onClick handler when theme is changed", () => {
     // Create mock onClick handler
-    const onClickMock = mock(() => {});
+    const onClickMock = vi.fn(() => {});
 
     // Create the component with onClick handler
     const component = mockThemeModeToggle({ onClick: onClickMock });

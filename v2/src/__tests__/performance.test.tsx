@@ -1,4 +1,4 @@
-import { describe, expect, it, mock, spyOn } from "bun:test";
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 // Mock components since we can't render React components in Bun's test environment
 const _mockRender = () => ({ unmount: () => {} });
@@ -183,7 +183,7 @@ describe("Performance Tests", () => {
       });
 
       // Use type assertion to make TypeScript happy with our mock
-      const memoryUsageSpy = spyOn(process, "memoryUsage").mockImplementation(
+      const memoryUsageSpy = vi.spyOn(process, "memoryUsage").mockImplementation(
         mockMemoryUsageFn as unknown as typeof process.memoryUsage
       );
 
@@ -217,7 +217,7 @@ describe("Performance Tests", () => {
   describe("Event Handling Performance", () => {
     it("measures event handler performance", () => {
       // Create a mock event handler
-      const eventHandler = mock(() => {});
+      const eventHandler = vi.fn(() => {});
 
       const start = performance.now();
 
@@ -250,7 +250,7 @@ describe("Performance Tests", () => {
         };
       }
 
-      const regularHandler = mock(() => {});
+      const regularHandler = vi.fn(() => {});
       // Instead of trying to mock the throttled function directly,
       // we'll track its call count separately
       let throttledCallCount = 0;

@@ -1,19 +1,19 @@
 import type { Theme } from "@/components/theme/theme-provider";
-import { beforeEach, describe, expect, it, mock } from "bun:test";
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import * as React from "react";
 
 // Create mocks for the DOM APIs we need
 const mockClassList = {
-  add: mock((_className: string) => {}),
-  remove: mock((_classNames: string[]) => {}),
+  add: vi.fn((_className: string) => {}),
+  remove: vi.fn((_classNames: string[]) => {}),
 };
 
 const mockLocalStorage = {
-  getItem: mock((_key: string) => null as null | string),
-  setItem: mock((_key: string, _value: string) => {}),
+  getItem: vi.fn((_key: string) => null as null | string),
+  setItem: vi.fn((_key: string, _value: string) => {}),
 };
 
-const mockMatchMedia = mock((_query: string) => ({
+const mockMatchMedia = vi.fn((_query: string) => ({
   matches: false,
 }));
 
@@ -34,7 +34,7 @@ type ContextProviderProps = {
 };
 
 // Create a mock for the ThemeProviderContext
-const mockContextProvider = mock((props: ContextProviderProps) => ({
+const mockContextProvider = vi.fn((props: ContextProviderProps) => ({
   type: "ContextProvider",
   props,
 }));

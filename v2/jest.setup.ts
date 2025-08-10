@@ -8,8 +8,8 @@ jest.mock("next/router", () => ({
       pathname: "",
       query: {},
       asPath: "",
-      push: jest.fn(),
-      replace: jest.fn(),
+      push: vi.fn(),
+      replace: vi.fn(),
     };
   },
 }));
@@ -18,10 +18,10 @@ jest.mock("next/router", () => ({
 jest.mock("next/navigation", () => ({
   useRouter() {
     return {
-      push: jest.fn(),
-      replace: jest.fn(),
-      prefetch: jest.fn(),
-      back: jest.fn(),
+      push: vi.fn(),
+      replace: vi.fn(),
+      prefetch: vi.fn(),
+      back: vi.fn(),
     };
   },
   usePathname() {
