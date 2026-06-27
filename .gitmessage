@@ -1,0 +1,59 @@
+# Commit Message Template
+#
+# Conventional commit format (MUST FOLLOW EXACTLY):
+#
+# Single-line format:
+# <type>: <description>
+#
+# Multiline format:
+# <type>: summary
+#
+# - <description_line_1>.
+# - <description_line_2>.
+# - ...
+#
+# Field Definitions:
+# - <type>: One of "feat", "fix", "docs", "refactor", "test", "chore", "ci", "build", "perf"
+# - <description>: Generated commit message describing the changes
+# - <summary>: Generated summary of the changes including key points, impacted areas, and rationale (for multiline format)
+# - <description_line_X>: Message for a different concern in multiline format
+#
+# Types:
+# - feat: A new feature
+# - fix: A bug fix
+# - docs: Documentation changes
+# - refactor: Code refactoring
+# - test: Adding or updating tests
+# - chore: Maintenance tasks
+# - ci: Continuous integration changes
+# - build: Build system changes
+# - perf: Performance improvements
+#
+# Format Rules:
+# - Subject line <= 50 chars
+# - No trailing period in subject line
+# - Body lines wrapped at 72 chars
+# - Keep an empty line between summary and descriptions in multiline format
+# - Each bullet point MUST start with - (dash and space)
+# - Use present tense, imperative mood (e.g., "add feature" not "added feature")
+# - NEVER add extra content like "Generated with Claude Code", author info, etc.
+# - Post-review commits: Use multiline format with first bullet starting "Apply post-review fixes to <summary>"
+#
+# Examples:
+# feat: implement JWT-based login system
+# fix: fix memory leak in data processor
+# docs: update documentation for API endpoints
+#
+# Multiline example:
+# feat: implement dashboard analytics
+#
+# - Add user activity tracking components.
+# - Create data visualization charts.
+# - Integrate with reporting API.
+#
+# Post-review fixes example:
+# fix: fix memory leak in data processor
+#
+# - Apply post-review fixes to buffer management optimization.
+# - Update error handling for edge cases.
+# - Add missing null checks.
