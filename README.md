@@ -110,7 +110,6 @@ You can customize various aspects of the portfolio website to make it your own.
 ### Changing Content
 
 1. Update the content in the `data` directory:
-
    - Edit the `projects.ts` file to add or modify project details.
    - Edit the `services.ts` file to add or modify services you provide.
    - Edit the `experiences.ts` file to add or modify experiences you have.
