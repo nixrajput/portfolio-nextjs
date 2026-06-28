@@ -1,12 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { UploadCloud } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { cn } from "@/utils/cn";
 
 type State = "idle" | "submitting" | "success" | "error";
+
+const inputClass =
+  "w-full rounded-lg border border-border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-violet)] transition";
 
 export function SubmitTestimonialForm({ onSuccess }: { onSuccess?: () => void }) {
   const [state, setState] = useState<State>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -37,17 +45,21 @@ export function SubmitTestimonialForm({ onSuccess }: { onSuccess?: () => void })
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-      <label className="flex flex-col gap-1 text-sm">
+      {/* Name */}
+      <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
         Your name
         <input
           name="name"
           required
           minLength={2}
           maxLength={80}
-          className="rounded-md border bg-transparent px-3 py-2"
+          placeholder="Jane Smith"
+          className={inputClass}
         />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
+
+      {/* Relationship */}
+      <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
         How do you know me?
         <input
           name="relationship"
@@ -55,10 +67,12 @@ export function SubmitTestimonialForm({ onSuccess }: { onSuccess?: () => void })
           minLength={2}
           maxLength={120}
           placeholder="e.g. Former colleague at NixLab"
-          className="rounded-md border bg-transparent px-3 py-2"
+          className={inputClass}
         />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
+
+      {/* Testimonial body */}
+      <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
         Your testimonial
         <textarea
           name="content"
@@ -66,18 +80,86 @@ export function SubmitTestimonialForm({ onSuccess }: { onSuccess?: () => void })
           minLength={20}
           maxLength={1000}
           rows={5}
-          className="rounded-md border bg-transparent px-3 py-2"
+          placeholder="Share your experience working with Nikhil…"
+          className={cn(inputClass, "resize-none")}
         />
       </label>
-      <label className="flex flex-col gap-1 text-sm">
-        Photo (optional)
-        <input name="image" type="file" accept="image/*" className="text-sm" />
-      </label>
+
+      {/* Social links — optional */}
+      <fieldset className="border-border flex flex-col gap-3 rounded-lg border p-3">
+        <legend className="text-muted px-1 text-xs font-semibold tracking-wide uppercase">
+          Social links (optional)
+        </legend>
+        <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
+          LinkedIn
+          <input
+            name="linkedinUrl"
+            type="url"
+            placeholder="https://linkedin.com/in/yourprofile"
+            className={inputClass}
+          />
+        </label>
+        <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
+          GitHub
+          <input
+            name="githubUrl"
+            type="url"
+            placeholder="https://github.com/yourusername"
+            className={inputClass}
+          />
+        </label>
+        <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
+          X / Twitter
+          <input
+            name="xUrl"
+            type="url"
+            placeholder="https://x.com/yourhandle"
+            className={inputClass}
+          />
+        </label>
+        <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
+          Website
+          <input
+            name="websiteUrl"
+            type="url"
+            placeholder="https://yoursite.com"
+            className={inputClass}
+          />
+        </label>
+      </fieldset>
+
+      {/* Custom file input */}
+      <div className="text-foreground flex flex-col gap-1 text-sm font-medium">
+        <span>Photo</span>
+        <label
+          className={cn(
+            "border-border flex cursor-pointer flex-col items-center gap-2 rounded-lg border border-dashed px-4 py-5 text-center transition",
+            "hover:border-[var(--color-brand-violet)] hover:bg-[color-mix(in_srgb,var(--color-brand-violet)_5%,transparent)]",
+          )}
+        >
+          <input
+            ref={fileInputRef}
+            name="image"
+            type="file"
+            accept="image/*"
+            className="sr-only"
+            onChange={(e) => setFileName(e.target.files?.[0]?.name ?? null)}
+          />
+          <UploadCloud className="text-muted h-6 w-6" aria-hidden />
+          <span className="text-muted text-xs">
+            {fileName ? (
+              <span className="text-foreground font-medium">{fileName}</span>
+            ) : (
+              "Upload a photo (optional)"
+            )}
+          </span>
+        </label>
+      </div>
 
       {/* Honeypot: hidden from humans, tab-skipped, autocomplete off. Bots fill it. */}
       <div aria-hidden="true" style={{ position: "absolute", left: "-9999px" }}>
         <label>
-          Website
+          Honeypot
           <input name="website" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
@@ -87,13 +169,16 @@ export function SubmitTestimonialForm({ onSuccess }: { onSuccess?: () => void })
           {error}
         </p>
       )}
-      <button
+
+      <Button
         type="submit"
+        variant="primary"
+        size="md"
         disabled={state === "submitting"}
-        className="rounded-md bg-[var(--color-brand-violet)] px-4 py-2 text-white disabled:opacity-50"
+        className="w-full rounded-lg"
       >
         {state === "submitting" ? "Submitting…" : "Submit testimonial"}
-      </button>
+      </Button>
     </form>
   );
 }

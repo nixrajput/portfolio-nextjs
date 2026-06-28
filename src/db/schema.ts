@@ -148,6 +148,10 @@ export const testimonials = pgTable("testimonials", {
   relationship: text("relationship").notNull(),
   content: text("content").notNull(),
   imageUrl: text("image_url"),
+  linkedinUrl: text("linkedin_url"),
+  githubUrl: text("github_url"),
+  xUrl: text("x_url"),
+  websiteUrl: text("website_url"),
   status: testimonialStatus("status").notNull().default("pending"),
   featured: boolean("featured").notNull().default(false),
   order: integer("order").notNull().default(0),
@@ -160,6 +164,16 @@ export const taglines = pgTable("taglines", {
   active: boolean("active").notNull().default(true),
   order: integer("order").default(0),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const githubCache = pgTable("github_cache", {
+  repo: varchar("repo", { length: 255 }).primaryKey(),
+  stars: integer("stars").notNull().default(0),
+  forks: integer("forks").notNull().default(0),
+  language: text("language"),
+  description: text("description"),
+  homepage: text("homepage"),
+  fetchedAt: timestamp("fetched_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 // Inferred types
@@ -181,3 +195,5 @@ export type Testimonial = typeof testimonials.$inferSelect;
 export type NewTestimonial = typeof testimonials.$inferInsert;
 export type Tagline = typeof taglines.$inferSelect;
 export type NewTagline = typeof taglines.$inferInsert;
+export type GithubCache = typeof githubCache.$inferSelect;
+export type NewGithubCache = typeof githubCache.$inferInsert;

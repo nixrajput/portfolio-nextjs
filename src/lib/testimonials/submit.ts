@@ -28,6 +28,10 @@ export async function submitTestimonial(
     relationship: formData.get("relationship"),
     content: formData.get("content"),
     website: formData.get("website") ?? "",
+    linkedinUrl: (formData.get("linkedinUrl") as string) || undefined,
+    githubUrl: (formData.get("githubUrl") as string) || undefined,
+    xUrl: (formData.get("xUrl") as string) || undefined,
+    websiteUrl: (formData.get("websiteUrl") as string) || undefined,
   });
 
   if (!parsed.success) {
@@ -56,6 +60,10 @@ export async function submitTestimonial(
       relationship: parsed.data.relationship,
       content: parsed.data.content,
       imageUrl,
+      linkedinUrl: parsed.data.linkedinUrl ?? null,
+      githubUrl: parsed.data.githubUrl ?? null,
+      xUrl: parsed.data.xUrl ?? null,
+      websiteUrl: parsed.data.websiteUrl ?? null,
       status: "pending",
     })
     .returning({ id: testimonials.id });
