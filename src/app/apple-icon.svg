@@ -10,8 +10,7 @@
       <stop offset="1" stop-color="#ec4899" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="180" height="180" rx="40" fill="#0b0b14"/>
   <path d="M52 128 V62 L118 116 V52" fill="none" stroke="url(#n)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="126" cy="46" r="34" fill="url(#spark)"/>
-  <circle cx="126" cy="46" r="13" fill="#ec4899"/>
+  <circle cx="118" cy="52" r="20" fill="url(#spark)"/>
+  <circle cx="118" cy="52" r="10" fill="#ec4899"/>
 </svg>
