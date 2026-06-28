@@ -140,6 +140,15 @@ body {
   a {
     text-decoration: none;
   }
+  /* Modern UA/Preflight resets set buttons to `cursor: default`; restore the
+     pointer affordance for all enabled buttons and button-role elements. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
