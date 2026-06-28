@@ -8,6 +8,7 @@ const sections = [
   { href: "/admin/services", label: "Services" },
   { href: "/admin/social-links", label: "Social Links" },
   { href: "/admin/funding-links", label: "Funding Links" },
+  { href: "/admin/testimonials", label: "Testimonials" },
 ];
 
 export default function AdminDashboard() {
