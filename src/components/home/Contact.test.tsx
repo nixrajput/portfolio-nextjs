@@ -2,7 +2,8 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Contact, platformIcon } from "./Contact";
 import type { SocialRow } from "./Contact";
-import { Github, Linkedin, Twitter, Instagram, Send, Mail, Globe } from "lucide-react";
+import { Github, Linkedin, Instagram, Send, Mail, Globe } from "lucide-react";
+import { XIcon } from "@/components/brand/XIcon";
 
 // Mock framer-motion to avoid jsdom animation issues
 vi.mock("framer-motion", () => ({
@@ -39,8 +40,8 @@ const mockSocials: SocialRow[] = [
 describe("platformIcon", () => {
   it("returns Github icon for github", () => expect(platformIcon("github")).toBe(Github));
   it("returns Linkedin icon for linkedin", () => expect(platformIcon("linkedin")).toBe(Linkedin));
-  it("returns Twitter icon for twitter", () => expect(platformIcon("twitter")).toBe(Twitter));
-  it("returns Twitter icon for x", () => expect(platformIcon("x")).toBe(Twitter));
+  it("returns X icon for twitter", () => expect(platformIcon("twitter")).toBe(XIcon));
+  it("returns X icon for x", () => expect(platformIcon("x")).toBe(XIcon));
   it("returns Instagram icon for instagram", () =>
     expect(platformIcon("instagram")).toBe(Instagram));
   it("returns Send icon for telegram", () => expect(platformIcon("telegram")).toBe(Send));

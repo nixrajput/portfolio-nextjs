@@ -1,29 +1,25 @@
-import {
-  Github,
-  Linkedin,
-  Twitter,
-  Instagram,
-  Send,
-  Mail,
-  Globe,
-  type LucideIcon,
-} from "lucide-react";
+import { Github, Linkedin, Instagram, Send, Mail, Globe } from "lucide-react";
+import type { ComponentType, SVGProps } from "react";
 import { Reveal } from "@/components/motion/Reveal";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
+import { XIcon } from "@/components/brand/XIcon";
 
-const ICONS: Record<string, LucideIcon> = {
+// Icons accept a className/size — lucide icons and our custom XIcon both qualify.
+export type SocialIcon = ComponentType<SVGProps<SVGSVGElement>>;
+
+const ICONS: Record<string, SocialIcon> = {
   github: Github,
   linkedin: Linkedin,
-  twitter: Twitter,
-  x: Twitter,
+  twitter: XIcon,
+  x: XIcon,
   instagram: Instagram,
   telegram: Send,
   email: Mail,
 };
 
-export function platformIcon(platform: string): LucideIcon {
-  return ICONS[platform.toLowerCase()] ?? Globe;
+export function platformIcon(platform: string): SocialIcon {
+  return ICONS[platform.toLowerCase()] ?? (Globe as SocialIcon);
 }
 
 export type SocialRow = {
