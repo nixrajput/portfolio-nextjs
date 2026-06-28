@@ -8,7 +8,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   const session = await auth();
   // signIn callback already blocks non-admins; if there's no session, gate it.
   if (!session?.user) {
-    redirect("/signin");
+    redirect("/login");
   }
   return (
     <div className="mx-auto max-w-5xl px-4 py-10">

@@ -30,5 +30,5 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return isAllowedLogin(login, process.env.ADMIN_GITHUB_LOGIN);
     },
   },
-  pages: { signIn: "/signin" },
+  pages: { signIn: "/login" },
 });
