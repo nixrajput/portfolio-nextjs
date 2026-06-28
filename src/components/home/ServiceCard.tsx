@@ -64,7 +64,7 @@ export function ServiceCard({ service }: { service: ServiceRow }) {
         style={{ background: glowBg }}
       />
       <div className="relative z-10">
-        <span className="inline-grid size-11 place-items-center rounded-2xl bg-[image:var(--gradient-brand)] text-white">
+        <span className="inline-grid size-11 place-items-center rounded-2xl bg-(image:--gradient-brand) text-white">
           {iconElement}
         </span>
         <h3 className="mt-4 text-lg font-bold">{service.title}</h3>

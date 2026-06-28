@@ -23,7 +23,7 @@ const variants: Record<Variant, string> = {
   // content being lifted via `[&>*]:relative [&>*]:z-10` keeps the white label
   // ABOVE the gradient layer so it stays readable in both themes.
   primary:
-    "relative isolate overflow-hidden border border-white/15 text-white shadow-sm backdrop-blur-sm [&>*]:relative [&>*]:z-10 before:pointer-events-none before:absolute before:inset-0 before:-z-0 before:bg-[image:var(--gradient-brand)] before:opacity-80 before:transition-opacity hover:before:opacity-95",
+    "relative isolate overflow-hidden border border-white/15 text-white shadow-sm backdrop-blur-sm [&>*]:relative [&>*]:z-10 before:pointer-events-none before:absolute before:inset-0 before:-z-0 before:bg-(image:--gradient-brand) before:opacity-80 before:transition-opacity hover:before:opacity-95",
   secondary: "border border-border bg-surface text-foreground hover:bg-surface-2",
   ghost: "text-muted hover:text-foreground",
 };

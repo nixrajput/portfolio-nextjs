@@ -63,7 +63,7 @@ function NavLinks({ collapsed, onNavigate }: { collapsed?: boolean; onNavigate?:
             <span
               className={cn(
                 "grid size-7 shrink-0 place-items-center rounded-md",
-                active ? "bg-[image:var(--gradient-brand)] text-white" : "text-muted",
+                active ? "bg-(image:--gradient-brand) text-white" : "text-muted",
               )}
             >
               <Icon className="size-4" aria-hidden />

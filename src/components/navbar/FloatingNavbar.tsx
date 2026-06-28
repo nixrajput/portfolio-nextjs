@@ -121,7 +121,7 @@ export function FloatingNavbar({
                       {isActive && (
                         <motion.span
                           layoutId="nav-active-pill"
-                          className="absolute inset-0 -z-10 rounded-full bg-[image:var(--gradient-brand)]"
+                          className="absolute inset-0 -z-10 rounded-full bg-(image:--gradient-brand)"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 0.2 }}
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}

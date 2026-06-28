@@ -37,7 +37,7 @@ export function Meteors({ number = 12, className }: { number?: number; className
       {meteors.map((m) => (
         <span
           key={m.id}
-          className="meteor absolute top-0 h-0.5 w-0.5 rounded-full bg-[var(--brand-cyan)] shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"
+          className="meteor absolute top-0 h-0.5 w-0.5 rounded-full bg-(--brand-cyan) shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"
           style={{
             left: m.left,
             animationDelay: m.delay,

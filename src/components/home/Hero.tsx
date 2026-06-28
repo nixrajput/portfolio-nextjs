@@ -46,7 +46,7 @@ export function Hero({
       className="relative flex min-h-[100svh] scroll-mt-24 items-center justify-center overflow-hidden px-6"
     >
       {/* Sweeping gradient spotlight behind the headline */}
-      <div className="pointer-events-none absolute top-1/3 left-1/2 -z-0 h-[40vh] w-[80vw] -translate-x-1/2 rounded-full bg-[image:var(--gradient-brand)] opacity-20 blur-[120px]" />
+      <div className="pointer-events-none absolute top-1/3 left-1/2 -z-0 h-[40vh] w-[80vw] -translate-x-1/2 rounded-full bg-(image:--gradient-brand) opacity-20 blur-[120px]" />
 
       <motion.div
         style={{ y, opacity }}
@@ -55,7 +55,7 @@ export function Hero({
         {/* Avatar */}
         <Reveal>
           <div className="relative mb-6 aspect-square w-28 sm:w-32">
-            <div className="absolute inset-0 -z-10 rounded-full bg-[image:var(--gradient-brand)] opacity-40 blur-xl" />
+            <div className="absolute inset-0 -z-10 rounded-full bg-(image:--gradient-brand) opacity-40 blur-xl" />
             <Image
               src={profile.avatarUrl}
               alt={`Portrait of ${profile.name}`}

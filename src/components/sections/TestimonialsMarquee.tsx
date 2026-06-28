@@ -17,7 +17,7 @@ function MarqueeCard({ t }: { t: TestimonialCard }) {
 
   return (
     <figure className="border-border bg-surface hover:border-foreground/20 flex flex-col gap-4 rounded-2xl border p-5 transition-colors">
-      <Quote className="size-5 shrink-0 text-[var(--color-brand-violet)]" aria-hidden />
+      <Quote className="size-5 shrink-0 text-(--color-brand-violet)" aria-hidden />
       <blockquote className="text-foreground/80 text-sm leading-relaxed">{t.content}</blockquote>
       <figcaption className="mt-auto flex items-center gap-3 pt-1">
         <BrandInitialsAvatar name={t.name} src={t.imageUrl} className="size-9" />

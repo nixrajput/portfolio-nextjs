@@ -20,7 +20,7 @@ export function ProjectCard({ project }: { project: MergedProject }) {
       as="article"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="group relative flex h-full flex-col overflow-hidden hover:border-[var(--brand-violet)]/40"
+      className="group relative flex h-full flex-col overflow-hidden hover:border-(--brand-violet)/40"
     >
       {hover && <Meteors number={10} />}
 
@@ -45,7 +45,7 @@ export function ProjectCard({ project }: { project: MergedProject }) {
         {(project.language || project.tags.length > 0) && (
           <div className="mt-4 flex flex-wrap gap-1.5">
             {project.language && (
-              <span className="rounded-full border border-[var(--brand-violet)]/30 bg-[var(--brand-violet)]/10 px-2 py-0.5 text-xs text-[var(--brand-violet)]">
+              <span className="rounded-full border border-(--brand-violet)/30 bg-(--brand-violet)/10 px-2 py-0.5 text-xs text-(--brand-violet)">
                 {project.language}
               </span>
             )}

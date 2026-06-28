@@ -29,7 +29,7 @@ export function Testimonials({ items }: { items: TestimonialCard[] }) {
       {items.length === 0 ? (
         <Reveal delay={0.1}>
           <Card className="flex flex-col items-center gap-5 py-14 text-center">
-            <span className="inline-grid size-12 place-items-center rounded-2xl bg-[image:var(--gradient-brand)] text-white">
+            <span className="inline-grid size-12 place-items-center rounded-2xl bg-(image:--gradient-brand) text-white">
               <MessageSquareQuote className="size-6" aria-hidden />
             </span>
             <div className="flex flex-col gap-1">

@@ -37,7 +37,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label={`Theme: ${current}. Switch to ${next}.`}
       onClick={() => setTheme(next)}
       className={cn(
-        "text-foreground/80 hover:bg-foreground/10 hover:text-foreground grid size-9 place-items-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-violet)]",
+        "text-foreground/80 hover:bg-foreground/10 hover:text-foreground grid size-9 place-items-center rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--brand-violet)",
         className,
       )}
     >

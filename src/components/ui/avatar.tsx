@@ -77,7 +77,7 @@ const AvatarFallback = React.forwardRef<HTMLSpanElement, AvatarFallbackProps>(
         ref={ref}
         className={cn(
           "flex h-full w-full items-center justify-center rounded-full text-sm font-semibold text-white select-none",
-          "bg-[image:var(--gradient-brand)]",
+          "bg-(image:--gradient-brand)",
           className,
         )}
         {...props}

@@ -76,7 +76,7 @@ export function CheckboxField({
         type="checkbox"
         name={name}
         defaultChecked={defaultChecked}
-        className="size-4 accent-[var(--color-brand-violet)]"
+        className="size-4 accent-(--color-brand-violet)"
       />
       <span className="text-foreground">{label}</span>
     </label>
@@ -127,7 +127,7 @@ export function Badge({
 }) {
   const tones: Record<string, string> = {
     muted: "bg-foreground/8 text-muted",
-    brand: "bg-[var(--color-brand-violet)]/12 text-[var(--color-brand-violet)]",
+    brand: "bg-(--color-brand-violet)/12 text-(--color-brand-violet)",
     success: "bg-emerald-500/12 text-emerald-500",
     warning: "bg-amber-500/12 text-amber-500",
   };

@@ -9,7 +9,7 @@ import { getCroppedImageFile } from "@/lib/crop-image";
 type State = "idle" | "submitting" | "success" | "error";
 
 const inputClass =
-  "w-full rounded-lg border border-border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-violet)] transition";
+  "w-full rounded-lg border border-border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-(--color-brand-violet) transition";
 
 export const TESTIMONIAL_FORM_ID = "submit-testimonial-form";
 
@@ -252,7 +252,7 @@ export function SubmitTestimonialForm({
                 value={zoom}
                 aria-label="Zoom"
                 onChange={(e) => setZoom(Number(e.target.value))}
-                className="flex-1 accent-[var(--color-brand-violet)]"
+                className="flex-1 accent-(--color-brand-violet)"
               />
               <button
                 type="button"
@@ -271,7 +271,7 @@ export function SubmitTestimonialForm({
             onClick={() => fileInputRef.current?.click()}
             className={cn(
               "border-border flex cursor-pointer flex-col items-center gap-2 rounded-lg border border-dashed px-4 py-5 text-center transition",
-              "hover:border-[var(--color-brand-violet)] hover:bg-[color-mix(in_srgb,var(--color-brand-violet)_5%,transparent)]",
+              "hover:border-(--color-brand-violet) hover:bg-[color-mix(in_srgb,var(--color-brand-violet)_5%,transparent)]",
             )}
           >
             <UploadCloud className="text-muted h-6 w-6" aria-hidden />

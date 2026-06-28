@@ -79,7 +79,7 @@ export function SubmitTestimonialModal({
                     transition={{ type: "spring", stiffness: 320, damping: 18 }}
                     className="relative grid size-16 place-items-center rounded-full"
                   >
-                    <span className="absolute inset-0 rounded-full bg-[image:var(--gradient-brand)] opacity-90" />
+                    <span className="absolute inset-0 rounded-full bg-(image:--gradient-brand) opacity-90" />
                     <Check className="relative h-8 w-8 text-white" strokeWidth={2.5} aria-hidden />
                   </motion.span>
 
