@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 import type { ReactNode } from "react";
 import { AdminShell } from "@/components/admin/AdminShell";
 
@@ -11,8 +11,18 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   if (!session?.user) {
     redirect("/login");
   }
+
+  async function logout() {
+    "use server";
+    await signOut({ redirectTo: "/login" });
+  }
+
   return (
-    <AdminShell userLabel={session.user.name ?? session.user.email ?? "Admin"}>
+    <AdminShell
+      userName={session?.user?.name ?? session?.user?.email ?? "Admin"}
+      userImage={session?.user?.image ?? null}
+      logoutAction={logout}
+    >
       {children}
     </AdminShell>
   );

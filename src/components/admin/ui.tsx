@@ -22,7 +22,14 @@ export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
 }
 
 export function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea {...props} className={cn(fieldBase, "resize-y", props.className)} />;
+  // No manual resize — the height is fixed by `rows` and content scrolls,
+  // so the field can't be dragged to an unlimited height.
+  return (
+    <textarea
+      {...props}
+      className={cn(fieldBase, "max-h-60 resize-none overflow-y-auto", props.className)}
+    />
+  );
 }
 
 export function Select(props: SelectHTMLAttributes<HTMLSelectElement>) {
@@ -146,6 +153,8 @@ export type AdminRow = {
   primary: ReactNode;
   meta?: ReactNode;
   badges?: ReactNode;
+  /** Optional extra row actions (e.g. an edit dialog) rendered before Delete. */
+  actions?: ReactNode;
 };
 
 /**
@@ -182,15 +191,18 @@ export function RecordList({
             </div>
             {row.meta ? <span className="text-muted truncate text-xs">{row.meta}</span> : null}
           </div>
-          <form action={deleteAction} className="shrink-0">
-            <input type="hidden" name="id" value={row.id} />
-            <button
-              type="submit"
-              className="text-muted rounded-md px-2 py-1 text-xs font-medium transition hover:bg-red-500/10 hover:text-red-500"
-            >
-              Delete
-            </button>
-          </form>
+          <div className="flex shrink-0 items-center gap-1">
+            {row.actions}
+            <form action={deleteAction}>
+              <input type="hidden" name="id" value={row.id} />
+              <button
+                type="submit"
+                className="text-muted rounded-md px-2 py-1 text-xs font-medium transition hover:bg-red-500/10 hover:text-red-500"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
         </li>
       ))}
     </ul>

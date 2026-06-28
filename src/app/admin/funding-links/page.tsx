@@ -1,32 +1,45 @@
 import { db } from "@/db/client";
 import { fundingLinks } from "@/db/schema";
-import { createFundingLink, deleteFundingLink } from "../actions";
+import { createFundingLink, updateFundingLink, deleteFundingLink } from "../actions";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import {
-  Panel,
-  Field,
-  Input,
-  CheckboxField,
-  SubmitButton,
-  RecordList,
-  Badge,
-} from "@/components/admin/ui";
+import { RecordList, Badge } from "@/components/admin/ui";
+import { RecordFormDialog, type AdminField } from "@/components/admin/RecordFormDialog";
 
 export const dynamic = "force-dynamic";
+
+const fields: AdminField[] = [
+  { name: "label", label: "Label", type: "text", placeholder: "Buy me a coffee", required: true },
+  {
+    name: "url",
+    label: "URL",
+    type: "url",
+    placeholder: "https://buymeacoffee.com/…",
+    required: true,
+  },
+  { name: "order", label: "Order", type: "number" },
+  { name: "primary", label: "Primary", type: "checkbox" },
+];
+
+function parse(formData: FormData) {
+  return {
+    label: String(formData.get("label")),
+    url: String(formData.get("url")),
+    primary: formData.get("primary") === "on",
+    order: Number(formData.get("order") || 0),
+  };
+}
 
 export default async function FundingLinksEditor() {
   const rows = await db.select().from(fundingLinks).orderBy(fundingLinks.order);
 
   async function create(formData: FormData) {
     "use server";
-    await createFundingLink({
-      label: String(formData.get("label")),
-      url: String(formData.get("url")),
-      primary: formData.get("primary") === "on",
-      order: Number(formData.get("order") || 0),
-    });
+    await createFundingLink(parse(formData));
   }
-
+  async function update(formData: FormData) {
+    "use server";
+    await updateFundingLink(Number(formData.get("id")), parse(formData));
+  }
   async function remove(formData: FormData) {
     "use server";
     await deleteFundingLink(Number(formData.get("id")));
@@ -34,29 +47,15 @@ export default async function FundingLinksEditor() {
 
   return (
     <div className="flex flex-col gap-8">
-      <AdminPageHeader title="Funding Links" description="Sponsorship and support links." />
-
-      <Panel title="Add funding link">
-        <form action={create} className="flex flex-col gap-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Label">
-              <Input name="label" placeholder="Buy me a coffee" required />
-            </Field>
-            <Field label="URL">
-              <Input name="url" type="url" placeholder="https://buymeacoffee.com/…" required />
-            </Field>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Order">
-              <Input name="order" type="number" defaultValue={0} />
-            </Field>
-            <div className="flex items-end">
-              <CheckboxField name="primary" label="Primary" />
-            </div>
-          </div>
-          <SubmitButton>Add funding link</SubmitButton>
-        </form>
-      </Panel>
+      <div className="flex items-start justify-between gap-4">
+        <AdminPageHeader title="Funding Links" description="Sponsorship and support links." />
+        <RecordFormDialog
+          mode="create"
+          title="Add funding link"
+          fields={fields}
+          formAction={create}
+        />
+      </div>
 
       <RecordList
         rows={rows.map((l) => ({
@@ -64,6 +63,15 @@ export default async function FundingLinksEditor() {
           primary: l.label,
           meta: l.url,
           badges: l.primary ? <Badge tone="brand">Primary</Badge> : null,
+          actions: (
+            <RecordFormDialog
+              mode="edit"
+              title="Edit funding link"
+              fields={fields}
+              formAction={update}
+              record={l}
+            />
+          ),
         }))}
         deleteAction={remove}
         empty="No funding links yet."

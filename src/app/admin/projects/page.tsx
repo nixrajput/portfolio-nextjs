@@ -1,39 +1,60 @@
 import { db } from "@/db/client";
 import { projects } from "@/db/schema";
-import { createProject, deleteProject } from "../actions";
+import { createProject, updateProject, deleteProject } from "../actions";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import {
-  Panel,
-  Field,
-  Input,
-  Textarea,
-  CheckboxField,
-  SubmitButton,
-  RecordList,
-  Badge,
-} from "@/components/admin/ui";
+import { RecordList, Badge } from "@/components/admin/ui";
+import { RecordFormDialog, type AdminField } from "@/components/admin/RecordFormDialog";
 
 export const dynamic = "force-dynamic";
+
+const fields: AdminField[] = [
+  { name: "repo", label: "GitHub slug", type: "text", placeholder: "e.g. siphon", required: true },
+  { name: "title", label: "Title", type: "text", placeholder: "Project title", required: true },
+  {
+    name: "customBlurb",
+    label: "Custom blurb",
+    type: "textarea",
+    rows: 2,
+    hint: "Optional — overrides the GitHub description.",
+  },
+  {
+    name: "tags",
+    label: "Tags",
+    type: "text",
+    placeholder: "Flutter, Dart",
+    hint: "Comma-separated",
+  },
+  { name: "order", label: "Order", type: "number" },
+  { name: "featured", label: "Featured", type: "checkbox" },
+  { name: "hidden", label: "Hidden", type: "checkbox" },
+];
+
+function parse(formData: FormData) {
+  return {
+    repo: String(formData.get("repo")),
+    title: String(formData.get("title")),
+    customBlurb: (formData.get("customBlurb") as string) || null,
+    tags: String(formData.get("tags") || "")
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean),
+    featured: formData.get("featured") === "on",
+    order: Number(formData.get("order") || 0),
+    hidden: formData.get("hidden") === "on",
+  };
+}
 
 export default async function ProjectsEditor() {
   const rows = await db.select().from(projects).orderBy(projects.order);
 
   async function create(formData: FormData) {
     "use server";
-    await createProject({
-      repo: String(formData.get("repo")),
-      title: String(formData.get("title")),
-      customBlurb: (formData.get("customBlurb") as string) || null,
-      tags: String(formData.get("tags") || "")
-        .split(",")
-        .map((t) => t.trim())
-        .filter(Boolean),
-      featured: formData.get("featured") === "on",
-      order: Number(formData.get("order") || 0),
-      hidden: formData.get("hidden") === "on",
-    });
+    await createProject(parse(formData));
   }
-
+  async function update(formData: FormData) {
+    "use server";
+    await updateProject(Number(formData.get("id")), parse(formData));
+  }
   async function remove(formData: FormData) {
     "use server";
     await deleteProject(Number(formData.get("id")));
@@ -41,36 +62,10 @@ export default async function ProjectsEditor() {
 
   return (
     <div className="flex flex-col gap-8">
-      <AdminPageHeader title="Projects" description="Curate which repos appear and how." />
-
-      <Panel title="Add project">
-        <form action={create} className="flex flex-col gap-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="GitHub slug">
-              <Input name="repo" placeholder="e.g. siphon" required />
-            </Field>
-            <Field label="Title">
-              <Input name="title" placeholder="Project title" required />
-            </Field>
-          </div>
-          <Field label="Custom blurb" hint="Optional — overrides the GitHub description.">
-            <Textarea name="customBlurb" rows={2} placeholder="A short custom description" />
-          </Field>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Tags" hint="Comma-separated">
-              <Input name="tags" placeholder="Flutter, Dart, GetX" />
-            </Field>
-            <Field label="Order">
-              <Input name="order" type="number" defaultValue={0} />
-            </Field>
-          </div>
-          <div className="flex gap-6">
-            <CheckboxField name="featured" label="Featured" />
-            <CheckboxField name="hidden" label="Hidden" />
-          </div>
-          <SubmitButton>Add project</SubmitButton>
-        </form>
-      </Panel>
+      <div className="flex items-start justify-between gap-4">
+        <AdminPageHeader title="Projects" description="Curate which repos appear and how." />
+        <RecordFormDialog mode="create" title="Add project" fields={fields} formAction={create} />
+      </div>
 
       <RecordList
         rows={rows.map((p) => ({
@@ -82,6 +77,15 @@ export default async function ProjectsEditor() {
               {p.featured ? <Badge tone="brand">Featured</Badge> : null}
               {p.hidden ? <Badge tone="warning">Hidden</Badge> : null}
             </>
+          ),
+          actions: (
+            <RecordFormDialog
+              mode="edit"
+              title="Edit project"
+              fields={fields}
+              formAction={update}
+              record={p}
+            />
           ),
         }))}
         deleteAction={remove}

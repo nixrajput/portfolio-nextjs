@@ -1,6 +1,5 @@
 import { db } from "@/db/client";
 import { profile } from "@/db/schema";
-import { eq } from "drizzle-orm";
 import { updateProfile } from "../actions";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { Panel, Field, Input, Textarea, SubmitButton } from "@/components/admin/ui";
@@ -8,7 +7,9 @@ import { Panel, Field, Input, Textarea, SubmitButton } from "@/components/admin/
 export const dynamic = "force-dynamic";
 
 export default async function ProfileEditor() {
-  const [row] = await db.select().from(profile).where(eq(profile.id, 1));
+  // Profile is a singleton — read the first row (its serial id can drift after
+  // a reseed, so don't filter by a hardcoded id).
+  const [row] = await db.select().from(profile).limit(1);
 
   async function action(formData: FormData) {
     "use server";

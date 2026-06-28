@@ -37,14 +37,22 @@ async function requireAdmin() {
   if (!session?.user) throw new Error("Unauthorized");
 }
 
-// ---------- Profile (single row id=1) ----------
+// ---------- Profile (singleton row) ----------
 export async function updateProfile(input: ProfileInput): Promise<void> {
   await requireAdmin();
   const data = profileInsertSchema.parse(input);
-  await db
-    .update(profile)
-    .set({ ...data, updatedAt: new Date() })
-    .where(eq(profile.id, 1));
+  // Profile is a singleton, but its serial id drifts after a reseed — so target
+  // the existing row by its actual id (or insert if the table is empty) rather
+  // than assuming id=1.
+  const [existing] = await db.select({ id: profile.id }).from(profile).limit(1);
+  if (existing) {
+    await db
+      .update(profile)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(profile.id, existing.id));
+  } else {
+    await db.insert(profile).values(data);
+  }
   revalidatePortfolio();
 }
 
