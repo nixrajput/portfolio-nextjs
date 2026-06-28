@@ -1,4 +1,4 @@
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import {
   getProfile,
   getProjectsMerged,
@@ -13,34 +13,43 @@ import { Hero } from "@/components/home/Hero";
 import { FloatingNavbar } from "@/components/navbar/FloatingNavbar";
 import { Footer } from "@/components/layout/Footer";
 
+// The homepage renders live DB-driven content, so render it dynamically at
+// request time. This also means `next build` does not need a database
+// connection to prerender it (CI builds without a live DB).
+export const dynamic = "force-dynamic";
+
 // Below-the-fold sections: lazy-loaded to keep the hero bundle lean.
 // Note: These are Server Components — next/dynamic with ssr:true (default)
 // performs code-splitting without disabling server rendering.
-const About = dynamic(() => import("@/components/home/About").then((m) => ({ default: m.About })));
-const Skills = dynamic(() =>
+const About = nextDynamic(() =>
+  import("@/components/home/About").then((m) => ({ default: m.About })),
+);
+const Skills = nextDynamic(() =>
   import("@/components/home/Skills").then((m) => ({ default: m.Skills })),
 );
-const Experience = dynamic(() =>
+const Experience = nextDynamic(() =>
   import("@/components/home/Experience").then((m) => ({ default: m.Experience })),
 );
-const Projects = dynamic(() =>
+const Projects = nextDynamic(() =>
   import("@/components/home/Projects").then((m) => ({ default: m.Projects })),
 );
-const Services = dynamic(() =>
+const Services = nextDynamic(() =>
   import("@/components/home/Services").then((m) => ({ default: m.Services })),
 );
-const Support = dynamic(() =>
+const Support = nextDynamic(() =>
   import("@/components/home/Support").then((m) => ({ default: m.Support })),
 );
-const TestimonialsSection = dynamic(() =>
+const TestimonialsSection = nextDynamic(() =>
   import("@/components/sections/TestimonialsSection").then((m) => ({
     default: m.TestimonialsSection,
   })),
 );
-const Contact = dynamic(() =>
+const Contact = nextDynamic(() =>
   import("@/components/home/Contact").then((m) => ({ default: m.Contact })),
 );
-const Faq = dynamic(() => import("@/components/sections/Faq").then((m) => ({ default: m.Faq })));
+const Faq = nextDynamic(() =>
+  import("@/components/sections/Faq").then((m) => ({ default: m.Faq })),
+);
 
 export default async function Home() {
   const [profile, projects, experiences, skills, services, socials, funding, tagline] =

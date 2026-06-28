@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.2",
+    "@radix-ui/react-alert-dialog": "1.1.15",
     "@radix-ui/react-dialog": "^1.1.17",
     "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.5.0",
@@ -31,6 +32,7 @@
     "drizzle-orm": "^0.45.2",
     "framer-motion": "^12.0.0",
     "geist": "^1.7.2",
+    "lucide-react": "0.542.0",
     "next": "16.2.0",
     "next-auth": "^5.0.0-beta.31",
     "next-themes": "^0.4.6",
