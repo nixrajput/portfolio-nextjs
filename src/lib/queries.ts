@@ -1,4 +1,4 @@
-import { asc, eq } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 
 import { db } from "@/db/client";
 import {
@@ -9,6 +9,7 @@ import {
   socialLinks,
   fundingLinks,
   taglines,
+  githubCache,
 } from "@/db/schema";
 import type { Experience, Skill, Service } from "@/db/schema";
 import { getProjects } from "@/lib/projects";
@@ -56,6 +57,15 @@ export async function getProfile(): Promise<{
 
   const s = row.stats as Record<string, unknown>;
 
+  // Derive the live total star count from the GitHub cache when available;
+  // fall back to the seeded value if the cache is empty (before first fetch).
+  // `repos` stays from the seed — the cache only holds curated repos, not the
+  // full public-repo count.
+  const [agg] = await db
+    .select({ totalStars: sql<number>`coalesce(sum(${githubCache.stars}), 0)` })
+    .from(githubCache);
+  const cachedStars = Number(agg?.totalStars ?? 0);
+
   return {
     name: row.name,
     headline: row.headline,
@@ -66,7 +76,7 @@ export async function getProfile(): Promise<{
     stats: {
       years: Number(s.years ?? 0),
       repos: Number(s.repos ?? 0),
-      stars: Number(s.stars ?? 0),
+      stars: cachedStars > 0 ? cachedStars : Number(s.stars ?? 0),
     },
   };
 }

@@ -1,6 +1,6 @@
 import { db } from "@/db/client";
 import { projects as projectsTable, type Project } from "@/db/schema";
-import { listUserRepos } from "@/lib/github";
+import { getCachedRepoData } from "@/lib/github-cache";
 import type { GithubRepo } from "@/lib/schemas";
 
 export type MergedProject = Project & {
@@ -38,13 +38,37 @@ export function mergeProjects(curation: Project[], repos: GithubRepo[]): MergedP
   });
 }
 
-/** Async wrapper: read DB curation + live repos, then merge.
- *  GitHub is best-effort: rate-limits or network errors return DB-only data
- *  with null stats so the section still renders at build time. */
+/** Async wrapper: read DB curation + cached GitHub stats, then merge.
+ *  Cache is 24h-TTL; stale/missing rows are refreshed from GitHub.
+ *  GitHub failures fall back to existing cache so the section always renders. */
 export async function getProjects(): Promise<MergedProject[]> {
-  const [curation, repos] = await Promise.all([
-    db.select().from(projectsTable),
-    listUserRepos("nixrajput").catch(() => [] as GithubRepo[]),
-  ]);
+  const curation = await db.select().from(projectsTable);
+
+  const OWNER = "nixrajput";
+  const slugs = curation.map((c) => `${OWNER}/${c.repo}`);
+
+  const cacheMap = await getCachedRepoData(slugs);
+
+  // Build GithubRepo-shaped objects from cache so mergeProjects stays unchanged
+  const repos: GithubRepo[] = curation.map((c) => {
+    const slug = `${OWNER}/${c.repo}`;
+    const stats = cacheMap.get(slug);
+    return {
+      name: c.repo,
+      full_name: slug,
+      html_url: stats?.htmlUrl ?? `https://github.com/${slug}`,
+      description: stats?.description ?? null,
+      homepage: stats?.homepage ?? null,
+      language: stats?.language ?? null,
+      stargazers_count: stats?.stars ?? 0,
+      forks_count: stats?.forks ?? 0,
+      open_issues_count: 0,
+      topics: [],
+      fork: false,
+      archived: false,
+      pushed_at: new Date().toISOString(),
+    };
+  });
+
   return mergeProjects(curation, repos);
 }
