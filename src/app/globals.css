@@ -124,11 +124,13 @@ a {
   text-decoration: none;
   color: inherit;
 }
-button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-}
+/*
+ * NOTE: no unlayered `button { background: transparent }` reset here. Like the
+ * universal reset, an unlayered element rule overrides Tailwind bg-* utilities
+ * (unlayered beats layered) — it was forcing every <button> with a bg utility
+ * (e.g. the gradient primary Button) to render transparent/invisible. Tailwind
+ * Preflight already normalizes button appearance inside its layer.
+ */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
