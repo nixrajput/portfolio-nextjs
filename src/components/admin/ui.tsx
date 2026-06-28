@@ -5,6 +5,7 @@ import type {
   SelectHTMLAttributes,
 } from "react";
 import { cn } from "@/utils/cn";
+import { RecordDeleteButton } from "@/components/admin/RecordDeleteButton";
 
 // ---------------------------------------------------------------------------
 // Admin UI primitives — branded form fields, cards, tables, and badges shared
@@ -103,15 +104,15 @@ export function Panel({
   );
 }
 
-/** Gradient primary submit button for admin forms. */
+/** Gradient primary submit button for admin forms — matches the dialog submit
+ * (full-width gradient) so forms and modals look consistent. */
 export function SubmitButton({ children }: { children: ReactNode }) {
   return (
     <button
       type="submit"
       className={cn(
-        "relative isolate inline-flex items-center justify-center gap-2 self-start overflow-hidden rounded-lg",
-        "border border-white/15 px-4 py-2 text-sm font-medium text-white shadow-sm backdrop-blur-sm",
-        "transition-[transform,box-shadow] duration-200 hover:shadow-md motion-safe:hover:-translate-y-0.5",
+        "relative isolate w-full overflow-hidden rounded-lg",
+        "border border-white/15 px-4 py-2.5 text-sm font-medium text-white shadow-sm backdrop-blur-sm",
         "before:absolute before:inset-0 before:-z-10 before:bg-[image:var(--gradient-brand)] before:opacity-90",
         "before:transition-opacity hover:before:opacity-100",
         "focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none",
@@ -193,15 +194,11 @@ export function RecordList({
           </div>
           <div className="flex shrink-0 items-center gap-1">
             {row.actions}
-            <form action={deleteAction}>
-              <input type="hidden" name="id" value={row.id} />
-              <button
-                type="submit"
-                className="text-muted rounded-md px-2 py-1 text-xs font-medium transition hover:bg-red-500/10 hover:text-red-500"
-              >
-                Delete
-              </button>
-            </form>
+            <RecordDeleteButton
+              id={row.id}
+              label={typeof row.primary === "string" ? row.primary : undefined}
+              deleteAction={deleteAction}
+            />
           </div>
         </li>
       ))}

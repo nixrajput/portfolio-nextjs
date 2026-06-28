@@ -48,10 +48,25 @@ export default async function TestimonialsPage() {
                   <StatusBadge status={t.status} />
                   {t.featured ? <Badge tone="brand">Featured</Badge> : null}
                 </div>
-                <p className="text-muted line-clamp-3 text-sm">{t.content}</p>
+                <p className="text-muted line-clamp-2 text-sm">{t.content}</p>
               </div>
 
-              <TestimonialActions id={t.id} status={t.status} featured={t.featured} />
+              <TestimonialActions
+                testimonial={{
+                  id: t.id,
+                  name: t.name,
+                  relationship: t.relationship,
+                  content: t.content,
+                  imageUrl: t.imageUrl,
+                  status: t.status,
+                  featured: t.featured,
+                  linkedinUrl: t.linkedinUrl,
+                  githubUrl: t.githubUrl,
+                  xUrl: t.xUrl,
+                  instagramUrl: t.instagramUrl,
+                  websiteUrl: t.websiteUrl,
+                }}
+              />
             </li>
           ))}
         </ul>
