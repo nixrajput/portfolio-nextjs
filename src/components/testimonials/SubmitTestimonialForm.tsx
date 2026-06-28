@@ -47,13 +47,10 @@ export function SubmitTestimonialForm({
     updateState("error");
   }
 
-  if (state === "success") {
-    return (
-      <p role="status" className="text-muted-foreground text-center text-sm">
-        Thank you! Your testimonial is pending review.
-      </p>
-    );
-  }
+  // The success view is owned by the modal (a curated confirmation panel that
+  // replaces the whole form + footer), so we render nothing here on success —
+  // we only signal it upward via onSuccess/onStateChange.
+  if (state === "success") return null;
 
   return (
     <form

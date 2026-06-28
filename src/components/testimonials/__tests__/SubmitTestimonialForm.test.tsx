@@ -23,8 +23,11 @@ describe("SubmitTestimonialForm", () => {
     expect(form!.id).toBe(TESTIMONIAL_FORM_ID);
   });
 
-  it("shows a success message after a successful submit", async () => {
-    const { container } = render(<SubmitTestimonialForm />);
+  it("signals success and unmounts the form on a successful submit", async () => {
+    // On success the form renders nothing — the modal owns the curated
+    // confirmation panel. The form's only job is to call onSuccess.
+    const onSuccess = vi.fn();
+    const { container } = render(<SubmitTestimonialForm onSuccess={onSuccess} />);
     fireEvent.change(screen.getByLabelText(/your name/i), {
       target: { value: "Jane" },
     });
@@ -35,7 +38,8 @@ describe("SubmitTestimonialForm", () => {
       target: { value: "A".repeat(25) },
     });
     fireEvent.submit(container.querySelector("form")!);
-    await waitFor(() => expect(screen.getByRole("status")).toBeInTheDocument());
+    await waitFor(() => expect(onSuccess).toHaveBeenCalledOnce());
+    expect(container.querySelector("form")).toBeNull();
   });
 
   it("shows the server error message on failure", async () => {
