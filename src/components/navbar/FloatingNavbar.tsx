@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, type Transition } from "framer-motion";
 import Link from "next/link";
-import { Heart, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/utils/cn";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -24,8 +24,10 @@ const SECTIONS: NavSection[] = [
 ];
 
 export function FloatingNavbar({
-  resumeUrl,
-  sponsorUrl,
+  // resumeUrl and sponsorUrl accepted for backward-compat but not rendered;
+  // the Sponsor CTA lives in the Hero section.
+  resumeUrl: _resumeUrl, // eslint-disable-line @typescript-eslint/no-unused-vars
+  sponsorUrl: _sponsorUrl, // eslint-disable-line @typescript-eslint/no-unused-vars
   sections = SECTIONS,
 }: {
   resumeUrl?: string;
@@ -36,7 +38,17 @@ export function FloatingNavbar({
   const active = useScrollSpy(ids);
   const reduce = useReducedMotion();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Detect scroll position for blur-on-scroll effect
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // Body scroll lock while mobile menu is open
   useEffect(() => {
@@ -72,93 +84,76 @@ export function FloatingNavbar({
 
   return (
     <>
-      {/* ── Glass pill nav (shared container) ─────────────────────────────── */}
+      {/* ── Full-width top bar ──────────────────────────────────────────────── */}
       <motion.nav
         aria-label="Primary"
-        initial={reduce ? false : { y: -80, opacity: 0 }}
+        initial={reduce ? false : { y: -64, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        className="fixed top-4 left-1/2 z-50 flex w-fit max-w-[calc(100vw-1.5rem)] -translate-x-1/2 items-center gap-2 rounded-full border border-white/15 bg-white/60 px-2 py-1.5 shadow-lg shadow-black/5 backdrop-blur-xl dark:border-white/10 dark:bg-black/40"
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+          scrolled ? "bg-background/70 border-border border-b backdrop-blur-md" : "bg-transparent",
+        )}
       >
-        {/* Logo — always visible */}
-        <Link href="#hero" aria-label="Go to top" onClick={closeMenu} className="shrink-0 pl-1.5">
-          <Logo withWordmark />
-        </Link>
+        <div className="flex h-16 w-full items-center justify-between px-6 lg:px-10">
+          {/* Logo — icon only, no wordmark */}
+          <Link href="#hero" aria-label="Home" onClick={closeMenu} className="shrink-0">
+            <Logo />
+          </Link>
 
-        {/* ── Desktop: section links ─────────────────────────────────────── */}
-        <span className="bg-foreground/15 mx-1 hidden h-5 w-px md:block" />
+          {/* ── Desktop: section links + theme toggle ─────────────────────── */}
+          <div className="hidden items-center gap-3 md:flex">
+            <ul className="flex items-center gap-1">
+              {sections.map((s) => {
+                const isActive = active === s.id;
+                return (
+                  <li key={s.id} className="relative">
+                    <Link
+                      href={`#${s.id}`}
+                      aria-current={isActive ? "true" : undefined}
+                      className={cn(
+                        "relative block rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200",
+                        isActive
+                          ? "text-foreground"
+                          : "text-muted hover:text-foreground hover:bg-foreground/5",
+                      )}
+                    >
+                      {isActive && (
+                        <motion.span
+                          layoutId="nav-active-pill"
+                          className="absolute inset-0 -z-10 rounded-full bg-[image:var(--gradient-brand)]"
+                          style={{ opacity: "var(--nav-pill-opacity, 0.2)" }}
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                      {s.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
 
-        <ul className="hidden items-center gap-0.5 md:flex">
-          {sections.map((s) => {
-            const isActive = active === s.id;
-            return (
-              <li key={s.id} className="relative">
-                <Link
-                  href={`#${s.id}`}
-                  aria-current={isActive ? "true" : undefined}
-                  className={cn(
-                    "relative block rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
-                    isActive ? "text-foreground" : "text-foreground/60 hover:text-foreground",
-                  )}
-                >
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-active-pill"
-                      className="bg-foreground/10 absolute inset-0 -z-10 rounded-full"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                  {s.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+            <span className="bg-border mx-1 h-5 w-px" />
 
-        {/* ── Desktop: action buttons ────────────────────────────────────── */}
-        <span className="bg-foreground/15 mx-1 hidden h-5 w-px md:block" />
+            <ThemeToggle />
+          </div>
 
-        <div className="hidden items-center gap-1 md:flex">
-          <ThemeToggle />
-
-          {resumeUrl && (
-            <a
-              href={resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-foreground/80 hover:bg-foreground/10 hover:text-foreground rounded-full px-3 py-1.5 text-sm font-medium transition-colors"
-            >
-              Resume
-            </a>
-          )}
-
-          {sponsorUrl && (
-            <a
-              href={sponsorUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 rounded-full bg-[image:var(--gradient-brand)] px-3.5 py-1.5 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
-            >
-              <Heart className="size-3.5" aria-hidden /> Sponsor
-            </a>
-          )}
+          {/* ── Mobile: hamburger ──────────────────────────────────────────── */}
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu-panel"
+            onClick={() => setMenuOpen((o) => !o)}
+            className="text-foreground/80 hover:bg-foreground/10 hover:text-foreground grid size-9 shrink-0 place-items-center rounded-full transition-colors md:hidden"
+          >
+            {menuOpen ? (
+              <X className="size-5" aria-hidden />
+            ) : (
+              <Menu className="size-5" aria-hidden />
+            )}
+          </button>
         </div>
-
-        {/* ── Mobile: hamburger ──────────────────────────────────────────── */}
-        <button
-          type="button"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu-panel"
-          onClick={() => setMenuOpen((o) => !o)}
-          className="text-foreground/80 hover:bg-foreground/10 hover:text-foreground grid size-9 shrink-0 place-items-center rounded-full transition-colors md:hidden"
-        >
-          {menuOpen ? (
-            <X className="size-5" aria-hidden />
-          ) : (
-            <Menu className="size-5" aria-hidden />
-          )}
-        </button>
       </motion.nav>
 
       {/* ── Mobile full-screen overlay ─────────────────────────────────────── */}
@@ -209,35 +204,9 @@ export function FloatingNavbar({
               {/* Divider */}
               <span className="bg-foreground/10 h-px w-full max-w-xs" />
 
-              {/* Action buttons */}
-              <div className="flex w-full max-w-xs flex-col items-center gap-3">
-                {resumeUrl && (
-                  <a
-                    href={resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={closeMenu}
-                    className="hover:bg-foreground/10 text-foreground/80 hover:text-foreground border-foreground/10 w-full rounded-xl border px-5 py-3 text-center text-base font-medium transition-colors"
-                  >
-                    Resume
-                  </a>
-                )}
-
-                {sponsorUrl && (
-                  <a
-                    href={sponsorUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={closeMenu}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-[image:var(--gradient-brand)] px-5 py-3 text-base font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
-                  >
-                    <Heart className="size-4" aria-hidden /> Sponsor
-                  </a>
-                )}
-
-                <div className="flex items-center justify-center pt-2">
-                  <ThemeToggle />
-                </div>
+              {/* Theme toggle */}
+              <div className="flex items-center justify-center">
+                <ThemeToggle />
               </div>
             </motion.div>
 
