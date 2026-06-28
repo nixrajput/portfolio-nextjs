@@ -96,8 +96,8 @@ export function FloatingNavbar({
         )}
       >
         <div className="flex h-16 w-full items-center justify-between px-6 lg:px-10">
-          {/* Logo — icon only, no wordmark */}
-          <Link href="#hero" aria-label="Home" onClick={closeMenu} className="shrink-0">
+          {/* Logo — icon only, no wordmark. Links to the site root (no hash). */}
+          <Link href="/" aria-label="Home" onClick={closeMenu} className="shrink-0">
             <Logo />
           </Link>
 
