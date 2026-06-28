@@ -38,6 +38,7 @@
     "postgres": "^3.4.9",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-easy-crop": "^6.0.2",
     "resend": "^6.16.0",
     "sharp": "^0.35.2",
     "tailwind-merge": "^2.5.4",
