@@ -1,5 +1,15 @@
 import { useEffect, useState, useCallback } from "react";
-import { navMenus } from "@/data/navMenus";
+import type { INavItem } from "@/types";
+
+const navMenus: INavItem[] = [
+  { name: "About", link: "/#about" },
+  { name: "Services", link: "/#services" },
+  { name: "Experiences", link: "/#experiences" },
+  { name: "Skills", link: "/#skills" },
+  { name: "Projects", link: "/#projects" },
+  { name: "Contact", link: "/#contact" },
+  { name: "Payment", link: "/payment" },
+];
 
 function throttle<T extends (...args: never[]) => void>(fn: T, wait: number) {
   let last = 0;
