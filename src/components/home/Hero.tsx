@@ -68,7 +68,7 @@ export function Hero({ profile, sponsorUrl }: { profile: HeroProfile; sponsorUrl
 
           <Reveal delay={0.15}>
             <div className="text-foreground/80 mt-4 text-xl font-medium sm:text-2xl">
-              <span className="text-foreground/60">I build </span>
+              <span className="text-foreground/60">I&apos;m a </span>
               <FlipWords words={profile.roles} className="text-foreground" />
             </div>
           </Reveal>
@@ -102,7 +102,7 @@ export function Hero({ profile, sponsorUrl }: { profile: HeroProfile; sponsorUrl
         </div>
 
         <Reveal delay={0.2} className="justify-self-center">
-          <div className="relative aspect-square w-48 sm:w-60 md:w-full">
+          <div className="relative aspect-square w-48 sm:w-60 md:w-72 lg:w-80">
             <div className="absolute inset-0 -z-10 rounded-full bg-[image:var(--gradient-brand)] opacity-30 blur-2xl" />
             <Image
               src={profile.avatarUrl}
