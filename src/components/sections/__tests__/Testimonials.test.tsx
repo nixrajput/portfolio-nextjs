@@ -121,18 +121,18 @@ describe("Testimonials", () => {
     render(<Testimonials items={[]} />);
     expect(screen.getByText(/No testimonials yet/)).toBeInTheDocument();
     // CTA is a button that triggers the modal, not a link to /testimonials/new
-    const cta = screen.getByRole("button", { name: /Leave a testimonial/ });
+    const cta = screen.getByRole("button", { name: /Share your experience/ });
     expect(cta).toBeTruthy();
-    expect(screen.queryByRole("link", { name: /Leave a testimonial/ })).toBeNull();
+    expect(screen.queryByRole("link", { name: /Share your experience/ })).toBeNull();
 
     // Clicking the button opens the Radix dialog
     await userEvent.click(cta);
     expect(screen.getByRole("dialog")).toBeTruthy();
   });
 
-  it("renders Leave a testimonial button in populated state", () => {
+  it("renders Share your experience button in populated state", () => {
     render(<Testimonials items={items} />);
-    expect(screen.getByRole("button", { name: /Leave a testimonial/ })).toBeTruthy();
+    expect(screen.getByRole("button", { name: /Share your experience/ })).toBeTruthy();
   });
 
   it("renders the testimonials section with correct id", () => {

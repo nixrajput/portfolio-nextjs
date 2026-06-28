@@ -48,11 +48,13 @@ export function Testimonials({ items }: { items: TestimonialCard[] }) {
             </span>
             <div className="flex flex-col gap-1">
               <p className="font-medium">No testimonials yet.</p>
-              <p className="text-muted text-sm">Be the first to leave one!</p>
+              <p className="text-muted text-sm">
+                Know me from school, work, or life? Be the first to share.
+              </p>
             </div>
             <SubmitTestimonialModal>
               <Button variant="primary" size="md">
-                Leave a testimonial
+                Share your experience
               </Button>
             </SubmitTestimonialModal>
           </Card>
@@ -148,7 +150,7 @@ export function Testimonials({ items }: { items: TestimonialCard[] }) {
           <Reveal delay={0.2}>
             <SubmitTestimonialModal>
               <Button variant="primary" size="md">
-                Leave a testimonial
+                Share your experience
               </Button>
             </SubmitTestimonialModal>
           </Reveal>

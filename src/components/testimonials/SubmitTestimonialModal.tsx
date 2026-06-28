@@ -106,7 +106,7 @@ export function SubmitTestimonialModal({
           ) : (
             <>
               <DialogHeader>
-                <DialogTitle>Leave a testimonial</DialogTitle>
+                <DialogTitle>Share your experience</DialogTitle>
               </DialogHeader>
               <DialogBody>
                 <SubmitTestimonialForm
