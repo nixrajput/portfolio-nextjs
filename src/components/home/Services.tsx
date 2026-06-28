@@ -20,9 +20,9 @@ export function Services({ services }: { services: ServiceRow[] }) {
           <p className="text-muted text-sm">No services listed yet.</p>
         </Card>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {sorted.map((s, i) => (
-            <Reveal key={s.title} delay={(i % 3) * 0.05}>
+            <Reveal key={s.title} delay={(i % 3) * 0.05} className="h-full">
               <ServiceCard service={s} />
             </Reveal>
           ))}

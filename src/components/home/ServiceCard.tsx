@@ -56,7 +56,7 @@ export function ServiceCard({ service }: { service: ServiceRow }) {
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       style={reduce ? undefined : { rotateX: rx, rotateY: ry, transformPerspective: 800 }}
-      className="group border-foreground/10 bg-foreground/[0.02] relative overflow-hidden rounded-3xl border p-6"
+      className="group border-border bg-surface relative flex h-full flex-col overflow-hidden rounded-3xl border p-6"
     >
       <motion.span
         aria-hidden
