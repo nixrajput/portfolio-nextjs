@@ -37,7 +37,8 @@ async function seed() {
       "Nikhil Rajput is a software engineer who builds production-grade mobile and web applications with Flutter, Next.js, and Node.js.",
     stats: { years: 4, repos: 60, stars: 0 },
     roles: ["Software Development Engineer", "Full Stack Developer", "Open Source Contributor"],
-    resumeUrl: process.env.NEXT_PUBLIC_RESUME_LINK ?? null,
+    // Resume URL lives in the DB only — set it via the admin panel.
+    resumeUrl: null,
     avatarUrl: "/images/nikhil.png",
   });
 

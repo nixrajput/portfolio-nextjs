@@ -96,22 +96,24 @@ Copy `.env.example` to `.env.local` and fill in the values:
 cp .env.example .env.local
 ```
 
-| Variable                                | Required    | Description                                                                        |
-| --------------------------------------- | ----------- | ---------------------------------------------------------------------------------- |
-| `DATABASE_URL`                          | Yes         | PostgreSQL connection string, e.g. `postgres://user:pass@localhost:5432/portfolio` |
-| `AUTH_SECRET`                           | Yes         | Random secret for Auth.js session encryption (`openssl rand -base64 32`)           |
-| `AUTH_GITHUB_ID`                        | Yes         | GitHub OAuth App client ID                                                         |
-| `AUTH_GITHUB_SECRET`                    | Yes         | GitHub OAuth App client secret                                                     |
-| `ADMIN_GITHUB_LOGIN`                    | Yes         | GitHub username allowed to access the admin panel (e.g. `nixrajput`)               |
-| `GITHUB_TOKEN`                          | Recommended | GitHub personal access token for project metadata fetching (higher rate limits)    |
-| `BLOB_READ_WRITE_TOKEN`                 | Yes (prod)  | Vercel Blob token for testimonial avatar uploads                                   |
-| `RESEND_API_KEY`                        | Yes (prod)  | Resend API key for admin notification emails                                       |
-| `CONTACT_EMAIL`                         | Yes (prod)  | Email address to receive testimonial submission notifications                      |
-| `REVALIDATE_SECRET`                     | Yes (prod)  | Secret for the `/api/revalidate` on-demand revalidation endpoint                   |
-| `NEXT_PUBLIC_SITE_URL`                  | Yes         | Canonical site URL, e.g. `https://nixrajput.com`                                   |
-| `NEXT_PUBLIC_GTAG_ID`                   | Optional    | Google Analytics measurement ID (e.g. `G-XXXXXXXXXX`)                              |
-| `NEXT_PUBLIC_GOOGLE_VERIFICATION_TOKEN` | Optional    | Google Search Console site verification token                                      |
-| `NEXT_PUBLIC_RESUME_LINK`               | Optional    | Public URL for the downloadable resume                                             |
+| Variable                                | Required    | Description                                                                         |
+| --------------------------------------- | ----------- | ----------------------------------------------------------------------------------- |
+| `DATABASE_URL`                          | Yes         | PostgreSQL connection string, e.g. `postgres://user:pass@localhost:5432/portfolio`  |
+| `AUTH_SECRET`                           | Yes         | Random secret for Auth.js session encryption (`openssl rand -base64 32`)            |
+| `AUTH_GITHUB_ID`                        | Yes         | GitHub OAuth App client ID                                                          |
+| `AUTH_GITHUB_SECRET`                    | Yes         | GitHub OAuth App client secret                                                      |
+| `ADMIN_GITHUB_LOGIN`                    | Yes         | GitHub username allowed to access the admin panel (e.g. `nixrajput`)                |
+| `GITHUB_TOKEN`                          | Recommended | GitHub personal access token for project metadata fetching (higher rate limits)     |
+| `BLOB_READ_WRITE_TOKEN`                 | Yes (prod)  | Vercel Blob token for testimonial avatar uploads                                    |
+| `RESEND_API_KEY`                        | Yes (prod)  | Resend API key for admin notification emails                                        |
+| `RESEND_FROM_EMAIL`                     | Yes (prod)  | From address for emails, e.g. `Portfolio <noreply@nixrajput.com>` (verified domain) |
+| `CONTACT_EMAIL`                         | Yes (prod)  | Email address to receive testimonial submission notifications                       |
+| `REVALIDATE_SECRET`                     | Yes (prod)  | Secret for the `/api/revalidate` on-demand revalidation endpoint                    |
+| `NEXT_PUBLIC_SITE_URL`                  | Yes         | Canonical site URL, e.g. `https://nixrajput.com`                                    |
+| `NEXT_PUBLIC_GTAG_ID`                   | Optional    | Google Analytics measurement ID (e.g. `G-XXXXXXXXXX`)                               |
+| `NEXT_PUBLIC_GOOGLE_VERIFICATION_TOKEN` | Optional    | Google Search Console site verification token                                       |
+
+> The resume link is stored in the database (`profile.resumeUrl`) and managed from the admin panel — not via an environment variable.
 
 ### 3. Database setup
 
@@ -181,9 +183,10 @@ The site is deployed on [Vercel](https://vercel.com/). The main branch deploys a
 
 1. Import the repository in Vercel.
 2. Add all required environment variables in the Vercel project settings.
-3. Provision a PostgreSQL database (Vercel Postgres / Neon) and set `DATABASE_URL`.
-4. Run migrations against the production database (via `bunx drizzle-kit migrate` with the production `DATABASE_URL`).
-5. Push to `master` — Vercel builds and deploys automatically.
+3. Provision a PostgreSQL database (Vercel Postgres / Neon) and set `DATABASE_URL` to its **pooled** connection string.
+4. Push to `master` — Vercel runs the `vercel-build` script, which applies migrations, seeds the database if empty, then builds. No manual migrate/seed step is needed.
+
+The local `DATABASE_URL` stays pointed at your local Postgres for development; only the Vercel environment uses the production database. The seed is guarded (seed-if-empty), so redeploys never duplicate data.
 
 ---
 
