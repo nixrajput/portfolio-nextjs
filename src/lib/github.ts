@@ -4,7 +4,10 @@ const GITHUB_API = "https://api.github.com";
 const REVALIDATE_SECONDS = 3600;
 
 function authHeaders(): HeadersInit {
-  const token = process.env.GITHUB_TOKEN ?? process.env.NEXT_PUBLIC_GITHUB_TOKEN;
+  // Server-only token (NOT NEXT_PUBLIC_*) — this code never runs on the client,
+  // so the token is never bundled into the browser. Used only to raise GitHub's
+  // anonymous rate limit (60/hr) to the authenticated 5,000/hr for public reads.
+  const token = process.env.GITHUB_TOKEN;
   return {
     Accept: "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28",
