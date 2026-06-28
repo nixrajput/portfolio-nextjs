@@ -56,10 +56,9 @@ describe("Support", () => {
     const kofiLink = screen.getByRole("link", { name: /ko-fi/i });
     const bmaLink = screen.getByRole("link", { name: /buy me a coffee/i });
 
+    // Button secondary variant uses border-border token
     expect(kofiLink).toHaveClass("border");
-    expect(kofiLink).toHaveClass("border-foreground/20");
     expect(bmaLink).toHaveClass("border");
-    expect(bmaLink).toHaveClass("border-foreground/20");
   });
 
   it("sorts funding links by order", () => {
@@ -92,7 +91,7 @@ describe("Support", () => {
     expect(links[2]).toHaveTextContent("Ko-fi");
   });
 
-  it("opens external links in new tab with proper security", () => {
+  it("opens funding links in the same tab (no target=_blank)", () => {
     const funding: FundingRow[] = [
       {
         label: "GitHub Sponsors",
@@ -112,8 +111,7 @@ describe("Support", () => {
 
     const links = screen.getAllByRole("link");
     links.forEach((link) => {
-      expect(link).toHaveAttribute("target", "_blank");
-      expect(link).toHaveAttribute("rel", "noopener noreferrer");
+      expect(link.getAttribute("target")).toBeNull();
     });
   });
 

@@ -7,6 +7,7 @@ import {
   getServices,
   getSocialLinks,
   getFundingLinks,
+  getRandomTagline,
 } from "@/lib/queries";
 import { Hero } from "@/components/home/Hero";
 import { FloatingNavbar } from "@/components/navbar/FloatingNavbar";
@@ -41,15 +42,17 @@ const Contact = dynamic(() =>
 );
 
 export default async function Home() {
-  const [profile, projects, experiences, skills, services, socials, funding] = await Promise.all([
-    getProfile(),
-    getProjectsMerged(),
-    getExperiences(),
-    getSkills(),
-    getServices(),
-    getSocialLinks(),
-    getFundingLinks(),
-  ]);
+  const [profile, projects, experiences, skills, services, socials, funding, tagline] =
+    await Promise.all([
+      getProfile(),
+      getProjectsMerged(),
+      getExperiences(),
+      getSkills(),
+      getServices(),
+      getSocialLinks(),
+      getFundingLinks(),
+      getRandomTagline(),
+    ]);
 
   const sponsorUrl = funding.find((f) => f.primary)?.url;
   // Derive contact email from social links (platform = "email") or fall back
@@ -64,13 +67,12 @@ export default async function Home() {
       <Hero
         profile={{
           name: profile.name,
-          headline: profile.headline,
           roles: profile.roles,
           avatarUrl: profile.avatarUrl ?? "/images/nikhil.png",
-          availableForWork: profile.availableForWork,
           resumeUrl: profile.resumeUrl ?? undefined,
         }}
         sponsorUrl={sponsorUrl}
+        tagline={tagline}
       />
 
       <About profile={{ bio: profile.bio, stats: profile.stats }} />

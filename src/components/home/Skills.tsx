@@ -1,4 +1,6 @@
 import { Reveal } from "@/components/motion/Reveal";
+import { Section, SectionHeading } from "@/components/ui/Section";
+import { Card } from "@/components/ui/Card";
 import { SkillCard } from "./SkillCard";
 
 export type SkillRow = {
@@ -22,31 +24,28 @@ export function Skills({ skills }: { skills: SkillRow[] }) {
   const groups = groupByCategory(skills);
 
   return (
-    <section id="skills" className="scroll-mt-24 px-6 py-28">
-      <div className="mx-auto max-w-5xl">
-        <Reveal>
-          <p className="text-foreground/50 mb-2 font-mono text-sm tracking-widest uppercase">
-            Skills
-          </p>
-          <h2 className="mb-12 text-3xl font-bold sm:text-4xl">Tools I work with</h2>
-        </Reveal>
+    <Section id="skills" className="scroll-mt-24">
+      <Reveal>
+        <SectionHeading eyebrow="Skills" title="Tools I work with" />
+      </Reveal>
 
-        <div className="grid gap-6 md:grid-cols-2">
-          {groups.map(([category, items], i) => (
-            <Reveal key={category} delay={i * 0.05}>
-              <div className="border-foreground/10 bg-foreground/[0.02] rounded-3xl border p-6">
-                <h3 className="text-foreground/70 mb-4 text-sm font-semibold">{category}</h3>
-                <ul className="grid grid-cols-3 gap-3 sm:grid-cols-4">
-                  {items.map((s) => (
-                    <SkillCard key={s.name} name={s.name} iconPath={s.iconPath} />
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+      <div className="grid gap-6 md:grid-cols-2 md:items-stretch">
+        {groups.map(([category, items], i) => (
+          <Reveal key={category} delay={i * 0.06} className="h-full">
+            <Card className="flex h-full flex-col p-6">
+              <h3 className="text-foreground/70 mb-4 text-sm font-semibold tracking-wide uppercase">
+                {category}
+              </h3>
+              <ul className="grid grid-cols-3 gap-3 sm:grid-cols-4">
+                {items.map((s) => (
+                  <SkillCard key={s.name} name={s.name} iconPath={s.iconPath} />
+                ))}
+              </ul>
+            </Card>
+          </Reveal>
+        ))}
       </div>
-    </section>
+    </Section>
   );
 }
 

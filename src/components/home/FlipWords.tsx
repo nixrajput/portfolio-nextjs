@@ -5,14 +5,22 @@ import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/utils/cn";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
+/** Returns "an" if the word starts with a vowel sound, otherwise "a". */
+function getArticle(word: string): string {
+  return /^[aeiou]/i.test(word) ? "an" : "a";
+}
+
 export function FlipWords({
   words,
   duration = 2800,
   className,
+  showArticle = false,
 }: {
   words: string[];
   duration?: number;
   className?: string;
+  /** When true, prepends "a"/"an" (grammar-correct) before each word. */
+  showArticle?: boolean;
 }) {
   const reduce = useReducedMotion();
   const [index, setIndex] = useState(0);
@@ -25,9 +33,15 @@ export function FlipWords({
   }, [index, duration, advance, reduce, words.length]);
 
   const word = words[index] ?? "";
+  const article = showArticle ? `${getArticle(word)} ` : "";
 
   if (reduce) {
-    return <span className={cn("inline-block", className)}>{word}</span>;
+    return (
+      <span className={cn("inline-block", className)}>
+        {article}
+        {word}
+      </span>
+    );
   }
 
   return (
@@ -41,6 +55,7 @@ export function FlipWords({
           transition={{ duration: 0.4, ease: "easeInOut" }}
           className="block whitespace-nowrap"
         >
+          {article}
           {word}
         </motion.span>
       </AnimatePresence>

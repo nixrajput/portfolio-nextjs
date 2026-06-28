@@ -3,7 +3,10 @@ import { render, screen } from "@testing-library/react";
 import { ProjectCard } from "./ProjectCard";
 import type { MergedProject } from "@/lib/projects";
 
-// Meteors uses Math.random which is fine in tests; no animation side-effects in jsdom
+// Suppress Meteors animation side effects in jsdom
+vi.mock("@/components/ui/Meteors", () => ({
+  Meteors: () => null,
+}));
 
 const base: MergedProject = {
   id: 1,
@@ -21,11 +24,6 @@ const base: MergedProject = {
   homepage: null,
   htmlUrl: "https://github.com/nixrajput/rippl",
 };
-
-// Suppress useState setter-in-effect warning (none expected, but guard anyway)
-vi.mock("@/components/ui/Meteors", () => ({
-  Meteors: () => null,
-}));
 
 describe("ProjectCard", () => {
   it("renders live stars and forks", () => {
@@ -53,5 +51,17 @@ describe("ProjectCard", () => {
   it("renders the project title", () => {
     render(<ProjectCard project={base} />);
     expect(screen.getByText("Rippl")).toBeInTheDocument();
+  });
+
+  it("renders Code link pointing to GitHub URL", () => {
+    render(<ProjectCard project={base} />);
+    const codeLink = screen.getByText("Code").closest("a");
+    expect(codeLink).toHaveAttribute("href", "https://github.com/nixrajput/rippl");
+  });
+
+  it("renders tech tags as badge pills", () => {
+    render(<ProjectCard project={base} />);
+    expect(screen.getByText("Flutter")).toBeInTheDocument();
+    expect(screen.getByText("Dart")).toBeInTheDocument();
   });
 });

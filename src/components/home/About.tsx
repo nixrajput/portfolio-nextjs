@@ -1,5 +1,7 @@
 import { Reveal } from "@/components/motion/Reveal";
-import { WordReveal } from "./WordReveal";
+import { Section, SectionHeading } from "@/components/ui/Section";
+import { Card } from "@/components/ui/Card";
+import { cn } from "@/utils/cn";
 
 export type AboutProfile = {
   bio: string;
@@ -7,39 +9,70 @@ export type AboutProfile = {
 };
 
 function Stat({ value, label }: { value: number; label: string }) {
+  const display = value >= 100 ? `${value}+` : `${value}`;
   return (
-    <div className="text-center">
-      <div className="gradient-text text-4xl font-bold sm:text-5xl">
-        {value}
-        {value >= 100 ? "+" : ""}
-      </div>
-      <div className="text-foreground/60 mt-1 text-sm">{label}</div>
+    <div className="flex flex-col items-center gap-1 py-2 text-center">
+      <span className="gradient-text text-4xl font-bold tabular-nums sm:text-5xl">{display}</span>
+      <span className="text-muted text-sm">{label}</span>
     </div>
+  );
+}
+
+type StatGridProps = {
+  stats: AboutProfile["stats"];
+  className?: string;
+};
+
+function StatGrid({ stats, className }: StatGridProps) {
+  const items: { value: number; label: string }[] = [
+    { value: stats.years, label: "Years building" },
+    { value: stats.repos, label: "Public repos" },
+    { value: stats.stars, label: "GitHub stars" },
+  ];
+
+  return (
+    <Card className={cn("divide-border mt-12 grid grid-cols-3 divide-x p-0", className)}>
+      {items.map(({ value, label }, i) => (
+        <Reveal key={label} delay={0.1 + i * 0.08}>
+          <Stat value={value} label={label} />
+        </Reveal>
+      ))}
+    </Card>
   );
 }
 
 export function About({ profile }: { profile: AboutProfile }) {
   return (
-    <section id="about" className="scroll-mt-24 px-6 py-28">
+    <Section id="about" className="scroll-mt-24">
       <div className="mx-auto max-w-3xl">
         <Reveal>
-          <p className="text-foreground/50 mb-8 font-mono text-sm tracking-widest uppercase">
-            About
-          </p>
+          <SectionHeading eyebrow="About" title="A bit about me" />
         </Reveal>
 
-        <WordReveal
-          text={profile.bio}
-          className="text-foreground text-2xl leading-relaxed font-medium text-balance sm:text-3xl"
-        />
+        <Reveal delay={0.08}>
+          <div className="max-w-2xl space-y-4">
+            {profile.bio
+              .split(/\n\s*\n/)
+              .map((para) => para.trim())
+              .filter(Boolean)
+              .map((para, i) => (
+                <p
+                  key={i}
+                  className={
+                    i === 0
+                      ? "text-foreground/90 text-xl leading-relaxed font-medium sm:text-2xl"
+                      : "text-muted text-base leading-relaxed sm:text-lg"
+                  }
+                >
+                  {para}
+                </p>
+              ))}
+          </div>
+        </Reveal>
 
-        <div className="mt-16 grid grid-cols-3 gap-6">
-          <Stat value={profile.stats.years} label="Years building" />
-          <Stat value={profile.stats.repos} label="Public repos" />
-          <Stat value={profile.stats.stars} label="GitHub stars" />
-        </div>
+        <StatGrid stats={profile.stats} />
       </div>
-    </section>
+    </Section>
   );
 }
 

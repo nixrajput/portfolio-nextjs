@@ -50,7 +50,6 @@ const mockServices: ServiceRow[] = [
     description: "Building fast, responsive websites.",
     shortDescription: null,
     icon: "Globe",
-    icons: [],
     order: 1,
   },
   {
@@ -59,7 +58,6 @@ const mockServices: ServiceRow[] = [
     description: "Cross-platform apps with Flutter.",
     shortDescription: null,
     icon: "Smartphone",
-    icons: [],
     order: 2,
   },
   {
@@ -68,7 +66,6 @@ const mockServices: ServiceRow[] = [
     description: "RESTful and GraphQL APIs.",
     shortDescription: null,
     icon: "Code",
-    icons: [],
     order: 3,
   },
 ];

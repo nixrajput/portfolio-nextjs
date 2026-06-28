@@ -1,5 +1,7 @@
 import { Heart, ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
+import { Section, SectionHeading } from "@/components/ui/Section";
+import { Button } from "@/components/ui/Button";
 
 export type FundingRow = {
   label: string;
@@ -16,42 +18,35 @@ export function Support({ funding }: { funding: FundingRow[] }) {
   if (!primary) return null;
 
   return (
-    <section id="support" className="mx-auto max-w-3xl scroll-mt-24 px-6 py-28 text-center">
-      <Reveal>
-        <p className="text-foreground/50 mb-3 font-mono text-sm tracking-widest uppercase">
-          Support
-        </p>
-        <h2 className="mb-4 text-3xl font-bold sm:text-4xl">Support my open-source work</h2>
-        <p className="text-foreground/70 mx-auto mb-8 max-w-md leading-relaxed">
-          Most of what I build is free and open source. If it helps you, you can support its
-          continued development — every bit is genuinely appreciated.
-        </p>
-      </Reveal>
+    <Section id="support" className="scroll-mt-24">
+      <div className="mx-auto max-w-2xl text-center">
+        <Reveal>
+          <SectionHeading eyebrow="Support" title="Support my open-source work" className="mb-4" />
+          <p className="text-foreground/70 mb-10 leading-relaxed">
+            Most of what I build is free and open source. If it helps you, supporting its continued
+            development is genuinely appreciated.
+          </p>
+        </Reveal>
 
-      <Reveal delay={0.1}>
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <a
-            href={primary.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 rounded-full bg-[image:var(--gradient-brand)] px-6 py-3 text-sm font-semibold text-white shadow-md transition-opacity hover:opacity-90"
-          >
-            <Heart className="size-4" aria-hidden /> {primary.label}
-          </a>
-          {rest.map((f) => (
-            <a
-              key={f.label}
-              href={f.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border-foreground/20 hover:bg-foreground/5 flex items-center gap-1.5 rounded-full border px-6 py-3 text-sm font-semibold transition-colors hover:border-[var(--brand-pink)]/50"
+        <Reveal delay={0.1}>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Button
+              href={primary.url}
+              variant="primary"
+              size="lg"
+              leftIcon={<Heart className="size-4" aria-hidden />}
             >
-              {f.label} <ArrowUpRight className="size-4" aria-hidden />
-            </a>
-          ))}
-        </div>
-      </Reveal>
-    </section>
+              {primary.label}
+            </Button>
+            {rest.map((f) => (
+              <Button key={f.label} href={f.url} variant="secondary" size="lg">
+                {f.label} <ArrowUpRight className="size-4" aria-hidden />
+              </Button>
+            ))}
+          </div>
+        </Reveal>
+      </div>
+    </Section>
   );
 }
 

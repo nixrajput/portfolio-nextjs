@@ -24,6 +24,11 @@ vi.mock("@/hooks/useReducedMotion", () => ({
   useReducedMotion: vi.fn(() => false),
 }));
 
+// Mock Reveal (wraps framer-motion internally)
+vi.mock("@/components/motion/Reveal", () => ({
+  Reveal: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+}));
+
 const mockExperiences: ExperienceRow[] = [
   {
     id: 1,
@@ -91,5 +96,10 @@ describe("Experience", () => {
   it("renders empty state gracefully", () => {
     render(<Experience experiences={[]} />);
     expect(screen.getByText("Experience")).toBeInTheDocument();
+  });
+
+  it("renders location when provided", () => {
+    render(<Experience experiences={mockExperiences} />);
+    expect(screen.getByText("Remote")).toBeInTheDocument();
   });
 });

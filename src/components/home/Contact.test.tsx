@@ -71,11 +71,11 @@ describe("Contact", () => {
     expect(screen.getByLabelText("twitter: nixrajput")).toBeTruthy();
   });
 
-  it("renders social links as external links with rel noopener noreferrer", () => {
+  it("renders social links that open in the same tab (no target=_blank)", () => {
     render(<Contact socials={mockSocials} email={email} />);
     const githubLink = screen.getByLabelText("github: nixrajput");
-    expect(githubLink.getAttribute("target")).toBe("_blank");
-    expect(githubLink.getAttribute("rel")).toBe("noopener noreferrer");
+    expect(githubLink.getAttribute("href")).toBe("https://github.com/nixrajput");
+    expect(githubLink.getAttribute("target")).toBeNull();
   });
 
   it("renders the heading", () => {

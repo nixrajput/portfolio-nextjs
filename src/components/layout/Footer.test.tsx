@@ -44,9 +44,11 @@ describe("Footer", () => {
     expect(container.querySelector("footer")).toBeTruthy();
   });
 
-  it("renders the Logo with wordmark (nixrajput text)", () => {
+  it("renders the Logo (icon only, no wordmark text)", () => {
     render(<Footer socials={mockSocials} />);
-    expect(screen.getByText("nixrajput")).toBeTruthy();
+    // Wordmark text removed per design; the logo mark exposes an accessible label.
+    expect(screen.queryByText("nixrajput")).toBeNull();
+    expect(screen.getByRole("img", { name: /nikhil rajput logo/i })).toBeTruthy();
   });
 
   it("renders footer nav links", () => {
@@ -70,11 +72,11 @@ describe("Footer", () => {
     expect(screen.getByLabelText("twitter")).toBeTruthy();
   });
 
-  it("renders social links as external with noopener noreferrer", () => {
+  it("renders social links that open in the same tab (no target=_blank)", () => {
     render(<Footer socials={mockSocials} />);
     const githubLink = screen.getByLabelText("github");
-    expect(githubLink.getAttribute("target")).toBe("_blank");
-    expect(githubLink.getAttribute("rel")).toBe("noopener noreferrer");
+    expect(githubLink.getAttribute("href")).toBe("https://github.com/nixrajput");
+    expect(githubLink.getAttribute("target")).toBeNull();
   });
 
   it("renders built-with and copyright line", () => {
