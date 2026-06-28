@@ -27,7 +27,7 @@ export default function Error({
       <p className="text-muted font-mono text-xs tracking-widest uppercase">Error</p>
       <h1 className="text-2xl font-bold sm:text-3xl">Something went wrong</h1>
       <p className="text-muted max-w-md text-pretty">
-        An unexpected error occurred on our end. Please try again — if it keeps happening, this is a
+        An unexpected error occurred on our end. Please try again - if it keeps happening, this is a
         backend issue to look into.
       </p>
       {error.digest && (

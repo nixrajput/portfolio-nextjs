@@ -7,7 +7,7 @@ export const FAQS: { question: string; answer: string }[] = [
   {
     question: "What does Nikhil build?",
     answer:
-      "He builds full-stack web applications, mobile apps, REST and GraphQL APIs, and open-source libraries — with a focus on performance, developer experience, and maintainability.",
+      "He builds full-stack web applications, mobile apps, REST and GraphQL APIs, and open-source libraries - with a focus on performance, developer experience, and maintainability.",
   },
   {
     question: "What is Nikhil's tech stack?",
@@ -17,11 +17,11 @@ export const FAQS: { question: string; answer: string }[] = [
   {
     question: "Is Nikhil available for collaboration?",
     answer:
-      "Yes — Nikhil is open to open-source collaboration, freelance engagements, and advisory roles. He is not actively job-seeking but is happy to discuss interesting projects. The fastest way to reach him is through the contact section on this site.",
+      "Yes - Nikhil is open to open-source collaboration, freelance engagements, and advisory roles. He is not actively job-seeking but is happy to discuss interesting projects. The fastest way to reach him is through the contact section on this site.",
   },
   {
     question: "How can I contact Nikhil?",
     answer:
-      "Use the contact form or email link in the Contact section on this page. You can also find him on GitHub at github.com/nixrajput, LinkedIn, and X (Twitter) — links are in the footer.",
+      "Use the contact form or email link in the Contact section on this page. You can also find him on GitHub at github.com/nixrajput, LinkedIn, and X (Twitter) - links are in the footer.",
   },
 ];

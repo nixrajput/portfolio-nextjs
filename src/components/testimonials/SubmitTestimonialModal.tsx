@@ -69,7 +69,7 @@ export function SubmitTestimonialModal({
           {submitted ? (
             <>
               <DialogHeader>
-                <DialogTitle>Thank you — truly</DialogTitle>
+                <DialogTitle>Thank you - truly</DialogTitle>
               </DialogHeader>
               <DialogBody>
                 <div className="flex flex-col items-center gap-5 py-4 text-center">
@@ -89,7 +89,7 @@ export function SubmitTestimonialModal({
                     </p>
                     <p className="text-muted mx-auto max-w-sm text-sm leading-relaxed">
                       I read every testimonial myself before it goes live. Once I&apos;ve had a
-                      chance to review yours, it&apos;ll appear right here on the site — usually
+                      chance to review yours, it&apos;ll appear right here on the site - usually
                       within a day or two. Thank you for taking the time to share it.
                     </p>
                   </div>

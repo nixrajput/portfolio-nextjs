@@ -27,7 +27,7 @@ const taglineRows = [
 const profileRow = {
   name: "Nikhil Rajput",
   headline: "Software Development Engineer",
-  bio: "Nikhil Rajput is a Software Development Engineer and AI Lead who builds fast, reliable products across web and mobile. He works full-stack — crafting polished front-ends with React and Next.js, mobile apps with Flutter, and robust back-ends with Node.js — with a growing focus on applied AI.\n\nBeyond his day-to-day engineering, he is an active open-source contributor, maintaining libraries and tools that other developers rely on. He cares about clean architecture, thoughtful UX, and shipping work that lasts.",
+  bio: "Nikhil Rajput is a Software Development Engineer and AI Lead who builds fast, reliable products across web and mobile. He works full-stack - crafting polished front-ends with React and Next.js, mobile apps with Flutter, and robust back-ends with Node.js - with a growing focus on applied AI.\n\nBeyond his day-to-day engineering, he is an active open-source contributor, maintaining libraries and tools that other developers rely on. He cares about clean architecture, thoughtful UX, and shipping work that lasts.",
   summary:
     "Nikhil Rajput is a software engineer who builds production-grade mobile and web applications with Flutter, Next.js, and Node.js.",
   stats: { years: 4, repos: 60, stars: 0 },

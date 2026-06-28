@@ -4,7 +4,7 @@ import { FAQS } from "@/lib/seo/faq";
 export const dynamic = "force-static";
 
 export function GET() {
-  const body = `# ${SITE.name} — Full Profile
+  const body = `# ${SITE.name} - Full Profile
 
 > ${SITE.description}
 
@@ -14,13 +14,13 @@ export function GET() {
 - **Handle:** nixrajput
 - **Role:** Software Development Engineer (SDE) & AI Lead
 - **Based in:** India
-- **Founder of:** NixLab — a personal software studio for open-source tools and products
+- **Founder of:** NixLab - a personal software studio for open-source tools and products
 
 ## Bio
 
 Nikhil Rajput is a Software Development Engineer and AI Lead from India with over five years of professional experience building web and mobile products. He focuses on full-stack development, performance engineering, and developer tooling.
 
-He is the founder of NixLab, under which he maintains open-source packages used by thousands of developers worldwide — including flutter_carousel_widget (Flutter widget library), get_time_ago (time formatting library), and Rippl (a social networking platform).
+He is the founder of NixLab, under which he maintains open-source packages used by thousands of developers worldwide - including flutter_carousel_widget (Flutter widget library), get_time_ago (time formatting library), and Rippl (a social networking platform).
 
 ## Tech Stack
 
@@ -43,12 +43,12 @@ He is the founder of NixLab, under which he maintains open-source packages used 
 
 ## Featured Projects
 
-1. **Rippl** — A social networking platform built with Flutter and Node.js; real-time feeds, image uploads, and social graph.
-2. **flutter_carousel_widget** — A fully customisable Flutter carousel widget with 1 000+ GitHub stars and 100 000+ pub.dev downloads.
-3. **get_time_ago** — A lightweight Dart/Flutter library for human-readable relative timestamps; supports 20+ locales.
-4. **NixLab Blog** — A Next.js + MDX blog with syntax highlighting, RSS, and OpenGraph image generation.
-5. **Portfolio (this site)** — Full-stack Next.js 16 portfolio with DB-driven content, server-rendered GitHub stats, testimonials, and FAQPage JSON-LD.
-6. **nx-admin** — A React-based admin dashboard template with TypeScript, Role-based access control, and a component library.
+1. **Rippl** - A social networking platform built with Flutter and Node.js; real-time feeds, image uploads, and social graph.
+2. **flutter_carousel_widget** - A fully customisable Flutter carousel widget with 1 000+ GitHub stars and 100 000+ pub.dev downloads.
+3. **get_time_ago** - A lightweight Dart/Flutter library for human-readable relative timestamps; supports 20+ locales.
+4. **NixLab Blog** - A Next.js + MDX blog with syntax highlighting, RSS, and OpenGraph image generation.
+5. **Portfolio (this site)** - Full-stack Next.js 16 portfolio with DB-driven content, server-rendered GitHub stats, testimonials, and FAQPage JSON-LD.
+6. **nx-admin** - A React-based admin dashboard template with TypeScript, Role-based access control, and a component library.
 
 ## Experience Summary
 
@@ -62,9 +62,9 @@ He is the founder of NixLab, under which he maintains open-source packages used 
 GitHub: https://github.com/nixrajput
 
 Highlights:
-- flutter_carousel_widget — 1 000+ stars, 100 000+ downloads
-- get_time_ago — 20+ locale support
-- Rippl social platform — Flutter + Node.js
+- flutter_carousel_widget - 1 000+ stars, 100 000+ downloads
+- get_time_ago - 20+ locale support
+- Rippl social platform - Flutter + Node.js
 
 ## Availability
 

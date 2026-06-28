@@ -33,7 +33,7 @@ export default function GlobalError({
       >
         <h1 style={{ fontSize: "1.75rem", fontWeight: 700 }}>Something went wrong</h1>
         <p style={{ maxWidth: "28rem", color: "rgba(250,250,250,0.62)" }}>
-          An unexpected error occurred. Please try again — if it keeps happening, it&apos;s a
+          An unexpected error occurred. Please try again - if it keeps happening, it&apos;s a
           backend issue to look into.
         </p>
         {error.digest && (
