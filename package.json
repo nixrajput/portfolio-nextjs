@@ -12,17 +12,27 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\"",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "bun run src/db/seed.ts"
   },
   "dependencies": {
+    "@auth/drizzle-adapter": "^1.11.2",
     "clsx": "^2.1.1",
+    "drizzle-orm": "^0.45.2",
     "framer-motion": "^12.0.0",
     "geist": "^1.7.2",
     "next": "16.2.0",
+    "next-auth": "^5.0.0-beta.31",
     "next-themes": "^0.4.6",
+    "postgres": "^3.4.9",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "tailwind-merge": "^2.5.4"
+    "tailwind-merge": "^2.5.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
@@ -35,6 +45,7 @@
     "@types/react": "19.2.0",
     "@types/react-dom": "19.2.0",
     "@vitejs/plugin-react": "^6.0.3",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9.13.0",
     "eslint-config-next": "16.2.0",
     "jsdom": "^29.1.1",
