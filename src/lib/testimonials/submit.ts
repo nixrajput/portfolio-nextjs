@@ -31,6 +31,7 @@ export async function submitTestimonial(
     linkedinUrl: (formData.get("linkedinUrl") as string) || undefined,
     githubUrl: (formData.get("githubUrl") as string) || undefined,
     xUrl: (formData.get("xUrl") as string) || undefined,
+    instagramUrl: (formData.get("instagramUrl") as string) || undefined,
     websiteUrl: (formData.get("websiteUrl") as string) || undefined,
   });
 
@@ -63,6 +64,7 @@ export async function submitTestimonial(
       linkedinUrl: parsed.data.linkedinUrl ?? null,
       githubUrl: parsed.data.githubUrl ?? null,
       xUrl: parsed.data.xUrl ?? null,
+      instagramUrl: parsed.data.instagramUrl ?? null,
       websiteUrl: parsed.data.websiteUrl ?? null,
       status: "pending",
     })

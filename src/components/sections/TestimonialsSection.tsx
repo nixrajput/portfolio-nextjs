@@ -14,6 +14,7 @@ export async function TestimonialsSection() {
       linkedinUrl: testimonials.linkedinUrl,
       githubUrl: testimonials.githubUrl,
       xUrl: testimonials.xUrl,
+      instagramUrl: testimonials.instagramUrl,
       websiteUrl: testimonials.websiteUrl,
     })
     .from(testimonials)

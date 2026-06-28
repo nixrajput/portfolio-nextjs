@@ -75,6 +75,7 @@ describe("SubmitTestimonialForm", () => {
     expect(container.querySelector('input[name="linkedinUrl"]')).toBeTruthy();
     expect(container.querySelector('input[name="githubUrl"]')).toBeTruthy();
     expect(container.querySelector('input[name="xUrl"]')).toBeTruthy();
+    expect(container.querySelector('input[name="instagramUrl"]')).toBeTruthy();
     expect(container.querySelector('input[name="websiteUrl"]')).toBeTruthy();
   });
 

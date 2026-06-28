@@ -108,8 +108,8 @@ export function SubmitTestimonialForm({
           LinkedIn
           <input
             name="linkedinUrl"
-            type="url"
-            placeholder="https://linkedin.com/in/yourprofile"
+            type="text"
+            placeholder="yourprofile or https://linkedin.com/in/yourprofile"
             className={inputClass}
           />
         </label>
@@ -117,8 +117,8 @@ export function SubmitTestimonialForm({
           GitHub
           <input
             name="githubUrl"
-            type="url"
-            placeholder="https://github.com/yourusername"
+            type="text"
+            placeholder="yourusername or https://github.com/yourusername"
             className={inputClass}
           />
         </label>
@@ -126,8 +126,17 @@ export function SubmitTestimonialForm({
           X / Twitter
           <input
             name="xUrl"
-            type="url"
-            placeholder="https://x.com/yourhandle"
+            type="text"
+            placeholder="@yourhandle or https://x.com/yourhandle"
+            className={inputClass}
+          />
+        </label>
+        <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
+          Instagram
+          <input
+            name="instagramUrl"
+            type="text"
+            placeholder="@yourhandle or https://instagram.com/yourhandle"
             className={inputClass}
           />
         </label>

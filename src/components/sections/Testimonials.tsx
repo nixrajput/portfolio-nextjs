@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MessageSquareQuote, Linkedin, Github, Twitter } from "lucide-react";
+import { MessageSquareQuote, Linkedin, Github, Twitter, Instagram } from "lucide-react";
 import {
   Carousel,
   type CarouselApi,
@@ -25,6 +25,7 @@ export type TestimonialCard = {
   linkedinUrl?: string | null;
   githubUrl?: string | null;
   xUrl?: string | null;
+  instagramUrl?: string | null;
   websiteUrl?: string | null;
 };
 
@@ -72,7 +73,11 @@ export function Testimonials({ items }: { items: TestimonialCard[] }) {
                         <div className="flex min-w-0 flex-col gap-0.5">
                           <span className="font-medium">{t.name}</span>
                           <span className="text-foreground/50 text-xs">{t.relationship}</span>
-                          {(t.linkedinUrl || t.githubUrl || t.xUrl || t.websiteUrl) && (
+                          {(t.linkedinUrl ||
+                            t.githubUrl ||
+                            t.xUrl ||
+                            t.instagramUrl ||
+                            t.websiteUrl) && (
                             <div className="mt-1 flex items-center gap-2">
                               {t.linkedinUrl && (
                                 <a
@@ -105,6 +110,17 @@ export function Testimonials({ items }: { items: TestimonialCard[] }) {
                                   className="text-muted hover:text-foreground transition"
                                 >
                                   <Twitter className="h-3.5 w-3.5" aria-hidden />
+                                </a>
+                              )}
+                              {t.instagramUrl && (
+                                <a
+                                  href={t.instagramUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label="Instagram"
+                                  className="text-muted hover:text-foreground transition"
+                                >
+                                  <Instagram className="h-3.5 w-3.5" aria-hidden />
                                 </a>
                               )}
                               {t.websiteUrl && (

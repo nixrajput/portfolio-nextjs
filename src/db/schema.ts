@@ -151,6 +151,7 @@ export const testimonials = pgTable("testimonials", {
   linkedinUrl: text("linkedin_url"),
   githubUrl: text("github_url"),
   xUrl: text("x_url"),
+  instagramUrl: text("instagram_url"),
   websiteUrl: text("website_url"),
   status: testimonialStatus("status").notNull().default("pending"),
   featured: boolean("featured").notNull().default(false),
