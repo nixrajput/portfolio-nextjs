@@ -6,11 +6,31 @@ import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { GoogleAnalytics, WebVitals } from "@/components/common/ClientOnlyComponents";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { PersonJsonLd, WebSiteJsonLd } from "@/lib/seo/jsonld";
+import { SITE } from "@/lib/seo/site";
 
 export const metadata: Metadata = {
-  title: "Nikhil Rajput",
-  description:
-    "Nikhil Rajput is a proficient Software Engineer and Full Stack Developer from India, skilled in front-end and back-end development using modern tech stacks.",
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: SITE.title,
+    template: `%s | Nikhil Rajput`,
+  },
+  description: SITE.description,
+  keywords: [
+    "nikhil rajput",
+    "nixrajput",
+    "software engineer",
+    "full-stack developer",
+    "ai lead",
+    "flutter",
+    "react",
+    "next.js",
+    "node.js",
+    "open source",
+    "indian developer",
+  ],
+  authors: [{ name: SITE.name, url: SITE.url }],
+  creator: SITE.name,
   robots: {
     index: true,
     follow: true,
@@ -22,18 +42,31 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  keywords: [
-    "nikhil rajput",
-    "nikhil",
-    "nixrajput",
-    "nikhil-rajput",
-    "rajput nikhil",
-    "founder of nixlab",
-    "nixlab founder",
-    "full stack developer",
-    "indian developer",
-    "nixrajput github",
-  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: SITE.url,
+    siteName: SITE.name,
+    title: SITE.title,
+    description: SITE.description,
+    locale: "en_US",
+    images: [{ url: "/opengraph-image" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE.title,
+    description: SITE.description,
+    creator: SITE.handle,
+  },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION_TOKEN
+    ? {
+        verification: {
+          google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION_TOKEN,
+        },
+      }
+    : {}),
 };
 
 const ScrollToTop = dynamic(() => import("@/components/common/ScrollToTop"));
@@ -50,6 +83,8 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
       {isDebug ? null : <GoogleAnalytics />}
 
       <body className={GeistSans.className}>
+        <PersonJsonLd />
+        <WebSiteJsonLd />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
