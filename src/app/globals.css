@@ -1,0 +1,81 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-brand-violet: #7c3aed;
+  --color-brand-cyan: #06b6d4;
+  --color-brand-pink: #ec4899;
+  --color-base: #07070c;
+  --color-surface: #0b0b14;
+  --color-light-base: #fafafa;
+  --gradient-brand: linear-gradient(135deg, #7c3aed 0%, #06b6d4 50%, #ec4899 100%);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --max-width: 1200px;
+  --default-radius: 0.5rem;
+  --background: var(--color-light-base);
+  --foreground: #0a0a0a;
+}
+.dark {
+  --background: var(--color-base);
+  --foreground: var(--color-light-base);
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+html {
+  scroll-behavior: smooth;
+}
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translate(-10%, -10%) rotate(0deg) scale(1.2);
+  }
+  50% {
+    transform: translate(10%, 10%) rotate(180deg) scale(1.4);
+  }
+  100% {
+    transform: translate(-10%, -10%) rotate(360deg) scale(1.2);
+  }
+}
+
+@utility gradient-text {
+  background-image: var(--gradient-brand);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
