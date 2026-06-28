@@ -29,7 +29,6 @@
     "@vercel/speed-insights": "^2.0.0",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.2",
-    "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.0.0",
     "geist": "^1.7.2",
     "next": "16.2.0",

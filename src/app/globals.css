@@ -111,15 +111,6 @@ body {
   background-image: none;
 }
 
-/* Aurora blob opacity: very subtle in light (airy, just a hint of tint),
-   vivid in dark. The vignette div (data-aurora-vignette) is excluded so
-   it always renders at full opacity to fully mask the lower content area. */
-[data-testid="aurora"] > *:not([data-aurora-vignette]) {
-  opacity: 0.09;
-}
-.dark [data-testid="aurora"] > *:not([data-aurora-vignette]) {
-  opacity: 0.48;
-}
 /*
  * NOTE: no unlayered element resets for `a`, `button`, or `*` here. An
  * unlayered rule like `a { color: inherit }` or `button { background:
@@ -158,68 +149,6 @@ body {
   scrollbar-width: none;
 }
 
-@keyframes aurora-drift {
-  0% {
-    transform: translate(-10%, -10%) rotate(0deg) scale(1.2);
-  }
-  50% {
-    transform: translate(10%, 10%) rotate(180deg) scale(1.4);
-  }
-  100% {
-    transform: translate(-10%, -10%) rotate(360deg) scale(1.2);
-  }
-}
-
-/* Per-blob aurora drift — each moves on a distinct path for organic layering */
-@keyframes aurora-drift-a {
-  0% {
-    transform: translate(0%, 0%) scale(1);
-  }
-  33% {
-    transform: translate(6%, 8%) scale(1.12);
-  }
-  66% {
-    transform: translate(-4%, 5%) scale(1.06);
-  }
-  100% {
-    transform: translate(0%, 0%) scale(1);
-  }
-}
-@keyframes aurora-drift-b {
-  0% {
-    transform: translate(0%, 0%) scale(1.05);
-  }
-  40% {
-    transform: translate(-8%, 6%) scale(1);
-  }
-  70% {
-    transform: translate(4%, -4%) scale(1.1);
-  }
-  100% {
-    transform: translate(0%, 0%) scale(1.05);
-  }
-}
-@keyframes aurora-drift-c {
-  0% {
-    transform: translate(0%, 0%) scale(1.08);
-  }
-  30% {
-    transform: translate(-5%, -7%) scale(1);
-  }
-  60% {
-    transform: translate(7%, 4%) scale(1.12);
-  }
-  100% {
-    transform: translate(0%, 0%) scale(1.08);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  [data-testid="aurora"] > * {
-    animation-play-state: paused !important;
-  }
-}
-
 @utility gradient-text {
   background-image: var(--gradient-brand);
   background-clip: text;
@@ -253,7 +182,7 @@ body {
   transform: translateY(-50%);
   width: 50px;
   height: 1px;
-  background: linear-gradient(90deg, var(--brand-cyan), transparent);
+  background: linear-gradient(90deg, var(--color-brand-cyan), transparent);
 }
 
 /* Vertical marquee for the testimonials grid. The track renders its items
