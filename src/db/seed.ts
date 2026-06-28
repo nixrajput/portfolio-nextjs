@@ -1,5 +1,3 @@
-import { createHash } from "node:crypto";
-import { desc } from "drizzle-orm";
 import { db } from "./client";
 import {
   profile,
@@ -12,13 +10,12 @@ import {
   taglines,
   faqs,
   testimonials,
-  seedHistory,
 } from "./schema";
 
 // ---------------------------------------------------------------------------
-// Seed data — the single source of truth for content tables. Everything below
-// is assembled into SEED_DATA, hashed, and only re-applied when the hash
-// differs from the most recent seed_history row (see seed()).
+// Seed data — the initial content inserted only on a fresh (empty) database.
+// Assembled into SEED_DATA and inserted once by seed(); later content changes
+// are made in the admin panel or the DB, not by re-running the seed.
 // ---------------------------------------------------------------------------
 
 const taglineRows = [
@@ -479,8 +476,7 @@ const testimonialRows: (typeof testimonials.$inferInsert)[] = [
   },
 ];
 
-// Everything the seed writes, in one object — the hash of this is what gates a
-// reseed. Adding/changing any value changes the checksum and triggers a reseed.
+// Everything the seed writes, inserted only on a fresh (empty) database.
 const SEED_DATA = {
   taglines: taglineRows,
   profile: profileRow,
@@ -493,43 +489,22 @@ const SEED_DATA = {
   faqs: faqRows,
 };
 
-function seedChecksum(): string {
-  return createHash("sha256").update(JSON.stringify(SEED_DATA)).digest("hex");
-}
-
+/**
+ * Seed-if-empty: insert the canonical content ONLY when the database has no
+ * profile row (a fresh first deploy). It never wipes or overwrites, so any
+ * later edits — in the admin panel or directly in the DB — are preserved.
+ * Subsequent content changes are made manually, not by re-running the seed.
+ */
 async function seed() {
-  const checksum = seedChecksum();
-
-  // Checksum gate: reseed only when the data hash differs from the most recent
-  // applied seed. Between content changes, admin-panel edits to these tables
-  // survive (we never touch them); a changed seed.ts re-applies the canonical
-  // content. Testimonials and auth tables are never seeded here.
-  const [latest] = await db
-    .select({ checksum: seedHistory.checksum })
-    .from(seedHistory)
-    .orderBy(desc(seedHistory.id))
-    .limit(1);
-
-  if (latest?.checksum === checksum) {
-    console.log("Seed unchanged (checksum match); skipping.");
+  const [existing] = await db.select({ id: profile.id }).from(profile).limit(1);
+  if (existing) {
+    console.log("Database already has content; skipping seed.");
     return;
   }
 
-  console.log("Seed checksum changed; reseeding content tables…");
+  console.log("Empty database; seeding content tables…");
 
-  // Wipe + re-insert + record history atomically so a failure can never leave
-  // the content tables empty or the history out of sync with the data.
   await db.transaction(async (tx) => {
-    await tx.delete(faqs);
-    await tx.delete(fundingLinks);
-    await tx.delete(socialLinks);
-    await tx.delete(services);
-    await tx.delete(skills);
-    await tx.delete(experiences);
-    await tx.delete(projects);
-    await tx.delete(taglines);
-    await tx.delete(profile);
-
     await tx.insert(taglines).values(SEED_DATA.taglines);
     await tx.insert(profile).values(SEED_DATA.profile);
     await tx.insert(projects).values(SEED_DATA.projects);
@@ -539,8 +514,6 @@ async function seed() {
     await tx.insert(socialLinks).values(SEED_DATA.socialLinks);
     await tx.insert(fundingLinks).values(SEED_DATA.fundingLinks);
     await tx.insert(faqs).values(SEED_DATA.faqs);
-
-    await tx.insert(seedHistory).values({ checksum });
   });
 
   console.log("Seed complete.");
@@ -548,9 +521,8 @@ async function seed() {
 
 /**
  * Seed demo testimonials for LOCAL UI testing only. These are fabricated, so
- * they must never reach production — skipped when NODE_ENV is "production"
- * (which Vercel sets during `vercel-build`). Seeds only when the table is empty
- * so real submissions are never wiped.
+ * they must never reach production — skipped when NODE_ENV is "production".
+ * Seeds only when the table is empty so real submissions are never wiped.
  */
 async function seedDemoTestimonials() {
   if (process.env.NODE_ENV === "production") {

@@ -71,6 +71,13 @@
       "when": 1782681872827,
       "tag": "0009_big_mandrill",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1782685943106,
+      "tag": "0010_breezy_archangel",
+      "breakpoints": true
     }
   ]
 }

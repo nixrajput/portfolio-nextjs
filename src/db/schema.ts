@@ -187,15 +187,6 @@ export const githubCache = pgTable("github_cache", {
   fetchedAt: timestamp("fetched_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
-// Append-only history of applied seeds. Each reseed inserts a row with the
-// checksum of the seed data; the seed runs only when the latest checksum
-// differs from the current data hash. Keeps a full audit trail of seed runs.
-export const seedHistory = pgTable("seed_history", {
-  id: serial("id").primaryKey(),
-  checksum: text("checksum").notNull(),
-  appliedAt: timestamp("applied_at", { withTimezone: true }).notNull().defaultNow(),
-});
-
 // Inferred types
 export type Profile = typeof profile.$inferSelect;
 export type NewProfile = typeof profile.$inferInsert;
@@ -219,5 +210,3 @@ export type Faq = typeof faqs.$inferSelect;
 export type NewFaq = typeof faqs.$inferInsert;
 export type GithubCache = typeof githubCache.$inferSelect;
 export type NewGithubCache = typeof githubCache.$inferInsert;
-export type SeedHistory = typeof seedHistory.$inferSelect;
-export type NewSeedHistory = typeof seedHistory.$inferInsert;

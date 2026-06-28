@@ -184,9 +184,10 @@ The site is deployed on [Vercel](https://vercel.com/). The main branch deploys a
 1. Import the repository in Vercel.
 2. Add all required environment variables in the Vercel project settings.
 3. Provision a PostgreSQL database (Vercel Postgres / Neon) and set `DATABASE_URL` to its **pooled** connection string.
-4. Push to `master` — Vercel runs the `vercel-build` script, which applies migrations, seeds the database if empty, then builds. No manual migrate/seed step is needed.
+4. Seed the production database **once** by hand against the production `DATABASE_URL`: `DATABASE_URL=<prod> bun run db:seed`. The seed is guarded (seed-if-empty), so it inserts the initial content only when the database is empty and never overwrites later edits.
+5. Push to `master` — Vercel runs the `vercel-build` script, which applies pending migrations and then builds. It does **not** seed; data seeding is the one-time manual step above, and further content changes are made in the admin panel.
 
-The local `DATABASE_URL` stays pointed at your local Postgres for development; only the Vercel environment uses the production database. The seed is guarded (seed-if-empty), so redeploys never duplicate data.
+The local `DATABASE_URL` stays pointed at your local Postgres for development; only the Vercel environment uses the production database.
 
 ---
 
