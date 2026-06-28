@@ -1,0 +1,20 @@
+#!/bin/sh
+# Pre-push gate. Runs ESLint + Prettier-check before every push so unformatted
+# or lint-broken code never reaches the remote.
+#
+# Enable once per clone:   git config core.hooksPath .githooks
+# Bypass in an emergency:  git push --no-verify
+set -eu
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+cd "$REPO_ROOT"
+
+if [ ! -d node_modules ]; then
+  echo "pre-push: node_modules missing — run 'bun install' first." >&2
+  exit 1
+fi
+
+echo "pre-push: running lint + format check…"
+bun run lint || { echo "pre-push: ESLint failed — fix it or run 'bun run lint:fix'." >&2; exit 1; }
+bun run format:check || { echo "pre-push: formatting issues — run 'bun run format'." >&2; exit 1; }
+echo "pre-push: checks passed."
