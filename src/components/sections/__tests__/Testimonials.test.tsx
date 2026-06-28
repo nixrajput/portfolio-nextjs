@@ -62,24 +62,6 @@ vi.mock("@/components/testimonials/SubmitTestimonialForm", () => ({
   TESTIMONIAL_FORM_ID: "submit-testimonial-form",
 }));
 
-// Mock embla-carousel-react so Carousel works in jsdom
-vi.mock("embla-carousel-react", () => {
-  const api = {
-    scrollNext: vi.fn(),
-    scrollTo: vi.fn(),
-    canScrollNext: vi.fn(() => true),
-    canScrollPrev: vi.fn(() => false),
-    scrollSnapList: vi.fn(() => [0, 1]),
-    selectedScrollSnap: vi.fn(() => 0),
-    on: vi.fn(),
-    off: vi.fn(),
-    emit: vi.fn(),
-  };
-  return {
-    default: () => [vi.fn(), api],
-  };
-});
-
 const items = [
   {
     id: "1",
@@ -111,10 +93,11 @@ const itemsWithSocials = [
 describe("Testimonials", () => {
   it("renders quote, name, relationship and a fallback avatar", () => {
     render(<Testimonials items={items} />);
-    expect(screen.getByText(/Brilliant work/)).toBeInTheDocument();
-    expect(screen.getByText("Jane Doe")).toBeInTheDocument();
-    expect(screen.getByText("Colleague")).toBeInTheDocument();
-    expect(screen.getByText("JD")).toBeInTheDocument();
+    // The marquee duplicates items for a seamless loop, so assert at least one.
+    expect(screen.getAllByText(/Brilliant work/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Jane Doe").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Colleague").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("JD").length).toBeGreaterThan(0);
   });
 
   it("renders empty state with CTA button (not a link) that opens dialog", async () => {
@@ -142,10 +125,11 @@ describe("Testimonials", () => {
 
   it("renders social icon links when present on a card", () => {
     render(<Testimonials items={itemsWithSocials} />);
-    const linkedinLink = screen.getByRole("link", { name: /linkedin/i });
+    // Marquee duplicates items, so take the first of each social link.
+    const [linkedinLink] = screen.getAllByRole("link", { name: /linkedin/i });
     expect(linkedinLink).toHaveAttribute("href", "https://linkedin.com/in/bob");
     expect(linkedinLink).toHaveAttribute("target", "_blank");
-    const githubLink = screen.getByRole("link", { name: /github/i });
+    const [githubLink] = screen.getAllByRole("link", { name: /github/i });
     expect(githubLink).toHaveAttribute("href", "https://github.com/bob");
   });
 

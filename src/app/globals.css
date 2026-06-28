@@ -255,3 +255,26 @@ body {
   height: 1px;
   background: linear-gradient(90deg, var(--brand-cyan), transparent);
 }
+
+/* Vertical marquee for the testimonials grid. The track renders its items
+   twice; translating up by 50% creates a seamless loop. Paused on hover and
+   disabled entirely under reduced-motion. */
+@keyframes marquee-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+.marquee-track {
+  animation: marquee-up linear infinite;
+}
+.marquee-group:hover .marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

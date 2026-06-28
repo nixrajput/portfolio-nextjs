@@ -1,20 +1,10 @@
-"use client";
-
-import { useState } from "react";
-import { MessageSquareQuote, Linkedin, Github, Twitter, Instagram } from "lucide-react";
-import {
-  Carousel,
-  type CarouselApi,
-  CarouselContent,
-  CarouselItem,
-  useCarouselAutoPlay,
-} from "@/components/ui/carousel";
-import { BrandInitialsAvatar } from "@/components/ui/avatar";
+import { MessageSquareQuote } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Reveal } from "@/components/motion/Reveal";
 import { SubmitTestimonialModal } from "@/components/testimonials/SubmitTestimonialModal";
+import { TestimonialsMarquee } from "./TestimonialsMarquee";
 
 export type TestimonialCard = {
   id: string;
@@ -30,10 +20,6 @@ export type TestimonialCard = {
 };
 
 export function Testimonials({ items }: { items: TestimonialCard[] }) {
-  const [api, setApi] = useState<CarouselApi>();
-
-  useCarouselAutoPlay(api, 5000);
-
   return (
     <Section id="testimonials" className="scroll-mt-24">
       <Reveal>
@@ -62,97 +48,17 @@ export function Testimonials({ items }: { items: TestimonialCard[] }) {
       ) : (
         <>
           <Reveal delay={0.1}>
-            <Carousel setApi={setApi} className="mb-8 w-full">
-              <CarouselContent>
-                {items.map((t) => (
-                  <CarouselItem key={t.id} className="md:basis-1/2">
-                    <Card className="flex h-full flex-col justify-between gap-6 [border-color:transparent] [background:linear-gradient(var(--color-surface,oklch(0.18_0_0)),var(--color-surface,oklch(0.18_0_0)))_padding-box,var(--gradient-brand)_border-box]">
-                      <p className="text-foreground/70 text-base leading-relaxed">
-                        &ldquo;{t.content}&rdquo;
-                      </p>
-                      <div className="flex items-center gap-3">
-                        <BrandInitialsAvatar name={t.name} src={t.imageUrl} className="h-10 w-10" />
-                        <div className="flex min-w-0 flex-col gap-0.5">
-                          <span className="font-medium">{t.name}</span>
-                          <span className="text-foreground/50 text-xs">{t.relationship}</span>
-                          {(t.linkedinUrl ||
-                            t.githubUrl ||
-                            t.xUrl ||
-                            t.instagramUrl ||
-                            t.websiteUrl) && (
-                            <div className="mt-1 flex items-center gap-2">
-                              {t.linkedinUrl && (
-                                <a
-                                  href={t.linkedinUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  aria-label="LinkedIn"
-                                  className="text-muted hover:text-foreground transition"
-                                >
-                                  <Linkedin className="h-3.5 w-3.5" aria-hidden />
-                                </a>
-                              )}
-                              {t.githubUrl && (
-                                <a
-                                  href={t.githubUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  aria-label="GitHub"
-                                  className="text-muted hover:text-foreground transition"
-                                >
-                                  <Github className="h-3.5 w-3.5" aria-hidden />
-                                </a>
-                              )}
-                              {t.xUrl && (
-                                <a
-                                  href={t.xUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  aria-label="X / Twitter"
-                                  className="text-muted hover:text-foreground transition"
-                                >
-                                  <Twitter className="h-3.5 w-3.5" aria-hidden />
-                                </a>
-                              )}
-                              {t.instagramUrl && (
-                                <a
-                                  href={t.instagramUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  aria-label="Instagram"
-                                  className="text-muted hover:text-foreground transition"
-                                >
-                                  <Instagram className="h-3.5 w-3.5" aria-hidden />
-                                </a>
-                              )}
-                              {t.websiteUrl && (
-                                <a
-                                  href={t.websiteUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  aria-label="Website"
-                                  className="text-muted hover:text-foreground text-xs underline underline-offset-2 transition"
-                                >
-                                  site
-                                </a>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </Card>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-            </Carousel>
+            <TestimonialsMarquee items={items} />
           </Reveal>
 
           <Reveal delay={0.2}>
-            <SubmitTestimonialModal>
-              <Button variant="primary" size="md">
-                Share your experience
-              </Button>
-            </SubmitTestimonialModal>
+            <div className="mt-10 flex justify-center">
+              <SubmitTestimonialModal>
+                <Button variant="primary" size="md">
+                  Share your experience
+                </Button>
+              </SubmitTestimonialModal>
+            </div>
           </Reveal>
         </>
       )}
