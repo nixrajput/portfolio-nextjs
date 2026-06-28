@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 
 test("testimonial form page loads", async ({ page }) => {
   await page.goto("/testimonials/new");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/testimonial/i);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/share your experience/i);
 });
 
 test("honeypot field is present and invisible to users", async ({ page }) => {
