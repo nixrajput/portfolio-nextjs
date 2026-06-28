@@ -37,11 +37,13 @@ export function Footer({ socials }: { socials: SocialRow[] }) {
           <ul className="flex items-center gap-3">
             {sorted.map((s) => {
               const Icon = platformIcon(s.platform);
+              const isExternal = s.url.startsWith("http");
               return (
                 <li key={s.platform}>
                   <a
                     href={s.url}
                     aria-label={s.platform}
+                    {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     className="text-muted hover:text-foreground hover:bg-surface-2 focus-visible:ring-ring grid size-8 place-items-center rounded-full transition-colors focus-visible:ring-2 focus-visible:outline-none motion-safe:transition-transform motion-safe:hover:scale-110"
                   >
                     <Icon className="size-4" aria-hidden />

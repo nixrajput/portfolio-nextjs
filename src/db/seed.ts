@@ -29,7 +29,7 @@ async function seed() {
     stats: { years: 4, repos: 60, stars: 0 },
     roles: ["Software Development Engineer", "Full Stack Developer", "Open Source Contributor"],
     resumeUrl: process.env.NEXT_PUBLIC_RESUME_LINK ?? null,
-    avatarUrl: "/images/Nikhil_new_pp.png",
+    avatarUrl: "/images/nikhil.png",
   });
 
   // --- projects (curation; featured set per spec) ---
@@ -373,6 +373,12 @@ async function seed() {
       url: "mailto:nkr.nikhil.nkr@gmail.com",
       username: "nkr.nikhil.nkr@gmail.com",
       order: 5,
+    },
+    {
+      platform: "x",
+      url: "https://x.com/nixrajput07",
+      username: "nixrajput07",
+      order: 6,
     },
   ]);
 

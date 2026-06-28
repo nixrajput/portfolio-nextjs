@@ -48,7 +48,12 @@ export default async function SocialLinksEditor() {
             <span>
               {l.platform}
               {l.username ? ` · @${l.username}` : ""}{" "}
-              <a href={l.url} className="text-muted-foreground text-xs underline">
+              <a
+                href={l.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground text-xs underline"
+              >
                 {l.url}
               </a>
             </span>

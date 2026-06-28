@@ -61,11 +61,13 @@ export function Contact({ socials, email }: { socials: SocialRow[]; email: strin
           <ul className="mt-10 flex flex-wrap items-center justify-center gap-3">
             {sorted.map((s) => {
               const Icon = platformIcon(s.platform);
+              const isExternal = s.url.startsWith("http");
               return (
                 <li key={s.platform}>
                   <a
                     href={s.url}
                     aria-label={`${s.platform}: ${s.username}`}
+                    {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     className="border-border text-muted hover:text-foreground hover:border-foreground/30 hover:bg-surface-2 focus-visible:ring-ring grid size-11 place-items-center rounded-full border transition-colors focus-visible:ring-2 focus-visible:outline-none motion-safe:transition-transform motion-safe:hover:scale-105"
                   >
                     <Icon className="size-5" aria-hidden />

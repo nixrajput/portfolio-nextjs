@@ -112,17 +112,18 @@ export function FloatingNavbar({
                       href={`#${s.id}`}
                       aria-current={isActive ? "true" : undefined}
                       className={cn(
-                        "relative block rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200",
+                        "relative block rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 motion-safe:transition-colors",
                         isActive
                           ? "text-foreground"
-                          : "text-muted hover:text-foreground hover:bg-foreground/5",
+                          : "text-muted hover:text-foreground hover:bg-foreground/5 [transition:color_200ms,background-color_200ms]",
                       )}
                     >
                       {isActive && (
                         <motion.span
                           layoutId="nav-active-pill"
                           className="absolute inset-0 -z-10 rounded-full bg-[image:var(--gradient-brand)]"
-                          style={{ opacity: "var(--nav-pill-opacity, 0.2)" }}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 0.2 }}
                           transition={{ type: "spring", stiffness: 380, damping: 30 }}
                         />
                       )}

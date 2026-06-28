@@ -16,6 +16,7 @@ export function Logo({
         role="img"
         aria-label="Nikhil Rajput logo"
         xmlns="http://www.w3.org/2000/svg"
+        style={{ display: "block" }}
       >
         <defs>
           <linearGradient id="logo-n" x1="0" y1="1" x2="1" y2="0">
@@ -40,7 +41,7 @@ export function Logo({
         <circle cx="22.5" cy="8" r="2.4" fill="#ec4899" />
       </svg>
       {withWordmark ? (
-        <span className="gradient-text font-mono text-lg font-semibold tracking-tight">
+        <span className="gradient-text font-mono text-lg leading-none font-semibold tracking-tight">
           nixrajput
         </span>
       ) : null}

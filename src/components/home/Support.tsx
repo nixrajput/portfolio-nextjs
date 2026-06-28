@@ -34,12 +34,21 @@ export function Support({ funding }: { funding: FundingRow[] }) {
               href={primary.url}
               variant="primary"
               size="lg"
+              target="_blank"
+              rel="noopener noreferrer"
               leftIcon={<Heart className="size-4" aria-hidden />}
             >
               {primary.label}
             </Button>
             {rest.map((f) => (
-              <Button key={f.label} href={f.url} variant="secondary" size="lg">
+              <Button
+                key={f.label}
+                href={f.url}
+                variant="secondary"
+                size="lg"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 {f.label} <ArrowUpRight className="size-4" aria-hidden />
               </Button>
             ))}

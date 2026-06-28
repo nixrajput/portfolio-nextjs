@@ -20,7 +20,7 @@ export function ProjectCard({ project }: { project: MergedProject }) {
       as="article"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="group relative flex flex-col overflow-hidden hover:border-[var(--brand-violet)]/40"
+      className="group relative flex h-full flex-col overflow-hidden hover:border-[var(--brand-violet)]/40"
     >
       {hover && <Meteors number={10} />}
 
@@ -61,11 +61,13 @@ export function ProjectCard({ project }: { project: MergedProject }) {
         )}
 
         {/* Action links */}
-        <div className="mt-5 flex items-center gap-2">
+        <div className="mt-auto flex items-center gap-2 pt-5">
           <Button
             href={githubUrl}
             variant="secondary"
             size="sm"
+            target="_blank"
+            rel="noopener noreferrer"
             leftIcon={<Github className="size-3.5" aria-hidden />}
           >
             Code
@@ -75,6 +77,8 @@ export function ProjectCard({ project }: { project: MergedProject }) {
               href={project.homepage}
               variant="ghost"
               size="sm"
+              target="_blank"
+              rel="noopener noreferrer"
               leftIcon={<ExternalLink className="size-3.5" aria-hidden />}
             >
               Live

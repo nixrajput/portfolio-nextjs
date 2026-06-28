@@ -59,6 +59,16 @@ describe("ProjectCard", () => {
     expect(codeLink).toHaveAttribute("href", "https://github.com/nixrajput/rippl");
   });
 
+  it("opens Code and Live links in a new tab (target=_blank)", () => {
+    render(<ProjectCard project={{ ...base, homepage: "https://example.com" }} />);
+    const codeLink = screen.getByText("Code").closest("a");
+    expect(codeLink).toHaveAttribute("target", "_blank");
+    expect(codeLink).toHaveAttribute("rel", "noopener noreferrer");
+    const liveLink = screen.getByText("Live").closest("a");
+    expect(liveLink).toHaveAttribute("target", "_blank");
+    expect(liveLink).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
   it("renders tech tags as badge pills", () => {
     render(<ProjectCard project={base} />);
     expect(screen.getByText("Flutter")).toBeInTheDocument();

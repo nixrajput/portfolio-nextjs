@@ -11,6 +11,10 @@ export async function TestimonialsSection() {
       relationship: testimonials.relationship,
       content: testimonials.content,
       imageUrl: testimonials.imageUrl,
+      linkedinUrl: testimonials.linkedinUrl,
+      githubUrl: testimonials.githubUrl,
+      xUrl: testimonials.xUrl,
+      websiteUrl: testimonials.websiteUrl,
     })
     .from(testimonials)
     .where(eq(testimonials.status, "approved"))

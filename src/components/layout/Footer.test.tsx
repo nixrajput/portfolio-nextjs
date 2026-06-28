@@ -72,11 +72,12 @@ describe("Footer", () => {
     expect(screen.getByLabelText("twitter")).toBeTruthy();
   });
 
-  it("renders social links that open in the same tab (no target=_blank)", () => {
+  it("renders external social links that open in a new tab (target=_blank)", () => {
     render(<Footer socials={mockSocials} />);
     const githubLink = screen.getByLabelText("github");
     expect(githubLink.getAttribute("href")).toBe("https://github.com/nixrajput");
-    expect(githubLink.getAttribute("target")).toBeNull();
+    expect(githubLink.getAttribute("target")).toBe("_blank");
+    expect(githubLink.getAttribute("rel")).toBe("noopener noreferrer");
   });
 
   it("renders built-with and copyright line", () => {

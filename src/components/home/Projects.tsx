@@ -19,7 +19,7 @@ export function Projects({ projects }: { projects: MergedProject[] }) {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {featured.map((p, i) => (
-          <Reveal key={p.id} delay={(i % 3) * 0.05}>
+          <Reveal key={p.id} delay={(i % 3) * 0.05} className="h-full">
             <ProjectCard project={p} />
           </Reveal>
         ))}
@@ -35,6 +35,8 @@ export function Projects({ projects }: { projects: MergedProject[] }) {
               <li key={p.id}>
                 <a
                   href={p.htmlUrl ?? `https://github.com/nixrajput/${p.repo}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="border-border bg-surface hover:bg-surface-2 hover:border-foreground/20 flex items-center justify-between rounded-xl border px-4 py-2.5 text-sm transition-colors"
                 >
                   <span className="truncate font-medium">{p.title}</span>
@@ -54,6 +56,8 @@ export function Projects({ projects }: { projects: MergedProject[] }) {
           href={GITHUB_PROFILE}
           variant="secondary"
           size="md"
+          target="_blank"
+          rel="noopener noreferrer"
           leftIcon={<ArrowUpRight className="size-4" aria-hidden />}
         >
           View all on GitHub

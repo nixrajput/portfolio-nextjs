@@ -89,6 +89,8 @@ export function Hero({
                   variant="secondary"
                   size="lg"
                   href={sponsorUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   leftIcon={<Heart className="size-4" aria-hidden />}
                 >
                   Sponsor

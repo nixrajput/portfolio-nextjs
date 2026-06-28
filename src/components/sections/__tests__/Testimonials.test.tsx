@@ -3,12 +3,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Testimonials } from "../Testimonials";
 
-// jsdom does not implement HTMLDialogElement.showModal / close
-beforeAll(() => {
-  HTMLDialogElement.prototype.showModal = vi.fn();
-  HTMLDialogElement.prototype.close = vi.fn();
-});
-
 // matchMedia mock — jsdom does not implement it
 beforeAll(() => {
   Object.defineProperty(window, "matchMedia", {
@@ -92,6 +86,24 @@ const items = [
     relationship: "Colleague",
     content: "Brilliant work.",
     imageUrl: null,
+    linkedinUrl: null,
+    githubUrl: null,
+    xUrl: null,
+    websiteUrl: null,
+  },
+];
+
+const itemsWithSocials = [
+  {
+    id: "2",
+    name: "Bob Builder",
+    relationship: "Client",
+    content: "Excellent work, highly recommended!",
+    imageUrl: null,
+    linkedinUrl: "https://linkedin.com/in/bob",
+    githubUrl: "https://github.com/bob",
+    xUrl: null,
+    websiteUrl: null,
   },
 ];
 
@@ -107,14 +119,14 @@ describe("Testimonials", () => {
   it("renders empty state with CTA button (not a link) that opens dialog", async () => {
     render(<Testimonials items={[]} />);
     expect(screen.getByText(/No testimonials yet/)).toBeInTheDocument();
-    // CTA is now a button that triggers the modal, not a link to /testimonials/new
+    // CTA is a button that triggers the modal, not a link to /testimonials/new
     const cta = screen.getByRole("button", { name: /Leave a testimonial/ });
     expect(cta).toBeTruthy();
     expect(screen.queryByRole("link", { name: /Leave a testimonial/ })).toBeNull();
 
-    // Clicking the button opens the dialog
+    // Clicking the button opens the Radix dialog
     await userEvent.click(cta);
-    expect(screen.getByRole("dialog", { hidden: true })).toBeTruthy();
+    expect(screen.getByRole("dialog")).toBeTruthy();
   });
 
   it("renders Leave a testimonial button in populated state", () => {
@@ -125,5 +137,20 @@ describe("Testimonials", () => {
   it("renders the testimonials section with correct id", () => {
     const { container } = render(<Testimonials items={items} />);
     expect(container.querySelector("#testimonials")).toBeTruthy();
+  });
+
+  it("renders social icon links when present on a card", () => {
+    render(<Testimonials items={itemsWithSocials} />);
+    const linkedinLink = screen.getByRole("link", { name: /linkedin/i });
+    expect(linkedinLink).toHaveAttribute("href", "https://linkedin.com/in/bob");
+    expect(linkedinLink).toHaveAttribute("target", "_blank");
+    const githubLink = screen.getByRole("link", { name: /github/i });
+    expect(githubLink).toHaveAttribute("href", "https://github.com/bob");
+  });
+
+  it("does not render social icons when no social links exist", () => {
+    render(<Testimonials items={items} />);
+    expect(screen.queryByRole("link", { name: /linkedin/i })).toBeNull();
+    expect(screen.queryByRole("link", { name: /github/i })).toBeNull();
   });
 });

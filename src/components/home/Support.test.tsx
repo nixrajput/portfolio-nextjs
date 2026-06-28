@@ -91,7 +91,7 @@ describe("Support", () => {
     expect(links[2]).toHaveTextContent("Ko-fi");
   });
 
-  it("opens funding links in the same tab (no target=_blank)", () => {
+  it("opens funding links in a new tab (target=_blank)", () => {
     const funding: FundingRow[] = [
       {
         label: "GitHub Sponsors",
@@ -111,7 +111,8 @@ describe("Support", () => {
 
     const links = screen.getAllByRole("link");
     links.forEach((link) => {
-      expect(link.getAttribute("target")).toBeNull();
+      expect(link.getAttribute("target")).toBe("_blank");
+      expect(link.getAttribute("rel")).toBe("noopener noreferrer");
     });
   });
 

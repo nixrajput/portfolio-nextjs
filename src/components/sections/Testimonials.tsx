@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { MessageSquareQuote } from "lucide-react";
+import { MessageSquareQuote, Linkedin, Github, Twitter } from "lucide-react";
 import {
   Carousel,
   type CarouselApi,
@@ -22,6 +22,10 @@ export type TestimonialCard = {
   relationship: string;
   content: string;
   imageUrl: string | null;
+  linkedinUrl?: string | null;
+  githubUrl?: string | null;
+  xUrl?: string | null;
+  websiteUrl?: string | null;
 };
 
 export function Testimonials({ items }: { items: TestimonialCard[] }) {
@@ -65,10 +69,58 @@ export function Testimonials({ items }: { items: TestimonialCard[] }) {
                       </p>
                       <div className="flex items-center gap-3">
                         <BrandInitialsAvatar name={t.name} src={t.imageUrl} className="h-10 w-10" />
-                        <span className="flex flex-col">
+                        <div className="flex min-w-0 flex-col gap-0.5">
                           <span className="font-medium">{t.name}</span>
                           <span className="text-foreground/50 text-xs">{t.relationship}</span>
-                        </span>
+                          {(t.linkedinUrl || t.githubUrl || t.xUrl || t.websiteUrl) && (
+                            <div className="mt-1 flex items-center gap-2">
+                              {t.linkedinUrl && (
+                                <a
+                                  href={t.linkedinUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label="LinkedIn"
+                                  className="text-muted hover:text-foreground transition"
+                                >
+                                  <Linkedin className="h-3.5 w-3.5" aria-hidden />
+                                </a>
+                              )}
+                              {t.githubUrl && (
+                                <a
+                                  href={t.githubUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label="GitHub"
+                                  className="text-muted hover:text-foreground transition"
+                                >
+                                  <Github className="h-3.5 w-3.5" aria-hidden />
+                                </a>
+                              )}
+                              {t.xUrl && (
+                                <a
+                                  href={t.xUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label="X / Twitter"
+                                  className="text-muted hover:text-foreground transition"
+                                >
+                                  <Twitter className="h-3.5 w-3.5" aria-hidden />
+                                </a>
+                              )}
+                              {t.websiteUrl && (
+                                <a
+                                  href={t.websiteUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  aria-label="Website"
+                                  className="text-muted hover:text-foreground text-xs underline underline-offset-2 transition"
+                                >
+                                  site
+                                </a>
+                              )}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </Card>
                   </CarouselItem>
@@ -79,7 +131,7 @@ export function Testimonials({ items }: { items: TestimonialCard[] }) {
 
           <Reveal delay={0.2}>
             <SubmitTestimonialModal>
-              <Button variant="secondary" size="md">
+              <Button variant="primary" size="md">
                 Leave a testimonial
               </Button>
             </SubmitTestimonialModal>
