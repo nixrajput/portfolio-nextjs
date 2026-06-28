@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { requireEnv } from "@/lib/env";
 
 type NotifyInput = {
   id: string;
@@ -8,11 +9,6 @@ type NotifyInput = {
   imageUrl: string | null;
 };
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nixrajput.com";
-
-// Must be a domain verified in Resend; matches the site domain.
-const FROM_ADDRESS = "Portfolio <noreply@nixrajput.com>";
-
 function escapeHtml(s: string): string {
   return s
     .replace(/&/g, "&amp;")
@@ -21,11 +17,14 @@ function escapeHtml(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
-export function buildTestimonialEmail(input: NotifyInput): {
+export function buildTestimonialEmail(
+  input: NotifyInput,
+  siteUrl: string,
+): {
   subject: string;
   html: string;
 } {
-  const approveUrl = `${SITE_URL}/admin?tab=testimonials&focus=${input.id}`;
+  const approveUrl = `${siteUrl}/admin?tab=testimonials&focus=${input.id}`;
   return {
     subject: `New testimonial from ${input.name} (pending)`,
     html: `
@@ -48,10 +47,14 @@ export async function notifyNewTestimonial(input: NotifyInput): Promise<void> {
     console.warn("Resend not configured; skipping testimonial notification");
     return;
   }
+  // From-address and site URL are env-driven with no fallback; resolved here
+  // (not at module load) so importing this module never requires them.
+  const from = requireEnv("RESEND_FROM_EMAIL");
+  const siteUrl = requireEnv("NEXT_PUBLIC_SITE_URL");
   const resend = new Resend(apiKey);
-  const { subject, html } = buildTestimonialEmail(input);
+  const { subject, html } = buildTestimonialEmail(input, siteUrl);
   await resend.emails.send({
-    from: FROM_ADDRESS,
+    from,
     to,
     subject,
     html,

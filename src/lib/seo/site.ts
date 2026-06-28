@@ -1,5 +1,10 @@
+import { requireEnv } from "@/lib/env";
+
 export const SITE = {
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://nixrajput.com",
+  // Canonical production origin (https://nixrajput.com), env-driven with no
+  // hardcoded fallback — a missing value fails the build loudly rather than
+  // silently emitting the wrong domain across SEO, OG, JSON-LD, and sitemaps.
+  url: requireEnv("NEXT_PUBLIC_SITE_URL"),
   name: "Nikhil Rajput",
   title: "Nikhil Rajput — Software Engineer & AI Lead",
   description:

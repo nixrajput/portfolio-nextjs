@@ -36,6 +36,7 @@ jobs:
         env:
           DATABASE_URL: postgres://build:build@localhost:5432/build
           AUTH_SECRET: ci-dummy-secret
+          NEXT_PUBLIC_SITE_URL: https://nixrajput.com
 
   e2e:
     runs-on: ubuntu-latest
@@ -70,6 +71,7 @@ jobs:
         env:
           DATABASE_URL: postgres://e2e:e2e@localhost:5432/portfolio_e2e
           AUTH_SECRET: ci-dummy-secret
+          NEXT_PUBLIC_SITE_URL: https://nixrajput.com
 
       - name: Run DB migrations
         run: bunx drizzle-kit migrate
@@ -84,6 +86,7 @@ jobs:
         env:
           DATABASE_URL: postgres://e2e:e2e@localhost:5432/portfolio_e2e
           AUTH_SECRET: ci-dummy-secret
+          NEXT_PUBLIC_SITE_URL: https://nixrajput.com
           CI: true
 
       - name: Upload Playwright report
