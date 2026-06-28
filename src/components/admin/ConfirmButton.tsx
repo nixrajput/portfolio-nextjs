@@ -10,14 +10,14 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { cn } from "@/utils/cn";
+import { gradientButtonBase } from "@/components/admin/styles";
 
 type Tone = "danger" | "brand" | "neutral";
 
 const toneClasses: Record<Tone, string> = {
   danger: "bg-red-600 text-white hover:bg-red-700",
   neutral: "border-border bg-surface text-foreground hover:bg-surface-2 border",
-  brand:
-    "relative isolate overflow-hidden border border-white/15 text-white before:absolute before:inset-0 before:-z-10 before:bg-[image:var(--gradient-brand)] before:opacity-90 hover:before:opacity-100",
+  brand: gradientButtonBase,
 };
 
 /**

@@ -10,7 +10,14 @@ import {
   DialogBody,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { Field, Input, Textarea, Select, CheckboxField } from "@/components/admin/ui";
+import {
+  Field,
+  Input,
+  Textarea,
+  Select,
+  CheckboxField,
+  gradientButtonBase,
+} from "@/components/admin/ui";
 import { cn } from "@/utils/cn";
 
 export type AdminField =
@@ -119,11 +126,9 @@ export function RecordFormDialog({
           type="button"
           onClick={() => setOpen(true)}
           className={cn(
-            "relative isolate inline-flex items-center gap-2 self-start overflow-hidden rounded-lg",
-            "border border-white/15 px-4 py-2 text-sm font-medium text-white shadow-sm backdrop-blur-sm",
+            gradientButtonBase,
+            "inline-flex items-center gap-2 self-start px-4 py-2",
             "transition-[transform,box-shadow] duration-200 hover:shadow-md motion-safe:hover:-translate-y-0.5",
-            "before:absolute before:inset-0 before:-z-10 before:bg-[image:var(--gradient-brand)] before:opacity-90 hover:before:opacity-100",
-            "focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none",
           )}
         >
           <Plus className="size-4" aria-hidden />
@@ -163,14 +168,7 @@ export function RecordFormDialog({
               </div>
             </DialogBody>
             <DialogFooter>
-              <button
-                type="submit"
-                className={cn(
-                  "relative isolate w-full overflow-hidden rounded-lg border border-white/15 px-4 py-2.5",
-                  "text-sm font-medium text-white shadow-sm backdrop-blur-sm",
-                  "before:absolute before:inset-0 before:-z-10 before:bg-[image:var(--gradient-brand)] before:opacity-90 hover:before:opacity-100",
-                )}
-              >
+              <button type="submit" className={cn(gradientButtonBase, "w-full px-4 py-2.5")}>
                 {mode === "create" ? "Create" : "Save changes"}
               </button>
             </DialogFooter>

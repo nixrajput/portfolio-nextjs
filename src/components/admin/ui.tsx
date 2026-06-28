@@ -6,6 +6,10 @@ import type {
 } from "react";
 import { cn } from "@/utils/cn";
 import { RecordDeleteButton } from "@/components/admin/RecordDeleteButton";
+import { gradientButtonBase } from "@/components/admin/styles";
+
+// Re-export so existing `@/components/admin/ui` consumers keep working.
+export { gradientButtonBase };
 
 // ---------------------------------------------------------------------------
 // Admin UI primitives — branded form fields, cards, tables, and badges shared
@@ -104,20 +108,10 @@ export function Panel({
   );
 }
 
-/** Gradient primary submit button for admin forms — matches the dialog submit
- * (full-width gradient) so forms and modals look consistent. */
+/** Full-width gradient submit button for admin forms. */
 export function SubmitButton({ children }: { children: ReactNode }) {
   return (
-    <button
-      type="submit"
-      className={cn(
-        "relative isolate w-full overflow-hidden rounded-lg",
-        "border border-white/15 px-4 py-2.5 text-sm font-medium text-white shadow-sm backdrop-blur-sm",
-        "before:absolute before:inset-0 before:-z-10 before:bg-[image:var(--gradient-brand)] before:opacity-90",
-        "before:transition-opacity hover:before:opacity-100",
-        "focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none",
-      )}
-    >
+    <button type="submit" className={cn(gradientButtonBase, "w-full px-4 py-2.5")}>
       {children}
     </button>
   );
