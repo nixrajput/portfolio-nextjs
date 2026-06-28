@@ -363,22 +363,16 @@ async function seed() {
       order: 3,
     },
     {
-      platform: "Twitter",
-      url: "https://www.twitter.com/nixrajput07",
-      username: "nixrajput07",
-      order: 4,
-    },
-    {
       platform: "Email",
       url: "mailto:nkr.nikhil.nkr@gmail.com",
       username: "nkr.nikhil.nkr@gmail.com",
-      order: 5,
+      order: 4,
     },
     {
       platform: "x",
       url: "https://x.com/nixrajput07",
       username: "nixrajput07",
-      order: 6,
+      order: 5,
     },
   ]);
 
