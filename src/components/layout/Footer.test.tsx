@@ -51,20 +51,6 @@ describe("Footer", () => {
     expect(screen.getByRole("img", { name: /nikhil rajput logo/i })).toBeTruthy();
   });
 
-  it("renders footer nav links", () => {
-    render(<Footer socials={mockSocials} />);
-    expect(screen.getByRole("link", { name: "About" })).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Projects" })).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Services" })).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Contact" })).toBeTruthy();
-  });
-
-  it("renders nav links with correct hrefs", () => {
-    render(<Footer socials={mockSocials} />);
-    expect(screen.getByRole("link", { name: "About" }).getAttribute("href")).toBe("#about");
-    expect(screen.getByRole("link", { name: "Projects" }).getAttribute("href")).toBe("#projects");
-  });
-
   it("renders social icon links with accessible labels", () => {
     render(<Footer socials={mockSocials} />);
     expect(screen.getByLabelText("github")).toBeTruthy();
@@ -80,10 +66,10 @@ describe("Footer", () => {
     expect(githubLink.getAttribute("rel")).toBe("noopener noreferrer");
   });
 
-  it("renders built-with and copyright line", () => {
+  it("renders the sign-off and copyright line", () => {
     render(<Footer socials={mockSocials} />);
-    expect(screen.getByText(/Built with Next\.js/)).toBeTruthy();
-    expect(screen.getByText(/Nikhil\s+Rajput/)).toBeTruthy();
+    expect(screen.getByText(/Designed & built by Nikhil Rajput/)).toBeTruthy();
+    expect(screen.getByText(/All rights reserved/)).toBeTruthy();
   });
 
   it("renders dynamic copyright year", () => {
@@ -94,11 +80,6 @@ describe("Footer", () => {
 
   it("renders empty socials gracefully", () => {
     render(<Footer socials={[]} />);
-    expect(screen.getByRole("link", { name: "About" })).toBeTruthy();
-  });
-
-  it("renders footer nav with aria-label", () => {
-    render(<Footer socials={mockSocials} />);
-    expect(screen.getByRole("navigation", { name: "Footer" })).toBeTruthy();
+    expect(screen.getByText(/Designed & built by Nikhil Rajput/)).toBeTruthy();
   });
 });
