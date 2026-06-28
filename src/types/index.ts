@@ -1,4 +1,3 @@
-import { IconDefinition, IconProp } from "@fortawesome/fontawesome-svg-core";
 import type { MouseEventHandler, ReactNode, RefObject } from "react";
 
 export interface INavMenuItem {
@@ -12,7 +11,6 @@ export interface INavMenuItem {
 export interface INavItem {
   name: string;
   link: string;
-  icon: IconProp;
 }
 
 export interface IExperienceItem {
@@ -54,7 +52,6 @@ export interface IProjectItem {
 export type IServiceItem = {
   id: number | string;
   title: string;
-  icon?: IconDefinition;
   shortDescription: string;
   description: string;
   icons: string[];
@@ -79,7 +76,7 @@ export interface ISkillItem {
 
 export interface ISocialLinkItem {
   url: string;
-  icon: IconDefinition | string;
+  icon?: string;
   text: string;
   name?: string;
 }
@@ -92,8 +89,7 @@ export interface MenuItemProps {
   current?: string;
 }
 
-export interface DropdownMenuProps
-  extends Omit<MenuItemProps, "items" | "current"> {
+export interface DropdownMenuProps extends Omit<MenuItemProps, "items" | "current"> {
   submenus: INavMenuItem[];
   dropdown: boolean;
 }
@@ -110,7 +106,7 @@ export interface CoreComponentsProps {
   classNames?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
   id?: string;
-  elementRef?: RefObject<HTMLDivElement>;
+  elementRef?: RefObject<HTMLDivElement | null>;
 }
 
 export interface ViewportProps {
