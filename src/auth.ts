@@ -6,6 +6,10 @@ import { authUsers, authAccounts, authSessions, authVerificationTokens } from "@
 import { isAllowedLogin } from "@/lib/auth-callbacks";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  // Derive the OAuth redirect_uri from the request host so a single GitHub
+  // OAuth app works across environments: localhost in dev, nixrajput.com in
+  // prod. Without this, a self-hosted prod deploy throws UntrustedHost.
+  trustHost: true,
   adapter: DrizzleAdapter(dbForAdapter, {
     usersTable: authUsers,
     accountsTable: authAccounts,
