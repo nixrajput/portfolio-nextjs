@@ -16,11 +16,10 @@ export default function useWindowDimensions() {
       setWindowDimensions(getWindowDimensions());
     }
 
-    if (document.readyState === "complete")
-      setWindowDimensions(getWindowDimensions());
+    if (document.readyState === "complete") handleResize();
 
     window.addEventListener("resize", handleResize);
-    
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 

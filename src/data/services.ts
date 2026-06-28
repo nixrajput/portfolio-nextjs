@@ -11,8 +11,7 @@ const services: IServiceItem[] = [
       "/skills/getx.png",
       "/skills/firebase.svg",
     ],
-    shortDescription:
-      "I create engaging mobile applications for your audience.",
+    shortDescription: "I create engaging mobile applications for your audience.",
     description:
       "I create captivating mobile apps from concept to deployment for iOS and Android. Using cutting-edge technologies, I ensure seamless performance, intuitive interfaces, and robust functionality that align with your business goals. Enjoy a flawless user experience and outstanding results.",
   },
@@ -54,8 +53,7 @@ const services: IServiceItem[] = [
       "/images/analytical-skills.png",
       "/skills/ubuntu.png",
     ],
-    shortDescription:
-      "I define goals, target audiences, and roadmap for success.",
+    shortDescription: "I define goals, target audiences, and roadmap for success.",
     description:
       "I collaborate to define clear goals, target audiences, and a success roadmap. My expertise in product ideation and market analysis ensures your product meets user needs and aligns with your business strategy for long-term growth and full potential realization. Drive your product's success with strategic planning.",
   },

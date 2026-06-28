@@ -3,10 +3,7 @@
 import type { ViewportProps } from "@/types";
 import { useEffect, useState, useMemo, RefObject } from "react";
 
-const useInViewport = (
-  ref: RefObject<HTMLDataElement>,
-  options?: ViewportProps
-) => {
+const useInViewport = (ref: RefObject<HTMLDataElement>, options?: ViewportProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const vOptions = useMemo(
@@ -15,7 +12,7 @@ const useInViewport = (
       rootMargin: options?.rootMargin || "20px",
       threshold: options?.threshold || 0.3,
     }),
-    [options]
+    [options],
   );
 
   const observer = useMemo(
@@ -23,7 +20,7 @@ const useInViewport = (
       new IntersectionObserver(([entry]) => {
         setIsVisible(entry.isIntersecting);
       }, vOptions),
-    [vOptions]
+    [vOptions],
   );
 
   useEffect(() => {

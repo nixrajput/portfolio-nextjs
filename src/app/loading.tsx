@@ -1,10 +1,8 @@
 const Loading = () => {
   return (
-    <div className="fixed inset-0 flex flex-col dark:bg-[var(--bgColor)] bg-[var(--bgColor)] justify-center items-center w-screen h-screen p-4 m-0 overflow-hidden transition duration-300 ease-in-out z-[9999]">
-      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-[var(--textColor)] border-opacity-50"></div>
-      <p className="text-center text-sm font-semibold mt-4">
-        Loading, please wait...
-      </p>
+    <div className="fixed inset-0 z-[9999] m-0 flex h-screen w-screen flex-col items-center justify-center overflow-hidden bg-[var(--bgColor)] p-4 transition duration-300 ease-in-out dark:bg-[var(--bgColor)]">
+      <div className="border-opacity-50 h-8 w-8 animate-spin rounded-full border-t-2 border-[var(--textColor)]"></div>
+      <p className="mt-4 text-center text-sm font-semibold">Loading, please wait...</p>
     </div>
   );
 };
