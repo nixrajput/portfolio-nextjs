@@ -1,6 +1,17 @@
 import { db } from "@/db/client";
 import { projects } from "@/db/schema";
 import { createProject, deleteProject } from "../actions";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
+import {
+  Panel,
+  Field,
+  Input,
+  Textarea,
+  CheckboxField,
+  SubmitButton,
+  RecordList,
+  Badge,
+} from "@/components/admin/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -29,53 +40,53 @@ export default async function ProjectsEditor() {
   }
 
   return (
-    <div className="grid gap-8">
-      <h2 className="text-xl font-semibold">Projects</h2>
+    <div className="flex flex-col gap-8">
+      <AdminPageHeader title="Projects" description="Curate which repos appear and how." />
 
-      <form action={create} className="grid max-w-2xl gap-3 rounded-lg border p-4">
-        <h3 className="font-medium">Add Project</h3>
-        <input
-          name="repo"
-          placeholder="GitHub slug (e.g. siphon)"
-          required
-          className="rounded border p-2"
-        />
-        <input name="title" placeholder="Title" required className="rounded border p-2" />
-        <textarea
-          name="customBlurb"
-          placeholder="Custom blurb (optional)"
-          className="rounded border p-2"
-        />
-        <input name="tags" placeholder="tags, comma, separated" className="rounded border p-2" />
-        <input name="order" type="number" defaultValue={0} className="rounded border p-2" />
-        <label className="flex gap-2">
-          <input name="featured" type="checkbox" /> Featured
-        </label>
-        <label className="flex gap-2">
-          <input name="hidden" type="checkbox" /> Hidden
-        </label>
-        <button type="submit" className="bg-foreground text-background rounded px-4 py-2">
-          Add project
-        </button>
-      </form>
+      <Panel title="Add project">
+        <form action={create} className="flex flex-col gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="GitHub slug">
+              <Input name="repo" placeholder="e.g. siphon" required />
+            </Field>
+            <Field label="Title">
+              <Input name="title" placeholder="Project title" required />
+            </Field>
+          </div>
+          <Field label="Custom blurb" hint="Optional — overrides the GitHub description.">
+            <Textarea name="customBlurb" rows={2} placeholder="A short custom description" />
+          </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Tags" hint="Comma-separated">
+              <Input name="tags" placeholder="Flutter, Dart, GetX" />
+            </Field>
+            <Field label="Order">
+              <Input name="order" type="number" defaultValue={0} />
+            </Field>
+          </div>
+          <div className="flex gap-6">
+            <CheckboxField name="featured" label="Featured" />
+            <CheckboxField name="hidden" label="Hidden" />
+          </div>
+          <SubmitButton>Add project</SubmitButton>
+        </form>
+      </Panel>
 
-      <ul className="grid gap-2">
-        {rows.map((p) => (
-          <li key={p.id} className="flex items-center justify-between rounded border p-3">
-            <span>
-              {p.title} <code className="text-muted-foreground text-xs">{p.repo}</code>
-              {p.featured ? " ★" : ""}
-              {p.hidden ? " (hidden)" : ""}
-            </span>
-            <form action={remove}>
-              <input type="hidden" name="id" value={p.id} />
-              <button type="submit" className="text-sm text-red-600">
-                Delete
-              </button>
-            </form>
-          </li>
-        ))}
-      </ul>
+      <RecordList
+        rows={rows.map((p) => ({
+          id: p.id,
+          primary: p.title,
+          meta: p.repo,
+          badges: (
+            <>
+              {p.featured ? <Badge tone="brand">Featured</Badge> : null}
+              {p.hidden ? <Badge tone="warning">Hidden</Badge> : null}
+            </>
+          ),
+        }))}
+        deleteAction={remove}
+        empty="No projects yet."
+      />
     </div>
   );
 }

@@ -1,6 +1,17 @@
 import { db } from "@/db/client";
 import { experiences } from "@/db/schema";
 import { createExperience, deleteExperience } from "../actions";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
+import {
+  Panel,
+  Field,
+  Input,
+  Textarea,
+  CheckboxField,
+  SubmitButton,
+  RecordList,
+  Badge,
+} from "@/components/admin/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -29,51 +40,52 @@ export default async function ExperiencesEditor() {
   }
 
   return (
-    <div className="grid gap-8">
-      <h2 className="text-xl font-semibold">Experiences</h2>
+    <div className="flex flex-col gap-8">
+      <AdminPageHeader title="Experiences" description="Your work history timeline." />
 
-      <form action={create} className="grid max-w-2xl gap-3 rounded-lg border p-4">
-        <h3 className="font-medium">Add Experience</h3>
-        <input name="role" placeholder="Role / Job title" required className="rounded border p-2" />
-        <input name="org" placeholder="Organisation" required className="rounded border p-2" />
-        <input
-          name="period"
-          placeholder="Period (e.g. Jan 2022 – Present)"
-          required
-          className="rounded border p-2"
-        />
-        <input name="location" placeholder="Location (optional)" className="rounded border p-2" />
-        <textarea
-          name="description"
-          placeholder="Description bullets (one per line)"
-          rows={4}
-          className="rounded border p-2"
-        />
-        <input name="order" type="number" defaultValue={0} className="rounded border p-2" />
-        <label className="flex gap-2">
-          <input name="isCurrent" type="checkbox" /> Current role
-        </label>
-        <button type="submit" className="bg-foreground text-background rounded px-4 py-2">
-          Add experience
-        </button>
-      </form>
+      <Panel title="Add experience">
+        <form action={create} className="flex flex-col gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Role / Job title">
+              <Input name="role" placeholder="Software Engineer" required />
+            </Field>
+            <Field label="Organisation">
+              <Input name="org" placeholder="Company" required />
+            </Field>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Period">
+              <Input name="period" placeholder="Jan 2022 – Present" required />
+            </Field>
+            <Field label="Location" hint="Optional">
+              <Input name="location" placeholder="Pune, India" />
+            </Field>
+          </div>
+          <Field label="Description" hint="One bullet per line.">
+            <Textarea name="description" rows={4} placeholder="Led the API rewrite…" />
+          </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Order">
+              <Input name="order" type="number" defaultValue={0} />
+            </Field>
+            <div className="flex items-end">
+              <CheckboxField name="isCurrent" label="Current role" />
+            </div>
+          </div>
+          <SubmitButton>Add experience</SubmitButton>
+        </form>
+      </Panel>
 
-      <ul className="grid gap-2">
-        {rows.map((e) => (
-          <li key={e.id} className="flex items-center justify-between rounded border p-3">
-            <span>
-              {e.role} @ {e.org} <span className="text-muted-foreground text-xs">{e.period}</span>
-              {e.isCurrent ? " (current)" : ""}
-            </span>
-            <form action={remove}>
-              <input type="hidden" name="id" value={e.id} />
-              <button type="submit" className="text-sm text-red-600">
-                Delete
-              </button>
-            </form>
-          </li>
-        ))}
-      </ul>
+      <RecordList
+        rows={rows.map((e) => ({
+          id: e.id,
+          primary: `${e.role} @ ${e.org}`,
+          meta: e.period,
+          badges: e.isCurrent ? <Badge tone="success">Current</Badge> : null,
+        }))}
+        deleteAction={remove}
+        empty="No experiences yet."
+      />
     </div>
   );
 }

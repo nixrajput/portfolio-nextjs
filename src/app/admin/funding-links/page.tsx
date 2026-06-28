@@ -1,6 +1,16 @@
 import { db } from "@/db/client";
 import { fundingLinks } from "@/db/schema";
 import { createFundingLink, deleteFundingLink } from "../actions";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
+import {
+  Panel,
+  Field,
+  Input,
+  CheckboxField,
+  SubmitButton,
+  RecordList,
+  Badge,
+} from "@/components/admin/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -23,51 +33,41 @@ export default async function FundingLinksEditor() {
   }
 
   return (
-    <div className="grid gap-8">
-      <h2 className="text-xl font-semibold">Funding Links</h2>
+    <div className="flex flex-col gap-8">
+      <AdminPageHeader title="Funding Links" description="Sponsorship and support links." />
 
-      <form action={create} className="grid max-w-2xl gap-3 rounded-lg border p-4">
-        <h3 className="font-medium">Add Funding Link</h3>
-        <input
-          name="label"
-          placeholder="Label (e.g. Buy me a coffee)"
-          required
-          className="rounded border p-2"
-        />
-        <input name="url" placeholder="URL" type="url" required className="rounded border p-2" />
-        <input name="order" type="number" defaultValue={0} className="rounded border p-2" />
-        <label className="flex gap-2">
-          <input name="primary" type="checkbox" /> Primary
-        </label>
-        <button type="submit" className="bg-foreground text-background rounded px-4 py-2">
-          Add funding link
-        </button>
-      </form>
+      <Panel title="Add funding link">
+        <form action={create} className="flex flex-col gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Label">
+              <Input name="label" placeholder="Buy me a coffee" required />
+            </Field>
+            <Field label="URL">
+              <Input name="url" type="url" placeholder="https://buymeacoffee.com/…" required />
+            </Field>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Order">
+              <Input name="order" type="number" defaultValue={0} />
+            </Field>
+            <div className="flex items-end">
+              <CheckboxField name="primary" label="Primary" />
+            </div>
+          </div>
+          <SubmitButton>Add funding link</SubmitButton>
+        </form>
+      </Panel>
 
-      <ul className="grid gap-2">
-        {rows.map((l) => (
-          <li key={l.id} className="flex items-center justify-between rounded border p-3">
-            <span>
-              {l.label}
-              {l.primary ? " (primary)" : ""}{" "}
-              <a
-                href={l.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground text-xs underline"
-              >
-                {l.url}
-              </a>
-            </span>
-            <form action={remove}>
-              <input type="hidden" name="id" value={l.id} />
-              <button type="submit" className="text-sm text-red-600">
-                Delete
-              </button>
-            </form>
-          </li>
-        ))}
-      </ul>
+      <RecordList
+        rows={rows.map((l) => ({
+          id: l.id,
+          primary: l.label,
+          meta: l.url,
+          badges: l.primary ? <Badge tone="brand">Primary</Badge> : null,
+        }))}
+        deleteAction={remove}
+        empty="No funding links yet."
+      />
     </div>
   );
 }

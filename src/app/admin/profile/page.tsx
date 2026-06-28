@@ -2,6 +2,8 @@ import { db } from "@/db/client";
 import { profile } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { updateProfile } from "../actions";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
+import { Panel, Field, Input, Textarea, SubmitButton } from "@/components/admin/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -23,51 +25,40 @@ export default async function ProfileEditor() {
   }
 
   return (
-    <div className="grid gap-6">
-      <h2 className="text-xl font-semibold">Profile</h2>
-      <form action={action} className="grid max-w-2xl gap-4">
-        <input
-          name="name"
-          defaultValue={row?.name}
-          placeholder="Name"
-          className="rounded border p-2"
-        />
-        <input
-          name="headline"
-          defaultValue={row?.headline}
-          placeholder="Headline"
-          className="rounded border p-2"
-        />
-        <textarea
-          name="bio"
-          defaultValue={row?.bio}
-          placeholder="Bio"
-          rows={3}
-          className="rounded border p-2"
-        />
-        <textarea
-          name="summary"
-          defaultValue={row?.summary}
-          placeholder="Entity-first summary"
-          rows={2}
-          className="rounded border p-2"
-        />
-        <input
-          name="resumeUrl"
-          defaultValue={row?.resumeUrl ?? ""}
-          placeholder="Resume URL"
-          className="rounded border p-2"
-        />
-        <input
-          name="avatarUrl"
-          defaultValue={row?.avatarUrl ?? ""}
-          placeholder="Avatar URL"
-          className="rounded border p-2"
-        />
-        <button type="submit" className="bg-foreground text-background rounded px-4 py-2">
-          Save
-        </button>
-      </form>
+    <div className="flex flex-col gap-8">
+      <AdminPageHeader title="Profile" description="Your headline, bio, and links." />
+
+      <Panel>
+        <form action={action} className="flex flex-col gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Name">
+              <Input name="name" defaultValue={row?.name} placeholder="Name" />
+            </Field>
+            <Field label="Headline">
+              <Input name="headline" defaultValue={row?.headline} placeholder="Headline" />
+            </Field>
+          </div>
+          <Field label="Bio">
+            <Textarea name="bio" defaultValue={row?.bio} rows={4} placeholder="Bio" />
+          </Field>
+          <Field label="Summary" hint="Entity-first one-liner used for SEO/GEO.">
+            <Textarea name="summary" defaultValue={row?.summary} rows={2} placeholder="Summary" />
+          </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Resume URL">
+              <Input name="resumeUrl" defaultValue={row?.resumeUrl ?? ""} placeholder="https://…" />
+            </Field>
+            <Field label="Avatar URL">
+              <Input
+                name="avatarUrl"
+                defaultValue={row?.avatarUrl ?? ""}
+                placeholder="/images/nikhil.png"
+              />
+            </Field>
+          </div>
+          <SubmitButton>Save changes</SubmitButton>
+        </form>
+      </Panel>
     </div>
   );
 }

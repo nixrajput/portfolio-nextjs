@@ -1,6 +1,16 @@
 import { db } from "@/db/client";
 import { skills } from "@/db/schema";
 import { createSkill, deleteSkill } from "../actions";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
+import {
+  Panel,
+  Field,
+  Input,
+  Select,
+  SubmitButton,
+  RecordList,
+  Badge,
+} from "@/components/admin/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -25,55 +35,49 @@ export default async function SkillsEditor() {
   }
 
   return (
-    <div className="grid gap-8">
-      <h2 className="text-xl font-semibold">Skills</h2>
+    <div className="flex flex-col gap-8">
+      <AdminPageHeader title="Skills" description="Tools and technologies, grouped by category." />
 
-      <form action={create} className="grid max-w-2xl gap-3 rounded-lg border p-4">
-        <h3 className="font-medium">Add Skill</h3>
-        <input name="name" placeholder="Skill name" required className="rounded border p-2" />
-        <input
-          name="iconPath"
-          placeholder="Icon path (e.g. /icons/react.svg)"
-          required
-          className="rounded border p-2"
-        />
-        <input
-          name="category"
-          placeholder="Category (e.g. Frontend)"
-          required
-          className="rounded border p-2"
-        />
-        <select name="level" className="rounded border p-2">
-          <option value="">No level</option>
-          <option value="Expert">Expert</option>
-          <option value="Intermediate">Intermediate</option>
-          <option value="Beginner">Beginner</option>
-        </select>
-        <input name="order" type="number" defaultValue={0} className="rounded border p-2" />
-        <button type="submit" className="bg-foreground text-background rounded px-4 py-2">
-          Add skill
-        </button>
-      </form>
+      <Panel title="Add skill">
+        <form action={create} className="flex flex-col gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Skill name">
+              <Input name="name" placeholder="React.js" required />
+            </Field>
+            <Field label="Category">
+              <Input name="category" placeholder="Frontend Development" required />
+            </Field>
+          </div>
+          <Field label="Icon path" hint="e.g. /skills/react.svg">
+            <Input name="iconPath" placeholder="/skills/react.svg" required />
+          </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Level">
+              <Select name="level" defaultValue="">
+                <option value="">No level</option>
+                <option value="Expert">Expert</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Beginner">Beginner</option>
+              </Select>
+            </Field>
+            <Field label="Order">
+              <Input name="order" type="number" defaultValue={0} />
+            </Field>
+          </div>
+          <SubmitButton>Add skill</SubmitButton>
+        </form>
+      </Panel>
 
-      <ul className="grid gap-2">
-        {rows.map((s) => (
-          <li key={s.id} className="flex items-center justify-between rounded border p-3">
-            <span>
-              {s.name}{" "}
-              <span className="text-muted-foreground text-xs">
-                {s.category}
-                {s.level ? ` · ${s.level}` : ""}
-              </span>
-            </span>
-            <form action={remove}>
-              <input type="hidden" name="id" value={s.id} />
-              <button type="submit" className="text-sm text-red-600">
-                Delete
-              </button>
-            </form>
-          </li>
-        ))}
-      </ul>
+      <RecordList
+        rows={rows.map((s) => ({
+          id: s.id,
+          primary: s.name,
+          meta: s.category,
+          badges: s.level ? <Badge>{s.level}</Badge> : null,
+        }))}
+        deleteAction={remove}
+        empty="No skills yet."
+      />
     </div>
   );
 }

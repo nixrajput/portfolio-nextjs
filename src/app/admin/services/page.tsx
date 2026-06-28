@@ -1,6 +1,8 @@
 import { db } from "@/db/client";
 import { services } from "@/db/schema";
 import { createService, deleteService } from "../actions";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
+import { Panel, Field, Input, Textarea, SubmitButton, RecordList } from "@/components/admin/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -24,48 +26,41 @@ export default async function ServicesEditor() {
   }
 
   return (
-    <div className="grid gap-8">
-      <h2 className="text-xl font-semibold">Services</h2>
+    <div className="flex flex-col gap-8">
+      <AdminPageHeader title="Services" description="What you offer." />
 
-      <form action={create} className="grid max-w-2xl gap-3 rounded-lg border p-4">
-        <h3 className="font-medium">Add Service</h3>
-        <input name="title" placeholder="Service title" required className="rounded border p-2" />
-        <textarea
-          name="description"
-          placeholder="Full description"
-          rows={3}
-          required
-          className="rounded border p-2"
-        />
-        <input
-          name="shortDescription"
-          placeholder="Short description (optional)"
-          className="rounded border p-2"
-        />
-        <input
-          name="icon"
-          placeholder="Primary icon path (optional)"
-          className="rounded border p-2"
-        />
-        <input name="order" type="number" defaultValue={0} className="rounded border p-2" />
-        <button type="submit" className="bg-foreground text-background rounded px-4 py-2">
-          Add service
-        </button>
-      </form>
+      <Panel title="Add service">
+        <form action={create} className="flex flex-col gap-4">
+          <Field label="Title">
+            <Input name="title" placeholder="Web Development" required />
+          </Field>
+          <Field label="Full description">
+            <Textarea name="description" rows={3} placeholder="Detailed description" required />
+          </Field>
+          <Field label="Short description" hint="Optional — shown on the card.">
+            <Input name="shortDescription" placeholder="One-line summary" />
+          </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Icon path" hint="Optional">
+              <Input name="icon" placeholder="/icons/web.svg" />
+            </Field>
+            <Field label="Order">
+              <Input name="order" type="number" defaultValue={0} />
+            </Field>
+          </div>
+          <SubmitButton>Add service</SubmitButton>
+        </form>
+      </Panel>
 
-      <ul className="grid gap-2">
-        {rows.map((s) => (
-          <li key={s.id} className="flex items-center justify-between rounded border p-3">
-            <span>{s.title}</span>
-            <form action={remove}>
-              <input type="hidden" name="id" value={s.id} />
-              <button type="submit" className="text-sm text-red-600">
-                Delete
-              </button>
-            </form>
-          </li>
-        ))}
-      </ul>
+      <RecordList
+        rows={rows.map((s) => ({
+          id: s.id,
+          primary: s.title,
+          meta: s.shortDescription ?? undefined,
+        }))}
+        deleteAction={remove}
+        empty="No services yet."
+      />
     </div>
   );
 }
