@@ -139,7 +139,7 @@ export function SubmitTestimonialForm({
           maxLength={1000}
           rows={5}
           placeholder="Share what it's like to know or work with Nikhil…"
-          className={cn(inputClass, "resize-none")}
+          className={cn(inputClass, "max-h-60 resize-y overflow-y-auto")}
         />
       </label>
 

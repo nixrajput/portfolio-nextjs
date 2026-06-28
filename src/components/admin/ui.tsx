@@ -22,12 +22,12 @@ export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
 }
 
 export function Textarea(props: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  // No manual resize — the height is fixed by `rows` and content scrolls,
-  // so the field can't be dragged to an unlimited height.
+  // Vertically resizable, but capped: the user can drag it taller up to
+  // max-h, after which it stops growing and the content scrolls.
   return (
     <textarea
       {...props}
-      className={cn(fieldBase, "max-h-60 resize-none overflow-y-auto", props.className)}
+      className={cn(fieldBase, "max-h-60 resize-y overflow-y-auto", props.className)}
     />
   );
 }
