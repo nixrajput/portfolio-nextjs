@@ -13,10 +13,12 @@ import { Hero } from "@/components/home/Hero";
 import { FloatingNavbar } from "@/components/navbar/FloatingNavbar";
 import { Footer } from "@/components/layout/Footer";
 
-// The homepage renders live DB-driven content, so render it dynamically at
-// request time. This also means `next build` does not need a database
-// connection to prerender it (CI builds without a live DB).
-export const dynamic = "force-dynamic";
+// The homepage is DB-driven but its content changes rarely, so use ISR: it is
+// statically generated and CDN-cached (fast TTFB), regenerated in the
+// background at most once an hour and on demand when the admin saves (via
+// revalidatePortfolio). It is prerendered at build time, so the build needs a
+// reachable database — provided locally and in CI.
+export const revalidate = 3600;
 
 // Below-the-fold sections: lazy-loaded to keep the hero bundle lean.
 // Note: These are Server Components — next/dynamic with ssr:true (default)
