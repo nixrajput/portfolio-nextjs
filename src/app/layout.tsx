@@ -4,10 +4,11 @@ import { GeistMono } from "geist/font/mono";
 import { ReactNode } from "react";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { HashScrollFix } from "@/components/util/HashScrollFix";
 import { PersonJsonLd, WebSiteJsonLd } from "@/lib/seo/jsonld";
 import { SITE } from "@/lib/seo/site";
 
@@ -92,7 +93,8 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
           <main>{children}</main>
           <ScrollToTop />
         </ThemeProvider>
-        <Analytics />
+        <HashScrollFix />
+        <VercelAnalytics />
         <SpeedInsights />
         <GoogleAnalytics />
       </body>
