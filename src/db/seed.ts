@@ -510,22 +510,27 @@ async function seed() {
 }
 
 /**
- * Seed demo testimonials ONLY when the table is empty, so real user
- * submissions are never wiped by a reseed. Runs independently of the
- * checksum-gated content reseed above.
+ * Seed demo testimonials for LOCAL UI testing only. These are fabricated, so
+ * they must never reach production — skipped when NODE_ENV is "production"
+ * (which Vercel sets during `vercel-build`). Seeds only when the table is empty
+ * so real submissions are never wiped.
  */
-async function seedTestimonialsIfEmpty() {
+async function seedDemoTestimonials() {
+  if (process.env.NODE_ENV === "production") {
+    console.log("Production environment; skipping demo testimonials.");
+    return;
+  }
   const existing = await db.select({ id: testimonials.id }).from(testimonials).limit(1);
   if (existing.length > 0) {
     console.log("Testimonials already present; skipping demo seed.");
     return;
   }
   await db.insert(testimonials).values(testimonialRows);
-  console.log(`Seeded ${testimonialRows.length} demo testimonials.`);
+  console.log(`Seeded ${testimonialRows.length} demo testimonials (local only).`);
 }
 
 seed()
-  .then(() => seedTestimonialsIfEmpty())
+  .then(() => seedDemoTestimonials())
   .then(() => process.exit(0))
   .catch((err) => {
     console.error(err);
