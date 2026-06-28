@@ -50,7 +50,7 @@ const Contact = nextDynamic(() =>
   import("@/components/home/Contact").then((m) => ({ default: m.Contact })),
 );
 const Faq = nextDynamic(() =>
-  import("@/components/sections/Faq").then((m) => ({ default: m.Faq })),
+  import("@/components/sections/FaqSection").then((m) => ({ default: m.FaqSection })),
 );
 
 export default async function Home() {

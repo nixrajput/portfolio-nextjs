@@ -1,9 +1,10 @@
 import { SITE } from "@/lib/seo/site";
-import { FAQS } from "@/lib/seo/faq";
+import { getFaqs } from "@/lib/queries";
 
 export const dynamic = "force-static";
 
-export function GET() {
+export async function GET() {
+  const faqs = await getFaqs();
   const body = `# ${SITE.name} - Full Profile
 
 > ${SITE.description}
@@ -77,7 +78,7 @@ He is not actively job-seeking but welcomes conversations about interesting proj
 
 ## FAQ
 
-${FAQS.map((f) => `### ${f.question}\n${f.answer}`).join("\n\n")}
+${faqs.map((f) => `### ${f.question}\n${f.answer}`).join("\n\n")}
 
 ## Contact
 

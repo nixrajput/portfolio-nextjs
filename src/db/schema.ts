@@ -170,6 +170,13 @@ export const taglines = pgTable("taglines", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const faqs = pgTable("faqs", {
+  id: serial("id").primaryKey(),
+  question: text("question").notNull(),
+  answer: text("answer").notNull(),
+  order: integer("order").notNull().default(0),
+});
+
 export const githubCache = pgTable("github_cache", {
   repo: varchar("repo", { length: 255 }).primaryKey(),
   stars: integer("stars").notNull().default(0),
@@ -208,6 +215,8 @@ export type Testimonial = typeof testimonials.$inferSelect;
 export type NewTestimonial = typeof testimonials.$inferInsert;
 export type Tagline = typeof taglines.$inferSelect;
 export type NewTagline = typeof taglines.$inferInsert;
+export type Faq = typeof faqs.$inferSelect;
+export type NewFaq = typeof faqs.$inferInsert;
 export type GithubCache = typeof githubCache.$inferSelect;
 export type NewGithubCache = typeof githubCache.$inferInsert;
 export type SeedHistory = typeof seedHistory.$inferSelect;

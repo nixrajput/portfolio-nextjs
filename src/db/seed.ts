@@ -10,6 +10,7 @@ import {
   socialLinks,
   fundingLinks,
   taglines,
+  faqs,
   testimonials,
   seedHistory,
 } from "./schema";
@@ -351,6 +352,39 @@ const fundingLinkRows = [
   },
 ];
 
+const faqRows = [
+  {
+    question: "Who is Nikhil Rajput?",
+    answer:
+      "Nikhil Rajput is a Software Development Engineer and AI Lead from India who builds fast, reliable web and mobile products. He is the founder of NixLab and an active open-source contributor.",
+    order: 0,
+  },
+  {
+    question: "What does Nikhil build?",
+    answer:
+      "He builds full-stack web applications, mobile apps, REST and GraphQL APIs, and open-source libraries - with a focus on performance, developer experience, and maintainability.",
+    order: 1,
+  },
+  {
+    question: "What is Nikhil's tech stack?",
+    answer:
+      "TypeScript and JavaScript on the front end (React, Next.js) and back end (Node.js, Express), Flutter and Dart for cross-platform mobile, and PostgreSQL and MongoDB for data persistence.",
+    order: 2,
+  },
+  {
+    question: "Is Nikhil available for collaboration?",
+    answer:
+      "Yes - Nikhil is open to open-source collaboration, freelance engagements, and advisory roles. He is not actively job-seeking but is happy to discuss interesting projects. The fastest way to reach him is through the contact section on this site.",
+    order: 3,
+  },
+  {
+    question: "How can I contact Nikhil?",
+    answer:
+      "Email is the fastest way - use the email link in the Contact section. You can also reach him on GitHub at github.com/nixrajput, LinkedIn, and X (Twitter); the social links are in the footer.",
+    order: 4,
+  },
+];
+
 // Demo testimonials covering every case (pending/approved/rejected, featured,
 // complete vs sparse details, a duplicate email). Seeded ONLY into an empty
 // testimonials table so real user submissions are never wiped.
@@ -456,6 +490,7 @@ const SEED_DATA = {
   services: serviceRows,
   socialLinks: socialLinkRows,
   fundingLinks: fundingLinkRows,
+  faqs: faqRows,
 };
 
 function seedChecksum(): string {
@@ -485,6 +520,7 @@ async function seed() {
   // Wipe + re-insert + record history atomically so a failure can never leave
   // the content tables empty or the history out of sync with the data.
   await db.transaction(async (tx) => {
+    await tx.delete(faqs);
     await tx.delete(fundingLinks);
     await tx.delete(socialLinks);
     await tx.delete(services);
@@ -502,6 +538,7 @@ async function seed() {
     await tx.insert(services).values(SEED_DATA.services);
     await tx.insert(socialLinks).values(SEED_DATA.socialLinks);
     await tx.insert(fundingLinks).values(SEED_DATA.fundingLinks);
+    await tx.insert(faqs).values(SEED_DATA.faqs);
 
     await tx.insert(seedHistory).values({ checksum });
   });

@@ -1,5 +1,4 @@
 import { SITE } from "./site";
-import { FAQS } from "./faq";
 
 function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
@@ -37,13 +36,13 @@ export function WebSiteJsonLd() {
   );
 }
 
-export function FaqJsonLd() {
+export function FaqJsonLd({ faqs }: { faqs: { question: string; answer: string }[] }) {
   return (
     <JsonLd
       data={{
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        mainEntity: FAQS.map((f) => ({
+        mainEntity: faqs.map((f) => ({
           "@type": "Question",
           name: f.question,
           acceptedAnswer: { "@type": "Answer", text: f.answer },

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { FAQS } from "@/lib/seo/faq";
 import { FaqJsonLd } from "@/lib/seo/jsonld";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { cn } from "@/utils/cn";
+
+export type FaqEntry = { question: string; answer: string };
 
 function FaqItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false);
@@ -44,14 +45,15 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   );
 }
 
-export function Faq() {
+export function Faq({ faqs }: { faqs: FaqEntry[] }) {
+  if (faqs.length === 0) return null;
   return (
     <Section id="faq" className="scroll-mt-24">
-      <FaqJsonLd />
+      <FaqJsonLd faqs={faqs} />
       <div className="mx-auto max-w-3xl">
         <SectionHeading eyebrow="FAQ" title="Frequently asked" />
         <div className="border-border border-t">
-          {FAQS.map((faq) => (
+          {faqs.map((faq) => (
             <FaqItem key={faq.question} question={faq.question} answer={faq.answer} />
           ))}
         </div>

@@ -24,7 +24,9 @@ describe("JSON-LD", () => {
   });
 
   it("emits a valid FAQPage schema with mainEntity questions", () => {
-    const { container } = render(<FaqJsonLd />);
+    const { container } = render(
+      <FaqJsonLd faqs={[{ question: "Who is Nikhil?", answer: "An engineer." }]} />,
+    );
     const data = parse(container.querySelector("script")!.innerHTML);
     expect(data["@type"]).toBe("FAQPage");
     expect(Array.isArray(data.mainEntity)).toBe(true);

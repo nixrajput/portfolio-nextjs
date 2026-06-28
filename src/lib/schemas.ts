@@ -72,6 +72,12 @@ export const taglineInsertSchema = z.object({
   order: z.number().int().nonnegative().default(0),
 });
 
+export const faqInsertSchema = z.object({
+  question: z.string().min(1),
+  answer: z.string().min(1),
+  order: z.number().int().nonnegative().default(0),
+});
+
 // Reorder payload shared by all sections
 export const reorderSchema = z.object({
   items: z.array(z.object({ id: z.number().int(), order: z.number().int() })),
@@ -106,5 +112,6 @@ export type ServiceInput = z.infer<typeof serviceInsertSchema>;
 export type SocialLinkInput = z.infer<typeof socialLinkInsertSchema>;
 export type FundingLinkInput = z.infer<typeof fundingLinkInsertSchema>;
 export type TaglineInput = z.infer<typeof taglineInsertSchema>;
+export type FaqInput = z.infer<typeof faqInsertSchema>;
 export type ReorderInput = z.infer<typeof reorderSchema>;
 export type GithubRepo = z.infer<typeof githubRepoSchema>;

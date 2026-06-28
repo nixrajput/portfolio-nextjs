@@ -9,9 +9,10 @@ import {
   socialLinks,
   fundingLinks,
   taglines,
+  faqs,
   githubCache,
 } from "@/db/schema";
-import type { Experience, Skill, Service } from "@/db/schema";
+import type { Experience, Skill, Service, Faq } from "@/db/schema";
 import { getProjects } from "@/lib/projects";
 import type { MergedProject } from "@/lib/projects";
 
@@ -91,6 +92,12 @@ export async function getSkills(): Promise<SkillRow[]> {
 
 export async function getServices(): Promise<ServiceRow[]> {
   return db.select().from(services).orderBy(asc(services.order));
+}
+
+export type FaqRow = Faq;
+
+export async function getFaqs(): Promise<FaqRow[]> {
+  return db.select().from(faqs).orderBy(asc(faqs.order));
 }
 
 export async function getSocialLinks(): Promise<SocialRow[]> {
