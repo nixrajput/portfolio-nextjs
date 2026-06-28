@@ -1,35 +1,95 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/*
+ * Tailwind v4 opacity modifier fix.
+ *
+ * Opacity modifiers (/10, /60, /[0.02]) only work on colors registered in
+ * @theme as --color-*. We cannot put theme-mode-switched values directly in
+ * @theme (it does not support :root/.dark overrides). The solution:
+ *
+ *   1. In :root / .dark, define raw CSS vars with actual color values
+ *      (no var() references — @theme needs to see the raw channel values
+ *       OR we use oklch/rgb literals that Tailwind can parse).
+ *   2. In @theme, alias those raw vars as --color-* tokens.
+ *
+ * Because @theme evaluates @theme at build time with CSS var() references,
+ * the actual runtime token switching is done by reassigning the underlying
+ * vars in :root/.dark. Tailwind v4 resolves the var() at runtime, so
+ * opacity channel arithmetic works correctly.
+ */
+
 @theme {
+  /* Brand colors (static) */
   --color-brand-violet: #7c3aed;
   --color-brand-cyan: #06b6d4;
   --color-brand-pink: #ec4899;
-  --color-base: #07070c;
-  --color-surface: #0b0b14;
-  --color-light-base: #fafafa;
-  --gradient-brand: linear-gradient(135deg, #7c3aed 0%, #06b6d4 50%, #ec4899 100%);
+
+  /* Semantic design-system tokens — values come from :root / .dark vars */
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border-color);
+  --color-muted: var(--muted);
+  /* alias: several components use `text-muted-foreground`; map it to the same value */
+  --color-muted-foreground: var(--muted);
+  --color-ring: var(--ring);
+
+  /* Gradient — per-theme overrides set in :root / .dark below */
+  --gradient-brand: linear-gradient(135deg, #6d28d9 0%, #0891b2 50%, #db2777 100%);
+
+  /* Typography */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Light theme — raw values for @theme var() references */
 :root {
   --max-width: 1200px;
-  --default-radius: 0.5rem;
-  --background: var(--color-light-base);
-  --foreground: #0a0a0a;
+  --bg: #fafafa;
+  --fg: #0a0a0a;
+  --surface: #ffffff;
+  --surface-2: rgba(0, 0, 0, 0.02);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --muted: rgba(10, 10, 10, 0.5);
+  --ring: #7c3aed;
+  /* Legacy aliases kept for existing components */
+  --background: var(--bg);
+  --foreground: var(--fg);
+  /* Light gradient: deeper/more saturated so it reads rich on white */
+  --gradient-brand: linear-gradient(135deg, #6d28d9 0%, #0891b2 50%, #db2777 100%);
+  /* Nav active pill opacity for light (higher so the pill is visible) */
+  --nav-pill-opacity: 0.28;
 }
+
+/* Dark theme */
 .dark {
-  --background: var(--color-base);
-  --foreground: var(--color-light-base);
+  --bg: #07070c;
+  --fg: #fafafa;
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-2: rgba(255, 255, 255, 0.06);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --muted: rgba(250, 250, 250, 0.62);
+  --ring: #06b6d4;
+  /* Legacy aliases */
+  --background: var(--bg);
+  --foreground: var(--fg);
+  /* Dark gradient: vivid original hues */
+  --gradient-brand: linear-gradient(135deg, #7c3aed 0%, #06b6d4 50%, #ec4899 100%);
+  /* Nav active pill opacity for dark */
+  --nav-pill-opacity: 0.2;
 }
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+/*
+ * NOTE: Do NOT add a global "star { padding: 0; margin: 0 }" reset here.
+ * Tailwind v4 Preflight (via @import "tailwindcss") already resets margins
+ * and box-sizing correctly INSIDE a cascade layer. An unlayered universal
+ * reset overrides every Tailwind padding/margin utility, because unlayered
+ * CSS beats layered utilities regardless of specificity, silently breaking
+ * spacing app-wide. Preflight handles the reset properly.
+ */
 html {
   scroll-behavior: smooth;
 }
@@ -40,8 +100,8 @@ body {
 }
 body {
   background-color: var(--background);
-  /* Light mode: subtle violet-tinted near-white so the aurora reads against the base */
-  background-image: radial-gradient(ellipse at 60% 0%, #f3eeff 0%, transparent 60%);
+  /* Light mode: very faint violet tint at top-right only — airy, not purple-washed */
+  background-image: radial-gradient(ellipse at 70% 0%, #f5f0ff 0%, transparent 50%);
   color: var(--foreground);
   font-size: 1rem;
   line-height: 1.5;
@@ -51,12 +111,14 @@ body {
   background-image: none;
 }
 
-/* Aurora blob opacity: lower in light, vivid in dark */
-[data-testid="aurora"] > * {
-  opacity: 0.28;
+/* Aurora blob opacity: very subtle in light (airy, just a hint of tint),
+   vivid in dark. The vignette div (data-aurora-vignette) is excluded so
+   it always renders at full opacity to fully mask the lower content area. */
+[data-testid="aurora"] > *:not([data-aurora-vignette]) {
+  opacity: 0.09;
 }
-.dark [data-testid="aurora"] > * {
-  opacity: 0.55;
+.dark [data-testid="aurora"] > *:not([data-aurora-vignette]) {
+  opacity: 0.48;
 }
 a {
   text-decoration: none;

@@ -13,9 +13,13 @@ describe("globals.css theme tokens", () => {
     expect(globalsContent).toContain("--color-brand-violet: #7c3aed");
     expect(globalsContent).toContain("--color-brand-cyan: #06b6d4");
     expect(globalsContent).toContain("--color-brand-pink: #ec4899");
-    expect(globalsContent).toContain("--color-base: #07070c");
-    expect(globalsContent).toContain("--color-surface: #0b0b14");
-    expect(globalsContent).toContain("--color-light-base: #fafafa");
+    // Semantic tokens replaced the old internal palette tokens.
+    // --color-base / --color-surface / --color-light-base were internal;
+    // they are now exposed as --color-background / --color-surface / etc.
+    // via the var(--bg) / var(--surface) indirection pattern.
+    expect(globalsContent).toContain("--color-background: var(--bg)");
+    expect(globalsContent).toContain("--color-foreground: var(--fg)");
+    expect(globalsContent).toContain("--color-surface: var(--surface)");
   });
 
   it("should define gradient and font tokens", () => {
