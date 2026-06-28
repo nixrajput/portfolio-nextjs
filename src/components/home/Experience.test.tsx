@@ -6,19 +6,17 @@ import type { ExperienceRow } from "@/lib/queries";
 // Mock framer-motion to avoid jsdom animation issues
 vi.mock("framer-motion", () => ({
   motion: {
-    div: ({
+    li: ({
       children,
       className,
       style,
       ...props
-    }: React.HTMLAttributes<HTMLDivElement> & { style?: React.CSSProperties }) => (
-      <div className={className} style={style} {...props}>
+    }: React.HTMLAttributes<HTMLLIElement> & { style?: React.CSSProperties }) => (
+      <li className={className} style={style} {...props}>
         {children}
-      </div>
+      </li>
     ),
   },
-  useScroll: () => ({ scrollYProgress: { get: () => 0 } }),
-  useTransform: () => 1,
 }));
 
 // Mock useReducedMotion — default: no reduced motion
