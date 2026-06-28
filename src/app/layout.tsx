@@ -1,28 +1,11 @@
-import "./globals.scss";
-import { Poppins } from "next/font/google";
+import "./globals.css";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import { ReactNode } from "react";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { navMenus } from "@/data/navMenus";
-
-const poppins = Poppins({
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  style: ["normal", "italic"],
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  preload: true,
-  fallback: [
-    "system-ui",
-    "arial",
-    "BlinkMacSystemFont",
-    "Segoe UI",
-    "Roboto",
-    "Oxygen",
-    "Ubuntu",
-    "Fira Sans",
-    "Droid Sans",
-  ],
-});
+import { GoogleAnalytics, WebVitals } from "@/components/common/ClientOnlyComponents";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Nikhil Rajput",
@@ -39,32 +22,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: [
-    {
-      url: "/favicon-16x16.ico",
-      rel: "icon",
-      sizes: "16x16",
-      type: "image/x-icon",
-    },
-    {
-      url: "/favicon-32x32.ico",
-      rel: "icon",
-      sizes: "32x32",
-      type: "image/x-icon",
-    },
-    {
-      url: "/favicon-48x48.ico",
-      rel: "icon",
-      sizes: "48x48",
-      type: "image/x-icon",
-    },
-    {
-      url: "/favicon-64x64.ico",
-      rel: "icon",
-      sizes: "64x64",
-      type: "image/x-icon",
-    },
-  ],
   keywords: [
     "nikhil rajput",
     "nikhil",
@@ -79,30 +36,30 @@ export const metadata: Metadata = {
   ],
 };
 
-const GoogleAnalytics = dynamic(
-  () => import("@/components/common/GoogleAnalytics"),
-  { ssr: false }
-);
-const WebVitals = dynamic(() => import("@/components/common/WebVitals"), {
-  ssr: false,
-});
-const FloatingNavbar = dynamic(
-  () => import("@/components/navbar/FloatingNavbar")
-);
 const ScrollToTop = dynamic(() => import("@/components/common/ScrollToTop"));
 
 const isDebug = process.env.NODE_ENV === "development";
 
 const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
-    <html lang="en" className={poppins.className}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+    >
       {isDebug ? null : <GoogleAnalytics />}
 
-      <body className={isDebug ? "debug-screens" : ""}>
-        {isDebug ? <WebVitals /> : null}
-        <FloatingNavbar className="app_nav" navItems={navMenus} />
-        <main>{children}</main>
-        <ScrollToTop />
+      <body className={GeistSans.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {isDebug ? <WebVitals /> : null}
+          <main>{children}</main>
+          <ScrollToTop />
+        </ThemeProvider>
       </body>
     </html>
   );
