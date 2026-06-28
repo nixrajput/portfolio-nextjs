@@ -5,23 +5,23 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 const blobs = [
   {
-    // Violet — top-left
-    className: "absolute -left-[20%] -top-[20%] h-[70vh] w-[70vh]",
-    background: "radial-gradient(circle, #7c3aed 0%, transparent 70%)",
+    // Violet — top-left corner
+    className: "absolute -left-[10%] -top-[10%] h-[45vh] w-[45vh]",
+    background: "radial-gradient(circle, #7c3aed 0%, transparent 60%)",
     animation: "aurora-drift-a",
     duration: "28s",
   },
   {
-    // Cyan — top-right
-    className: "absolute -right-[15%] -top-[10%] h-[60vh] w-[60vh]",
-    background: "radial-gradient(circle, #06b6d4 0%, transparent 70%)",
+    // Cyan — top-right corner
+    className: "absolute -right-[8%] -top-[8%] h-[38vh] w-[38vh]",
+    background: "radial-gradient(circle, #06b6d4 0%, transparent 60%)",
     animation: "aurora-drift-b",
     duration: "35s",
   },
   {
-    // Pink — bottom-center
-    className: "absolute bottom-[-15%] left-[30%] h-[55vh] w-[55vh]",
-    background: "radial-gradient(circle, #ec4899 0%, transparent 70%)",
+    // Pink — top-center, small accent
+    className: "absolute left-[30%] -top-[8%] h-[32vh] w-[32vh]",
+    background: "radial-gradient(circle, #ec4899 0%, transparent 60%)",
     animation: "aurora-drift-c",
     duration: "42s",
   },
@@ -46,7 +46,7 @@ export function Aurora() {
           className={blob.className}
           style={{
             background: blob.background,
-            filter: "blur(80px)",
+            filter: "blur(90px)",
             animation: reduced
               ? undefined
               : `${blob.animation} ${blob.duration} ease-in-out infinite`,
@@ -55,6 +55,17 @@ export function Aurora() {
           }}
         />
       ))}
+      {/* Vignette: fades the lower 60% of the aurora toward the base
+          background so content sections (skills/projects/etc.) sit on a
+          calm, high-contrast backdrop. Must stay at full opacity — it is
+          excluded from the blob-opacity rule via data-aurora-vignette. */}
+      <div
+        data-aurora-vignette
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[60%]"
+        style={{
+          background: "linear-gradient(to bottom, transparent 0%, var(--bg) 100%)",
+        }}
+      />
     </div>
   );
 }
