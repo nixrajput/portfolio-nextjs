@@ -176,6 +176,7 @@ async function seed() {
           iconPath: "/skills/typescript.svg",
         },
         { name: "Dart", level: "Expert", iconPath: "/skills/dart.svg" },
+        { name: "Ruby", level: "Intermediate", iconPath: "/skills/ruby.png" },
       ],
     },
     {
@@ -201,6 +202,11 @@ async function seed() {
           name: "Express.js",
           level: "Expert",
           iconPath: "/skills/express.svg",
+        },
+        {
+          name: "Ruby on Rails",
+          level: "Intermediate",
+          iconPath: "/skills/rails.png",
         },
         {
           name: "Socket.io",
