@@ -11,6 +11,15 @@ import {
 } from "./schema";
 
 async function seed() {
+  // Seed-if-empty: this script is insert-only (not idempotent), so running it
+  // on an already-seeded database would duplicate every row. On deploy we run
+  // it on every build, so guard on the profile row — if data exists, skip.
+  const existing = await db.select({ id: profile.id }).from(profile).limit(1);
+  if (existing.length > 0) {
+    console.log("Database already seeded; skipping.");
+    return;
+  }
+
   console.log("Seeding database…");
 
   // --- taglines ---

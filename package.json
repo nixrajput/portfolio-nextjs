@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack -p 4000",
     "build": "next build --turbopack",
+    "vercel-build": "drizzle-kit migrate && bun run db:seed && next build --turbopack",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
