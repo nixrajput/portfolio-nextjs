@@ -5,17 +5,26 @@ import { describe, expect, it, vi } from "vitest";
 const { _getRows, _setRows, selectMock, chainFrom } = vi.hoisted(() => {
   let rows: unknown[] = [];
 
+  function makeFromResult() {
+    return {
+      orderBy: vi.fn().mockImplementation(() => Promise.resolve(rows)),
+      where: vi.fn().mockImplementation(() => ({
+        // getRandomTagline awaits .where() directly
+        then: (resolve: (v: unknown) => unknown, reject?: (e: unknown) => unknown) =>
+          Promise.resolve(rows).then(resolve, reject),
+      })),
+      // make the result directly awaitable (no .orderBy) for getProfile path
+      then: (resolve: (v: unknown) => unknown, reject?: (e: unknown) => unknown) =>
+        Promise.resolve(rows).then(resolve, reject),
+    };
+  }
+
   const chainFrom = {
     orderBy: vi.fn().mockImplementation(() => Promise.resolve(rows)),
   };
 
   // db.select().from(table) — returns a thenable for `await db.select().from(profile)`
-  const fromMock = vi.fn().mockImplementation(() => ({
-    ...chainFrom,
-    // make the result directly awaitable (no .orderBy) for getProfile path
-    then: (resolve: (v: unknown) => unknown, reject?: (e: unknown) => unknown) =>
-      Promise.resolve(rows).then(resolve, reject),
-  }));
+  const fromMock = vi.fn().mockImplementation(() => makeFromResult());
 
   const selectMock = vi.fn().mockReturnValue({ from: fromMock });
 
@@ -24,11 +33,7 @@ const { _getRows, _setRows, selectMock, chainFrom } = vi.hoisted(() => {
     _setRows: (r: unknown[]) => {
       rows = r;
       chainFrom.orderBy.mockImplementation(() => Promise.resolve(rows));
-      fromMock.mockImplementation(() => ({
-        ...chainFrom,
-        then: (resolve: (v: unknown) => unknown, reject?: (e: unknown) => unknown) =>
-          Promise.resolve(rows).then(resolve, reject),
-      }));
+      fromMock.mockImplementation(() => makeFromResult());
     },
     selectMock,
     chainFrom,
@@ -56,6 +61,7 @@ import {
   getServices,
   getSocialLinks,
   getFundingLinks,
+  getRandomTagline,
 } from "./queries";
 
 // ── Tests ─────────────────────────────────────────────────────────────────────
@@ -74,7 +80,6 @@ describe("getSocialLinks", () => {
         platform: "twitter",
         url: "https://twitter.com/a",
         username: "a",
-        icon: null,
         order: 2,
         id: 2,
       },
@@ -82,7 +87,6 @@ describe("getSocialLinks", () => {
         platform: "github",
         url: "https://github.com/b",
         username: "b",
-        icon: null,
         order: 1,
         id: 1,
       },
@@ -109,7 +113,6 @@ describe("getSocialLinks", () => {
         platform: "linkedin",
         url: "https://linkedin.com/in/x",
         username: null,
-        icon: null,
         order: 0,
         id: 1,
       },
@@ -161,7 +164,7 @@ describe("getFundingLinks", () => {
 });
 
 describe("getProfile", () => {
-  it("shapes profile row reading roles/availableForWork from dedicated columns", async () => {
+  it("shapes profile row reading roles from dedicated column", async () => {
     _setRows([
       {
         id: 1,
@@ -171,7 +174,6 @@ describe("getProfile", () => {
         summary: "Summary",
         stats: { years: 4, repos: 60, stars: 1200 },
         roles: ["Developer", "Designer"],
-        availableForWork: true,
         resumeUrl: "/resume.pdf",
         avatarUrl: "/avatar.jpg",
         updatedAt: new Date(),
@@ -184,11 +186,10 @@ describe("getProfile", () => {
     expect(result.avatarUrl).toBe("/avatar.jpg");
     expect(result.resumeUrl).toBe("/resume.pdf");
     expect(result.roles).toEqual(["Developer", "Designer"]);
-    expect(result.availableForWork).toBe(true);
     expect(result.stats).toEqual({ years: 4, repos: 60, stars: 1200 });
   });
 
-  it("returns empty roles and availableForWork from column defaults", async () => {
+  it("returns empty roles and defaults from column defaults", async () => {
     _setRows([
       {
         id: 1,
@@ -198,7 +199,6 @@ describe("getProfile", () => {
         summary: "Summary",
         stats: {},
         roles: [],
-        availableForWork: false,
         resumeUrl: null,
         avatarUrl: null,
         updatedAt: new Date(),
@@ -206,7 +206,6 @@ describe("getProfile", () => {
     ]);
     const result = await getProfile();
     expect(result.roles).toEqual([]);
-    expect(result.availableForWork).toBe(false);
     expect(result.avatarUrl).toBe("");
     expect(result.resumeUrl).toBe("");
     expect(result.stats).toEqual({ years: 0, repos: 0, stars: 0 });
@@ -264,12 +263,42 @@ describe("getServices", () => {
         description: "Build apps",
         shortDescription: null,
         icon: null,
-        icons: [],
         order: 0,
       },
     ]);
     const result = await getServices();
     expect(result[0].title).toBe("Web Dev");
+  });
+});
+
+describe("getRandomTagline", () => {
+  it("returns text of a random active tagline", async () => {
+    _setRows([
+      { id: "abc", text: "Rise above limits", active: true, order: 0, created_at: new Date() },
+    ]);
+    const result = await getRandomTagline();
+    expect(result).toBe("Rise above limits");
+  });
+
+  it("returns fallback when no active taglines exist", async () => {
+    _setRows([]);
+    const result = await getRandomTagline();
+    expect(result).toBe("Rise above limits");
+  });
+
+  it("returns one of the texts when multiple taglines exist", async () => {
+    const taglineTexts = ["Rise above limits", "Think, build, and ship"];
+    _setRows(
+      taglineTexts.map((text, i) => ({
+        id: String(i),
+        text,
+        active: true,
+        order: i,
+        created_at: new Date(),
+      })),
+    );
+    const result = await getRandomTagline();
+    expect(taglineTexts).toContain(result);
   });
 });
 

@@ -7,21 +7,27 @@ import {
   services,
   socialLinks,
   fundingLinks,
+  taglines,
 } from "./schema";
 
 async function seed() {
   console.log("Seeding database…");
 
+  // --- taglines ---
+  await db.insert(taglines).values([
+    { text: "Rise above limits", active: true, order: 0 },
+    { text: "Think, build, and ship", active: true, order: 1 },
+  ]);
+
   // --- profile (single row) ---
   await db.insert(profile).values({
     name: "Nikhil Rajput",
     headline: "Software Development Engineer",
-    bio: "Full-stack and mobile engineer building fast, reliable products with Flutter, React/Next.js, and Node.js.",
+    bio: "Nikhil Rajput is a Software Development Engineer and AI Lead who builds fast, reliable products across web and mobile. He works full-stack — crafting polished front-ends with React and Next.js, mobile apps with Flutter, and robust back-ends with Node.js — with a growing focus on applied AI.\n\nBeyond his day-to-day engineering, he is an active open-source contributor, maintaining libraries and tools that other developers rely on. He cares about clean architecture, thoughtful UX, and shipping work that lasts.",
     summary:
       "Nikhil Rajput is a software engineer who builds production-grade mobile and web applications with Flutter, Next.js, and Node.js.",
     stats: { years: 4, repos: 60, stars: 0 },
-    roles: ["Software Engineer", "Full-Stack Developer", "Open-Source Contributor"],
-    availableForWork: true,
+    roles: ["Software Development Engineer", "Full Stack Developer", "Open Source Contributor"],
     resumeUrl: process.env.NEXT_PUBLIC_RESUME_LINK ?? null,
     avatarUrl: "/images/Nikhil_new_pp.png",
   });
@@ -78,7 +84,7 @@ async function seed() {
       tags: ["Node.js", "Express.js", "MongoDB", "Stripe"],
     },
     {
-      repo: "bus-reservation-system",
+      repo: "bus-reservation-system-cpp",
       title: "Bus Reservation System",
       tags: ["C++", "OOP", "File Handling"],
     },
@@ -291,13 +297,6 @@ async function seed() {
       shortDescription: "I create engaging mobile applications for your audience.",
       description:
         "I create captivating mobile apps from concept to deployment for iOS and Android. Using cutting-edge technologies, I ensure seamless performance, intuitive interfaces, and robust functionality that align with your business goals. Enjoy a flawless user experience and outstanding results.",
-      icons: [
-        "/skills/socket-io.png",
-        "/skills/dart.svg",
-        "/skills/flutter.svg",
-        "/skills/getx.png",
-        "/skills/firebase.svg",
-      ],
       order: 0,
     },
     {
@@ -305,13 +304,6 @@ async function seed() {
       shortDescription: "I build visually stunning and user-friendly websites.",
       description:
         "I deliver stunning, user-friendly websites to establish your online presence. From simple sites to complex e-commerce platforms, I provide tailored solutions using the latest frameworks and technologies for a seamless, responsive, and SEO-friendly browsing experience. Enhance your online identity with quality.",
-      icons: [
-        "/skills/redux.svg",
-        "/skills/react.svg",
-        "/skills/nextjs.png",
-        "/skills/html.svg",
-        "/skills/css.svg",
-      ],
       order: 1,
     },
     {
@@ -319,13 +311,6 @@ async function seed() {
       shortDescription: "I create robust and scalable backend infrastructures.",
       description:
         "I enhance digital applications with robust, scalable backend infrastructures. I develop efficient database structures, APIs, and configure servers for optimal performance, security, and scalability, ensuring your applications handle high traffic and complex data management seamlessly. Rely on strong backend solutions.",
-      icons: [
-        "/skills/socket-io.png",
-        "/skills/docker.png",
-        "/skills/nodejs.svg",
-        "/skills/express.svg",
-        "/skills/aws.svg",
-      ],
       order: 2,
     },
     {
@@ -333,13 +318,6 @@ async function seed() {
       shortDescription: "I define goals, target audiences, and roadmap for success.",
       description:
         "I collaborate to define clear goals, target audiences, and a success roadmap. My expertise in product ideation and market analysis ensures your product meets user needs and aligns with your business strategy for long-term growth and full potential realization. Drive your product's success with strategic planning.",
-      icons: [
-        "/skills/git.svg",
-        "/images/collaboration.png",
-        "/images/logical-thinking.png",
-        "/images/analytical-skills.png",
-        "/skills/ubuntu.png",
-      ],
       order: 3,
     },
     {
@@ -347,13 +325,6 @@ async function seed() {
       shortDescription: "I streamline development and operations processes.",
       description:
         "I streamline development and operations processes through effective DevOps practices. I implement continuous integration and deployment pipelines, manage cloud infrastructure, and use containerization to ensure efficient, reliable, and scalable software delivery. Improve your workflow with DevOps solutions.",
-      icons: [
-        "/skills/docker.svg",
-        "/skills/kubernetes.svg",
-        "/skills/aws.svg",
-        "/skills/jenkins.svg",
-        "/skills/terraform.svg",
-      ],
       order: 4,
     },
     {
@@ -361,13 +332,6 @@ async function seed() {
       shortDescription: "I manage and optimize your database systems.",
       description:
         "I manage and optimize your database systems for performance, reliability, and scalability. With expertise in SQL and NoSQL databases, I design schemas, write complex queries, and implement best practices for data integrity and security. Ensure your data is managed effectively and efficiently.",
-      icons: [
-        "/skills/mysql.svg",
-        "/skills/postgresql.svg",
-        "/skills/mongodb.svg",
-        "/skills/redis.svg",
-        "/skills/sqlite.svg",
-      ],
       order: 5,
     },
   ]);
@@ -378,42 +342,36 @@ async function seed() {
       platform: "GitHub",
       url: "https://www.github.com/nixrajput",
       username: "nixrajput",
-      icon: "github",
       order: 0,
     },
     {
       platform: "LinkedIn",
       url: "https://www.linkedin.com/in/nixrajput",
       username: "nixrajput",
-      icon: "linkedin",
       order: 1,
     },
     {
       platform: "Telegram",
       url: "https://telegram.me/nixrajput",
       username: "nixrajput",
-      icon: "telegram",
       order: 2,
     },
     {
       platform: "Instagram",
       url: "https://www.instagram.com/nixrajput",
       username: "nixrajput",
-      icon: "instagram",
       order: 3,
     },
     {
       platform: "Twitter",
       url: "https://www.twitter.com/nixrajput07",
       username: "nixrajput07",
-      icon: "twitter",
       order: 4,
     },
     {
       platform: "Email",
       url: "mailto:nkr.nikhil.nkr@gmail.com",
       username: "nkr.nikhil.nkr@gmail.com",
-      icon: "mail",
       order: 5,
     },
   ]);

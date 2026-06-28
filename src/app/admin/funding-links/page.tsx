@@ -50,12 +50,7 @@ export default async function FundingLinksEditor() {
             <span>
               {l.label}
               {l.primary ? " (primary)" : ""}{" "}
-              <a
-                href={l.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground text-xs underline"
-              >
+              <a href={l.url} className="text-muted-foreground text-xs underline">
                 {l.url}
               </a>
             </span>

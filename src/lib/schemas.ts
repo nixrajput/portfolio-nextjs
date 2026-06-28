@@ -9,7 +9,6 @@ export const profileInsertSchema = z.object({
   summary: z.string().min(1),
   stats: z.record(z.string(), z.union([z.string(), z.number()])).default({}),
   roles: z.array(z.string()).default([]),
-  availableForWork: z.boolean().default(true),
   resumeUrl: z.string().url().nullable().optional(),
   avatarUrl: z.string().url().nullable().optional(),
 });
@@ -50,7 +49,6 @@ export const serviceInsertSchema = z.object({
   description: z.string().min(1),
   shortDescription: z.string().nullable().optional(),
   icon: z.string().nullable().optional(),
-  icons: z.array(z.string()).default([]),
   order: z.number().int().nonnegative().default(0),
 });
 
@@ -58,7 +56,6 @@ export const socialLinkInsertSchema = z.object({
   platform: z.string().min(1),
   url: z.string().url(),
   username: z.string().nullable().optional(),
-  icon: z.string().nullable().optional(),
   order: z.number().int().nonnegative().default(0),
 });
 
@@ -66,6 +63,12 @@ export const fundingLinkInsertSchema = z.object({
   label: z.string().min(1),
   url: z.string().url(),
   primary: z.boolean().default(false),
+  order: z.number().int().nonnegative().default(0),
+});
+
+export const taglineInsertSchema = z.object({
+  text: z.string().min(1),
+  active: z.boolean().default(true),
   order: z.number().int().nonnegative().default(0),
 });
 
@@ -102,5 +105,6 @@ export type SkillInput = z.infer<typeof skillInsertSchema>;
 export type ServiceInput = z.infer<typeof serviceInsertSchema>;
 export type SocialLinkInput = z.infer<typeof socialLinkInsertSchema>;
 export type FundingLinkInput = z.infer<typeof fundingLinkInsertSchema>;
+export type TaglineInput = z.infer<typeof taglineInsertSchema>;
 export type ReorderInput = z.infer<typeof reorderSchema>;
 export type GithubRepo = z.infer<typeof githubRepoSchema>;

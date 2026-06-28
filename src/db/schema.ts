@@ -24,7 +24,6 @@ export const profile = pgTable("profile", {
   // arbitrary stat blocks e.g. { years: 4, repos: 60, stars: 1200 }
   stats: jsonb("stats").$type<Record<string, string | number>>().notNull().default({}),
   roles: jsonb("roles").$type<string[]>().notNull().default([]),
-  availableForWork: boolean("available_for_work").notNull().default(true),
   resumeUrl: text("resume_url"),
   avatarUrl: text("avatar_url"),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
@@ -69,7 +68,6 @@ export const services = pgTable("services", {
   description: text("description").notNull(),
   shortDescription: text("short_description"),
   icon: text("icon"),
-  icons: jsonb("icons").$type<string[]>().notNull().default([]),
   order: integer("order").notNull().default(0),
 });
 
@@ -78,7 +76,6 @@ export const socialLinks = pgTable("social_links", {
   platform: text("platform").notNull(),
   url: text("url").notNull(),
   username: text("username"),
-  icon: text("icon"),
   order: integer("order").notNull().default(0),
 });
 
@@ -157,6 +154,14 @@ export const testimonials = pgTable("testimonials", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const taglines = pgTable("taglines", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  text: text("text").notNull(),
+  active: boolean("active").notNull().default(true),
+  order: integer("order").default(0),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 // Inferred types
 export type Profile = typeof profile.$inferSelect;
 export type NewProfile = typeof profile.$inferInsert;
@@ -174,3 +179,5 @@ export type FundingLink = typeof fundingLinks.$inferSelect;
 export type NewFundingLink = typeof fundingLinks.$inferInsert;
 export type Testimonial = typeof testimonials.$inferSelect;
 export type NewTestimonial = typeof testimonials.$inferInsert;
+export type Tagline = typeof taglines.$inferSelect;
+export type NewTagline = typeof taglines.$inferInsert;

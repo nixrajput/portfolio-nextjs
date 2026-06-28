@@ -14,10 +14,6 @@ export default async function ServicesEditor() {
       description: String(formData.get("description")),
       shortDescription: (formData.get("shortDescription") as string) || null,
       icon: (formData.get("icon") as string) || null,
-      icons: String(formData.get("icons") || "")
-        .split(",")
-        .map((i) => i.trim())
-        .filter(Boolean),
       order: Number(formData.get("order") || 0),
     });
   }
@@ -49,11 +45,6 @@ export default async function ServicesEditor() {
         <input
           name="icon"
           placeholder="Primary icon path (optional)"
-          className="rounded border p-2"
-        />
-        <input
-          name="icons"
-          placeholder="Additional icons, comma separated"
           className="rounded border p-2"
         />
         <input name="order" type="number" defaultValue={0} className="rounded border p-2" />

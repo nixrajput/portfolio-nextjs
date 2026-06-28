@@ -115,7 +115,6 @@ describe("zod validation", () => {
         summary: "s",
         stats: {},
         roles: [],
-        availableForWork: true,
       }),
     ).rejects.toThrow();
   });

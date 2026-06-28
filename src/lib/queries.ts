@@ -1,7 +1,15 @@
-import { asc } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 
 import { db } from "@/db/client";
-import { profile, experiences, skills, services, socialLinks, fundingLinks } from "@/db/schema";
+import {
+  profile,
+  experiences,
+  skills,
+  services,
+  socialLinks,
+  fundingLinks,
+  taglines,
+} from "@/db/schema";
 import type { Experience, Skill, Service } from "@/db/schema";
 import { getProjects } from "@/lib/projects";
 import type { MergedProject } from "@/lib/projects";
@@ -40,7 +48,6 @@ export async function getProfile(): Promise<{
   roles: string[];
   avatarUrl: string;
   resumeUrl: string;
-  availableForWork: boolean;
   stats: { years: number; repos: number; stars: number };
 }> {
   const rows = await db.select().from(profile);
@@ -56,7 +63,6 @@ export async function getProfile(): Promise<{
     avatarUrl: (row.avatarUrl as string) ?? "",
     resumeUrl: (row.resumeUrl as string) ?? "",
     roles: row.roles,
-    availableForWork: row.availableForWork,
     stats: {
       years: Number(s.years ?? 0),
       repos: Number(s.repos ?? 0),
@@ -95,4 +101,15 @@ export async function getFundingLinks(): Promise<FundingRow[]> {
     primary: r.primary,
     order: r.order,
   }));
+}
+
+// Returns a random active tagline text.
+// The page uses ISR (1h revalidation), so the tagline rotates on each
+// revalidation cycle. In dev and after admin edits (revalidatePortfolio),
+// it runs fresh. The random pick happens in JS after fetching all active rows.
+export async function getRandomTagline(): Promise<string> {
+  const rows = await db.select().from(taglines).where(eq(taglines.active, true));
+  if (rows.length === 0) return "Rise above limits";
+  const pick = rows[Math.floor(Math.random() * rows.length)];
+  return pick.text;
 }

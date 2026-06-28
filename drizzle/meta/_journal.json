@@ -15,6 +15,20 @@
       "when": 1782614180061,
       "tag": "0001_testimonials",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782645701958,
+      "tag": "0002_classy_sleeper",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1782646982333,
+      "tag": "0003_worried_thor_girl",
+      "breakpoints": true
     }
   ]
 }

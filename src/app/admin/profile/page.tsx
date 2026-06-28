@@ -17,7 +17,6 @@ export default async function ProfileEditor() {
       summary: String(formData.get("summary")),
       stats: row?.stats ?? {},
       roles: row?.roles ?? [],
-      availableForWork: row?.availableForWork ?? true,
       resumeUrl: (formData.get("resumeUrl") as string) || null,
       avatarUrl: (formData.get("avatarUrl") as string) || null,
     });

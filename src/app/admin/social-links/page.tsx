@@ -13,7 +13,6 @@ export default async function SocialLinksEditor() {
       platform: String(formData.get("platform")),
       url: String(formData.get("url")),
       username: (formData.get("username") as string) || null,
-      icon: (formData.get("icon") as string) || null,
       order: Number(formData.get("order") || 0),
     });
   }
@@ -37,7 +36,6 @@ export default async function SocialLinksEditor() {
         />
         <input name="url" placeholder="URL" type="url" required className="rounded border p-2" />
         <input name="username" placeholder="Username (optional)" className="rounded border p-2" />
-        <input name="icon" placeholder="Icon path (optional)" className="rounded border p-2" />
         <input name="order" type="number" defaultValue={0} className="rounded border p-2" />
         <button type="submit" className="bg-foreground text-background rounded px-4 py-2">
           Add social link
@@ -50,12 +48,7 @@ export default async function SocialLinksEditor() {
             <span>
               {l.platform}
               {l.username ? ` · @${l.username}` : ""}{" "}
-              <a
-                href={l.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground text-xs underline"
-              >
+              <a href={l.url} className="text-muted-foreground text-xs underline">
                 {l.url}
               </a>
             </span>

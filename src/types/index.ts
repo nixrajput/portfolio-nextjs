@@ -54,7 +54,6 @@ export type IServiceItem = {
   title: string;
   shortDescription: string;
   description: string;
-  icons: string[];
 };
 
 export interface ISkillListItem {
@@ -76,7 +75,6 @@ export interface ISkillItem {
 
 export interface ISocialLinkItem {
   url: string;
-  icon?: string;
   text: string;
   name?: string;
 }
