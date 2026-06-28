@@ -16,43 +16,47 @@ Personal portfolio website for [Nikhil Rajput](https://nixrajput.com), rebuilt f
 
 ## Table of Contents
 
-- [Stack](#stack)
-- [Architecture overview](#architecture-overview)
-- [Prerequisites](#prerequisites)
-- [Local setup](#local-setup)
-  - [Environment variables](#environment-variables)
-  - [Database setup](#database-setup)
-  - [Git hooks](#git-hooks)
-  - [Run the dev server](#run-the-dev-server)
-- [Commands](#commands)
-- [Admin panel](#admin-panel)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [Sponsor me](#sponsor-me)
-- [Connect with me](#connect-with-me)
+- [Nikhil Rajput — Portfolio (v2)](#nikhil-rajput--portfolio-v2)
+  - [Table of Contents](#table-of-contents)
+  - [Stack](#stack)
+  - [Architecture overview](#architecture-overview)
+  - [Prerequisites](#prerequisites)
+  - [Local setup](#local-setup)
+    - [1. Clone and install](#1-clone-and-install)
+    - [2. Environment variables](#2-environment-variables)
+    - [3. Database setup](#3-database-setup)
+    - [4. Git hooks](#4-git-hooks)
+    - [5. Run the dev server](#5-run-the-dev-server)
+  - [Commands](#commands)
+  - [Admin panel](#admin-panel)
+  - [Deployment](#deployment)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Sponsor me](#sponsor-me)
+  - [Connect with me](#connect-with-me)
 
 ---
 
 ## Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | [Next.js 16](https://nextjs.org/) (App Router, Turbopack) |
-| UI library | [React 19](https://react.dev/) |
-| Language | TypeScript |
-| Styling | [Tailwind CSS v4](https://tailwindcss.com/), Geist font |
-| Animation | [Framer Motion](https://www.framer-motion.com/) |
-| Icons | [Lucide React](https://lucide.dev/) |
-| Database | PostgreSQL via [postgres-js](https://github.com/porsager/postgres) |
-| ORM | [Drizzle ORM](https://orm.drizzle.team/) |
-| Auth | [Auth.js v5](https://authjs.dev/) — GitHub OAuth |
-| File storage | [Vercel Blob](https://vercel.com/docs/storage/vercel-blob) |
-| Email | [Resend](https://resend.com/) |
-| Analytics | [Vercel Analytics](https://vercel.com/analytics) + Google Analytics |
-| Package manager | [Bun](https://bun.sh/) |
-| Unit tests | [Vitest](https://vitest.dev/) + Testing Library |
-| E2E tests | [Playwright](https://playwright.dev/) |
-| Deployment | [Vercel](https://vercel.com/) |
+| Layer           | Technology                                                          |
+| --------------- | ------------------------------------------------------------------- |
+| Framework       | [Next.js 16](https://nextjs.org/) (App Router, Turbopack)           |
+| UI library      | [React 19](https://react.dev/)                                      |
+| Language        | TypeScript                                                          |
+| Styling         | [Tailwind CSS v4](https://tailwindcss.com/), Geist font             |
+| Animation       | [Framer Motion](https://www.framer-motion.com/)                     |
+| Icons           | [Lucide React](https://lucide.dev/)                                 |
+| Database        | PostgreSQL via [postgres-js](https://github.com/porsager/postgres)  |
+| ORM             | [Drizzle ORM](https://orm.drizzle.team/)                            |
+| Auth            | [Auth.js v5](https://authjs.dev/) — GitHub OAuth                    |
+| File storage    | [Vercel Blob](https://vercel.com/docs/storage/vercel-blob)          |
+| Email           | [Resend](https://resend.com/)                                       |
+| Analytics       | [Vercel Analytics](https://vercel.com/analytics) + Google Analytics |
+| Package manager | [Bun](https://bun.sh/)                                              |
+| Unit tests      | [Vitest](https://vitest.dev/) + Testing Library                     |
+| E2E tests       | [Playwright](https://playwright.dev/)                               |
+| Deployment      | [Vercel](https://vercel.com/)                                       |
 
 ---
 
@@ -92,22 +96,22 @@ Copy `.env.example` to `.env.local` and fill in the values:
 cp .env.example .env.local
 ```
 
-| Variable | Required | Description |
-|---|---|---|
-| `DATABASE_URL` | Yes | PostgreSQL connection string, e.g. `postgres://user:pass@localhost:5432/portfolio` |
-| `AUTH_SECRET` | Yes | Random secret for Auth.js session encryption (`openssl rand -base64 32`) |
-| `AUTH_GITHUB_ID` | Yes | GitHub OAuth App client ID |
-| `AUTH_GITHUB_SECRET` | Yes | GitHub OAuth App client secret |
-| `ADMIN_GITHUB_LOGIN` | Yes | GitHub username allowed to access the admin panel (e.g. `nixrajput`) |
-| `GITHUB_TOKEN` | Recommended | GitHub personal access token for project metadata fetching (higher rate limits) |
-| `BLOB_READ_WRITE_TOKEN` | Yes (prod) | Vercel Blob token for testimonial avatar uploads |
-| `RESEND_API_KEY` | Yes (prod) | Resend API key for admin notification emails |
-| `CONTACT_EMAIL` | Yes (prod) | Email address to receive testimonial submission notifications |
-| `REVALIDATE_SECRET` | Yes (prod) | Secret for the `/api/revalidate` on-demand revalidation endpoint |
-| `NEXT_PUBLIC_SITE_URL` | Yes | Canonical site URL, e.g. `https://nixrajput.com` |
-| `NEXT_PUBLIC_GTAG_ID` | Optional | Google Analytics measurement ID (e.g. `G-XXXXXXXXXX`) |
-| `NEXT_PUBLIC_GOOGLE_VERIFICATION_TOKEN` | Optional | Google Search Console site verification token |
-| `NEXT_PUBLIC_RESUME_LINK` | Optional | Public URL for the downloadable resume |
+| Variable                                | Required    | Description                                                                        |
+| --------------------------------------- | ----------- | ---------------------------------------------------------------------------------- |
+| `DATABASE_URL`                          | Yes         | PostgreSQL connection string, e.g. `postgres://user:pass@localhost:5432/portfolio` |
+| `AUTH_SECRET`                           | Yes         | Random secret for Auth.js session encryption (`openssl rand -base64 32`)           |
+| `AUTH_GITHUB_ID`                        | Yes         | GitHub OAuth App client ID                                                         |
+| `AUTH_GITHUB_SECRET`                    | Yes         | GitHub OAuth App client secret                                                     |
+| `ADMIN_GITHUB_LOGIN`                    | Yes         | GitHub username allowed to access the admin panel (e.g. `nixrajput`)               |
+| `GITHUB_TOKEN`                          | Recommended | GitHub personal access token for project metadata fetching (higher rate limits)    |
+| `BLOB_READ_WRITE_TOKEN`                 | Yes (prod)  | Vercel Blob token for testimonial avatar uploads                                   |
+| `RESEND_API_KEY`                        | Yes (prod)  | Resend API key for admin notification emails                                       |
+| `CONTACT_EMAIL`                         | Yes (prod)  | Email address to receive testimonial submission notifications                      |
+| `REVALIDATE_SECRET`                     | Yes (prod)  | Secret for the `/api/revalidate` on-demand revalidation endpoint                   |
+| `NEXT_PUBLIC_SITE_URL`                  | Yes         | Canonical site URL, e.g. `https://nixrajput.com`                                   |
+| `NEXT_PUBLIC_GTAG_ID`                   | Optional    | Google Analytics measurement ID (e.g. `G-XXXXXXXXXX`)                              |
+| `NEXT_PUBLIC_GOOGLE_VERIFICATION_TOKEN` | Optional    | Google Search Console site verification token                                      |
+| `NEXT_PUBLIC_RESUME_LINK`               | Optional    | Public URL for the downloadable resume                                             |
 
 ### 3. Database setup
 
@@ -140,24 +144,24 @@ The site is available at [http://localhost:4000](http://localhost:4000).
 
 ## Commands
 
-| Command | Description |
-|---|---|
-| `bun run dev` | Start dev server (Turbopack, port 4000) |
-| `bun run build` | Production build (Turbopack) |
-| `bun run start` | Start production server |
-| `bun run lint` | Run ESLint |
-| `bun run lint:fix` | Run ESLint with auto-fix |
-| `bun run format` | Format source files with Prettier |
-| `bun run format:check` | Check formatting without writing |
-| `bun run typecheck` | Run `tsc --noEmit` |
-| `bun run test` | Run Vitest unit tests |
-| `bun run test:watch` | Run Vitest in watch mode |
-| `bun run test:e2e` | Run Playwright end-to-end tests |
-| `bun run db:generate` | Generate a new Drizzle migration |
-| `bun run db:migrate` | Apply pending migrations |
-| `bun run db:push` | Push schema changes directly (dev only) |
-| `bun run db:studio` | Open Drizzle Studio |
-| `bun run db:seed` | Seed the database with initial data |
+| Command                | Description                             |
+| ---------------------- | --------------------------------------- |
+| `bun run dev`          | Start dev server (Turbopack, port 4000) |
+| `bun run build`        | Production build (Turbopack)            |
+| `bun run start`        | Start production server                 |
+| `bun run lint`         | Run ESLint                              |
+| `bun run lint:fix`     | Run ESLint with auto-fix                |
+| `bun run format`       | Format source files with Prettier       |
+| `bun run format:check` | Check formatting without writing        |
+| `bun run typecheck`    | Run `tsc --noEmit`                      |
+| `bun run test`         | Run Vitest unit tests                   |
+| `bun run test:watch`   | Run Vitest in watch mode                |
+| `bun run test:e2e`     | Run Playwright end-to-end tests         |
+| `bun run db:generate`  | Generate a new Drizzle migration        |
+| `bun run db:migrate`   | Apply pending migrations                |
+| `bun run db:push`      | Push schema changes directly (dev only) |
+| `bun run db:studio`    | Open Drizzle Studio                     |
+| `bun run db:seed`      | Seed the database with initial data     |
 
 ---
 
