@@ -40,9 +40,23 @@ body {
 }
 body {
   background-color: var(--background);
+  /* Light mode: subtle violet-tinted near-white so the aurora reads against the base */
+  background-image: radial-gradient(ellipse at 60% 0%, #f3eeff 0%, transparent 60%);
   color: var(--foreground);
   font-size: 1rem;
   line-height: 1.5;
+}
+.dark body {
+  /* Dark mode: no extra tint — deep base is enough */
+  background-image: none;
+}
+
+/* Aurora blob opacity: lower in light, vivid in dark */
+[data-testid="aurora"] > * {
+  opacity: 0.28;
+}
+.dark [data-testid="aurora"] > * {
+  opacity: 0.55;
 }
 a {
   text-decoration: none;
@@ -70,6 +84,56 @@ button {
   }
   100% {
     transform: translate(-10%, -10%) rotate(360deg) scale(1.2);
+  }
+}
+
+/* Per-blob aurora drift — each moves on a distinct path for organic layering */
+@keyframes aurora-drift-a {
+  0% {
+    transform: translate(0%, 0%) scale(1);
+  }
+  33% {
+    transform: translate(6%, 8%) scale(1.12);
+  }
+  66% {
+    transform: translate(-4%, 5%) scale(1.06);
+  }
+  100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+}
+@keyframes aurora-drift-b {
+  0% {
+    transform: translate(0%, 0%) scale(1.05);
+  }
+  40% {
+    transform: translate(-8%, 6%) scale(1);
+  }
+  70% {
+    transform: translate(4%, -4%) scale(1.1);
+  }
+  100% {
+    transform: translate(0%, 0%) scale(1.05);
+  }
+}
+@keyframes aurora-drift-c {
+  0% {
+    transform: translate(0%, 0%) scale(1.08);
+  }
+  30% {
+    transform: translate(-5%, -7%) scale(1);
+  }
+  60% {
+    transform: translate(7%, 4%) scale(1.12);
+  }
+  100% {
+    transform: translate(0%, 0%) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-testid="aurora"] > * {
+    animation-play-state: paused !important;
   }
 }
 
