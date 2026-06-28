@@ -120,17 +120,27 @@ body {
 .dark [data-testid="aurora"] > *:not([data-aurora-vignette]) {
   opacity: 0.48;
 }
-a {
-  text-decoration: none;
-  color: inherit;
-}
 /*
- * NOTE: no unlayered `button { background: transparent }` reset here. Like the
- * universal reset, an unlayered element rule overrides Tailwind bg-* utilities
- * (unlayered beats layered) — it was forcing every <button> with a bg utility
- * (e.g. the gradient primary Button) to render transparent/invisible. Tailwind
- * Preflight already normalizes button appearance inside its layer.
+ * NOTE: no unlayered element resets for `a`, `button`, or `*` here. An
+ * unlayered rule like `a { color: inherit }` or `button { background:
+ * transparent }` overrides Tailwind's `text-*`/`bg-*` utilities (unlayered CSS
+ * beats layered utilities regardless of specificity) — this silently broke
+ * button/link text colors and backgrounds app-wide (e.g. a primary <a> button
+ * rendering black text instead of white). Tailwind Preflight already resets
+ * anchors (color: inherit) and buttons inside its layer, so utilities win.
+ * We only keep link styling as a Tailwind utility (link-reset) where needed.
  */
+/*
+ * Anchor base: only remove underline. Do NOT set `color` here — Tailwind
+ * Preflight already makes anchors inherit color in its base layer (lower than
+ * utilities), so explicit text-* utilities on a link win. Setting color here
+ * (even via @apply) creates a same-layer fight that breaks button text colors.
+ */
+@layer base {
+  a {
+    text-decoration: none;
+  }
+}
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

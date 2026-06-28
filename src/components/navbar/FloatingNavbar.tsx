@@ -112,10 +112,10 @@ export function FloatingNavbar({
                       href={`#${s.id}`}
                       aria-current={isActive ? "true" : undefined}
                       className={cn(
-                        "relative block rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 motion-safe:transition-colors",
+                        "relative block rounded-full px-4 py-2 text-sm font-medium transition-[color,background-color] duration-300 ease-out",
                         isActive
                           ? "text-foreground"
-                          : "text-muted hover:text-foreground hover:bg-foreground/5 [transition:color_200ms,background-color_200ms]",
+                          : "text-muted hover:text-foreground hover:bg-foreground/5",
                       )}
                     >
                       {isActive && (

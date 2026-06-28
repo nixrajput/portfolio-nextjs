@@ -10,7 +10,12 @@ type Variant = "primary" | "secondary" | "ghost";
 type Size = "sm" | "md" | "lg";
 
 const base =
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium " +
+  // Fluid, tactile motion: smooth eased transition, a subtle lift on hover and
+  // a gentle press-in on click. Transform-based (GPU-cheap) and motion-safe.
+  "transition-[transform,box-shadow,background-color,color,opacity] duration-300 ease-out " +
+  "will-change-transform motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 motion-safe:active:scale-[0.98] " +
+  "hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 const variants: Record<Variant, string> = {
   // Glassy primary: the gradient lives on a ::before layer at reduced opacity
