@@ -40,6 +40,7 @@ const TestimonialsSection = dynamic(() =>
 const Contact = dynamic(() =>
   import("@/components/home/Contact").then((m) => ({ default: m.Contact })),
 );
+const Faq = dynamic(() => import("@/components/sections/Faq").then((m) => ({ default: m.Faq })));
 
 export default async function Home() {
   const [profile, projects, experiences, skills, services, socials, funding, tagline] =
@@ -88,6 +89,8 @@ export default async function Home() {
       <TestimonialsSection />
 
       <Support funding={funding} />
+
+      <Faq />
 
       <Contact socials={socials} email={contactEmail} />
 

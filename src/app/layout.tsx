@@ -4,7 +4,9 @@ import { GeistMono } from "geist/font/mono";
 import { ReactNode } from "react";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { GoogleAnalytics, WebVitals } from "@/components/common/ClientOnlyComponents";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { PersonJsonLd, WebSiteJsonLd } from "@/lib/seo/jsonld";
 import { SITE } from "@/lib/seo/site";
@@ -71,8 +73,6 @@ export const metadata: Metadata = {
 
 const ScrollToTop = dynamic(() => import("@/components/common/ScrollToTop"));
 
-const isDebug = process.env.NODE_ENV === "development";
-
 const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
     <html
@@ -80,8 +80,6 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
       suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
-      {isDebug ? null : <GoogleAnalytics />}
-
       <body className={GeistSans.className}>
         <PersonJsonLd />
         <WebSiteJsonLd />
@@ -91,10 +89,12 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
           enableSystem
           disableTransitionOnChange
         >
-          {isDebug ? <WebVitals /> : null}
           <main>{children}</main>
           <ScrollToTop />
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
+        <GoogleAnalytics />
       </body>
     </html>
   );
