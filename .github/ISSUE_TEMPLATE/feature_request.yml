@@ -1,56 +1,70 @@
-name: Feature request
-description: Suggest an idea for this project
+name: Feature Request
+description: Suggest an improvement or new feature for portfolio-nextjs v2
 title: "[Feature Request]: "
 labels: ["enhancement"]
 assignees:
   - nixrajput
 body:
-  - type: input
-    id: contact
+  - type: markdown
     attributes:
-      label: Contact Details
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. email@example.com
-    validations:
-      required: false
-  - type: textarea
-    id: feature
+      value: |
+        Thanks for suggesting a feature!
+        Before submitting, check [existing issues](https://github.com/nixrajput/portfolio-nextjs/issues) and [discussions](https://github.com/nixrajput/portfolio-nextjs/discussions) to see if it has already been proposed.
+
+  - type: dropdown
+    id: area
     attributes:
-      label: Is your feature request related to a problem? Please describe.
-      description: A clear and concise description of what the problem is.
-      placeholder: Write here
+      label: Scope / area
+      description: Which part of the project does this feature relate to?
+      multiple: false
+      options:
+        - Homepage / UI / Design
+        - Projects section
+        - Experience / Skills
+        - Testimonials
+        - Admin panel
+        - SEO / Analytics
+        - CI / Developer tooling
+        - Other
     validations:
       required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What problem does this feature solve? Why is it needed?
+      placeholder: "As a visitor / admin, I find it hard to ..."
+    validations:
+      required: true
+
   - type: textarea
     id: solution
     attributes:
-      label: Describe the solution you'd like
-      description: A clear and concise description of what you want to happen.
-      placeholder: Write here
+      label: Proposed solution
+      description: Describe the feature you would like to see.
+      placeholder: "I would like ..."
     validations:
       required: true
+
   - type: textarea
     id: alternatives
     attributes:
-      label: Describe alternatives you've considered
-      description: A clear and concise description of any alternative solutions or features you've considered.
-      placeholder: Write here
-    validations:
-      required: true
+      label: Alternatives considered
+      description: Any alternative approaches you have thought about?
+      placeholder: "Instead, one could ..."
+
   - type: textarea
-    id: additional-context
+    id: context
     attributes:
       label: Additional context
-      description: Add any other context or screenshots about the feature request here.
-      placeholder: Write here
+      description: Any other information, mockups, or references that would help.
+
   - type: checkboxes
-    id: terms
+    id: conduct
     attributes:
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/nixrajput/flutter_carousel_widget/CODE_OF_CONDUCT.md).
+      description: By submitting this issue you agree to follow our [Code of Conduct](https://github.com/nixrajput/portfolio-nextjs/blob/master/CODE_OF_CONDUCT.md).
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
-  - type: markdown
-    attributes:
-      value: "## Thanks for taking the time to fill out this feature request form!"

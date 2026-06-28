@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question / Discussion
+    url: https://github.com/nixrajput/portfolio-nextjs/discussions
+    about: For questions and general discussion, please use Discussions.
+  - name: Security report
+    url: https://github.com/nixrajput/portfolio-nextjs/security/advisories/new
+    about: Report a vulnerability privately (see SECURITY.md).

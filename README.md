@@ -1,6 +1,6 @@
-# Portfolio Website with Next.js and Sass
+# Nikhil Rajput — Portfolio (v2)
 
-This repository contains the source code for a portfolio website built using Next.js and Sass. This README.md file provides an overview of the project and instructions on how to set it up and customize it for your own use.
+Personal portfolio website for [Nikhil Rajput](https://nixrajput.com), rebuilt from scratch on the modern Next.js 16 stack with a database-driven content layer, GitHub OAuth admin panel, and full CI/test suite.
 
 [![Stars](https://img.shields.io/github/stars/nixrajput/portfolio-nextjs?label=Stars&style=flat)][repo]
 [![Forks](https://img.shields.io/github/forks/nixrajput/portfolio-nextjs?label=Forks&style=flat)][repo]
@@ -12,162 +12,209 @@ This repository contains the source code for a portfolio website built using Nex
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/nixrajput/portfolio-nextjs?label=Pull+Requests&style=flat)][pulls]
 [![GitHub License](https://img.shields.io/github/license/nixrajput/portfolio-nextjs?label=License&style=flat)][license]
 
+---
+
 ## Table of Contents
 
-- [Portfolio Website with Next.js and Sass](#portfolio-website-with-nextjs-and-sass)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Screenshots](#screenshots)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-  - [Usage](#usage)
-  - [Customization](#customization)
-    - [Changing Content](#changing-content)
-  - [Deployment](#deployment)
-  - [Contributing](#contributing)
-  - [License](#license)
-  - [Sponsor Me](#sponsor-me)
-  - [Connect With Me](#connect-with-me)
-  - [Activities](#activities)
+- [Stack](#stack)
+- [Architecture overview](#architecture-overview)
+- [Prerequisites](#prerequisites)
+- [Local setup](#local-setup)
+  - [Environment variables](#environment-variables)
+  - [Database setup](#database-setup)
+  - [Git hooks](#git-hooks)
+  - [Run the dev server](#run-the-dev-server)
+- [Commands](#commands)
+- [Admin panel](#admin-panel)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [Sponsor me](#sponsor-me)
+- [Connect with me](#connect-with-me)
 
-## Features
+---
 
-- Responsive design for various screen sizes.
-- A customizable portfolio section to showcase your projects.
-- An about section to introduce yourself.
-- Easily customizable with Sass for styling.
+## Stack
 
-## Screenshots
+| Layer | Technology |
+|---|---|
+| Framework | [Next.js 16](https://nextjs.org/) (App Router, Turbopack) |
+| UI library | [React 19](https://react.dev/) |
+| Language | TypeScript |
+| Styling | [Tailwind CSS v4](https://tailwindcss.com/), Geist font |
+| Animation | [Framer Motion](https://www.framer-motion.com/) |
+| Icons | [Lucide React](https://lucide.dev/) |
+| Database | PostgreSQL via [postgres-js](https://github.com/porsager/postgres) |
+| ORM | [Drizzle ORM](https://orm.drizzle.team/) |
+| Auth | [Auth.js v5](https://authjs.dev/) — GitHub OAuth |
+| File storage | [Vercel Blob](https://vercel.com/docs/storage/vercel-blob) |
+| Email | [Resend](https://resend.com/) |
+| Analytics | [Vercel Analytics](https://vercel.com/analytics) + Google Analytics |
+| Package manager | [Bun](https://bun.sh/) |
+| Unit tests | [Vitest](https://vitest.dev/) + Testing Library |
+| E2E tests | [Playwright](https://playwright.dev/) |
+| Deployment | [Vercel](https://vercel.com/) |
 
-![Screenshot 1](/screenshot-desktop.png)
+---
 
-## Getting Started
+## Architecture overview
 
-Follow these instructions to get the project up and running on your local machine.
+- **DB-driven content** — profile, projects, experiences, skills, services, social links, and taglines are stored in PostgreSQL and seeded via `bun run db:seed`. The admin panel allows live CRUD editing.
+- **GitHub cache** — project metadata (stars, forks, descriptions) is fetched from the GitHub API at build time and revalidated server-side via `GITHUB_TOKEN`. Only repos listed in the database are enriched.
+- **Testimonials** — visitors can submit testimonials with an optional avatar upload to Vercel Blob. Submissions land in a moderation queue; the admin approves or rejects them before they appear publicly. Resend emails the admin on new submissions.
+- **Admin panel** — protected by GitHub OAuth (`AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET`). Access is restricted to the GitHub login set in `ADMIN_GITHUB_LOGIN` (default: `nixrajput`). The panel exposes CRUD tabs for all content types plus the testimonial moderation queue.
+- **SEO / GEO** — structured metadata, Open Graph, Twitter cards, Google verification, and `robots.txt` are generated from the database profile row and site config.
 
-### Prerequisites
+---
 
-You need to have the following software installed on your computer:
+## Prerequisites
 
-- [Node.js](https://nodejs.org/) (LTS version recommended)
-- [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/) or [Yarn](https://yarnpkg.com/) package manager
+- **[Bun](https://bun.sh/) ≥ 1.1** — the only supported package manager and runtime.
+- **PostgreSQL ≥ 14** — running locally or via a managed service (Neon, Supabase, etc.).
+- A **GitHub OAuth App** for admin login (Settings → Developer settings → OAuth Apps).
 
-### Installation
+---
 
-1. Star the repository.
+## Local setup
 
-2. Clone this repository to your local machine using the following command:
-
-   ```bash
-   git clone https://github.com/nixrajput/portfolio-nextjs.git
-   ```
-
-3. Navigate to the project directory:
-
-   ```bash
-   cd portfolio-nextjs
-   ```
-
-4. Install the project dependencies:
-
-   If you're using npm:
-
-   ```bash
-   npm install
-   ```
-
-   If you're using pnpm:
-
-   ```bash
-   pnpm install
-   ```
-
-   If you're using Yarn:
-
-   ```bash
-   yarn install
-   ```
-
-## Usage
-
-To start the development server and view the website locally, run the following command:
+### 1. Clone and install
 
 ```bash
-npm run dev
-#or
-pnpm run dev
-# or
-yarn dev
+git clone https://github.com/nixrajput/portfolio-nextjs.git
+cd portfolio-nextjs
+bun install
 ```
 
-This will start the Next.js development server, and you can access the website in your web browser at `http://localhost:3000`.
+### 2. Environment variables
 
-## Customization
+Copy `.env.example` to `.env.local` and fill in the values:
 
-You can customize various aspects of the portfolio website to make it your own.
+```bash
+cp .env.example .env.local
+```
 
-### Changing Content
+| Variable | Required | Description |
+|---|---|---|
+| `DATABASE_URL` | Yes | PostgreSQL connection string, e.g. `postgres://user:pass@localhost:5432/portfolio` |
+| `AUTH_SECRET` | Yes | Random secret for Auth.js session encryption (`openssl rand -base64 32`) |
+| `AUTH_GITHUB_ID` | Yes | GitHub OAuth App client ID |
+| `AUTH_GITHUB_SECRET` | Yes | GitHub OAuth App client secret |
+| `ADMIN_GITHUB_LOGIN` | Yes | GitHub username allowed to access the admin panel (e.g. `nixrajput`) |
+| `GITHUB_TOKEN` | Recommended | GitHub personal access token for project metadata fetching (higher rate limits) |
+| `BLOB_READ_WRITE_TOKEN` | Yes (prod) | Vercel Blob token for testimonial avatar uploads |
+| `RESEND_API_KEY` | Yes (prod) | Resend API key for admin notification emails |
+| `CONTACT_EMAIL` | Yes (prod) | Email address to receive testimonial submission notifications |
+| `REVALIDATE_SECRET` | Yes (prod) | Secret for the `/api/revalidate` on-demand revalidation endpoint |
+| `NEXT_PUBLIC_SITE_URL` | Yes | Canonical site URL, e.g. `https://nixrajput.com` |
+| `NEXT_PUBLIC_GTAG_ID` | Optional | Google Analytics measurement ID (e.g. `G-XXXXXXXXXX`) |
+| `NEXT_PUBLIC_GOOGLE_VERIFICATION_TOKEN` | Optional | Google Search Console site verification token |
+| `NEXT_PUBLIC_RESUME_LINK` | Optional | Public URL for the downloadable resume |
 
-1. Update the content in the `data` directory:
-   - Edit the `projects.ts` file to add or modify project details.
-   - Edit the `services.ts` file to add or modify services you provide.
-   - Edit the `experiences.ts` file to add or modify experiences you have.
-   - Edit the `skills.ts` file to add or modify skills you know.
-   - Edit the `socialLinks.ts` file to add or modify social media links.
+### 3. Database setup
 
-2. Replace or add images in the `public/images` directory to match your projects and profile picture.
+Run migrations to create the schema, then seed initial data:
+
+```bash
+bunx drizzle-kit migrate
+bun run db:seed
+```
+
+### 4. Git hooks
+
+Enable the pre-push lint + format gate once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+This runs `bun run lint` and `bun run format:check` before every push. Bypass in an emergency with `git push --no-verify`.
+
+### 5. Run the dev server
+
+```bash
+bun run dev
+```
+
+The site is available at [http://localhost:4000](http://localhost:4000).
+
+---
+
+## Commands
+
+| Command | Description |
+|---|---|
+| `bun run dev` | Start dev server (Turbopack, port 4000) |
+| `bun run build` | Production build (Turbopack) |
+| `bun run start` | Start production server |
+| `bun run lint` | Run ESLint |
+| `bun run lint:fix` | Run ESLint with auto-fix |
+| `bun run format` | Format source files with Prettier |
+| `bun run format:check` | Check formatting without writing |
+| `bun run typecheck` | Run `tsc --noEmit` |
+| `bun run test` | Run Vitest unit tests |
+| `bun run test:watch` | Run Vitest in watch mode |
+| `bun run test:e2e` | Run Playwright end-to-end tests |
+| `bun run db:generate` | Generate a new Drizzle migration |
+| `bun run db:migrate` | Apply pending migrations |
+| `bun run db:push` | Push schema changes directly (dev only) |
+| `bun run db:studio` | Open Drizzle Studio |
+| `bun run db:seed` | Seed the database with initial data |
+
+---
+
+## Admin panel
+
+The admin panel is at `/admin` and requires authentication via GitHub OAuth.
+
+- Only the GitHub account set in `ADMIN_GITHUB_LOGIN` (e.g. `nixrajput`) can sign in.
+- After signing in you have access to CRUD tabs for profile, projects, experiences, skills, services, social links, taglines, and funding links.
+- Testimonial submissions appear in a moderation queue. Approve a testimonial to make it visible on the site; reject to discard it.
+
+---
 
 ## Deployment
 
-To deploy the portfolio website to a hosting service of your choice, follow the deployment instructions for Next.js applications. Some popular hosting options include Vercel, Netlify, and GitHub Pages.
+The site is deployed on [Vercel](https://vercel.com/). The main branch deploys automatically.
 
-Remember to configure environment variables for sensitive information like email credentials if needed.
+1. Import the repository in Vercel.
+2. Add all required environment variables in the Vercel project settings.
+3. Provision a PostgreSQL database (Vercel Postgres / Neon) and set `DATABASE_URL`.
+4. Run migrations against the production database (via `bunx drizzle-kit migrate` with the production `DATABASE_URL`).
+5. Push to `master` — Vercel builds and deploys automatically.
+
+---
 
 ## Contributing
 
-If you would like to contribute to this project, feel free to fork the repository, make your changes, and submit a pull request. Please follow the guidelines in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
+
+---
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT — see [LICENSE](LICENSE).
 
-## Sponsor Me
+---
 
-By sponsoring my efforts, you're not merely contributing to the development of my projects; you're investing in its growth and sustainability.
-
-Your support empowers me to dedicate more time and resources to improving the project's features, addressing issues, and ensuring its continued relevance in the rapidly evolving landscape of technology.
-
-Your sponsorship directly fuels innovation, fosters a vibrant community, and helps maintain the project's high standards of quality. Together, we can shape the future of the projects and make a lasting impact in the open-source community.
-
-Thank you for considering sponsoring my work!
+## Sponsor me
 
 [![Sponsor](https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://github.com/sponsors/nixrajput)
-
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/nixrajput)
-
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/nixrajput)
 
-## Connect With Me
+---
+
+## Connect with me
 
 [![GitHub: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=GitHub&logoColor=333&link=https://www.github.com/nixrajput)][github]
-[![Linkedin: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=LinkedIn&logoColor=blue&link=https://www.linkedin.com/in/nixrajput)][linkedin]
+[![LinkedIn: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=LinkedIn&logoColor=blue&link=https://www.linkedin.com/in/nixrajput)][linkedin]
 [![Instagram: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=Instagram&link=https://www.instagram.com/nixrajput)][instagram]
-[![Twitter: nixrajput07](https://img.shields.io/badge/nixrajput-EFF7F6?logo=X&logoColor=333&link=https://x.com/nixrajput)][twitter]
-[![Telegram: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=Telegram&link=https://telegram.me/nixrajput)][telegram]
-[![Gmail: nkr.nikhi.nkr@gmail.com](https://img.shields.io/badge/nkr.nikhil.nkr@gmail.com-EFF7F6?logo=Gmail&link=mailto:nkr.nikhil.nkr@gmail.com)][gmail]
-
-## Activities
-
-![Alt](https://repobeats.axiom.co/api/embed/39717929794c9e56c46a4313ee2c33347cf209d1.svg "Repobeats analytics image")
+[![X: nixrajput](https://img.shields.io/badge/nixrajput-EFF7F6?logo=X&logoColor=333&link=https://x.com/nixrajput)][twitter]
 
 [github]: https://github.com/nixrajput
-[twitter]: https://twitter.com/nixrajput07
+[twitter]: https://x.com/nixrajput
 [instagram]: https://instagram.com/nixrajput
 [linkedin]: https://linkedin.com/in/nixrajput
-[telegram]: https://telegram.me/nixrajput
-[gmail]: mailto:nkr.nikhil.nkr@gmail.com
 [repo]: https://github.com/nixrajput/portfolio-nextjs
 [issues]: https://github.com/nixrajput/portfolio-nextjs/issues
 [pulls]: https://github.com/nixrajput/portfolio-nextjs/pulls
-[license]: https://github.com/nixrajput/portfolio-nextjs/blob/master/LICENSE.md
+[license]: https://github.com/nixrajput/portfolio-nextjs/blob/master/LICENSE
