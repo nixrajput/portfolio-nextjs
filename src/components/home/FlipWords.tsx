@@ -31,20 +31,15 @@ export function FlipWords({
   }
 
   return (
-    <span className={cn("relative inline-block", className)}>
+    <span className={cn("relative inline-block overflow-hidden align-bottom", className)}>
       <AnimatePresence mode="wait">
         <motion.span
           key={word}
           initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          exit={{
-            opacity: 0,
-            y: -16,
-            filter: "blur(6px)",
-            position: "absolute",
-          }}
+          exit={{ opacity: 0, y: -16, filter: "blur(6px)" }}
           transition={{ duration: 0.4, ease: "easeInOut" }}
-          className="inline-block whitespace-nowrap"
+          className="block whitespace-nowrap"
         >
           {word}
         </motion.span>

@@ -14,10 +14,14 @@ function Word({
   range: [number, number];
 }) {
   const opacity = useTransform(progress, range, [0.15, 1]);
+  // inline-block so the word is one unit; the trailing real space keeps natural
+  // word spacing and lets the line wrap normally.
   return (
-    <span className="relative mr-[0.25em] inline-block">
-      <motion.span style={{ opacity }}>{children}</motion.span>
-    </span>
+    <>
+      <motion.span style={{ opacity }} className="inline-block">
+        {children}
+      </motion.span>{" "}
+    </>
   );
 }
 
@@ -26,8 +30,8 @@ export function WordReveal({ text, className }: { text: string; className?: stri
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    // reveal spans from when the element enters until it reaches the upper third
-    offset: ["start 0.85", "start 0.25"],
+    // reveal completes while the element scrolls through the viewport — no extra track
+    offset: ["start 0.9", "end 0.5"],
   });
 
   const words = text.split(" ");
