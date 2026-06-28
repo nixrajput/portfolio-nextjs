@@ -23,7 +23,7 @@ const optionalUrl = z
   .transform((v) => (v === "" || v === undefined ? undefined : v))
   .superRefine((v, ctx) => {
     if (v !== undefined && !isSafeHttpUrl(v)) {
-      ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Must be a valid URL" });
+      ctx.addIssue({ code: "custom", message: "Must be a valid URL" });
     }
   });
 
@@ -41,13 +41,13 @@ function socialHandle(baseUrl: string, handlePattern: RegExp, label: string) {
       if (v === undefined) return;
       if (/^https?:\/\//i.test(v)) {
         if (!isSafeHttpUrl(v)) {
-          ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Must be a valid URL" });
+          ctx.addIssue({ code: "custom", message: "Must be a valid URL" });
         }
         return;
       }
       if (!handlePattern.test(v.replace(/^@/, ""))) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: "custom",
           message: `Enter a valid ${label} username or URL`,
         });
       }
@@ -76,7 +76,7 @@ const instagramHandle = socialHandle(
 
 export const submitTestimonialSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(80),
-  email: z.string().trim().toLowerCase().email("Enter a valid email").max(200),
+  email: z.email("Enter a valid email").trim().toLowerCase().max(200),
   relationship: z.string().trim().min(2, "Tell me how you know me").max(120),
   content: z
     .string()
@@ -96,10 +96,10 @@ export const submitTestimonialSchema = z.object({
 export type SubmitTestimonialInput = z.infer<typeof submitTestimonialSchema>;
 
 export const moderateTestimonialSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   action: z.enum(["approve", "reject", "delete", "feature", "unfeature"]),
 });
 
 export const reorderTestimonialsSchema = z.object({
-  ids: z.array(z.string().uuid()).min(1),
+  ids: z.array(z.uuid()).min(1),
 });

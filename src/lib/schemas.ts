@@ -9,8 +9,8 @@ export const profileInsertSchema = z.object({
   summary: z.string().min(1),
   stats: z.record(z.string(), z.union([z.string(), z.number()])).default({}),
   roles: z.array(z.string()).default([]),
-  resumeUrl: z.string().url().nullable().optional(),
-  avatarUrl: z.string().url().nullable().optional(),
+  resumeUrl: z.url().nullable().optional(),
+  avatarUrl: z.url().nullable().optional(),
 });
 
 export const projectInsertSchema = z.object({
@@ -54,14 +54,14 @@ export const serviceInsertSchema = z.object({
 
 export const socialLinkInsertSchema = z.object({
   platform: z.string().min(1),
-  url: z.string().url(),
+  url: z.url(),
   username: z.string().nullable().optional(),
   order: z.number().int().nonnegative().default(0),
 });
 
 export const fundingLinkInsertSchema = z.object({
   label: z.string().min(1),
-  url: z.string().url(),
+  url: z.url(),
   primary: z.boolean().default(false),
   order: z.number().int().nonnegative().default(0),
 });
@@ -88,7 +88,7 @@ export const reorderSchema = z.object({
 export const githubRepoSchema = z.object({
   name: z.string(),
   full_name: z.string(),
-  html_url: z.string().url(),
+  html_url: z.url(),
   description: z.string().nullable(),
   homepage: z.string().nullable(),
   language: z.string().nullable(),
