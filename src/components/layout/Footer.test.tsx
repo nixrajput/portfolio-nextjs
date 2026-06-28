@@ -68,7 +68,7 @@ describe("Footer", () => {
 
   it("renders the sign-off and copyright line", () => {
     render(<Footer socials={mockSocials} />);
-    expect(screen.getByText(/Designed & built by Nikhil Rajput/)).toBeTruthy();
+    expect(screen.getByText(/Designed & built in India/)).toBeTruthy();
     expect(screen.getByText(/All rights reserved/)).toBeTruthy();
   });
 
@@ -80,6 +80,6 @@ describe("Footer", () => {
 
   it("renders empty socials gracefully", () => {
     render(<Footer socials={[]} />);
-    expect(screen.getByText(/Designed & built by Nikhil Rajput/)).toBeTruthy();
+    expect(screen.getByText(/Designed & built in India/)).toBeTruthy();
   });
 });
