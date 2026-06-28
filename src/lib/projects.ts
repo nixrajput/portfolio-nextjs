@@ -38,11 +38,13 @@ export function mergeProjects(curation: Project[], repos: GithubRepo[]): MergedP
   });
 }
 
-/** Async wrapper: read DB curation + live repos, then merge. */
+/** Async wrapper: read DB curation + live repos, then merge.
+ *  GitHub is best-effort: rate-limits or network errors return DB-only data
+ *  with null stats so the section still renders at build time. */
 export async function getProjects(): Promise<MergedProject[]> {
   const [curation, repos] = await Promise.all([
     db.select().from(projectsTable),
-    listUserRepos("nixrajput"),
+    listUserRepos("nixrajput").catch(() => [] as GithubRepo[]),
   ]);
   return mergeProjects(curation, repos);
 }
