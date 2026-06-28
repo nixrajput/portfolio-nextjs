@@ -47,3 +47,8 @@ yarn.lock
 
 # Internal planning artifacts (specs, phase plans, brainstorming sessions)
 docs/superpowers/
+# Playwright MCP + design screenshots (local only)
+.playwright-mcp/
+desktop-full.png
+mobile-hero.png
+*.playwright.png

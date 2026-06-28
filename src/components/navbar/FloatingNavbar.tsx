@@ -17,6 +17,7 @@ const SECTIONS: NavSection[] = [
   { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
   { id: "services", label: "Services" },
+  { id: "testimonials", label: "Testimonials" },
   { id: "contact", label: "Contact" },
 ];
 

@@ -31,6 +31,11 @@ const Services = dynamic(() =>
 const Support = dynamic(() =>
   import("@/components/home/Support").then((m) => ({ default: m.Support })),
 );
+const TestimonialsSection = dynamic(() =>
+  import("@/components/sections/TestimonialsSection").then((m) => ({
+    default: m.TestimonialsSection,
+  })),
+);
 const Contact = dynamic(() =>
   import("@/components/home/Contact").then((m) => ({ default: m.Contact })),
 );
@@ -78,7 +83,7 @@ export default async function Home() {
 
       <Services services={services} />
 
-      {/* Phase 6: <Testimonials id="testimonials" /> goes here, between Services and Support */}
+      <TestimonialsSection />
 
       <Support funding={funding} />
 
