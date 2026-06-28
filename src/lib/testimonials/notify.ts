@@ -8,7 +8,10 @@ type NotifyInput = {
   imageUrl: string | null;
 };
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nixlab.co.in";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://nixrajput.com";
+
+// Must be a domain verified in Resend; matches the site domain.
+const FROM_ADDRESS = "Portfolio <noreply@nixrajput.com>";
 
 function escapeHtml(s: string): string {
   return s
@@ -48,7 +51,7 @@ export async function notifyNewTestimonial(input: NotifyInput): Promise<void> {
   const resend = new Resend(apiKey);
   const { subject, html } = buildTestimonialEmail(input);
   await resend.emails.send({
-    from: "Portfolio <noreply@nixlab.co.in>",
+    from: FROM_ADDRESS,
     to,
     subject,
     html,
