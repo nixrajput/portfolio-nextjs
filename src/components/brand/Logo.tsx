@@ -37,8 +37,8 @@ export function Logo({
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        <circle cx="21" cy="9" r="3.5" fill="url(#logo-spark)" />
-        <circle cx="21" cy="9" r="1.8" fill="#ec4899" />
+        <circle cx="21" cy="9" r="6" fill="url(#logo-spark)" />
+        <circle cx="21" cy="9" r="2.2" fill="#ec4899" />
       </svg>
       {withWordmark ? (
         <span className="gradient-text font-mono text-lg leading-none font-semibold tracking-tight">

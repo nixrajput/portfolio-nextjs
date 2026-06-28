@@ -11,6 +11,6 @@
     </radialGradient>
   </defs>
   <path d="M52 128 V62 L118 116 V52" fill="none" stroke="url(#n)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="118" cy="52" r="20" fill="url(#spark)"/>
-  <circle cx="118" cy="52" r="10" fill="#ec4899"/>
+  <circle cx="118" cy="52" r="34" fill="url(#spark)"/>
+  <circle cx="118" cy="52" r="12.5" fill="#ec4899"/>
 </svg>
