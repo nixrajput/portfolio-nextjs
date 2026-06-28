@@ -10,6 +10,7 @@ import {
   socialLinks,
   fundingLinks,
   taglines,
+  testimonials,
   seedHistory,
 } from "./schema";
 
@@ -350,6 +351,100 @@ const fundingLinkRows = [
   },
 ];
 
+// Demo testimonials covering every case (pending/approved/rejected, featured,
+// complete vs sparse details, a duplicate email). Seeded ONLY into an empty
+// testimonials table so real user submissions are never wiped.
+const testimonialRows: (typeof testimonials.$inferInsert)[] = [
+  {
+    name: "Aarav Mehta",
+    email: "aarav.mehta@example.com",
+    relationship: "College friend & hackathon teammate",
+    content:
+      "Nikhil is the most driven person I studied with. We built our first hackathon project together and he carried the team - clean architecture, calm under pressure, and genuinely fun to work with.",
+    status: "approved",
+    featured: true,
+    order: 0,
+    linkedinUrl: "https://www.linkedin.com/in/aaravmehta",
+    githubUrl: "https://github.com/aaravmehta",
+    websiteUrl: "https://aarav.dev",
+  },
+  {
+    name: "Priya Sharma",
+    email: "priya.sharma@example.com",
+    relationship: "Engineering Manager at Merito",
+    content:
+      "I managed Nikhil for over a year. He consistently shipped polished features ahead of schedule and raised the quality bar for the whole team. A rare mix of speed and craft.",
+    status: "approved",
+    featured: true,
+    order: 1,
+    linkedinUrl: "https://www.linkedin.com/in/priyasharma",
+  },
+  {
+    name: "Rahul Verma",
+    email: "rahul.verma@example.com",
+    relationship: "Open-source collaborator",
+    content:
+      "We maintain a Flutter package together. Nikhil's reviews are thorough and kind, and his docs are the reason new contributors actually stick around.",
+    status: "approved",
+    featured: false,
+    order: 2,
+    githubUrl: "https://github.com/rahulverma",
+    xUrl: "https://x.com/rahulverma",
+  },
+  {
+    name: "Dr. Anjali Rao",
+    email: "anjali.rao@example.com",
+    relationship: "Professor, Computer Science",
+    content:
+      "Nikhil was among the most curious students I taught. He asked the questions the rest of the class was afraid to, and he always followed through with working code.",
+    status: "approved",
+    featured: false,
+    order: 3,
+  },
+  {
+    name: "Sofia Almeida",
+    email: "sofia.almeida@example.com",
+    relationship: "Product designer, freelance project",
+    content:
+      "Handing designs to Nikhil felt effortless. He respected the details, asked the right questions, and the final build looked better than the mockups.",
+    status: "pending",
+    featured: false,
+    order: 4,
+    instagramUrl: "https://instagram.com/sofia.designs",
+    websiteUrl: "https://sofiaalmeida.design",
+  },
+  {
+    name: "Karan Singh",
+    email: "karan.singh@example.com",
+    relationship: "Former teammate",
+    content: "Dependable, sharp, and a great teammate. Would work with him again in a heartbeat.",
+    status: "pending",
+    featured: false,
+    order: 5,
+  },
+  {
+    // Duplicate email of Aarav above — exercises the admin duplicate flag.
+    name: "Aarav Mehta",
+    email: "aarav.mehta@example.com",
+    relationship: "College friend",
+    content:
+      "Adding a second note because I forgot to mention - he also mentored three juniors on our team and they all credit him for their growth.",
+    status: "pending",
+    featured: false,
+    order: 6,
+  },
+  {
+    name: "Spammy McSpamface",
+    email: "spam@example.com",
+    relationship: "n/a",
+    content:
+      "Check out my amazing crypto deals at this totally legit link, definitely not spam at all friend.",
+    status: "rejected",
+    featured: false,
+    order: 7,
+  },
+];
+
 // Everything the seed writes, in one object — the hash of this is what gates a
 // reseed. Adding/changing any value changes the checksum and triggers a reseed.
 const SEED_DATA = {
@@ -414,7 +509,23 @@ async function seed() {
   console.log("Seed complete.");
 }
 
+/**
+ * Seed demo testimonials ONLY when the table is empty, so real user
+ * submissions are never wiped by a reseed. Runs independently of the
+ * checksum-gated content reseed above.
+ */
+async function seedTestimonialsIfEmpty() {
+  const existing = await db.select({ id: testimonials.id }).from(testimonials).limit(1);
+  if (existing.length > 0) {
+    console.log("Testimonials already present; skipping demo seed.");
+    return;
+  }
+  await db.insert(testimonials).values(testimonialRows);
+  console.log(`Seeded ${testimonialRows.length} demo testimonials.`);
+}
+
 seed()
+  .then(() => seedTestimonialsIfEmpty())
   .then(() => process.exit(0))
   .catch((err) => {
     console.error(err);

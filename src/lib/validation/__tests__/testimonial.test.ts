@@ -4,6 +4,7 @@ import { submitTestimonialSchema, moderateTestimonialSchema } from "../testimoni
 describe("submitTestimonialSchema", () => {
   const valid = {
     name: "Jane Doe",
+    email: "jane@example.com",
     relationship: "Former colleague at NixLab",
     content: "Nikhil shipped our API rewrite two weeks early. Exceptional engineer.",
     website: "",
@@ -32,8 +33,8 @@ describe("submitTestimonialSchema", () => {
   });
 
   it("defaults the honeypot to empty when omitted", () => {
-    const { name, relationship, content } = valid;
-    expect(submitTestimonialSchema.parse({ name, relationship, content }).website).toBe("");
+    const { name, email, relationship, content } = valid;
+    expect(submitTestimonialSchema.parse({ name, email, relationship, content }).website).toBe("");
   });
 
   it("normalizes a bare Instagram handle to a canonical URL", () => {

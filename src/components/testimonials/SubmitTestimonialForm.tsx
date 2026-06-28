@@ -116,6 +116,22 @@ export function SubmitTestimonialForm({
         />
       </label>
 
+      {/* Email — kept private, used only to identify the submitter */}
+      <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
+        Your email
+        <input
+          name="email"
+          type="email"
+          required
+          maxLength={200}
+          placeholder="jane@example.com"
+          className={inputClass}
+        />
+        <span className="text-muted text-xs font-normal">
+          Kept private — never shown on the site.
+        </span>
+      </label>
+
       {/* Relationship */}
       <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
         How do you know me?

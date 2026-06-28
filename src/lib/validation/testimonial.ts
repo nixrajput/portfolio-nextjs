@@ -76,6 +76,7 @@ const instagramHandle = socialHandle(
 
 export const submitTestimonialSchema = z.object({
   name: z.string().trim().min(2, "Name must be at least 2 characters").max(80),
+  email: z.string().trim().toLowerCase().email("Enter a valid email").max(200),
   relationship: z.string().trim().min(2, "Tell me how you know me").max(120),
   content: z
     .string()

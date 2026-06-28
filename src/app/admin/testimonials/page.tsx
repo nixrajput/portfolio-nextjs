@@ -21,6 +21,13 @@ export default async function TestimonialsPage() {
   const sorted = [...rows].sort((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status]);
   const pendingCount = rows.filter((r) => r.status === "pending").length;
 
+  // Flag possible duplicates: emails that appear on more than one testimonial.
+  const emailCounts = new Map<string, number>();
+  for (const r of rows) {
+    if (r.email) emailCounts.set(r.email, (emailCounts.get(r.email) ?? 0) + 1);
+  }
+  const isDuplicate = (email: string | null) => !!email && (emailCounts.get(email) ?? 0) > 1;
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between gap-3">
@@ -47,7 +54,9 @@ export default async function TestimonialsPage() {
                   <span className="text-muted text-xs">{t.relationship}</span>
                   <StatusBadge status={t.status} />
                   {t.featured ? <Badge tone="brand">Featured</Badge> : null}
+                  {isDuplicate(t.email) ? <Badge tone="warning">Possible duplicate</Badge> : null}
                 </div>
+                {t.email ? <span className="text-muted text-xs">{t.email}</span> : null}
                 <p className="text-muted line-clamp-2 text-sm">{t.content}</p>
               </div>
 
@@ -55,11 +64,13 @@ export default async function TestimonialsPage() {
                 testimonial={{
                   id: t.id,
                   name: t.name,
+                  email: t.email,
                   relationship: t.relationship,
                   content: t.content,
                   imageUrl: t.imageUrl,
                   status: t.status,
                   featured: t.featured,
+                  duplicate: isDuplicate(t.email),
                   linkedinUrl: t.linkedinUrl,
                   githubUrl: t.githubUrl,
                   xUrl: t.xUrl,

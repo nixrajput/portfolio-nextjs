@@ -57,6 +57,13 @@
       "when": 1782666010279,
       "tag": "0007_gorgeous_white_queen",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1782675096750,
+      "tag": "0008_quiet_anthem",
+      "breakpoints": true
     }
   ]
 }

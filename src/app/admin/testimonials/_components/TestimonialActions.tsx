@@ -23,11 +23,13 @@ import { Badge } from "@/components/admin/ui";
 export type AdminTestimonial = {
   id: string;
   name: string;
+  email: string | null;
   relationship: string;
   content: string;
   imageUrl: string | null;
   status: "pending" | "approved" | "rejected";
   featured: boolean;
+  duplicate: boolean;
   linkedinUrl: string | null;
   githubUrl: string | null;
   xUrl: string | null;
@@ -77,10 +79,12 @@ export default function TestimonialActions({ testimonial }: { testimonial: Admin
                 <div className="min-w-0">
                   <div className="text-foreground font-medium">{t.name}</div>
                   <div className="text-muted text-sm">{t.relationship}</div>
+                  {t.email ? <div className="text-muted text-xs">{t.email}</div> : null}
                 </div>
-                <div className="ml-auto flex items-center gap-1.5">
+                <div className="ml-auto flex flex-wrap items-center justify-end gap-1.5">
                   <StatusBadge status={t.status} />
                   {t.featured ? <Badge tone="brand">Featured</Badge> : null}
+                  {t.duplicate ? <Badge tone="warning">Possible duplicate</Badge> : null}
                 </div>
               </div>
 

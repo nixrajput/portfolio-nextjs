@@ -145,6 +145,9 @@ export const testimonialStatus = pgEnum("testimonial_status", ["pending", "appro
 export const testimonials = pgTable("testimonials", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
+  // Soft identifier for the testimonial giver — used in the admin to flag
+  // possible duplicate submissions (not a hard unique constraint).
+  email: text("email"),
   relationship: text("relationship").notNull(),
   content: text("content").notNull(),
   imageUrl: text("image_url"),

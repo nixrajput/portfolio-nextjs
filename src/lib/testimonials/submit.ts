@@ -25,6 +25,7 @@ export async function submitTestimonial(
   // Step 2: Validate + honeypot check
   const parsed = submitTestimonialSchema.safeParse({
     name: formData.get("name"),
+    email: formData.get("email"),
     relationship: formData.get("relationship"),
     content: formData.get("content"),
     website: formData.get("website") ?? "",
@@ -58,6 +59,7 @@ export async function submitTestimonial(
     .insert(testimonials)
     .values({
       name: parsed.data.name,
+      email: parsed.data.email,
       relationship: parsed.data.relationship,
       content: parsed.data.content,
       imageUrl,

@@ -32,6 +32,7 @@ const headers = (ip: string) => new Headers({ "x-forwarded-for": ip });
 
 const good = {
   name: "Jane Doe",
+  email: "jane@example.com",
   relationship: "Worked together at NixLab",
   content: "Nikhil delivered our platform rewrite ahead of schedule. Stellar.",
   website: "",
