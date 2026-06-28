@@ -1,8 +1,10 @@
 import {
   pgTable,
+  pgEnum,
   serial,
   text,
   varchar,
+  uuid,
   integer,
   boolean,
   jsonb,
@@ -141,6 +143,20 @@ export const authVerificationTokens = pgTable(
   ],
 );
 
+export const testimonialStatus = pgEnum("testimonial_status", ["pending", "approved", "rejected"]);
+
+export const testimonials = pgTable("testimonials", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: text("name").notNull(),
+  relationship: text("relationship").notNull(),
+  content: text("content").notNull(),
+  imageUrl: text("image_url"),
+  status: testimonialStatus("status").notNull().default("pending"),
+  featured: boolean("featured").notNull().default(false),
+  order: integer("order").notNull().default(0),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 // Inferred types
 export type Profile = typeof profile.$inferSelect;
 export type NewProfile = typeof profile.$inferInsert;
@@ -156,3 +172,5 @@ export type SocialLink = typeof socialLinks.$inferSelect;
 export type NewSocialLink = typeof socialLinks.$inferInsert;
 export type FundingLink = typeof fundingLinks.$inferSelect;
 export type NewFundingLink = typeof fundingLinks.$inferInsert;
+export type Testimonial = typeof testimonials.$inferSelect;
+export type NewTestimonial = typeof testimonials.$inferInsert;
