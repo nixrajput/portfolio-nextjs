@@ -28,7 +28,6 @@ export function Logo({
             <stop offset="1" stopColor="#ec4899" stopOpacity="0" />
           </radialGradient>
         </defs>
-        <rect width="32" height="32" rx="8" fill="#0b0b14" />
         <path
           d="M9 23 V11 L21 21 V9"
           fill="none"
