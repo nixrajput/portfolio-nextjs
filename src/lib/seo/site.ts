@@ -1,10 +1,10 @@
-import { requireEnv } from "@/lib/env";
+import { requirePublicEnv } from "@/lib/env";
 
 export const SITE = {
   // Canonical production origin (https://nixrajput.com), env-driven with no
-  // hardcoded fallback — a missing value fails the build loudly rather than
-  // silently emitting the wrong domain across SEO, OG, JSON-LD, and sitemaps.
-  url: requireEnv("NEXT_PUBLIC_SITE_URL"),
+  // hardcoded fallback. Fails the build loudly on the server if missing; on the
+  // client it never throws (would crash hydration) since Next inlines the value.
+  url: requirePublicEnv("NEXT_PUBLIC_SITE_URL"),
   name: "Nikhil Rajput",
   title: "Nikhil Rajput — Software Engineer & AI Lead",
   description:
