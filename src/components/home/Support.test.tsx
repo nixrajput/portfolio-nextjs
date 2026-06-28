@@ -25,7 +25,8 @@ describe("Support", () => {
     render(<Support funding={funding} />);
 
     const primaryLink = screen.getByRole("link", { name: /github sponsors/i });
-    expect(primaryLink).toHaveClass("bg-[image:var(--gradient-brand)]");
+    // Primary variant uses before: pseudo-element for the gradient (glassmorphic style)
+    expect(primaryLink.className).toMatch(/before:bg-\[image:var\(--gradient-brand\)\]/);
     expect(primaryLink).toHaveClass("text-white");
   });
 
@@ -135,6 +136,7 @@ describe("Support", () => {
     render(<Support funding={funding} />);
 
     const kofiLink = screen.getByRole("link", { name: /ko-fi/i });
-    expect(kofiLink).toHaveClass("bg-[image:var(--gradient-brand)]");
+    // Primary variant now uses a before: pseudo-element for the gradient (glassmorphic style)
+    expect(kofiLink.className).toMatch(/before:bg-\[image:var\(--gradient-brand\)\]/);
   });
 });

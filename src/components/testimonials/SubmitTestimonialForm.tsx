@@ -2,7 +2,6 @@
 
 import { useState, useRef } from "react";
 import { UploadCloud } from "lucide-react";
-import { Button } from "@/components/ui/Button";
 import { cn } from "@/utils/cn";
 
 type State = "idle" | "submitting" | "success" | "error";
@@ -10,15 +9,28 @@ type State = "idle" | "submitting" | "success" | "error";
 const inputClass =
   "w-full rounded-lg border border-border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-[var(--color-brand-violet)] transition";
 
-export function SubmitTestimonialForm({ onSuccess }: { onSuccess?: () => void }) {
+export const TESTIMONIAL_FORM_ID = "submit-testimonial-form";
+
+export function SubmitTestimonialForm({
+  onSuccess,
+  onStateChange,
+}: {
+  onSuccess?: () => void;
+  onStateChange?: (state: State) => void;
+}) {
   const [state, setState] = useState<State>("idle");
   const [error, setError] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  function updateState(next: State) {
+    setState(next);
+    onStateChange?.(next);
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setState("submitting");
+    updateState("submitting");
     setError(null);
     const formData = new FormData(e.currentTarget);
     const res = await fetch("/api/testimonials", {
@@ -26,13 +38,13 @@ export function SubmitTestimonialForm({ onSuccess }: { onSuccess?: () => void })
       body: formData,
     });
     if (res.ok) {
-      setState("success");
+      updateState("success");
       onSuccess?.();
       return;
     }
     const body = (await res.json().catch(() => ({}))) as { error?: string };
     setError(body.error ?? "Something went wrong. Please try again.");
-    setState("error");
+    updateState("error");
   }
 
   if (state === "success") {
@@ -44,7 +56,12 @@ export function SubmitTestimonialForm({ onSuccess }: { onSuccess?: () => void })
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
+    <form
+      id={TESTIMONIAL_FORM_ID}
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-4"
+      noValidate
+    >
       {/* Name */}
       <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
         Your name
@@ -169,16 +186,6 @@ export function SubmitTestimonialForm({ onSuccess }: { onSuccess?: () => void })
           {error}
         </p>
       )}
-
-      <Button
-        type="submit"
-        variant="primary"
-        size="md"
-        disabled={state === "submitting"}
-        className="w-full rounded-lg"
-      >
-        {state === "submitting" ? "Submitting…" : "Submit testimonial"}
-      </Button>
     </form>
   );
 }

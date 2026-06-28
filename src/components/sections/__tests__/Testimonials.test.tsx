@@ -59,6 +59,7 @@ vi.mock("@/components/motion/Reveal", () => ({
 // Mock SubmitTestimonialForm so dialog tests don't need fetch
 vi.mock("@/components/testimonials/SubmitTestimonialForm", () => ({
   SubmitTestimonialForm: () => <div data-testid="submit-form">Form</div>,
+  TESTIMONIAL_FORM_ID: "submit-testimonial-form",
 }));
 
 // Mock embla-carousel-react so Carousel works in jsdom

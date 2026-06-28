@@ -13,8 +13,12 @@ const base =
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
 const variants: Record<Variant, string> = {
+  // Glassy primary: the gradient lives on a ::before layer at reduced opacity
+  // (soft, not a harsh slab) with a subtle border + blur. `isolate` + the
+  // content being lifted via `[&>*]:relative [&>*]:z-10` keeps the white label
+  // ABOVE the gradient layer so it stays readable in both themes.
   primary:
-    "bg-[image:var(--gradient-brand)] text-white shadow-sm hover:opacity-90 transition-opacity saturate-[0.85] hover:saturate-100",
+    "relative isolate overflow-hidden border border-white/15 text-white shadow-sm backdrop-blur-sm [&>*]:relative [&>*]:z-10 before:pointer-events-none before:absolute before:inset-0 before:-z-0 before:bg-[image:var(--gradient-brand)] before:opacity-80 before:transition-opacity hover:before:opacity-95",
   secondary: "border border-border bg-surface text-foreground hover:bg-surface-2",
   ghost: "text-muted hover:text-foreground",
 };
@@ -49,6 +53,14 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
     ref,
   ) {
     const classes = cn(base, variants[variant], sizes[size], className);
+    // Wrap content in a positioned span so the label sits ABOVE the primary
+    // variant's gradient ::before layer (raw text nodes can't take z-index).
+    const content = (
+      <span className="relative z-10 inline-flex items-center gap-2">
+        {leftIcon}
+        {children}
+      </span>
+    );
 
     if ("href" in rest && rest.href !== undefined) {
       const { href, ...anchorRest } = rest as AsAnchor;
@@ -59,16 +71,14 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
           className={classes}
           {...anchorRest}
         >
-          {leftIcon}
-          {children}
+          {content}
         </a>
       );
     }
 
     return (
       <button ref={ref as React.Ref<HTMLButtonElement>} className={classes} {...(rest as AsButton)}>
-        {leftIcon}
-        {children}
+        {content}
       </button>
     );
   },

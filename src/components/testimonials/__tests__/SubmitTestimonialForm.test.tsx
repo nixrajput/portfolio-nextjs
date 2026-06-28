@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { SubmitTestimonialForm } from "../SubmitTestimonialForm";
+import { SubmitTestimonialForm, TESTIMONIAL_FORM_ID } from "../SubmitTestimonialForm";
 
 describe("SubmitTestimonialForm", () => {
   beforeEach(() => {
@@ -16,8 +16,15 @@ describe("SubmitTestimonialForm", () => {
     expect(honeypot.closest('[aria-hidden="true"]')).toBeTruthy();
   });
 
+  it("has the correct form id for external submit button", () => {
+    const { container } = render(<SubmitTestimonialForm />);
+    const form = container.querySelector("form");
+    expect(form).toBeTruthy();
+    expect(form!.id).toBe(TESTIMONIAL_FORM_ID);
+  });
+
   it("shows a success message after a successful submit", async () => {
-    render(<SubmitTestimonialForm />);
+    const { container } = render(<SubmitTestimonialForm />);
     fireEvent.change(screen.getByLabelText(/your name/i), {
       target: { value: "Jane" },
     });
@@ -27,7 +34,7 @@ describe("SubmitTestimonialForm", () => {
     fireEvent.change(screen.getByLabelText(/your testimonial/i), {
       target: { value: "A".repeat(25) },
     });
-    fireEvent.submit(screen.getByRole("button", { name: /submit/i }).closest("form")!);
+    fireEvent.submit(container.querySelector("form")!);
     await waitFor(() => expect(screen.getByRole("status")).toBeInTheDocument());
   });
 
@@ -36,8 +43,8 @@ describe("SubmitTestimonialForm", () => {
       ok: false,
       json: async () => ({ error: "Too many submissions." }),
     });
-    render(<SubmitTestimonialForm />);
-    fireEvent.submit(screen.getByRole("button", { name: /submit/i }).closest("form")!);
+    const { container } = render(<SubmitTestimonialForm />);
+    fireEvent.submit(container.querySelector("form")!);
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent(/too many/i));
   });
 
@@ -49,15 +56,6 @@ describe("SubmitTestimonialForm", () => {
     expect(fileInput.classList.contains("sr-only")).toBe(true);
     // A visible "Upload a photo" label should be present
     expect(screen.getByText(/upload a photo/i)).toBeInTheDocument();
-  });
-
-  it("submit button is rendered using the Button primitive (not a bare unstyled button)", () => {
-    render(<SubmitTestimonialForm />);
-    const btn = screen.getByRole("button", { name: /submit testimonial/i });
-    expect(btn).toBeTruthy();
-    expect(btn).not.toBeDisabled();
-    // Button primitive adds rounded-full from its base class
-    expect(btn.className).toMatch(/rounded/);
   });
 
   it("renders optional social link fields", () => {
@@ -74,5 +72,13 @@ describe("SubmitTestimonialForm", () => {
     expect(container.querySelector('input[name="githubUrl"]')).toBeTruthy();
     expect(container.querySelector('input[name="xUrl"]')).toBeTruthy();
     expect(container.querySelector('input[name="websiteUrl"]')).toBeTruthy();
+  });
+
+  it("calls onStateChange with submitting then success on successful submit", async () => {
+    const onStateChange = vi.fn();
+    const { container } = render(<SubmitTestimonialForm onStateChange={onStateChange} />);
+    fireEvent.submit(container.querySelector("form")!);
+    await waitFor(() => expect(onStateChange).toHaveBeenCalledWith("success"));
+    expect(onStateChange).toHaveBeenCalledWith("submitting");
   });
 });

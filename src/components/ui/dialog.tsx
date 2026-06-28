@@ -43,9 +43,9 @@ export const DialogContent = React.forwardRef<
       className={cn(
         "fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2",
         "w-[calc(100%-2rem)] max-w-md",
-        // Cap height + scroll internally so tall forms never overflow the viewport.
-        "max-h-[90vh] overflow-y-auto",
-        "bg-background border-border rounded-2xl border p-6 shadow-2xl",
+        // Flex column: header fixed, body scrolls, footer fixed.
+        "flex max-h-[90vh] flex-col",
+        "bg-background border-border rounded-2xl border shadow-2xl",
         "transition-opacity data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
         className,
       )}
@@ -69,14 +69,27 @@ export const DialogContent = React.forwardRef<
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
 export function DialogHeader({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("mb-4 flex flex-col gap-1.5", className)} {...props} />;
+  return (
+    <div
+      className={cn("border-border flex shrink-0 flex-col gap-1.5 border-b px-6 py-4", className)}
+      {...props}
+    />
+  );
 }
 DialogHeader.displayName = "DialogHeader";
+
+export function DialogBody({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  return <div className={cn("flex-1 overflow-y-auto px-6 py-4", className)} {...props} />;
+}
+DialogBody.displayName = "DialogBody";
 
 export function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={cn("mt-4 flex flex-col-reverse sm:flex-row sm:justify-end sm:gap-2", className)}
+      className={cn(
+        "border-border flex shrink-0 flex-col-reverse border-t px-6 py-4 sm:flex-row sm:justify-end sm:gap-2",
+        className,
+      )}
       {...props}
     />
   );
