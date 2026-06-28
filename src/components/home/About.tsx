@@ -11,9 +11,11 @@ export type AboutProfile = {
 function Stat({ value, label }: { value: number; label: string }) {
   const display = value >= 100 ? `${value}+` : `${value}`;
   return (
-    <div className="flex flex-col items-center gap-1 py-2 text-center">
-      <span className="gradient-text text-4xl font-bold tabular-nums sm:text-5xl">{display}</span>
-      <span className="text-muted text-sm">{label}</span>
+    <div className="flex flex-col items-center gap-1 px-2 py-2 text-center sm:px-4">
+      <span className="gradient-text text-3xl font-bold tabular-nums sm:text-4xl md:text-5xl">
+        {display}
+      </span>
+      <span className="text-muted text-xs sm:text-sm">{label}</span>
     </div>
   );
 }
