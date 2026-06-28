@@ -65,7 +65,7 @@ export function SubmitTestimonialModal({
     <>
       {trigger}
       <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogContent className="max-w-lg">
+        <DialogContent className="max-w-2xl">
           {submitted ? (
             <>
               <DialogHeader>
