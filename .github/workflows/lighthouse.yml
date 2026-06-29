@@ -43,6 +43,7 @@ jobs:
         run: bun run db:seed
         env:
           DATABASE_URL: postgres://lh:lh@localhost:5432/portfolio_lh
+          NEXT_PUBLIC_SITE_URL: https://nixrajput.com
 
       - name: Build
         run: bun run build

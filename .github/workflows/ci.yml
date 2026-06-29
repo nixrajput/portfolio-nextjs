@@ -99,6 +99,7 @@ jobs:
         run: bun run db:seed
         env:
           DATABASE_URL: postgres://e2e:e2e@localhost:5432/portfolio_e2e
+          NEXT_PUBLIC_SITE_URL: https://nixrajput.com
 
       - name: Build
         run: bun run build
