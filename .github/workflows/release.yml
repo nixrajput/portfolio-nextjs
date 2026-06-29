@@ -1,0 +1,64 @@
+name: Release
+
+# On every push to master (i.e. a merged PR), read the package.json version and
+# — if a matching tag doesn't already exist — create the tag and a GitHub
+# Release with auto-generated notes. The Version Check workflow guarantees each
+# merged PR carries a fresh version, so this produces exactly one release per
+# merge with no manual tagging.
+#
+# The "tag already exists" guard makes the job idempotent: re-runs, or pushes
+# that don't change the version, are a no-op instead of an error.
+on:
+  push:
+    branches: [master]
+  workflow_dispatch: {} # allow a manual re-run for the current version
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: Tag and release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # create the tag and the GitHub Release
+    steps:
+      - name: Check out
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # full history + tags for release-note generation
+          persist-credentials: false
+
+      - name: Read version
+        id: version
+        run: |
+          version=$(jq -r .version package.json)
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Check whether the tag already exists
+        id: exists
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view "${{ steps.version.outputs.tag }}" >/dev/null 2>&1 \
+            || git ls-remote --tags origin "refs/tags/${{ steps.version.outputs.tag }}" | grep -q .; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Tag ${{ steps.version.outputs.tag }} already exists — skipping release."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create release
+        if: steps.exists.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          # Tag the merge commit and publish a release with notes auto-generated
+          # from the PRs/commits since the previous tag.
+          gh release create "$TAG" \
+            --target "${{ github.sha }}" \
+            --title "$TAG" \
+            --generate-notes
+          echo "Released $TAG ✓"

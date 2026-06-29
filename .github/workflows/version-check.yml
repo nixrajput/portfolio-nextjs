@@ -1,0 +1,59 @@
+name: Version Check
+
+# Enforces that every PR into master bumps the package.json version. The Release
+# workflow turns that version into a tag + GitHub Release on merge, so a PR that
+# forgets to bump would either fail to release or collide with an existing tag.
+# This is a required check: a PR cannot merge until the version moves forward.
+on:
+  pull_request:
+    branches: [master]
+    # Re-run when the PR opens, gets new commits, or its base changes.
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  version-bumped:
+    name: package.json version bumped
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out PR head
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Read PR version
+        id: pr
+        run: echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Read base (master) version
+        id: base
+        run: |
+          # Read package.json from the PR's base branch without switching trees.
+          base_version=$(git show "origin/${{ github.base_ref }}:package.json" | jq -r .version)
+          echo "version=$base_version" >> "$GITHUB_OUTPUT"
+
+      - name: Compare versions
+        env:
+          PR_VERSION: ${{ steps.pr.outputs.version }}
+          BASE_VERSION: ${{ steps.base.outputs.version }}
+        run: |
+          echo "Base (master): $BASE_VERSION"
+          echo "PR:            $PR_VERSION"
+
+          if [ "$PR_VERSION" = "$BASE_VERSION" ]; then
+            echo "::error::package.json version was not bumped. Update \"version\" in package.json (it is still $BASE_VERSION). Use a SemVer bump: patch for fixes, minor for features, major for breaking changes."
+            exit 1
+          fi
+
+          # Confirm the PR version is strictly GREATER than base, not just different
+          # (guards against an accidental downgrade). `sort -V` orders SemVer; the
+          # greater of the two must be the PR version, and they must differ.
+          greater=$(printf '%s\n%s\n' "$BASE_VERSION" "$PR_VERSION" | sort -V | tail -n1)
+          if [ "$greater" != "$PR_VERSION" ]; then
+            echo "::error::package.json version $PR_VERSION is lower than master's $BASE_VERSION. The version must move forward."
+            exit 1
+          fi
+
+          echo "Version bumped $BASE_VERSION -> $PR_VERSION ✓"
