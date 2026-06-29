@@ -53,8 +53,8 @@ export function Faq({ faqs }: { faqs: FaqEntry[] }) {
       <div className="mx-auto max-w-3xl">
         <SectionHeading eyebrow="FAQ" title="Frequently asked" />
         <div className="border-border border-t">
-          {faqs.map((faq) => (
-            <FaqItem key={faq.question} question={faq.question} answer={faq.answer} />
+          {faqs.map((faq, i) => (
+            <FaqItem key={`faq-${i}`} question={faq.question} answer={faq.answer} />
           ))}
         </div>
       </div>

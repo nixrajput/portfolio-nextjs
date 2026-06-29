@@ -96,7 +96,8 @@ export function TestimonialsMarquee({ items }: { items: TestimonialCard[] }) {
       )}
     >
       {columns.map((col, i) => (
-        <MarqueeColumn key={i} items={col} duration={durations[i % durations.length]} />
+        // Columns are a fixed positional partition; the index IS the stable identity.
+        <MarqueeColumn key={`col-${i}`} items={col} duration={durations[i % durations.length]} />
       ))}
     </div>
   );

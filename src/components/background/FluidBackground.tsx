@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 // Brand blobs — soft radial gradients drifting and easing toward the cursor,
 // blended additively for a fluid look. Colors match the brand gradient.
@@ -20,7 +20,7 @@ const BLOBS = [
  */
 export function FluidBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const reduced = usePrefersReducedMotion();
+  const reduced = useReducedMotion();
 
   useEffect(() => {
     const canvas = canvasRef.current;

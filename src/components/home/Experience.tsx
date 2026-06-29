@@ -36,7 +36,7 @@ function TimelineEntry({ exp, index, last }: { exp: ExperienceRow; index: number
         {exp.description.length > 0 && (
           <ul className="mt-3 space-y-1.5">
             {exp.description.map((d, i) => (
-              <li key={i} className="text-muted flex gap-2 text-sm">
+              <li key={`${exp.id}-bullet-${i}`} className="text-muted flex gap-2 text-sm">
                 <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-(image:--gradient-brand)" />
                 <span>{d}</span>
               </li>
@@ -71,12 +71,7 @@ export function Experience({ experiences }: { experiences: ExperienceRow[] }) {
       <SectionHeading eyebrow="Experience" title="Where I've worked" />
       <ol className="max-w-2xl">
         {sorted.map((exp, index) => (
-          <TimelineEntry
-            key={`${exp.org}-${exp.period}`}
-            exp={exp}
-            index={index}
-            last={index === sorted.length - 1}
-          />
+          <TimelineEntry key={exp.id} exp={exp} index={index} last={index === sorted.length - 1} />
         ))}
       </ol>
     </Section>

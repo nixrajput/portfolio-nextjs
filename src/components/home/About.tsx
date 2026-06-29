@@ -59,7 +59,7 @@ export function About({ profile }: { profile: AboutProfile }) {
               .filter(Boolean)
               .map((para, i) => (
                 <p
-                  key={i}
+                  key={`bio-${i}`}
                   className={
                     i === 0
                       ? "text-foreground/90 text-xl leading-relaxed font-medium sm:text-2xl"

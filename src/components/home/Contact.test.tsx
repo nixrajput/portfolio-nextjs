@@ -21,11 +21,6 @@ vi.mock("@/components/motion/Reveal", () => ({
   Reveal: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
 
-// Mock usePrefersReducedMotion
-vi.mock("@/hooks/usePrefersReducedMotion", () => ({
-  usePrefersReducedMotion: vi.fn(() => false),
-}));
-
 const mockSocials: SocialRow[] = [
   { platform: "github", url: "https://github.com/nixrajput", username: "nixrajput", order: 1 },
   {

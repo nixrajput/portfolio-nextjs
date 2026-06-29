@@ -7,6 +7,9 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function OpengraphImage() {
+  // Display host derived from the configured site URL, not hardcoded, so the
+  // badge stays correct if the domain changes.
+  const displayHost = SITE.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
   return new ImageResponse(
     <div
       style={{
@@ -137,7 +140,7 @@ export default async function OpengraphImage() {
           fontSize: 22,
         }}
       >
-        nixrajput.com
+        {displayHost}
       </div>
     </div>,
     { ...size },

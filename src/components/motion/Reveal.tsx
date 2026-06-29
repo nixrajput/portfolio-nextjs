@@ -2,7 +2,7 @@
 
 import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export const fadeUpVariants: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -18,7 +18,7 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
-  const reduced = usePrefersReducedMotion();
+  const reduced = useReducedMotion();
 
   if (reduced) {
     return <div className={className}>{children}</div>;

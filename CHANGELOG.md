@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Admin dashboard now surfaces a stat for every content section (projects, experiences, skills, services, social links, funding links, FAQs, testimonials) plus a profile status and testimonial moderation breakdown.
+- Extracted a shared `AdminCrudPage` so the eight content sections no longer duplicate their list/dialog scaffold.
+
+### Fixed
+
+- **Security:** admin-managed link URLs are validated with `z.httpUrl()`, rejecting `javascript:`/`data:` schemes that could otherwise be stored and rendered as an `href`.
+- **Security:** the `/api/revalidate` secret is compared in constant time, and the avatar URL in admin notification emails is HTML-escaped.
+- Postgres client sets `prepare: false` so it works under transaction-mode connection poolers (e.g. Neon pooled URLs) as well as direct connections.
+- A missing profile avatar falls back to a bundled asset instead of rendering a broken image.
+- Migrated to Tailwind v4 CSS-variable shorthand and dropped deprecated Zod 4 APIs.
+
 ---
 
 ## [2.0.0] — 2025-01-01
