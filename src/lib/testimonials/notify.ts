@@ -34,7 +34,7 @@ export function buildTestimonialEmail(
       <blockquote style="border-left:3px solid #7c3aed;padding-left:12px;color:#444">
         ${escapeHtml(input.content)}
       </blockquote>
-      ${input.imageUrl ? `<p><img src="${input.imageUrl}" alt="avatar" width="64" height="64" style="border-radius:50%"/></p>` : "<p><em>No image provided.</em></p>"}
+      ${input.imageUrl ? `<p><img src="${escapeHtml(input.imageUrl)}" alt="avatar" width="64" height="64" style="border-radius:50%"/></p>` : "<p><em>No image provided.</em></p>"}
       <p><a href="${approveUrl}" style="background:#7c3aed;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none">Review in admin</a></p>
     `,
   };

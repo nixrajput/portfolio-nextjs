@@ -16,6 +16,10 @@ import type { Experience, Skill, Service, Faq } from "@/db/schema";
 import { getProjects } from "@/lib/projects";
 import type { MergedProject } from "@/lib/projects";
 
+// Bundled asset shown when the profile has no avatar set yet (e.g. before the
+// admin uploads one). Served from `public/`, so a relative src is correct here.
+const FALLBACK_AVATAR = "/images/nikhil.png";
+
 // ── Public row types ────────────────────────────────────────────────────────
 
 export type ExperienceRow = Experience;
@@ -71,7 +75,7 @@ export async function getProfile(): Promise<{
     name: row.name,
     headline: row.headline,
     bio: row.bio,
-    avatarUrl: (row.avatarUrl as string) ?? "",
+    avatarUrl: (row.avatarUrl as string) || FALLBACK_AVATAR,
     resumeUrl: (row.resumeUrl as string) ?? "",
     roles: row.roles,
     stats: {

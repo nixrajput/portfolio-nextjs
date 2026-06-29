@@ -206,7 +206,8 @@ describe("getProfile", () => {
     ]);
     const result = await getProfile();
     expect(result.roles).toEqual([]);
-    expect(result.avatarUrl).toBe("");
+    // A missing avatar falls back to the bundled asset so the hero never breaks.
+    expect(result.avatarUrl).toBe("/images/nikhil.png");
     expect(result.resumeUrl).toBe("");
     expect(result.stats).toEqual({ years: 0, repos: 0, stars: 0 });
   });

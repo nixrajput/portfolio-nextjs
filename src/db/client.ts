@@ -10,7 +10,13 @@ import * as schema from "./schema";
 // instead of opening a fresh pool on every reload/build worker (which leaks
 // connections until Postgres hits "too many clients"). The pool is kept small
 // with an idle timeout so connections are released when not in use.
-const POOL_OPTS = { max: 5, idle_timeout: 20, connect_timeout: 10 } as const;
+//
+// `prepare: false` disables named prepared statements. Neon (and most managed
+// Postgres) pool through pgbouncer; in transaction pooling mode a connection is
+// reused across statements, so server-side prepared statements break with
+// "prepared statement does not exist". Disabling them keeps the same client
+// safe whether the URL points at a direct connection or a transaction pooler.
+const POOL_OPTS = { max: 5, idle_timeout: 20, connect_timeout: 10, prepare: false } as const;
 
 const globalForDb = globalThis as unknown as {
   __pgClient?: Sql;

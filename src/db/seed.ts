@@ -11,6 +11,7 @@ import {
   faqs,
   testimonials,
 } from "./schema";
+import { requireEnv } from "@/lib/env";
 
 // ---------------------------------------------------------------------------
 // Seed data — the initial content inserted only on a fresh (empty) database.
@@ -23,6 +24,12 @@ const taglineRows = [
   { text: "Think, build, and ship", active: true, order: 1 },
 ];
 
+// avatarUrl is validated as a full http(s) URL, so seed it as an absolute URL
+// pointing at the bundled asset on whatever site this database serves.
+// NEXT_PUBLIC_SITE_URL is always set (no fallback) — fail loudly if it isn't.
+const SITE_ORIGIN = requireEnv("NEXT_PUBLIC_SITE_URL").replace(/\/$/, "");
+const seededAvatarUrl = `${SITE_ORIGIN}/images/nikhil.png`;
+
 const profileRow = {
   name: "Nikhil Rajput",
   headline: "Software Development Engineer",
@@ -33,7 +40,7 @@ const profileRow = {
   roles: ["Software Development Engineer", "Full Stack Developer", "Open Source Contributor"],
   // Resume URL lives in the DB only — set it via the admin panel.
   resumeUrl: null,
-  avatarUrl: "/images/nikhil.png",
+  avatarUrl: seededAvatarUrl,
 };
 
 const featuredSet = new Set([

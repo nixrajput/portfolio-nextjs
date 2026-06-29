@@ -9,8 +9,11 @@ export const profileInsertSchema = z.object({
   summary: z.string().min(1),
   stats: z.record(z.string(), z.union([z.string(), z.number()])).default({}),
   roles: z.array(z.string()).default([]),
-  resumeUrl: z.url().nullable().optional(),
-  avatarUrl: z.url().nullable().optional(),
+  // Full http(s) URLs only — z.httpUrl() rejects javascript:/data: schemes
+  // (the resume renders as <a href>, the avatar as <img src>). Store the
+  // absolute asset URL, not a relative path.
+  resumeUrl: z.httpUrl().nullable().optional(),
+  avatarUrl: z.httpUrl().nullable().optional(),
 });
 
 export const projectInsertSchema = z.object({
@@ -54,14 +57,14 @@ export const serviceInsertSchema = z.object({
 
 export const socialLinkInsertSchema = z.object({
   platform: z.string().min(1),
-  url: z.url(),
+  url: z.httpUrl(),
   username: z.string().nullable().optional(),
   order: z.number().int().nonnegative().default(0),
 });
 
 export const fundingLinkInsertSchema = z.object({
   label: z.string().min(1),
-  url: z.url(),
+  url: z.httpUrl(),
   primary: z.boolean().default(false),
   order: z.number().int().nonnegative().default(0),
 });
@@ -88,7 +91,7 @@ export const reorderSchema = z.object({
 export const githubRepoSchema = z.object({
   name: z.string(),
   full_name: z.string(),
-  html_url: z.url(),
+  html_url: z.httpUrl(),
   description: z.string().nullable(),
   homepage: z.string().nullable(),
   language: z.string().nullable(),
