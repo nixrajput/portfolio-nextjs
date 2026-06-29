@@ -1,9 +1,8 @@
 import { db } from "@/db/client";
 import { socialLinks } from "@/db/schema";
 import { createSocialLink, updateSocialLink, deleteSocialLink } from "../actions";
-import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import { RecordList } from "@/components/admin/ui";
-import { RecordFormDialog, type AdminField } from "@/components/admin/RecordFormDialog";
+import { AdminCrudPage } from "@/components/admin/AdminCrudPage";
+import { type AdminField } from "@/components/admin/RecordFormDialog";
 
 export const dynamic = "force-dynamic";
 
@@ -46,35 +45,21 @@ export default async function SocialLinksEditor() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-start justify-between gap-4">
-        <AdminPageHeader title="Social Links" description="Where people can find you." />
-        <RecordFormDialog
-          mode="create"
-          title="Add social link"
-          fields={fields}
-          formAction={create}
-        />
-      </div>
-
-      <RecordList
-        rows={rows.map((l) => ({
-          id: l.id,
-          primary: l.platform,
-          meta: l.username ? `@${l.username} · ${l.url}` : l.url,
-          actions: (
-            <RecordFormDialog
-              mode="edit"
-              title="Edit social link"
-              fields={fields}
-              formAction={update}
-              record={l}
-            />
-          ),
-        }))}
-        deleteAction={remove}
-        empty="No social links yet."
-      />
-    </div>
+    <AdminCrudPage
+      title="Social Links"
+      description="Where people can find you."
+      createTitle="Add social link"
+      editTitle="Edit social link"
+      fields={fields}
+      rows={rows}
+      toRow={(l) => ({
+        primary: l.platform,
+        meta: l.username ? `@${l.username} · ${l.url}` : l.url,
+      })}
+      createAction={create}
+      updateAction={update}
+      deleteAction={remove}
+      empty="No social links yet."
+    />
   );
 }

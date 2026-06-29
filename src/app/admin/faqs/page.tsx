@@ -1,9 +1,8 @@
 import { db } from "@/db/client";
 import { faqs } from "@/db/schema";
 import { createFaq, updateFaq, deleteFaq } from "../actions";
-import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import { RecordList } from "@/components/admin/ui";
-import { RecordFormDialog, type AdminField } from "@/components/admin/RecordFormDialog";
+import { AdminCrudPage } from "@/components/admin/AdminCrudPage";
+import { type AdminField } from "@/components/admin/RecordFormDialog";
 
 export const dynamic = "force-dynamic";
 
@@ -51,33 +50,21 @@ export default async function FaqsEditor() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-start justify-between gap-4">
-        <AdminPageHeader
-          title="FAQs"
-          description="Questions shown on the site and to AI crawlers."
-        />
-        <RecordFormDialog mode="create" title="Add FAQ" fields={fields} formAction={create} />
-      </div>
-
-      <RecordList
-        rows={rows.map((f) => ({
-          id: f.id,
-          primary: f.question,
-          meta: f.answer,
-          actions: (
-            <RecordFormDialog
-              mode="edit"
-              title="Edit FAQ"
-              fields={fields}
-              formAction={update}
-              record={f}
-            />
-          ),
-        }))}
-        deleteAction={remove}
-        empty="No FAQs yet."
-      />
-    </div>
+    <AdminCrudPage
+      title="FAQs"
+      description="Questions shown on the site and to AI crawlers."
+      createTitle="Add FAQ"
+      editTitle="Edit FAQ"
+      fields={fields}
+      rows={rows}
+      toRow={(f) => ({
+        primary: f.question,
+        meta: f.answer,
+      })}
+      createAction={create}
+      updateAction={update}
+      deleteAction={remove}
+      empty="No FAQs yet."
+    />
   );
 }

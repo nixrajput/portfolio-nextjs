@@ -1,9 +1,9 @@
 import { db } from "@/db/client";
 import { fundingLinks } from "@/db/schema";
 import { createFundingLink, updateFundingLink, deleteFundingLink } from "../actions";
-import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import { RecordList, Badge } from "@/components/admin/ui";
-import { RecordFormDialog, type AdminField } from "@/components/admin/RecordFormDialog";
+import { AdminCrudPage } from "@/components/admin/AdminCrudPage";
+import { Badge } from "@/components/admin/ui";
+import { type AdminField } from "@/components/admin/RecordFormDialog";
 
 export const dynamic = "force-dynamic";
 
@@ -46,36 +46,22 @@ export default async function FundingLinksEditor() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-start justify-between gap-4">
-        <AdminPageHeader title="Funding Links" description="Sponsorship and support links." />
-        <RecordFormDialog
-          mode="create"
-          title="Add funding link"
-          fields={fields}
-          formAction={create}
-        />
-      </div>
-
-      <RecordList
-        rows={rows.map((l) => ({
-          id: l.id,
-          primary: l.label,
-          meta: l.url,
-          badges: l.primary ? <Badge tone="brand">Primary</Badge> : null,
-          actions: (
-            <RecordFormDialog
-              mode="edit"
-              title="Edit funding link"
-              fields={fields}
-              formAction={update}
-              record={l}
-            />
-          ),
-        }))}
-        deleteAction={remove}
-        empty="No funding links yet."
-      />
-    </div>
+    <AdminCrudPage
+      title="Funding Links"
+      description="Sponsorship and support links."
+      createTitle="Add funding link"
+      editTitle="Edit funding link"
+      fields={fields}
+      rows={rows}
+      toRow={(l) => ({
+        primary: l.label,
+        meta: l.url,
+        badges: l.primary ? <Badge tone="brand">Primary</Badge> : null,
+      })}
+      createAction={create}
+      updateAction={update}
+      deleteAction={remove}
+      empty="No funding links yet."
+    />
   );
 }

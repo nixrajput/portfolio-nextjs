@@ -1,9 +1,9 @@
 import { db } from "@/db/client";
 import { projects } from "@/db/schema";
 import { createProject, updateProject, deleteProject } from "../actions";
-import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import { RecordList, Badge } from "@/components/admin/ui";
-import { RecordFormDialog, type AdminField } from "@/components/admin/RecordFormDialog";
+import { AdminCrudPage } from "@/components/admin/AdminCrudPage";
+import { Badge } from "@/components/admin/ui";
+import { type AdminField } from "@/components/admin/RecordFormDialog";
 
 export const dynamic = "force-dynamic";
 
@@ -61,36 +61,27 @@ export default async function ProjectsEditor() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-start justify-between gap-4">
-        <AdminPageHeader title="Projects" description="Curate which repos appear and how." />
-        <RecordFormDialog mode="create" title="Add project" fields={fields} formAction={create} />
-      </div>
-
-      <RecordList
-        rows={rows.map((p) => ({
-          id: p.id,
-          primary: p.title,
-          meta: p.repo,
-          badges: (
-            <>
-              {p.featured ? <Badge tone="brand">Featured</Badge> : null}
-              {p.hidden ? <Badge tone="warning">Hidden</Badge> : null}
-            </>
-          ),
-          actions: (
-            <RecordFormDialog
-              mode="edit"
-              title="Edit project"
-              fields={fields}
-              formAction={update}
-              record={p}
-            />
-          ),
-        }))}
-        deleteAction={remove}
-        empty="No projects yet."
-      />
-    </div>
+    <AdminCrudPage
+      title="Projects"
+      description="Curate which repos appear and how."
+      createTitle="Add project"
+      editTitle="Edit project"
+      fields={fields}
+      rows={rows}
+      toRow={(p) => ({
+        primary: p.title,
+        meta: p.repo,
+        badges: (
+          <>
+            {p.featured ? <Badge tone="brand">Featured</Badge> : null}
+            {p.hidden ? <Badge tone="warning">Hidden</Badge> : null}
+          </>
+        ),
+      })}
+      createAction={create}
+      updateAction={update}
+      deleteAction={remove}
+      empty="No projects yet."
+    />
   );
 }

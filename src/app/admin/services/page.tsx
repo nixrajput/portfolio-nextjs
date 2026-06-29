@@ -1,9 +1,8 @@
 import { db } from "@/db/client";
 import { services } from "@/db/schema";
 import { createService, updateService, deleteService } from "../actions";
-import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import { RecordList } from "@/components/admin/ui";
-import { RecordFormDialog, type AdminField } from "@/components/admin/RecordFormDialog";
+import { AdminCrudPage } from "@/components/admin/AdminCrudPage";
+import { type AdminField } from "@/components/admin/RecordFormDialog";
 
 export const dynamic = "force-dynamic";
 
@@ -61,30 +60,21 @@ export default async function ServicesEditor() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-start justify-between gap-4">
-        <AdminPageHeader title="Services" description="What you offer." />
-        <RecordFormDialog mode="create" title="Add service" fields={fields} formAction={create} />
-      </div>
-
-      <RecordList
-        rows={rows.map((s) => ({
-          id: s.id,
-          primary: s.title,
-          meta: s.shortDescription ?? undefined,
-          actions: (
-            <RecordFormDialog
-              mode="edit"
-              title="Edit service"
-              fields={fields}
-              formAction={update}
-              record={s}
-            />
-          ),
-        }))}
-        deleteAction={remove}
-        empty="No services yet."
-      />
-    </div>
+    <AdminCrudPage
+      title="Services"
+      description="What you offer."
+      createTitle="Add service"
+      editTitle="Edit service"
+      fields={fields}
+      rows={rows}
+      toRow={(s) => ({
+        primary: s.title,
+        meta: s.shortDescription ?? undefined,
+      })}
+      createAction={create}
+      updateAction={update}
+      deleteAction={remove}
+      empty="No services yet."
+    />
   );
 }

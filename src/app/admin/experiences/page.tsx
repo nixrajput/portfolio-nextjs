@@ -1,9 +1,9 @@
 import { db } from "@/db/client";
 import { experiences } from "@/db/schema";
 import { createExperience, updateExperience, deleteExperience } from "../actions";
-import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import { RecordList, Badge } from "@/components/admin/ui";
-import { RecordFormDialog, type AdminField } from "@/components/admin/RecordFormDialog";
+import { AdminCrudPage } from "@/components/admin/AdminCrudPage";
+import { Badge } from "@/components/admin/ui";
+import { type AdminField } from "@/components/admin/RecordFormDialog";
 
 export const dynamic = "force-dynamic";
 
@@ -73,36 +73,22 @@ export default async function ExperiencesEditor() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-start justify-between gap-4">
-        <AdminPageHeader title="Experiences" description="Your work history timeline." />
-        <RecordFormDialog
-          mode="create"
-          title="Add experience"
-          fields={fields}
-          formAction={create}
-        />
-      </div>
-
-      <RecordList
-        rows={rows.map((e) => ({
-          id: e.id,
-          primary: `${e.role} @ ${e.org}`,
-          meta: e.period,
-          badges: e.isCurrent ? <Badge tone="success">Current</Badge> : null,
-          actions: (
-            <RecordFormDialog
-              mode="edit"
-              title="Edit experience"
-              fields={fields}
-              formAction={update}
-              record={e}
-            />
-          ),
-        }))}
-        deleteAction={remove}
-        empty="No experiences yet."
-      />
-    </div>
+    <AdminCrudPage
+      title="Experiences"
+      description="Your work history timeline."
+      createTitle="Add experience"
+      editTitle="Edit experience"
+      fields={fields}
+      rows={rows}
+      toRow={(e) => ({
+        primary: `${e.role} @ ${e.org}`,
+        meta: e.period,
+        badges: e.isCurrent ? <Badge tone="success">Current</Badge> : null,
+      })}
+      createAction={create}
+      updateAction={update}
+      deleteAction={remove}
+      empty="No experiences yet."
+    />
   );
 }

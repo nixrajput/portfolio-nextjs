@@ -1,9 +1,9 @@
 import { db } from "@/db/client";
 import { skills } from "@/db/schema";
 import { createSkill, updateSkill, deleteSkill } from "../actions";
-import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
-import { RecordList, Badge } from "@/components/admin/ui";
-import { RecordFormDialog, type AdminField } from "@/components/admin/RecordFormDialog";
+import { AdminCrudPage } from "@/components/admin/AdminCrudPage";
+import { Badge } from "@/components/admin/ui";
+import { type AdminField } from "@/components/admin/RecordFormDialog";
 
 export const dynamic = "force-dynamic";
 
@@ -68,34 +68,22 @@ export default async function SkillsEditor() {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex items-start justify-between gap-4">
-        <AdminPageHeader
-          title="Skills"
-          description="Tools and technologies, grouped by category."
-        />
-        <RecordFormDialog mode="create" title="Add skill" fields={fields} formAction={create} />
-      </div>
-
-      <RecordList
-        rows={rows.map((s) => ({
-          id: s.id,
-          primary: s.name,
-          meta: s.category,
-          badges: s.level ? <Badge>{s.level}</Badge> : null,
-          actions: (
-            <RecordFormDialog
-              mode="edit"
-              title="Edit skill"
-              fields={fields}
-              formAction={update}
-              record={s}
-            />
-          ),
-        }))}
-        deleteAction={remove}
-        empty="No skills yet."
-      />
-    </div>
+    <AdminCrudPage
+      title="Skills"
+      description="Tools and technologies, grouped by category."
+      createTitle="Add skill"
+      editTitle="Edit skill"
+      fields={fields}
+      rows={rows}
+      toRow={(s) => ({
+        primary: s.name,
+        meta: s.category,
+        badges: s.level ? <Badge>{s.level}</Badge> : null,
+      })}
+      createAction={create}
+      updateAction={update}
+      deleteAction={remove}
+      empty="No skills yet."
+    />
   );
 }
