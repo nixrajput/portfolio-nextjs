@@ -1,60 +1,88 @@
 name: Bug Report
-description: File a bug report
+description: File a bug report for portfolio-nextjs v2
 title: "[Bug]: "
 labels: ["bug", "triage"]
 assignees: ["nixrajput"]
 body:
-  - type: input
-    id: contact
+  - type: markdown
     attributes:
-      label: Contact Details
-      description: How can we get in touch with you if we need more info?
-      placeholder: ex. email@example.com
+      value: |
+        Thanks for taking the time to fill out this bug report.
+        Before submitting, please check the [existing issues](https://github.com/nixrajput/portfolio-nextjs/issues) to avoid duplicates.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      description: Which part of the site is affected?
+      multiple: false
+      options:
+        - Homepage / Hero
+        - Projects section
+        - Experience / Skills
+        - Testimonials
+        - Admin panel
+        - SEO / Meta
+        - CI / Build
+        - Other
     validations:
-      required: false
+      required: true
+
   - type: textarea
     id: what-happened
     attributes:
       label: What happened?
-      description: Also tell us, what did you expect to happen?
-      placeholder: Tell us what you see!
+      description: Describe the bug clearly. What did you see, and what did you expect?
+      placeholder: "Expected: ... Actual: ..."
     validations:
       required: true
-  - type: dropdown
-    id: devices
+
+  - type: textarea
+    id: steps
     attributes:
-      label: What devices are you seeing the problem on?
+      label: Steps to reproduce
+      description: Numbered steps that reliably reproduce the issue.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device type
       multiple: true
       options:
-        - Android
-        - iPhone
-        - Windows
-        - Mac
-        - Linux
+        - Desktop (macOS)
+        - Desktop (Windows)
+        - Desktop (Linux)
+        - Mobile (iOS)
+        - Mobile (Android)
     validations:
       required: true
+
   - type: input
-    id: os
+    id: browser
     attributes:
-      label: OS Version
-      description: On what version of OS is your device running?
-      placeholder: Android 12
+      label: Browser and version
+      placeholder: "e.g. Chrome 125, Safari 17"
     validations:
       required: true
+
   - type: textarea
     id: logs
     attributes:
-      label: Relevant log output
-      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      label: Relevant console output or error messages
+      description: Paste any relevant logs. This will be automatically formatted as code.
       render: shell
+
   - type: checkboxes
-    id: terms
+    id: conduct
     attributes:
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/nixrajput/flutter_carousel_widget/CODE_OF_CONDUCT.md).
+      description: By submitting this issue you agree to follow our [Code of Conduct](https://github.com/nixrajput/portfolio-nextjs/blob/master/CODE_OF_CONDUCT.md).
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
-  - type: markdown
-    attributes:
-      value: "## Thanks for taking the time to fill out this bug report!"

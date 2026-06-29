@@ -1,0 +1,97 @@
+import { db } from "@/db/client";
+import { testimonials } from "@/db/schema";
+import { asc } from "drizzle-orm";
+import type { Testimonial } from "@/db/schema";
+import TestimonialActions from "./_components/TestimonialActions";
+import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
+import { Badge } from "@/components/admin/ui";
+import { BrandInitialsAvatar } from "@/components/ui/avatar";
+
+export const dynamic = "force-dynamic";
+
+const STATUS_ORDER: Record<Testimonial["status"], number> = {
+  pending: 0,
+  approved: 1,
+  rejected: 2,
+};
+
+export default async function TestimonialsPage() {
+  const rows = await db.select().from(testimonials).orderBy(asc(testimonials.createdAt));
+
+  const sorted = [...rows].sort((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status]);
+  const pendingCount = rows.filter((r) => r.status === "pending").length;
+
+  // Flag possible duplicates: emails that appear on more than one testimonial.
+  const emailCounts = new Map<string, number>();
+  for (const r of rows) {
+    if (r.email) emailCounts.set(r.email, (emailCounts.get(r.email) ?? 0) + 1);
+  }
+  const isDuplicate = (email: string | null) => !!email && (emailCounts.get(email) ?? 0) > 1;
+
+  return (
+    <div className="flex flex-col gap-8">
+      <div className="flex items-center justify-between gap-3">
+        <AdminPageHeader title="Testimonials" description="Approve or reject submissions." />
+        {pendingCount > 0 ? <Badge tone="warning">{pendingCount} pending</Badge> : null}
+      </div>
+
+      {sorted.length === 0 ? (
+        <div className="border-border text-muted rounded-xl border border-dashed p-8 text-center text-sm">
+          No testimonials yet.
+        </div>
+      ) : (
+        <ul className="flex flex-col gap-3">
+          {sorted.map((t) => (
+            <li
+              key={t.id}
+              className="border-border bg-surface flex flex-col gap-3 rounded-2xl border p-4 sm:flex-row sm:items-start"
+            >
+              <BrandInitialsAvatar name={t.name} src={t.imageUrl} className="h-10 w-10 shrink-0" />
+
+              <div className="flex min-w-0 flex-1 flex-col gap-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-foreground font-medium">{t.name}</span>
+                  <span className="text-muted text-xs">{t.relationship}</span>
+                  <StatusBadge status={t.status} />
+                  {t.featured ? <Badge tone="brand">Featured</Badge> : null}
+                  {isDuplicate(t.email) ? <Badge tone="warning">Possible duplicate</Badge> : null}
+                </div>
+                {t.email ? <span className="text-muted text-xs">{t.email}</span> : null}
+                <p className="text-muted line-clamp-2 text-sm">{t.content}</p>
+              </div>
+
+              <TestimonialActions
+                testimonial={{
+                  id: t.id,
+                  name: t.name,
+                  email: t.email,
+                  relationship: t.relationship,
+                  content: t.content,
+                  imageUrl: t.imageUrl,
+                  status: t.status,
+                  featured: t.featured,
+                  duplicate: isDuplicate(t.email),
+                  linkedinUrl: t.linkedinUrl,
+                  githubUrl: t.githubUrl,
+                  xUrl: t.xUrl,
+                  instagramUrl: t.instagramUrl,
+                  websiteUrl: t.websiteUrl,
+                }}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function StatusBadge({ status }: { status: Testimonial["status"] }) {
+  if (status === "pending") return <Badge tone="warning">Pending</Badge>;
+  if (status === "approved") return <Badge tone="success">Approved</Badge>;
+  return (
+    <span className="inline-flex items-center rounded-full bg-red-500/12 px-2 py-0.5 text-xs font-medium text-red-500">
+      Rejected
+    </span>
+  );
+}

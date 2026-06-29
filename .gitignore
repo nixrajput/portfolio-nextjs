@@ -38,3 +38,21 @@ next-env.d.ts
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
+
+# Logs
+*.log
+
+# Superpowers brainstorming session artifacts
+.superpowers/
+
+# Internal planning artifacts (specs, phase plans, brainstorming sessions)
+docs/superpowers/
+# Playwright MCP + design screenshots (local only)
+.playwright-mcp/
+desktop-full.png
+mobile-hero.png
+*.playwright.png
+
+# Playwright e2e output
+playwright-report/
+test-results/

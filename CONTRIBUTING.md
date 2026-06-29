@@ -1,63 +1,90 @@
-# Contributing to the Portfolio Website
+# Contributing to Portfolio v2
 
-We appreciate your interest in contributing to the Portfolio Website built with Next.js and Sass. By contributing, you help make this project better and more accessible for others. Please take a moment to review the following guidelines to ensure a smooth and collaborative development process.
+Thank you for your interest in contributing. This document covers the conventions and workflow for this project.
 
 ## Code of Conduct
 
-Please review and adhere to our [Code of Conduct](CODE_OF_CONDUCT.md). We expect all contributors to be respectful, considerate, and inclusive when interacting with the project and its community.
+Please read and follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
-## How to Contribute
+## Getting started
 
-Here are the steps to contribute to this project:
-
-1. Fork the Repository: Click the "Fork" button at the top right of this repository to create a copy in your GitHub account.
-
-2. Clone the Repository: Clone your forked repository to your local machine using the following command:
+1. Fork the repository and clone your fork:
 
    ```bash
-   git clone https://github.com/nixrajput/portfolio-nextjs.git
+   git clone https://github.com/<your-username>/portfolio-nextjs.git
+   cd portfolio-nextjs
    ```
 
-3. Create a Branch: Create a new branch for your contributions. Make sure to choose a descriptive branch name that reflects the changes you intend to make.
+2. Install dependencies with **Bun** (the only supported package manager):
 
    ```bash
-   git checkout -b feature/your-feature-name
+   bun install
    ```
 
-4. Make Changes: Implement your changes and improvements in your local repository. Follow the coding style and best practices of the project.
+3. Follow the [Local setup](README.md#local-setup) section in the README to configure your `.env.local` and database.
 
-5. Test Your Changes: Ensure that your changes do not introduce any errors or regressions. Test the website locally to verify that it functions as expected.
-
-6. Commit Changes: Commit your changes with a clear and descriptive commit message.
+4. Enable the pre-push hook once:
 
    ```bash
-   git commit -m "Add feature/fix: Describe your changes here"
+   git config core.hooksPath .githooks
    ```
 
-7. Push Changes: Push your changes to your forked repository on GitHub.
+## Branch naming
 
-   ```bash
-   git push origin feature/your-feature-name
-   ```
+Use lowercase, hyphen-separated names that describe the work:
 
-8. Create a Pull Request: Go to the original repository on GitHub and click the "New Pull Request" button. Provide a concise description of your changes, why they are necessary, and any relevant information.
+- `feat/<short-description>` — new feature
+- `fix/<short-description>` — bug fix
+- `docs/<short-description>` — documentation only
+- `chore/<short-description>` — maintenance, tooling, deps
+- `refactor/<short-description>` — code restructuring without behaviour change
 
-9. Review and Collaboration: Contributors and maintainers will review your Pull Request. Be prepared to address any feedback or make additional changes as necessary.
+## Commit messages
 
-10. Merge: Once your Pull Request is approved and passes all checks, a maintainer will merge it into the main branch. Congratulations, your contribution is now part of the project!
+This project uses [Conventional Commits](https://www.conventionalcommits.org/). A `.gitmessage` template is committed to the repo — configure it once:
 
-## Development Guidelines
+```bash
+git config commit.template .gitmessage
+```
 
-- Follow the project's coding style and guidelines.
-- Write clear and concise code with comments where necessary.
-- Test your changes thoroughly before submitting a Pull Request.
-- Keep Pull Requests focused on a single feature or bug fix.
-- Be responsive to feedback and be willing to make improvements as requested.
+**Allowed types:** `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`, `perf`, `ci`, `revert`.
 
-## Reporting Issues
+Rules:
+- Subject line ≤ 72 characters, imperative mood (`add`, not `added`).
+- No `Co-Authored-By: Claude` or similar generated lines.
+- Reference an issue in the body when applicable (`Closes #123`).
 
-If you encounter any issues or bugs while using the Portfolio Website, please report them on the [Issues](https://github.com/nixrajput/portfolio-nextjs/issues) page of the repository. Provide as much detail as possible to help us understand and address the problem.
+Example:
 
-## Thank You
+```
+feat: add testimonial approval notifications via Resend
 
-Thank you for contributing to the Portfolio Website project. Your contributions help make this project better and more valuable to its users. We appreciate your time and effort in making this project a success!
+Sends an email to CONTACT_EMAIL whenever a new testimonial submission
+arrives, so the admin can act on it promptly.
+
+Closes #42
+```
+
+## Before submitting a pull request
+
+Run the full local gate and make sure everything is green:
+
+```bash
+bunx eslint .          # must be 0 errors
+bunx tsc --noEmit      # must be clean
+bunx vitest run        # all unit tests must pass
+bun run test:e2e       # optional but encouraged for UI changes
+```
+
+CI runs the same checks — a failing CI gate will block merge.
+
+## Pull request guidelines
+
+- Keep PRs focused on a single concern.
+- Fill in the PR template (summary, type of change, testing steps, checklist).
+- Link the relevant issue in the PR description.
+- Address review feedback before asking for re-review.
+
+## Reporting issues
+
+Use the [Issues](https://github.com/nixrajput/portfolio-nextjs/issues) tab. Choose the appropriate template (Bug Report or Feature Request) and fill it in completely.

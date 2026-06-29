@@ -1,0 +1,83 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1782610724812,
+      "tag": "0000_wandering_black_cat",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782614180061,
+      "tag": "0001_testimonials",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782645701958,
+      "tag": "0002_classy_sleeper",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1782646982333,
+      "tag": "0003_worried_thor_girl",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1782650645852,
+      "tag": "0004_lowly_sway",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1782651378945,
+      "tag": "0005_wide_scarlet_spider",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1782665464694,
+      "tag": "0006_yellow_ma_gnuci",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1782666010279,
+      "tag": "0007_gorgeous_white_queen",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1782675096750,
+      "tag": "0008_quiet_anthem",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1782681872827,
+      "tag": "0009_big_mandrill",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1782685943106,
+      "tag": "0010_breezy_archangel",
+      "breakpoints": true
+    }
+  ]
+}
