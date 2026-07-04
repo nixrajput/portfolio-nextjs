@@ -14,19 +14,32 @@ const socials = [
 ];
 
 describe("SiteNav", () => {
-  it("renders logo home link, status line, and menu button", () => {
-    render(<SiteNav location="Lucknow, IN" availability="Open to work" socials={socials} />);
+  it("renders logo home link, tagline, and menu button", () => {
+    render(
+      <SiteNav
+        tagline="Rise above limit"
+        location="Lucknow, IN"
+        availability="Open to work"
+        socials={socials}
+      />,
+    );
     expect(screen.getByLabelText(/home/i)).toBeInTheDocument();
-    expect(screen.getByText(/lucknow, in · open to work/i)).toBeInTheDocument();
+    expect(screen.getByText(/rise above limit/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /open menu/i })).toHaveAttribute(
       "aria-expanded",
       "false",
     );
   });
 
-  it("omits the status line without location", () => {
+  it("omits the tagline when not provided", () => {
     render(<SiteNav socials={socials} />);
-    expect(screen.queryByText(/open to work/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/rise above limit/i)).not.toBeInTheDocument();
+  });
+
+  it("shows the location status in the menu footer", () => {
+    render(<SiteNav location="Lucknow, IN" availability="Open to work" socials={socials} />);
+    fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
+    expect(screen.getByText(/lucknow, in · open to work/i)).toBeInTheDocument();
   });
 
   it("opens the menu dialog with 8 numbered section links and socials", () => {

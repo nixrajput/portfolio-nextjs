@@ -28,11 +28,14 @@ const SECTIONS: MenuSection[] = [
  * paradigm at every viewport (no inline section links).
  */
 export function SiteNav({
+  tagline,
   location,
   availability,
   socials,
   sections = SECTIONS,
 }: {
+  /** Motto shown center-stage in the top bar (e.g. "Rise above limit"). */
+  tagline?: string;
   location?: string | null;
   availability?: string | null;
   socials: { platform: string; url: string }[];
@@ -73,13 +76,12 @@ export function SiteNav({
             <Logo />
           </Link>
 
-          {statusLine && (
-            <span className="text-muted hidden items-center gap-2.5 font-mono text-xs tracking-[0.08em] uppercase md:flex">
-              <span
-                aria-hidden
-                className="size-[7px] animate-pulse rounded-full bg-emerald-400 motion-reduce:animate-none"
-              />
-              {statusLine}
+          {tagline && (
+            <span className="text-muted hidden items-center gap-2.5 font-mono text-xs tracking-[0.18em] uppercase md:flex">
+              <span aria-hidden className="gradient-text">
+                ✦
+              </span>
+              {tagline}
             </span>
           )}
 

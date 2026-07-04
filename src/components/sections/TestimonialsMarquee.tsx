@@ -16,14 +16,21 @@ function MarqueeCard({ t }: { t: TestimonialCard }) {
   ].filter((s) => s.url);
 
   return (
-    <figure className="border-border bg-surface hover:border-foreground/20 flex flex-col gap-4 rounded-2xl border p-5 transition-colors">
-      <Quote className="size-5 shrink-0 text-(--color-brand-violet)" aria-hidden />
-      <blockquote className="text-foreground/80 text-sm leading-relaxed">{t.content}</blockquote>
-      <figcaption className="mt-auto flex items-center gap-3 pt-1">
+    <figure className="group border-border bg-surface flex flex-col gap-4 rounded-2xl border p-5 backdrop-blur-sm transition-colors hover:border-(--brand-violet)/40">
+      <Quote
+        className="size-5 shrink-0 text-(--color-brand-violet) transition-colors group-hover:text-(--color-brand-pink)"
+        aria-hidden
+      />
+      <blockquote className="text-foreground/85 text-sm leading-relaxed">{t.content}</blockquote>
+      <figcaption className="border-border mt-auto flex items-center gap-3 border-t pt-4">
         <BrandInitialsAvatar name={t.name} src={t.imageUrl} className="size-9" />
-        <div className="flex min-w-0 flex-col">
-          <span className="text-foreground truncate text-sm font-medium">{t.name}</span>
-          <span className="text-muted truncate text-xs">{t.relationship}</span>
+        <div className="flex min-w-0 flex-col gap-0.5">
+          <span className="text-foreground truncate text-sm font-semibold tracking-tight">
+            {t.name}
+          </span>
+          <span className="text-muted truncate font-mono text-[11px] tracking-[0.06em] uppercase">
+            {t.relationship}
+          </span>
         </div>
         {socials.length > 0 ? (
           <div className="ml-auto flex items-center gap-2">
@@ -49,7 +56,10 @@ function MarqueeCard({ t }: { t: TestimonialCard }) {
 /** One auto-scrolling column. Items are rendered twice for a seamless loop. */
 function MarqueeColumn({ items, duration }: { items: TestimonialCard[]; duration: number }) {
   return (
-    <div className="marquee-group relative h-[34rem] overflow-hidden">
+    // mask-image fades the CONTENT at the edges instead of painting a
+    // background-colored overlay on top (which read as solid blocks over the
+    // ambient gradient).
+    <div className="marquee-group relative h-[34rem] overflow-hidden [mask-image:linear-gradient(180deg,transparent,#000_9%,#000_91%,transparent)]">
       <div
         className="marquee-track flex flex-col gap-5"
         style={{ animationDuration: `${duration}s` }}
@@ -64,9 +74,6 @@ function MarqueeColumn({ items, duration }: { items: TestimonialCard[]; duration
           </div>
         ))}
       </div>
-      {/* Top/bottom fade masks */}
-      <div className="from-background pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b to-transparent" />
-      <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t to-transparent" />
     </div>
   );
 }

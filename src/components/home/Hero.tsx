@@ -9,7 +9,6 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export type HeroProfile = {
   name: string;
-  headline: string;
   roles: string[];
 };
 
@@ -33,11 +32,13 @@ function fadeUp(reduce: boolean, delay: number) {
 export function Hero({
   profile,
   sponsorUrl,
-  careerStartYear,
+  availability,
+  location,
 }: {
   profile: HeroProfile;
   sponsorUrl?: string;
-  careerStartYear?: number;
+  availability?: string | null;
+  location?: string | null;
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
@@ -47,7 +48,7 @@ export function Hero({
 
   const [first, ...rest] = profile.name.split(" ");
   const last = rest.join(" ");
-  const eyebrow = `${profile.headline}${careerStartYear ? ` · est. ${careerStartYear}` : ""}`;
+  const status = [availability, location].filter(Boolean).join(" · ");
   // Duplicated track (x2) so the -50% translate loops seamlessly.
   const marqueeItems = [...profile.roles, ...profile.roles];
 
@@ -61,13 +62,18 @@ export function Hero({
       <div aria-hidden className="hero-scrim pointer-events-none absolute inset-0" />
 
       <motion.div style={{ y, opacity }} className="relative">
-        {/* Eyebrow */}
-        <motion.p
-          {...fadeUp(reduce, 0.35)}
-          className="text-muted mb-[2.2vh] font-mono text-xs tracking-[0.35em] uppercase"
-        >
-          {eyebrow}
-        </motion.p>
+        {/* Live status chip (availability + location from the profile) */}
+        {status && (
+          <motion.p {...fadeUp(reduce, 0.35)} className="mb-[2.6vh]">
+            <span className="border-border bg-surface text-muted inline-flex items-center gap-2.5 rounded-full border px-4 py-2 font-mono text-[11px] tracking-[0.22em] uppercase backdrop-blur-sm">
+              <span
+                aria-hidden
+                className="size-[7px] animate-pulse rounded-full bg-emerald-400 motion-reduce:animate-none"
+              />
+              {status}
+            </span>
+          </motion.p>
+        )}
 
         {/* Name: two masked lines, solid + stroke */}
         <h1 className="leading-[0.92] font-extrabold tracking-tight uppercase select-none">

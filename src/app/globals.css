@@ -53,8 +53,9 @@
   --max-width: 1200px;
   --bg: #f7f6fb;
   --fg: #191333;
-  --surface: #ffffff;
-  --surface-2: rgba(30, 22, 64, 0.03);
+  /* Translucent so cards read as glass over the ambient canvas, not white slabs */
+  --surface: rgba(255, 255, 255, 0.6);
+  --surface-2: rgba(255, 255, 255, 0.85);
   --border-color: rgba(30, 22, 64, 0.18);
   --muted: rgba(30, 22, 64, 0.62);
   --ring: #7c3aed;

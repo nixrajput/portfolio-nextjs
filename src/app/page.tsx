@@ -7,6 +7,7 @@ import {
   getServices,
   getSocialLinks,
   getFundingLinks,
+  getRandomTagline,
 } from "@/lib/queries";
 import { Hero } from "@/components/home/Hero";
 import { SiteNav } from "@/components/navbar/SiteNav";
@@ -53,24 +54,19 @@ const Faq = nextDynamic(() =>
 );
 
 export default async function Home() {
-  const [profile, projects, experiences, skills, services, socials, funding] = await Promise.all([
-    getProfile(),
-    getProjectsMerged(),
-    getExperiences(),
-    getSkills(),
-    getServices(),
-    getSocialLinks(),
-    getFundingLinks(),
-  ]);
+  const [profile, projects, experiences, skills, services, socials, funding, tagline] =
+    await Promise.all([
+      getProfile(),
+      getProjectsMerged(),
+      getExperiences(),
+      getSkills(),
+      getServices(),
+      getSocialLinks(),
+      getFundingLinks(),
+      getRandomTagline(),
+    ]);
 
   const sponsorUrl = funding.find((f) => f.primary)?.url;
-  // Earliest 4-digit year across experience periods (freeform text like
-  // "Jan 2020 - Present"), used for the hero eyebrow. Undefined if none parse.
-  const years = experiences
-    .map((e) => e.period.match(/(?:19|20)\d{2}/)?.[0])
-    .filter((y): y is string => Boolean(y))
-    .map(Number);
-  const careerStartYear = years.length ? Math.min(...years) : undefined;
   // Derive contact email from social links (platform = "email") or fall back
   const contactEmail =
     socials.find((s) => s.platform.toLowerCase() === "email")?.url.replace("mailto:", "") ??
@@ -79,18 +75,27 @@ export default async function Home() {
   return (
     <>
       <SiteNav
+        tagline={tagline}
         location={profile.location}
         availability={profile.availability}
         socials={socials.map((s) => ({ platform: s.platform, url: s.url }))}
       />
 
       <Hero
-        profile={{ name: profile.name, headline: profile.headline, roles: profile.roles }}
+        profile={{ name: profile.name, roles: profile.roles }}
         sponsorUrl={sponsorUrl}
-        careerStartYear={careerStartYear}
+        availability={profile.availability}
+        location={profile.location}
       />
 
-      <About profile={{ bio: profile.bio, stats: profile.stats }} />
+      <About
+        profile={{
+          bio: profile.bio,
+          stats: profile.stats,
+          name: profile.name,
+          avatarUrl: profile.avatarUrl,
+        }}
+      />
 
       <Skills skills={skills} />
 

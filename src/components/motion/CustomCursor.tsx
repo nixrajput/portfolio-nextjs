@@ -38,31 +38,51 @@ export function CustomCursor() {
     if (!active) return;
     document.documentElement.classList.add("cursor-hidden");
 
-    // Start off-screen until the first pointer event.
-    const pos = { x: -100, y: -100, rx: -100, ry: -100 };
+    // Hidden until the first pointer event so nothing renders at (0,0).
+    const pos = { x: -100, y: -100, rx: -100, ry: -100, scale: 1, targetScale: 1 };
+    let seen = false;
 
     const onMove = (e: PointerEvent) => {
       pos.x = e.clientX;
       pos.y = e.clientY;
-      if (dotRef.current) {
-        dotRef.current.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+      if (!seen) {
+        // First event: snap the ring onto the pointer instead of easing
+        // across the whole viewport.
+        seen = true;
+        pos.rx = pos.x;
+        pos.ry = pos.y;
+        if (dotRef.current) dotRef.current.style.opacity = "1";
+        if (ringRef.current) ringRef.current.style.opacity = "1";
       }
     };
     const onOver = (e: PointerEvent) => {
       const hot = Boolean((e.target as Element | null)?.closest?.(HOT_SELECTOR));
-      if (ringRef.current) {
-        ringRef.current.style.scale = hot ? "1.7" : "1";
-      }
+      pos.targetScale = hot ? 1.7 : 1;
     };
     window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("pointerover", onOver, { passive: true });
 
+    // One rAF drives both parts: the dot locks to the raw pointer, the ring
+    // eases behind it with its lag capped so it can never detach across the
+    // screen (dropped frames or fast flicks would otherwise strand it).
+    const MAX_LAG = 90;
     let raf = 0;
     const loop = () => {
-      pos.rx += (pos.x - pos.rx) * 0.18;
-      pos.ry += (pos.y - pos.ry) * 0.18;
+      pos.rx += (pos.x - pos.rx) * 0.35;
+      pos.ry += (pos.y - pos.ry) * 0.35;
+      const dx = pos.x - pos.rx;
+      const dy = pos.y - pos.ry;
+      const d = Math.hypot(dx, dy);
+      if (d > MAX_LAG) {
+        pos.rx = pos.x - (dx / d) * MAX_LAG;
+        pos.ry = pos.y - (dy / d) * MAX_LAG;
+      }
+      pos.scale += (pos.targetScale - pos.scale) * 0.25;
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
+      }
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate(${pos.rx}px, ${pos.ry}px)`;
+        ringRef.current.style.transform = `translate(${pos.rx}px, ${pos.ry}px) scale(${pos.scale.toFixed(3)})`;
       }
       raf = requestAnimationFrame(loop);
     };
@@ -84,14 +104,14 @@ export function CustomCursor() {
         ref={dotRef}
         data-cursor-part="dot"
         aria-hidden="true"
-        className="pointer-events-none fixed top-0 left-0 z-[90] -mt-[3px] -ml-[3px] size-1.5 rounded-full"
+        className="pointer-events-none fixed top-0 left-0 z-[90] -mt-[3px] -ml-[3px] size-1.5 rounded-full opacity-0"
         style={{ background: dark ? "#06b6d4" : "#7c3aed" }}
       />
       <div
         ref={ringRef}
         data-cursor-part="ring"
         aria-hidden="true"
-        className="pointer-events-none fixed top-0 left-0 z-[90] -mt-[17px] -ml-[17px] size-[34px] rounded-full border-[1.5px] transition-[scale,border-color] duration-250"
+        className="pointer-events-none fixed top-0 left-0 z-[90] -mt-[17px] -ml-[17px] size-[34px] rounded-full border-[1.5px] opacity-0 transition-[border-color] duration-300"
         style={{ borderColor: dark ? "rgba(124,58,237,0.8)" : "rgba(219,39,119,0.75)" }}
       />
     </>

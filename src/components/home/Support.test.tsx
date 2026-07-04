@@ -29,8 +29,8 @@ describe("Support", () => {
     render(<Support funding={funding} />);
 
     const primaryLink = screen.getByRole("link", { name: /github sponsors/i });
-    // Primary variant uses before: pseudo-element for the gradient (glassmorphic style)
-    expect(primaryLink.className).toMatch(/before:bg-\(image:--gradient-brand\)/);
+    // Primary variant carries the full brand gradient background
+    expect(primaryLink.className).toMatch(/bg-\(image:--gradient-brand\)/);
     expect(primaryLink).toHaveClass("text-white");
   });
 
@@ -140,7 +140,7 @@ describe("Support", () => {
     render(<Support funding={funding} />);
 
     const kofiLink = screen.getByRole("link", { name: /ko-fi/i });
-    // Primary variant now uses a before: pseudo-element for the gradient (glassmorphic style)
-    expect(kofiLink.className).toMatch(/before:bg-\(image:--gradient-brand\)/);
+    // Falls back to the first row as primary (full gradient background)
+    expect(kofiLink.className).toMatch(/bg-\(image:--gradient-brand\)/);
   });
 });
