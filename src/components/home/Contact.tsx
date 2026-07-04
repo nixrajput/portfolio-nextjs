@@ -35,7 +35,7 @@ export function Contact({ socials, email }: { socials: SocialRow[]; email: strin
 
   return (
     <Section id="contact" className="scroll-mt-24">
-      <div className="mx-auto max-w-2xl text-center">
+      <div className="text-center">
         <Reveal>
           <SectionHeading
             number="08"

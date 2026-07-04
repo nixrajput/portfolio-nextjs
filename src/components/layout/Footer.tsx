@@ -7,8 +7,8 @@ export function Footer({ socials }: { socials: SocialRow[] }) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-border border-t px-6 py-12">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-8">
+    <footer className="border-border border-t py-12">
+      <div className="site-container flex flex-col items-center gap-8">
         {/* Row 1: logo + social icons */}
         <div className="flex w-full flex-col items-center gap-6 sm:flex-row sm:justify-between">
           <Link href="#hero" aria-label="Back to top">

@@ -20,7 +20,7 @@ export function Support({ funding }: { funding: FundingRow[] }) {
 
   return (
     <Section id="support" className="scroll-mt-24">
-      <div className="mx-auto max-w-2xl text-center">
+      <div className="text-center">
         <Reveal>
           <SectionHeading
             eyebrow="Support"

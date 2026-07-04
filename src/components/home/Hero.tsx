@@ -53,12 +53,12 @@ export function Hero({
     <section
       id="hero"
       ref={ref}
-      className="relative flex min-h-[100svh] scroll-mt-24 flex-col justify-center overflow-hidden px-6 sm:px-[6vw]"
+      className="relative flex min-h-[100svh] scroll-mt-24 flex-col justify-center overflow-hidden"
     >
       {/* Text-protection scrim: quiets the gradient under the type only */}
       <div aria-hidden className="hero-scrim pointer-events-none absolute inset-0" />
 
-      <motion.div style={{ y, opacity }} className="relative">
+      <motion.div style={{ y, opacity }} className="site-container relative">
         {/* "Currently ·" chip — an AI-era status signal, not personal data */}
         {heroTagline && (
           <motion.p {...fadeUp(reduce, 0.35)} className="mb-[2.6vh]">

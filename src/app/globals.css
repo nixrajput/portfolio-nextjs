@@ -180,6 +180,18 @@ body {
   color: transparent;
 }
 
+/* Shared horizontal rhythm: the hero's fluid gutter is the reference, so the
+   nav, every Section, and the Footer use the same edges — no max-width cap,
+   6vw gutters on >= sm, a comfortable 1.5rem on mobile. Change it here once. */
+@utility site-container {
+  padding-inline: 1.5rem;
+}
+@media (width >= 40rem) {
+  .site-container {
+    padding-inline: 6vw;
+  }
+}
+
 /* Hero display: transparent fill with a theme-aware stroke */
 @utility text-stroke-name {
   -webkit-text-stroke: 2px var(--name-stroke);

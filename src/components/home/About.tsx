@@ -37,7 +37,7 @@ function StatGrid({ stats, className }: StatGridProps) {
 export function About({ profile }: { profile: AboutProfile }) {
   return (
     <Section id="about" className="scroll-mt-24">
-      <div className="mx-auto max-w-4xl">
+      <div>
         <Reveal>
           <SectionHeading number="02" eyebrow="About" title="A bit about me" />
         </Reveal>

@@ -50,7 +50,7 @@ export function Faq({ faqs }: { faqs: FaqEntry[] }) {
   return (
     <Section id="faq" className="scroll-mt-24">
       <FaqJsonLd faqs={faqs} />
-      <div className="mx-auto max-w-3xl">
+      <div>
         <SectionHeading eyebrow="FAQ" title="Frequently asked" />
         <div className="border-border border-t">
           {faqs.map((faq, i) => (

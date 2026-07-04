@@ -88,10 +88,7 @@ export function MenuOverlay({
           transition={{ duration: 0.35 }}
           className="fixed inset-0 z-[60] flex flex-col bg-(--overlay-bg) p-5 backdrop-blur-xl sm:p-10"
         >
-          <div className="flex items-center justify-between">
-            <span className="text-muted font-mono text-xs tracking-[0.3em] uppercase">
-              Navigation
-            </span>
+          <div className="flex items-center justify-end">
             <button
               ref={closeRef}
               type="button"

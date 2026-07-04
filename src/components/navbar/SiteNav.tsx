@@ -65,8 +65,8 @@ export function SiteNav({
           scrolled ? "bg-background/70 border-border border-b backdrop-blur-md" : "bg-transparent",
         )}
       >
-        {/* Same max-width + px as Section so nav edges align with section content */}
-        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
+        {/* Same gutters as the hero/sections so nav edges align with content */}
+        <div className="site-container flex h-16 w-full items-center justify-between">
           <Link
             href="/"
             aria-label="Home"
