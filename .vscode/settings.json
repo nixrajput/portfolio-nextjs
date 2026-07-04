@@ -1,5 +1,17 @@
 {
-    "cSpell.words": [
-        "TECHOX"
-    ]
+  "cSpell.words": ["TECHOX"],
+
+  "//": "Tailwind v4 uses CSS-first config (@theme / @utility in globals.css) and the (--var) shorthand. These settings point Tailwind CSS IntelliSense at the CSS entry and stop it underlining valid v4 class names and at-rules.",
+  "tailwindCSS.experimental.configFile": "src/app/globals.css",
+  "tailwindCSS.classAttributes": ["class", "className", "ngClass", "class:list"],
+  "tailwindCSS.classFunctions": ["cn", "cva", "clsx", "twMerge"],
+  "tailwindCSS.lint.cssConflict": "warning",
+  "tailwindCSS.lint.invalidTailwindDirectives": "ignore",
+
+  "//2": "Stop the built-in CSS language server from flagging Tailwind at-rules (@theme, @utility, @custom-variant, @apply, @plugin) as 'unknown at rule' in globals.css.",
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+  "editor.quickSuggestions": {
+    "strings": "on"
+  }
 }

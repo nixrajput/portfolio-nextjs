@@ -59,7 +59,7 @@ function MarqueeColumn({ items, duration }: { items: TestimonialCard[]; duration
     // mask-image fades the CONTENT at the edges instead of painting a
     // background-colored overlay on top (which read as solid blocks over the
     // ambient gradient).
-    <div className="marquee-group relative h-[34rem] overflow-hidden [mask-image:linear-gradient(180deg,transparent,#000_9%,#000_91%,transparent)]">
+    <div className="marquee-group relative h-[34rem] overflow-hidden mask-[linear-gradient(180deg,transparent,#000_9%,#000_91%,transparent)]">
       <div
         className="marquee-track flex flex-col gap-5"
         style={{ animationDuration: `${duration}s` }}

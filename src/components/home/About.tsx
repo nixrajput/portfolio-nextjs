@@ -70,7 +70,7 @@ export function About({ profile }: { profile: AboutProfile }) {
                 {/* Gradient halo behind the portrait */}
                 <div
                   aria-hidden
-                  className="absolute -inset-3 rounded-[2rem] bg-(image:--gradient-brand) opacity-25 blur-2xl transition-opacity duration-500 group-hover:opacity-45"
+                  className="absolute -inset-3 rounded-4xl bg-(image:--gradient-brand) opacity-25 blur-2xl transition-opacity duration-500 group-hover:opacity-45"
                 />
                 <div className="border-border relative aspect-4/5 w-56 overflow-hidden rounded-3xl border backdrop-blur-sm sm:w-64">
                   <Image

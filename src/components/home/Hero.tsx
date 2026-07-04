@@ -53,7 +53,7 @@ export function Hero({
     <section
       id="hero"
       ref={ref}
-      className="relative flex min-h-[100svh] scroll-mt-24 flex-col justify-center overflow-hidden"
+      className="relative flex min-h-svh scroll-mt-24 flex-col justify-center overflow-hidden"
     >
       {/* Text-protection scrim: quiets the gradient under the type only */}
       <div aria-hidden className="hero-scrim pointer-events-none absolute inset-0" />
@@ -66,7 +66,7 @@ export function Hero({
             <span className="border-border bg-surface text-muted inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[9px] tracking-[0.18em] uppercase backdrop-blur-sm sm:text-[10px]">
               <span
                 aria-hidden
-                className="size-[6px] animate-pulse rounded-full bg-(image:--gradient-brand) shadow-[0_0_8px_2px_rgba(124,58,237,0.6)] motion-reduce:animate-none"
+                className="size-1.5 animate-pulse rounded-full bg-(image:--gradient-brand) shadow-[0_0_8px_2px_rgba(124,58,237,0.6)] motion-reduce:animate-none"
               />
               {heroTagline}
             </span>
@@ -112,7 +112,7 @@ export function Hero({
           {...fadeUp(reduce, 1.25)}
           aria-hidden="true"
           data-testid="hero-marquee"
-          className="text-muted mt-[2.6vh] overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)] font-mono text-[13px] whitespace-nowrap sm:text-[15px]"
+          className="text-muted mt-[2.6vh] overflow-hidden mask-[linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)] font-mono text-[13px] whitespace-nowrap sm:text-[15px]"
         >
           <span className={reduce ? "inline-block" : "hero-marquee-track inline-block"}>
             {marqueeItems.map((role, i) => (
