@@ -72,6 +72,9 @@
   --period: #0e7490;
   /* Accent text on translucent brand chips (project language etc.): deep on paper */
   --accent-on-chip: #6d28d9;
+  /* Opaque brand-tinted chip surface — subtle violet wash over paper, so the
+     chip reads as "brand" (not dead black) yet blocks the moving gradient. */
+  --chip-surface: #f0ecfb;
   /* Legacy aliases kept for existing components */
   --background: var(--bg);
   --foreground: var(--fg);
@@ -96,6 +99,8 @@
   --period: #22d3ee;
   /* Dark: a bright lavender so brand chips are legible on the deep ground */
   --accent-on-chip: #c4b5fd;
+  /* Opaque deep-violet chip surface: immersive brand tone, not flat black. */
+  --chip-surface: #1a1430;
   /* Legacy aliases */
   --background: var(--bg);
   --foreground: var(--fg);
@@ -236,33 +241,38 @@ html.cursor-hidden * {
 }
 
 /* ── Dialog motion (Radix data-state driven) ─────────────────────────────
-   Scale + fade on the brand ease curve so modals open/close smoothly and
-   consistently with the rest of the new design language. */
+   Scale + fade on the brand ease curve. We animate the standalone `scale`
+   property (NOT `transform`) so it composes with Tailwind's
+   -translate-x/y-1/2 centering instead of overriding it — animating
+   `transform` here made the modal jump from a mis-centered spot to center
+   when the animation ended and the utility transform took back over.
+   animation-fill-mode: both holds the first/last frame so there is no
+   pre-animation flash either. */
 @keyframes dialog-in {
   from {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.94);
+    scale: 0.94;
   }
   to {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    scale: 1;
   }
 }
 @keyframes dialog-out {
   from {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
+    scale: 1;
   }
   to {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.94);
+    scale: 0.94;
   }
 }
 .dialog-pop[data-state="open"] {
-  animation: dialog-in 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: dialog-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .dialog-pop[data-state="closed"] {
-  animation: dialog-out 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: dialog-out 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 @keyframes overlay-in {
   from {

@@ -86,7 +86,7 @@ export function MenuOverlay({
           animate={reduce ? undefined : { opacity: 1 }}
           exit={reduce ? undefined : { opacity: 0 }}
           transition={{ duration: 0.35 }}
-          className="fixed inset-0 z-[60] flex flex-col bg-(--overlay-bg) p-5 backdrop-blur-xl sm:p-10"
+          className="site-container fixed inset-0 z-[60] flex flex-col bg-(--overlay-bg) py-6 backdrop-blur-xl sm:py-10"
         >
           <div className="flex items-center justify-end">
             <button
