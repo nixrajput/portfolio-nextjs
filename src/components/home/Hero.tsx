@@ -63,10 +63,10 @@ export function Hero({
             not personal data). No label; the pulsing dot reads as "live". */}
         {heroTagline && (
           <motion.p {...fadeUp(reduce, 0.35)} className="mb-[2.6vh]">
-            <span className="border-border bg-surface text-muted inline-flex items-center gap-2.5 rounded-full border px-4 py-2 font-mono text-[11px] tracking-[0.22em] uppercase backdrop-blur-sm">
+            <span className="border-border bg-surface text-muted inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[9px] tracking-[0.18em] uppercase backdrop-blur-sm sm:text-[10px]">
               <span
                 aria-hidden
-                className="size-[7px] animate-pulse rounded-full bg-(image:--gradient-brand) shadow-[0_0_8px_2px_rgba(124,58,237,0.6)] motion-reduce:animate-none"
+                className="size-[6px] animate-pulse rounded-full bg-(image:--gradient-brand) shadow-[0_0_8px_2px_rgba(124,58,237,0.6)] motion-reduce:animate-none"
               />
               {heroTagline}
             </span>

@@ -86,7 +86,7 @@ export function MenuOverlay({
           animate={reduce ? undefined : { opacity: 1 }}
           exit={reduce ? undefined : { opacity: 0 }}
           transition={{ duration: 0.35 }}
-          className="site-container fixed inset-0 z-[60] flex flex-col bg-(--overlay-bg) py-6 backdrop-blur-xl sm:py-10"
+          className="site-container fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-(--overlay-bg) py-6 backdrop-blur-xl sm:py-10"
         >
           <div className="flex items-center justify-end">
             <button
@@ -100,7 +100,10 @@ export function MenuOverlay({
             </button>
           </div>
 
-          <ul className="flex flex-1 flex-col justify-center gap-1">
+          {/* min-h-0 lets the list shrink inside the scrollable column; on tall
+              screens flex-1 + justify-center vertically centers the links, on
+              short screens they pack from the top and the whole panel scrolls. */}
+          <ul className="flex min-h-0 flex-1 flex-col justify-center gap-1 py-4">
             {sections.map((s, i) => (
               <li key={s.id}>
                 <motion.span
@@ -115,7 +118,7 @@ export function MenuOverlay({
                     aria-current={active === s.id ? "true" : undefined}
                     onClick={onClose}
                     className={cn(
-                      "flex items-baseline gap-4 text-[clamp(30px,6.2vh,58px)] font-extrabold tracking-tight",
+                      "flex items-baseline gap-4 text-[clamp(26px,6vh,58px)] font-extrabold tracking-tight",
                       active === s.id
                         ? "gradient-text"
                         : "text-foreground hover:gradient-text transition-colors",
