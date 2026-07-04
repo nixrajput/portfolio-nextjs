@@ -22,6 +22,10 @@ export function SkillCard({ name, iconPath }: { name: string; iconPath: string }
           alt=""
           fill
           sizes="48px"
+          // unoptimized: icons are tiny (no optimizer gain) and this serves
+          // static paths, remote raster, and remote/uploaded SVG uniformly
+          // without the next/image SVG restriction.
+          unoptimized
           className={cn(
             "object-contain p-1",
             // Light theme: invert white glyphs to dark; dark theme leaves them.

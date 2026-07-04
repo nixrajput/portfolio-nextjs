@@ -18,6 +18,7 @@ import {
   CheckboxField,
   gradientButtonBase,
 } from "@/components/admin/ui";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import { cn } from "@/utils/cn";
 
 export type AdminField =
@@ -41,6 +42,14 @@ export type AdminField =
       name: string;
       label: string;
       type: "checkbox";
+    }
+  | {
+      name: string;
+      label: string;
+      type: "image";
+      folder: "avatar" | "skills";
+      placeholder?: string;
+      hint?: string;
     };
 
 /** Render one field, pre-filled from `record` when editing. */
@@ -60,6 +69,18 @@ function FieldControl({ field, record }: { field: AdminField; record?: Record<st
             </option>
           ))}
         </Select>
+      </Field>
+    );
+  }
+  if (field.type === "image") {
+    return (
+      <Field label={field.label} hint={field.hint}>
+        <ImageUploadField
+          name={field.name}
+          folder={field.folder}
+          defaultValue={raw == null ? "" : String(raw)}
+          placeholder={field.placeholder}
+        />
       </Field>
     );
   }

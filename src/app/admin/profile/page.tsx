@@ -3,6 +3,7 @@ import { profile } from "@/db/schema";
 import { updateProfile } from "../actions";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { Panel, Field, Input, Textarea, SubmitButton } from "@/components/admin/ui";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 
 export const dynamic = "force-dynamic";
 
@@ -46,26 +47,29 @@ export default async function ProfileEditor() {
           <Field label="Summary" hint="Entity-first one-liner used for SEO/GEO.">
             <Textarea name="summary" defaultValue={row?.summary} rows={2} placeholder="Summary" />
           </Field>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Resume URL">
-              <Input name="resumeUrl" defaultValue={row?.resumeUrl ?? ""} placeholder="https://…" />
-            </Field>
-            <Field label="Avatar URL">
-              <Input
-                name="avatarUrl"
-                defaultValue={row?.avatarUrl ?? ""}
-                placeholder="/images/nikhil.png"
-              />
-            </Field>
-          </div>
+          <Field label="Resume URL" hint="Full https URL to your resume/CV.">
+            <Input name="resumeUrl" defaultValue={row?.resumeUrl ?? ""} placeholder="https://…" />
+          </Field>
+          <Field
+            label="Avatar"
+            hint="Upload a portrait or paste an image URL. Shown in the About section."
+          >
+            <ImageUploadField
+              name="avatarUrl"
+              folder="avatar"
+              defaultValue={row?.avatarUrl ?? ""}
+              placeholder="https://… or upload a portrait"
+              previewRounded="rounded-full"
+            />
+          </Field>
           <Field
             label="Hero tagline"
-            hint="The 'Currently ·' line above your name. Leave empty to hide."
+            hint="Short phrase shown beside the glowing dot above your name. Leave empty to hide."
           >
             <Input
               name="heroTagline"
               defaultValue={row?.heroTagline ?? ""}
-              placeholder="Engineering with AI, building for scale"
+              placeholder="AI-native engineering"
             />
           </Field>
           <SubmitButton>Save changes</SubmitButton>
