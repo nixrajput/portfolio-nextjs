@@ -23,8 +23,7 @@ export const DialogOverlay = React.forwardRef<
     ref={ref}
     className={cn(
       "fixed inset-0 z-50 bg-black/60 backdrop-blur-sm",
-      "data-[state=open]:animate-in data-[state=closed]:animate-out",
-      "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "dialog-overlay-fade",
       className,
     )}
     {...props}
@@ -47,7 +46,8 @@ export const DialogContent = React.forwardRef<
         "flex max-h-[90vh] flex-col",
         // Same glass ground as the nav MenuOverlay - one modal language.
         "border-border rounded-2xl border bg-(--overlay-bg) shadow-2xl backdrop-blur-xl",
-        "transition-opacity data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
+        // Scale + fade in/out on the eased brand curve (smooth, not a snap).
+        "dialog-pop",
         className,
       )}
       {...props}

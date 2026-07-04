@@ -29,15 +29,11 @@ const SECTIONS: MenuSection[] = [
  */
 export function SiteNav({
   tagline,
-  location,
-  availability,
   socials,
   sections = SECTIONS,
 }: {
-  /** Motto shown center-stage in the top bar (e.g. "Rise above limit"). */
+  /** Motto shown center-stage in the top bar and menu footer. */
   tagline?: string;
-  location?: string | null;
-  availability?: string | null;
   socials: { platform: string; url: string }[];
   sections?: MenuSection[];
 }) {
@@ -57,8 +53,6 @@ export function SiteNav({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const statusLine = location ? `${location}${availability ? ` · ${availability}` : ""}` : "";
-
   return (
     <>
       <motion.nav
@@ -71,7 +65,8 @@ export function SiteNav({
           scrolled ? "bg-background/70 border-border border-b backdrop-blur-md" : "bg-transparent",
         )}
       >
-        <div className="flex h-16 w-full items-center justify-between px-5 sm:px-8">
+        {/* Same max-width + px as Section so nav edges align with section content */}
+        <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
           <Link
             href="/"
             aria-label="Home"
@@ -117,7 +112,7 @@ export function SiteNav({
         active={active}
         sections={sections}
         socials={socials}
-        statusLine={statusLine || undefined}
+        statusLine={tagline}
       />
     </>
   );

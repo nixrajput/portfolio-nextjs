@@ -32,13 +32,11 @@ function fadeUp(reduce: boolean, delay: number) {
 export function Hero({
   profile,
   sponsorUrl,
-  availability,
-  location,
+  heroTagline,
 }: {
   profile: HeroProfile;
   sponsorUrl?: string;
-  availability?: string | null;
-  location?: string | null;
+  heroTagline?: string | null;
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
@@ -48,7 +46,6 @@ export function Hero({
 
   const [first, ...rest] = profile.name.split(" ");
   const last = rest.join(" ");
-  const status = [availability, location].filter(Boolean).join(" · ");
   // Duplicated track (x2) so the -50% translate loops seamlessly.
   const marqueeItems = [...profile.roles, ...profile.roles];
 
@@ -62,15 +59,17 @@ export function Hero({
       <div aria-hidden className="hero-scrim pointer-events-none absolute inset-0" />
 
       <motion.div style={{ y, opacity }} className="relative">
-        {/* Live status chip (availability + location from the profile) */}
-        {status && (
+        {/* "Currently ·" chip — an AI-era status signal, not personal data */}
+        {heroTagline && (
           <motion.p {...fadeUp(reduce, 0.35)} className="mb-[2.6vh]">
             <span className="border-border bg-surface text-muted inline-flex items-center gap-2.5 rounded-full border px-4 py-2 font-mono text-[11px] tracking-[0.22em] uppercase backdrop-blur-sm">
               <span
                 aria-hidden
-                className="size-[7px] animate-pulse rounded-full bg-emerald-400 motion-reduce:animate-none"
+                className="size-[7px] animate-pulse rounded-full bg-(image:--gradient-brand) motion-reduce:animate-none"
               />
-              {status}
+              <span className="text-foreground/50">Currently</span>
+              <span aria-hidden className="bg-border h-3 w-px" />
+              {heroTagline}
             </span>
           </motion.p>
         )}

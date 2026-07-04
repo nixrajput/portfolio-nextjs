@@ -14,8 +14,7 @@ export const profileInsertSchema = z.object({
   // absolute asset URL, not a relative path.
   resumeUrl: z.httpUrl().nullable().optional(),
   avatarUrl: z.httpUrl().nullable().optional(),
-  location: z.string().nullable().optional(),
-  availability: z.string().nullable().optional(),
+  heroTagline: z.string().nullable().optional(),
 });
 
 export const projectInsertSchema = z.object({

@@ -1,11 +1,16 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { installMatchMedia } from "@/test/matchMedia";
 import { About } from "./About";
 
 // Mock Reveal to render children directly
 vi.mock("@/components/motion/Reveal", () => ({
   Reveal: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
+
+// AnimatedStat renders for real (count-up) — force reduced motion so it shows
+// the final values synchronously, and provide matchMedia for the hook.
+beforeEach(() => installMatchMedia({ "(prefers-reduced-motion: reduce)": true }));
 
 const mockProfile = {
   bio: "I build fast, accessible web apps and love open source.",

@@ -95,7 +95,6 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
          * paint (blocking, in <head>) so there is no unguarded frame.
          */}
         <script
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html:
               "requestAnimationFrame(function(){document.documentElement.classList.add('theme-ready')})",

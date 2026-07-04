@@ -22,8 +22,7 @@ export default async function ProfileEditor() {
       roles: row?.roles ?? [],
       resumeUrl: (formData.get("resumeUrl") as string) || null,
       avatarUrl: (formData.get("avatarUrl") as string) || null,
-      location: (formData.get("location") as string) || null,
-      availability: (formData.get("availability") as string) || null,
+      heroTagline: (formData.get("heroTagline") as string) || null,
     });
   }
 
@@ -59,18 +58,16 @@ export default async function ProfileEditor() {
               />
             </Field>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Location" hint="Shown in the nav status line.">
-              <Input name="location" defaultValue={row?.location ?? ""} placeholder="Lucknow, IN" />
-            </Field>
-            <Field label="Availability" hint="e.g. Open to work. Leave empty to hide.">
-              <Input
-                name="availability"
-                defaultValue={row?.availability ?? ""}
-                placeholder="Open to work"
-              />
-            </Field>
-          </div>
+          <Field
+            label="Hero tagline"
+            hint="The 'Currently ·' line above your name. Leave empty to hide."
+          >
+            <Input
+              name="heroTagline"
+              defaultValue={row?.heroTagline ?? ""}
+              placeholder="Engineering with AI, building for scale"
+            />
+          </Field>
           <SubmitButton>Save changes</SubmitButton>
         </form>
       </Panel>

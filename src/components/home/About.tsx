@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
+import { Parallax } from "@/components/motion/Parallax";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
+import { AnimatedStat } from "./AnimatedStat";
 import { cn } from "@/utils/cn";
 
 export type AboutProfile = {
@@ -10,18 +12,6 @@ export type AboutProfile = {
   name?: string;
   avatarUrl?: string;
 };
-
-function Stat({ value, label }: { value: number; label: string }) {
-  const display = value >= 100 ? `${value}+` : `${value}`;
-  return (
-    <div className="flex flex-col items-center gap-1 px-2 py-2 text-center sm:px-4">
-      <span className="gradient-text text-3xl font-bold tabular-nums sm:text-4xl md:text-5xl">
-        {display}
-      </span>
-      <span className="text-muted text-xs sm:text-sm">{label}</span>
-    </div>
-  );
-}
 
 type StatGridProps = {
   stats: AboutProfile["stats"];
@@ -38,9 +28,7 @@ function StatGrid({ stats, className }: StatGridProps) {
   return (
     <Card className={cn("divide-border mt-12 grid grid-cols-3 divide-x p-0", className)}>
       {items.map(({ value, label }, i) => (
-        <Reveal key={label} delay={0.1 + i * 0.08}>
-          <Stat value={value} label={label} />
-        </Reveal>
+        <AnimatedStat key={label} value={value} label={label} delay={0.1 + i * 0.08} />
       ))}
     </Card>
   );
@@ -78,7 +66,7 @@ export function About({ profile }: { profile: AboutProfile }) {
 
           {profile.avatarUrl && (
             <Reveal delay={0.14} className="mx-auto shrink-0 md:mx-0">
-              <div className="group relative">
+              <Parallax strength={28} className="group relative">
                 {/* Gradient halo behind the portrait */}
                 <div
                   aria-hidden
@@ -93,7 +81,7 @@ export function About({ profile }: { profile: AboutProfile }) {
                     className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                   />
                 </div>
-              </div>
+              </Parallax>
             </Reveal>
           )}
         </div>

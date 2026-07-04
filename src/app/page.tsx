@@ -76,16 +76,13 @@ export default async function Home() {
     <>
       <SiteNav
         tagline={tagline}
-        location={profile.location}
-        availability={profile.availability}
         socials={socials.map((s) => ({ platform: s.platform, url: s.url }))}
       />
 
       <Hero
         profile={{ name: profile.name, roles: profile.roles }}
         sponsorUrl={sponsorUrl}
-        availability={profile.availability}
-        location={profile.location}
+        heroTagline={profile.heroTagline}
       />
 
       <About

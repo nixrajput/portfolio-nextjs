@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import { MapPin } from "lucide-react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { Section, SectionHeading } from "@/components/ui/Section";
@@ -12,17 +13,14 @@ function TimelineEntry({ exp, index, last }: { exp: ExperienceRow; index: number
 
   const inner = (
     <div className="flex gap-6">
-      {/* Rail: dot + line */}
-      <div className="flex flex-col items-center">
-        <span className="bg-background mt-1 size-3 shrink-0 rounded-full border-2 border-(--brand-violet) ring-4 ring-(--brand-violet)/10" />
-        {!last && <span className="bg-border mt-1 w-px flex-1" />}
+      {/* Rail dot (the connector line is drawn once for the whole list) */}
+      <div className="relative flex w-3 justify-center">
+        <span className="bg-background z-10 mt-1 size-3 shrink-0 rounded-full border-2 border-(--brand-violet) ring-4 ring-(--brand-violet)/10" />
       </div>
 
       {/* Card content */}
       <div className={cn("pb-10", last && "pb-0")}>
-        <p className="font-mono text-xs tracking-widest text-(--brand-cyan) uppercase">
-          {exp.period}
-        </p>
+        <p className="font-mono text-xs tracking-widest text-(--period) uppercase">{exp.period}</p>
         <h3 className="mt-1 text-xl font-bold">{exp.role}</h3>
         <div className="text-muted mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-sm">
           <span>{exp.org}</span>
@@ -65,15 +63,45 @@ function TimelineEntry({ exp, index, last }: { exp: ExperienceRow; index: number
 
 export function Experience({ experiences }: { experiences: ExperienceRow[] }) {
   const sorted = [...experiences].sort((a, b) => a.order - b.order);
+  const reduce = useReducedMotion();
+  const listRef = useRef<HTMLDivElement>(null);
+
+  // Track scroll through the list and fill the connector rail as it passes.
+  const { scrollYProgress } = useScroll({
+    target: listRef,
+    offset: ["start 70%", "end 60%"],
+  });
+  const fill = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
+  const scaleY = useTransform(fill, [0, 1], [0, 1]);
 
   return (
     <Section id="experience" className="scroll-mt-24">
       <SectionHeading number="04" eyebrow="Experience" title="Where I've worked" />
-      <ol className="max-w-2xl">
-        {sorted.map((exp, index) => (
-          <TimelineEntry key={exp.id} exp={exp} index={index} last={index === sorted.length - 1} />
-        ))}
-      </ol>
+      <div ref={listRef} className="relative max-w-2xl">
+        {/* Connector rail: faint track + a gradient fill that grows on scroll.
+              Sits under the entry dots (which are z-10). Left-aligned to the
+              dot column center (w-3 -> 1.5 offset within the gap-6 layout). */}
+        {sorted.length > 1 && (
+          <>
+            <span aria-hidden className="bg-border absolute top-2 bottom-8 left-[5.5px] w-px" />
+            <motion.span
+              aria-hidden
+              style={reduce ? { transform: "scaleY(1)" } : { scaleY }}
+              className="absolute top-2 bottom-8 left-[5.5px] w-px origin-top bg-(image:--gradient-brand)"
+            />
+          </>
+        )}
+        <ol className="relative">
+          {sorted.map((exp, index) => (
+            <TimelineEntry
+              key={exp.id}
+              exp={exp}
+              index={index}
+              last={index === sorted.length - 1}
+            />
+          ))}
+        </ol>
+      </div>
     </Section>
   );
 }

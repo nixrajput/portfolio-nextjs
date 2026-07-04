@@ -54,8 +54,7 @@ export async function getProfile(): Promise<{
   roles: string[];
   avatarUrl: string;
   resumeUrl: string;
-  location: string | null;
-  availability: string | null;
+  heroTagline: string | null;
   stats: { years: number; repos: number; stars: number };
 }> {
   const rows = await db.select().from(profile);
@@ -79,8 +78,7 @@ export async function getProfile(): Promise<{
     bio: row.bio,
     avatarUrl: (row.avatarUrl as string) || FALLBACK_AVATAR,
     resumeUrl: (row.resumeUrl as string) ?? "",
-    location: row.location ?? null,
-    availability: row.availability ?? null,
+    heroTagline: row.heroTagline ?? null,
     roles: row.roles,
     stats: {
       years: Number(s.years ?? 0),

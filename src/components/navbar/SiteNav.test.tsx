@@ -15,14 +15,7 @@ const socials = [
 
 describe("SiteNav", () => {
   it("renders logo home link, tagline, and menu button", () => {
-    render(
-      <SiteNav
-        tagline="Rise above limit"
-        location="Lucknow, IN"
-        availability="Open to work"
-        socials={socials}
-      />,
-    );
+    render(<SiteNav tagline="Rise above limit" socials={socials} />);
     expect(screen.getByLabelText(/home/i)).toBeInTheDocument();
     expect(screen.getByText(/rise above limit/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /open menu/i })).toHaveAttribute(
@@ -36,14 +29,15 @@ describe("SiteNav", () => {
     expect(screen.queryByText(/rise above limit/i)).not.toBeInTheDocument();
   });
 
-  it("shows the location status in the menu footer", () => {
-    render(<SiteNav location="Lucknow, IN" availability="Open to work" socials={socials} />);
+  it("shows the tagline in the menu footer", () => {
+    render(<SiteNav tagline="Rise above limit" socials={socials} />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
-    expect(screen.getByText(/lucknow, in · open to work/i)).toBeInTheDocument();
+    // Tagline appears both in the top bar and the footer once the menu opens.
+    expect(screen.getAllByText(/rise above limit/i).length).toBeGreaterThan(1);
   });
 
   it("opens the menu dialog with 8 numbered section links and socials", () => {
-    render(<SiteNav location="Lucknow, IN" availability="Open to work" socials={socials} />);
+    render(<SiteNav tagline="Rise above limit" socials={socials} />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
     const dialog = screen.getByRole("dialog", { name: /navigation/i });
     expect(dialog).toBeInTheDocument();

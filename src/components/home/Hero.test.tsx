@@ -19,14 +19,15 @@ describe("Hero", () => {
     expect(h1).toHaveTextContent(/rajput/i);
   });
 
-  it("renders the availability status chip", () => {
-    render(<Hero profile={profile} availability="Open to work" location="Lucknow, IN" />);
-    expect(screen.getByText(/open to work · lucknow, in/i)).toBeInTheDocument();
+  it("renders the hero tagline chip", () => {
+    render(<Hero profile={profile} heroTagline="Engineering with AI, building for scale" />);
+    expect(screen.getByText(/engineering with ai, building for scale/i)).toBeInTheDocument();
+    expect(screen.getByText(/currently/i)).toBeInTheDocument();
   });
 
-  it("omits the status chip without availability and location", () => {
+  it("omits the chip without a hero tagline", () => {
     render(<Hero profile={profile} />);
-    expect(screen.queryByText(/open to work/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/currently/i)).not.toBeInTheDocument();
   });
 
   it("renders the roles marquee as decorative", () => {

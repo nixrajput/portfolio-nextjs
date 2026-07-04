@@ -1,54 +1,51 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUp } from "lucide-react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 const ScrollToTop = () => {
-  const [showTopBtn, setShowTopBtn] = useState<boolean>(false);
+  const [show, setShow] = useState(false);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
-    const handleShowBtn = () => {
-      setShowTopBtn(window.scrollY > 400);
-    };
-
-    window.addEventListener("scroll", handleShowBtn);
-    return () => window.removeEventListener("scroll", handleShowBtn);
+    const onScroll = () => setShow(window.scrollY > 400);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const goToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  if (!showTopBtn) return null;
+  const goToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <button
-      onClick={goToTop}
-      style={{
-        position: "fixed",
-        bottom: "2rem",
-        right: "2rem",
-        zIndex: 999,
-        padding: "0.5rem",
-        cursor: "pointer",
-      }}
-      aria-label="Scroll to top"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <line x1="12" y1="19" x2="12" y2="5" />
-        <polyline points="5 12 12 5 19 12" />
-      </svg>
-    </button>
+    <AnimatePresence>
+      {show && (
+        <motion.button
+          type="button"
+          onClick={goToTop}
+          aria-label="Scroll to top"
+          initial={reduce ? false : { opacity: 0, scale: 0.6, y: 12 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={reduce ? undefined : { opacity: 0, scale: 0.6, y: 12 }}
+          transition={{ type: "spring", stiffness: 320, damping: 22 }}
+          whileHover={reduce ? undefined : { scale: 1.08 }}
+          whileTap={reduce ? undefined : { scale: 0.92 }}
+          className="group border-border bg-surface fixed right-6 bottom-6 z-[60] grid size-12 place-items-center overflow-hidden rounded-full border [filter:drop-shadow(0_6px_20px_rgba(124,58,237,0.35))] backdrop-blur-md sm:right-8 sm:bottom-8"
+        >
+          {/* Gradient wash that fades in on hover */}
+          <span
+            aria-hidden
+            className="absolute inset-0 bg-(image:--gradient-brand) opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          />
+          {/* Arrow lifts and turns white as the gradient fills */}
+          <ArrowUp
+            className="text-foreground relative size-5 transition-[transform,color] duration-300 group-hover:-translate-y-0.5 group-hover:text-white motion-reduce:transform-none"
+            aria-hidden
+          />
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
 };
 
