@@ -76,31 +76,42 @@ export function Experience({ experiences }: { experiences: ExperienceRow[] }) {
 
   return (
     <Section id="experience" className="scroll-mt-24">
-      <SectionHeading number="04" eyebrow="Experience" title="Where I've worked" />
-      <div ref={listRef} className="relative max-w-2xl">
-        {/* Connector rail: faint track + a gradient fill that grows on scroll.
-              Sits under the entry dots (which are z-10). Left-aligned to the
-              dot column center (w-3 -> 1.5 offset within the gap-6 layout). */}
-        {sorted.length > 1 && (
-          <>
-            <span aria-hidden className="bg-border absolute top-2 bottom-8 left-[5.5px] w-px" />
-            <motion.span
-              aria-hidden
-              style={reduce ? { transform: "scaleY(1)" } : { scaleY }}
-              className="absolute top-2 bottom-8 left-[5.5px] w-px origin-top bg-(image:--gradient-brand)"
-            />
-          </>
-        )}
-        <ol className="relative">
-          {sorted.map((exp, index) => (
-            <TimelineEntry
-              key={exp.id}
-              exp={exp}
-              index={index}
-              last={index === sorted.length - 1}
-            />
-          ))}
-        </ol>
+      {/* Two columns on lg+: a sticky intro fills the left while the timeline
+          scrolls on the right, so the section uses the full width instead of
+          leaving a large blank gutter. Stacks to one column below lg. */}
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-16">
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <SectionHeading number="04" eyebrow="Experience" title="Where I've worked" />
+          <p className="text-muted -mt-6 max-w-sm text-base leading-relaxed">
+            A track record of shipping across startups and open source - each role a step in
+            building faster, more reliable products.
+          </p>
+        </div>
+
+        <div ref={listRef} className="relative">
+          {/* Connector rail: faint track + a gradient fill that grows on scroll.
+              Sits under the entry dots (which are z-10). */}
+          {sorted.length > 1 && (
+            <>
+              <span aria-hidden className="bg-border absolute top-2 bottom-8 left-[5.5px] w-px" />
+              <motion.span
+                aria-hidden
+                style={reduce ? { transform: "scaleY(1)" } : { scaleY }}
+                className="absolute top-2 bottom-8 left-[5.5px] w-px origin-top bg-(image:--gradient-brand)"
+              />
+            </>
+          )}
+          <ol className="relative">
+            {sorted.map((exp, index) => (
+              <TimelineEntry
+                key={exp.id}
+                exp={exp}
+                index={index}
+                last={index === sorted.length - 1}
+              />
+            ))}
+          </ol>
+        </div>
       </div>
     </Section>
   );

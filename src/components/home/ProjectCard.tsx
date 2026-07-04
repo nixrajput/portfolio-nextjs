@@ -45,14 +45,18 @@ export function ProjectCard({ project }: { project: MergedProject }) {
         {(project.language || project.tags.length > 0) && (
           <div className="mt-4 flex flex-wrap gap-1.5">
             {project.language && (
-              <span className="rounded-full border border-(--brand-violet)/30 bg-(--brand-violet)/10 px-2 py-0.5 text-xs text-(--brand-violet)">
+              // Solid opaque chip: the card and the ambient gradient are both
+              // in the violet family, so a translucent brand tint washed out
+              // when the gradient drifted behind it. An opaque surface + brand
+              // accent text stays legible over any background.
+              <span className="bg-background rounded-full border border-(--brand-violet)/40 px-2 py-0.5 text-xs font-semibold text-(--accent-on-chip)">
                 {project.language}
               </span>
             )}
             {project.tags.map((t) => (
               <span
                 key={t}
-                className="border-border bg-surface-2 text-muted rounded-full border px-2 py-0.5 text-xs"
+                className="border-border bg-background text-muted rounded-full border px-2 py-0.5 text-xs"
               >
                 {t}
               </span>

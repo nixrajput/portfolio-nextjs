@@ -70,6 +70,8 @@
   --overlay-bg: rgba(247, 246, 251, 0.94);
   /* Experience period label: brand cyan is too light on paper — use a deep teal */
   --period: #0e7490;
+  /* Accent text on translucent brand chips (project language etc.): deep on paper */
+  --accent-on-chip: #6d28d9;
   /* Legacy aliases kept for existing components */
   --background: var(--bg);
   --foreground: var(--fg);
@@ -92,6 +94,8 @@
   --overlay-bg: rgba(7, 7, 12, 0.92);
   /* Dark: the vivid cyan reads fine on the deep ground */
   --period: #22d3ee;
+  /* Dark: a bright lavender so brand chips are legible on the deep ground */
+  --accent-on-chip: #c4b5fd;
   /* Legacy aliases */
   --background: var(--bg);
   --foreground: var(--fg);

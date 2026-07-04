@@ -59,16 +59,15 @@ export function Hero({
       <div aria-hidden className="hero-scrim pointer-events-none absolute inset-0" />
 
       <motion.div style={{ y, opacity }} className="site-container relative">
-        {/* "Currently ·" chip — an AI-era status signal, not personal data */}
+        {/* Status chip — a glowing brand dot + the tagline (an AI-era signal,
+            not personal data). No label; the pulsing dot reads as "live". */}
         {heroTagline && (
           <motion.p {...fadeUp(reduce, 0.35)} className="mb-[2.6vh]">
             <span className="border-border bg-surface text-muted inline-flex items-center gap-2.5 rounded-full border px-4 py-2 font-mono text-[11px] tracking-[0.22em] uppercase backdrop-blur-sm">
               <span
                 aria-hidden
-                className="size-[7px] animate-pulse rounded-full bg-(image:--gradient-brand) motion-reduce:animate-none"
+                className="size-[7px] animate-pulse rounded-full bg-(image:--gradient-brand) shadow-[0_0_8px_2px_rgba(124,58,237,0.6)] motion-reduce:animate-none"
               />
-              <span className="text-foreground/50">Currently</span>
-              <span aria-hidden className="bg-border h-3 w-px" />
               {heroTagline}
             </span>
           </motion.p>

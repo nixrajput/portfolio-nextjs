@@ -20,14 +20,13 @@ describe("Hero", () => {
   });
 
   it("renders the hero tagline chip", () => {
-    render(<Hero profile={profile} heroTagline="Engineering with AI, building for scale" />);
-    expect(screen.getByText(/engineering with ai, building for scale/i)).toBeInTheDocument();
-    expect(screen.getByText(/currently/i)).toBeInTheDocument();
+    render(<Hero profile={profile} heroTagline="Building AI-native products" />);
+    expect(screen.getByText(/building ai-native products/i)).toBeInTheDocument();
   });
 
   it("omits the chip without a hero tagline", () => {
     render(<Hero profile={profile} />);
-    expect(screen.queryByText(/currently/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/building ai-native products/i)).not.toBeInTheDocument();
   });
 
   it("renders the roles marquee as decorative", () => {

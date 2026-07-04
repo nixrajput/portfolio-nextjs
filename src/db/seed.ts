@@ -41,7 +41,7 @@ const profileRow = {
   // Resume URL lives in the DB only — set it via the admin panel.
   resumeUrl: null,
   avatarUrl: seededAvatarUrl,
-  heroTagline: "Engineering with AI, building for scale",
+  heroTagline: "Building AI-native products",
 };
 
 const featuredSet = new Set([
