@@ -21,6 +21,6 @@ test("mobile hamburger opens the nav menu", async ({ page }) => {
   await expect(hamburger).toBeVisible();
   await hamburger.click();
 
-  // The mobile overlay dialog should appear
-  await expect(page.getByRole("dialog", { name: /navigation menu/i })).toBeVisible();
+  // The full-screen menu overlay dialog should appear
+  await expect(page.getByRole("dialog", { name: /navigation/i })).toBeVisible();
 });
