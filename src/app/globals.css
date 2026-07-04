@@ -59,6 +59,12 @@
   --border-color: rgba(30, 22, 64, 0.18);
   --muted: rgba(30, 22, 64, 0.62);
   --ring: #7c3aed;
+  /* Raw brand vars for arbitrary-value utilities like border-(--brand-violet).
+     The @theme --color-brand-* tokens only generate the --color-* namespace,
+     so components referencing the bare names need these aliases. */
+  --brand-violet: #7c3aed;
+  --brand-cyan: #06b6d4;
+  --brand-pink: #ec4899;
   /* Redesign tokens: hero name stroke + full-screen menu ground */
   --name-stroke: rgba(30, 22, 64, 0.88);
   --overlay-bg: rgba(247, 246, 251, 0.94);

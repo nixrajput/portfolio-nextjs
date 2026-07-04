@@ -35,14 +35,17 @@ export function MenuOverlay({
   const closeRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  // Scroll lock + initial focus while open.
+  // Scroll lock + focus management while open: focus moves to the close
+  // button, and returns to whatever triggered the dialog (WAI-ARIA APG).
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
+    const trigger = document.activeElement as HTMLElement | null;
     document.body.style.overflow = "hidden";
     closeRef.current?.focus();
     return () => {
       document.body.style.overflow = prev;
+      trigger?.focus?.();
     };
   }, [open]);
 

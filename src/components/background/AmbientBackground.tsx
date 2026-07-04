@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
@@ -32,6 +33,7 @@ const IDLE_AFTER_MS = 3500;
  */
 export function AmbientBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const pathname = usePathname();
   const reduced = useReducedMotion();
   const { resolvedTheme } = useTheme();
   // Read per-frame via ref so a theme switch needs no effect re-subscription.
@@ -68,6 +70,9 @@ export function AmbientBackground() {
       cv.style.width = `${w}px`;
       cv.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // Resizing clears the bitmap; without a loop (reduced motion) the
+      // canvas would stay blank until the next frame that never comes.
+      if (reduced) draw(0);
     }
 
     function draw(t: number) {
@@ -171,6 +176,9 @@ export function AmbientBackground() {
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [reduced]);
+
+  // The ambient scene is public-site language; admin keeps a plain ground.
+  if (pathname?.startsWith("/admin")) return null;
 
   return (
     <canvas

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
@@ -27,12 +28,15 @@ const getFineServer = () => false;
 export function CustomCursor() {
   const reduced = useReducedMotion();
   const fine = useSyncExternalStore(subscribeFine, getFine, getFineServer);
+  const pathname = usePathname();
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
   const dark = resolvedTheme !== "light";
 
-  const active = fine && !reduced;
+  // Public-site only: admin keeps the native cursor for precision form work.
+  const onAdmin = Boolean(pathname?.startsWith("/admin"));
+  const active = fine && !reduced && !onAdmin;
 
   useEffect(() => {
     if (!active) return;

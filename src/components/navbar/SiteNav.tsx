@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { cn } from "@/utils/cn";
@@ -41,10 +41,14 @@ export function SiteNav({
   socials: { platform: string; url: string }[];
   sections?: MenuSection[];
 }) {
-  const active = useScrollSpy(sections.map((s) => s.id));
+  // Stable identities: useScrollSpy re-subscribes its listeners whenever the
+  // ids array changes, and MenuOverlay's keydown trap re-binds on onClose.
+  const ids = useMemo(() => sections.map((s) => s.id), [sections]);
+  const active = useScrollSpy(ids);
   const reduce = useReducedMotion();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   // Blur-on-scroll backdrop, same trigger as the previous navbar.
   useEffect(() => {
@@ -93,7 +97,7 @@ export function SiteNav({
                 aria-label={menuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={menuOpen}
                 aria-haspopup="dialog"
-                onClick={() => setMenuOpen(true)}
+                onClick={() => setMenuOpen((o) => !o)}
                 className="text-foreground group flex items-center gap-2.5 rounded-full px-3 py-2 font-mono text-xs tracking-[0.14em] uppercase"
               >
                 Menu
@@ -109,7 +113,7 @@ export function SiteNav({
 
       <MenuOverlay
         open={menuOpen}
-        onClose={() => setMenuOpen(false)}
+        onClose={closeMenu}
         active={active}
         sections={sections}
         socials={socials}
