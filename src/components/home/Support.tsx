@@ -1,5 +1,6 @@
 import { Heart, ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
+import { Magnetic } from "@/components/motion/Magnetic";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 
@@ -21,7 +22,12 @@ export function Support({ funding }: { funding: FundingRow[] }) {
     <Section id="support" className="scroll-mt-24">
       <div className="mx-auto max-w-2xl text-center">
         <Reveal>
-          <SectionHeading eyebrow="Support" title="Support my open-source work" className="mb-4" />
+          <SectionHeading
+            eyebrow="Support"
+            title="Support my open-source work"
+            align="center"
+            className="mb-4"
+          />
           <p className="text-foreground/70 mb-10 leading-relaxed">
             Most of what I build is free and open source. If it helps you, supporting its continued
             development is genuinely appreciated.
@@ -30,16 +36,18 @@ export function Support({ funding }: { funding: FundingRow[] }) {
 
         <Reveal delay={0.1}>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <Button
-              href={primary.url}
-              variant="primary"
-              size="lg"
-              target="_blank"
-              rel="noopener noreferrer"
-              leftIcon={<Heart className="size-4" aria-hidden />}
-            >
-              {primary.label}
-            </Button>
+            <Magnetic>
+              <Button
+                href={primary.url}
+                variant="primary"
+                size="lg"
+                target="_blank"
+                rel="noopener noreferrer"
+                leftIcon={<Heart className="size-4" aria-hidden />}
+              >
+                {primary.label}
+              </Button>
+            </Magnetic>
             {rest.map((f) => (
               <Button
                 key={f.label}

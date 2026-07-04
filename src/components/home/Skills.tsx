@@ -26,7 +26,7 @@ export function Skills({ skills }: { skills: SkillRow[] }) {
   return (
     <Section id="skills" className="scroll-mt-24">
       <Reveal>
-        <SectionHeading eyebrow="Skills" title="Tools I work with" />
+        <SectionHeading number="03" eyebrow="Skills" title="Tools I work with" />
       </Reveal>
 
       <div className="grid gap-6 md:grid-cols-2 md:items-stretch">

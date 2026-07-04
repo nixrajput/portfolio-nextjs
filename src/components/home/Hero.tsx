@@ -108,7 +108,7 @@ export function Hero({
           {...fadeUp(reduce, 1.25)}
           aria-hidden="true"
           data-testid="hero-marquee"
-          className="text-muted mt-[2.6vh] overflow-hidden font-mono text-[13px] whitespace-nowrap [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)] sm:text-[15px]"
+          className="text-muted mt-[2.6vh] overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)] font-mono text-[13px] whitespace-nowrap sm:text-[15px]"
         >
           <span className={reduce ? "inline-block" : "hero-marquee-track inline-block"}>
             {marqueeItems.map((role, i) => (

@@ -68,7 +68,7 @@ export function Experience({ experiences }: { experiences: ExperienceRow[] }) {
 
   return (
     <Section id="experience" className="scroll-mt-24">
-      <SectionHeading eyebrow="Experience" title="Where I've worked" />
+      <SectionHeading number="04" eyebrow="Experience" title="Where I've worked" />
       <ol className="max-w-2xl">
         {sorted.map((exp, index) => (
           <TimelineEntry key={exp.id} exp={exp} index={index} last={index === sorted.length - 1} />

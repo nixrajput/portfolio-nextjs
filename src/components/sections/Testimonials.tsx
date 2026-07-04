@@ -23,7 +23,7 @@ export function Testimonials({ items }: { items: TestimonialCard[] }) {
   return (
     <Section id="testimonials" className="scroll-mt-24">
       <Reveal>
-        <SectionHeading eyebrow="Testimonials" title="What people say" />
+        <SectionHeading number="07" eyebrow="Testimonials" title="What people say" />
       </Reveal>
 
       {items.length === 0 ? (

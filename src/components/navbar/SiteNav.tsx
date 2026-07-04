@@ -68,7 +68,7 @@ export function SiteNav({
           <Link
             href="/"
             aria-label="Home"
-            className="shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] [filter:drop-shadow(0_0_12px_rgba(124,58,237,0.4))] hover:-rotate-4 hover:scale-110 hover:[filter:drop-shadow(0_0_16px_rgba(236,72,153,0.55))]"
+            className="shrink-0 [filter:drop-shadow(0_0_12px_rgba(124,58,237,0.4))] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:-rotate-4 hover:[filter:drop-shadow(0_0_16px_rgba(236,72,153,0.55))]"
           >
             <Logo />
           </Link>

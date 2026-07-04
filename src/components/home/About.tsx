@@ -48,7 +48,7 @@ export function About({ profile }: { profile: AboutProfile }) {
     <Section id="about" className="scroll-mt-24">
       <div className="mx-auto max-w-3xl">
         <Reveal>
-          <SectionHeading eyebrow="About" title="A bit about me" />
+          <SectionHeading number="02" eyebrow="About" title="A bit about me" />
         </Reveal>
 
         <Reveal delay={0.08}>

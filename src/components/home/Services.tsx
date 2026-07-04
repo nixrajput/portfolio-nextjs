@@ -12,7 +12,7 @@ export function Services({ services }: { services: ServiceRow[] }) {
   return (
     <Section id="services" className="scroll-mt-24">
       <Reveal>
-        <SectionHeading eyebrow="Services" title="What I do" />
+        <SectionHeading number="06" eyebrow="Services" title="What I do" />
       </Reveal>
 
       {sorted.length === 0 ? (
