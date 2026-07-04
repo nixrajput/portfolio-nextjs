@@ -78,6 +78,13 @@
       "when": 1782685943106,
       "tag": "0010_breezy_archangel",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1783178813962,
+      "tag": "0011_long_doctor_faustus",
+      "breakpoints": true
     }
   ]
 }

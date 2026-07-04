@@ -22,6 +22,18 @@ describe("globals.css theme tokens", () => {
     expect(globalsContent).toContain("--color-surface: var(--surface)");
   });
 
+  it("should define hue-biased ink/paper and redesign tokens", () => {
+    // light
+    expect(globalsContent).toContain("--bg: #f7f6fb");
+    expect(globalsContent).toContain("--fg: #191333");
+    // dark
+    expect(globalsContent).toContain("--bg: #07070c");
+    expect(globalsContent).toContain("--fg: #f2f0ff");
+    // new tokens present in both theme blocks
+    expect(globalsContent.match(/--name-stroke:/g)?.length).toBeGreaterThanOrEqual(2);
+    expect(globalsContent.match(/--overlay-bg:/g)?.length).toBeGreaterThanOrEqual(2);
+  });
+
   it("should define gradient and font tokens", () => {
     expect(globalsContent).toContain("--gradient-brand:");
     expect(globalsContent).toContain("--font-sans: var(--font-geist-sans)");

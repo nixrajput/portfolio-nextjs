@@ -22,6 +22,8 @@ export default async function ProfileEditor() {
       roles: row?.roles ?? [],
       resumeUrl: (formData.get("resumeUrl") as string) || null,
       avatarUrl: (formData.get("avatarUrl") as string) || null,
+      location: (formData.get("location") as string) || null,
+      availability: (formData.get("availability") as string) || null,
     });
   }
 
@@ -54,6 +56,18 @@ export default async function ProfileEditor() {
                 name="avatarUrl"
                 defaultValue={row?.avatarUrl ?? ""}
                 placeholder="/images/nikhil.png"
+              />
+            </Field>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Location" hint="Shown in the nav status line.">
+              <Input name="location" defaultValue={row?.location ?? ""} placeholder="Lucknow, IN" />
+            </Field>
+            <Field label="Availability" hint="e.g. Open to work. Leave empty to hide.">
+              <Input
+                name="availability"
+                defaultValue={row?.availability ?? ""}
+                placeholder="Open to work"
               />
             </Field>
           </div>

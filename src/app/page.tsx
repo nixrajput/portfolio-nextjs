@@ -7,10 +7,9 @@ import {
   getServices,
   getSocialLinks,
   getFundingLinks,
-  getRandomTagline,
 } from "@/lib/queries";
 import { Hero } from "@/components/home/Hero";
-import { FloatingNavbar } from "@/components/navbar/FloatingNavbar";
+import { SiteNav } from "@/components/navbar/SiteNav";
 import { Footer } from "@/components/layout/Footer";
 
 // The homepage is DB-driven but its content changes rarely, so use ISR: it is
@@ -54,19 +53,24 @@ const Faq = nextDynamic(() =>
 );
 
 export default async function Home() {
-  const [profile, projects, experiences, skills, services, socials, funding, tagline] =
-    await Promise.all([
-      getProfile(),
-      getProjectsMerged(),
-      getExperiences(),
-      getSkills(),
-      getServices(),
-      getSocialLinks(),
-      getFundingLinks(),
-      getRandomTagline(),
-    ]);
+  const [profile, projects, experiences, skills, services, socials, funding] = await Promise.all([
+    getProfile(),
+    getProjectsMerged(),
+    getExperiences(),
+    getSkills(),
+    getServices(),
+    getSocialLinks(),
+    getFundingLinks(),
+  ]);
 
   const sponsorUrl = funding.find((f) => f.primary)?.url;
+  // Earliest 4-digit year across experience periods (freeform text like
+  // "Jan 2020 - Present"), used for the hero eyebrow. Undefined if none parse.
+  const years = experiences
+    .map((e) => e.period.match(/(?:19|20)\d{2}/)?.[0])
+    .filter((y): y is string => Boolean(y))
+    .map(Number);
+  const careerStartYear = years.length ? Math.min(...years) : undefined;
   // Derive contact email from social links (platform = "email") or fall back
   const contactEmail =
     socials.find((s) => s.platform.toLowerCase() === "email")?.url.replace("mailto:", "") ??
@@ -74,17 +78,16 @@ export default async function Home() {
 
   return (
     <>
-      <FloatingNavbar resumeUrl={profile.resumeUrl ?? undefined} sponsorUrl={sponsorUrl} />
+      <SiteNav
+        location={profile.location}
+        availability={profile.availability}
+        socials={socials.map((s) => ({ platform: s.platform, url: s.url }))}
+      />
 
       <Hero
-        profile={{
-          name: profile.name,
-          roles: profile.roles,
-          avatarUrl: profile.avatarUrl ?? "/images/nikhil.png",
-          resumeUrl: profile.resumeUrl ?? undefined,
-        }}
+        profile={{ name: profile.name, headline: profile.headline, roles: profile.roles }}
         sponsorUrl={sponsorUrl}
-        tagline={tagline}
+        careerStartYear={careerStartYear}
       />
 
       <About profile={{ bio: profile.bio, stats: profile.stats }} />

@@ -26,6 +26,8 @@ export const profile = pgTable("profile", {
   roles: jsonb("roles").$type<string[]>().notNull().default([]),
   resumeUrl: text("resume_url"),
   avatarUrl: text("avatar_url"),
+  location: text("location"),
+  availability: text("availability"),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

@@ -46,16 +46,21 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Light theme — raw values for @theme var() references */
+/* Light theme — raw values for @theme var() references.
+   Ink/paper are hue-biased toward the brand violet (never pure black/white)
+   so text harmonizes with the ambient gradient. */
 :root {
   --max-width: 1200px;
-  --bg: #fafafa;
-  --fg: #0a0a0a;
+  --bg: #f7f6fb;
+  --fg: #191333;
   --surface: #ffffff;
-  --surface-2: rgba(0, 0, 0, 0.02);
-  --border-color: rgba(0, 0, 0, 0.08);
-  --muted: rgba(10, 10, 10, 0.5);
+  --surface-2: rgba(30, 22, 64, 0.03);
+  --border-color: rgba(30, 22, 64, 0.18);
+  --muted: rgba(30, 22, 64, 0.62);
   --ring: #7c3aed;
+  /* Redesign tokens: hero name stroke + full-screen menu ground */
+  --name-stroke: rgba(30, 22, 64, 0.88);
+  --overlay-bg: rgba(247, 246, 251, 0.94);
   /* Legacy aliases kept for existing components */
   --background: var(--bg);
   --foreground: var(--fg);
@@ -68,12 +73,14 @@
 /* Dark theme */
 .dark {
   --bg: #07070c;
-  --fg: #fafafa;
+  --fg: #f2f0ff;
   --surface: rgba(255, 255, 255, 0.04);
   --surface-2: rgba(255, 255, 255, 0.06);
-  --border-color: rgba(255, 255, 255, 0.1);
-  --muted: rgba(250, 250, 250, 0.62);
+  --border-color: rgba(226, 222, 255, 0.16);
+  --muted: rgba(226, 222, 255, 0.66);
   --ring: #06b6d4;
+  --name-stroke: rgba(238, 235, 255, 0.9);
+  --overlay-bg: rgba(7, 7, 12, 0.92);
   /* Legacy aliases */
   --background: var(--bg);
   --foreground: var(--fg);
@@ -100,15 +107,9 @@ body {
 }
 body {
   background-color: var(--background);
-  /* Light mode: very faint violet tint at top-right only — airy, not purple-washed */
-  background-image: radial-gradient(ellipse at 70% 0%, #f5f0ff 0%, transparent 50%);
   color: var(--foreground);
   font-size: 1rem;
   line-height: 1.5;
-}
-.dark body {
-  /* Dark mode: no extra tint — deep base is enough */
-  background-image: none;
 }
 
 /*
@@ -154,6 +155,45 @@ body {
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+}
+
+/* Hero display: transparent fill with a theme-aware stroke */
+@utility text-stroke-name {
+  -webkit-text-stroke: 2px var(--name-stroke);
+  color: transparent;
+  letter-spacing: 0.04em;
+}
+
+/* Text-protection scrim: quiets the ambient gradient under the hero headline
+   block only - corners and edges stay vivid. Both themes via var(--bg). */
+.hero-scrim {
+  background: radial-gradient(
+    95% 64% ellipse at 26% 52%,
+    color-mix(in srgb, var(--bg) 78%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 42%, transparent) 42%,
+    transparent 70%
+  );
+}
+
+/* Hero roles marquee: duplicated track, translate by half for a seamless loop */
+@keyframes marquee-left {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.hero-marquee-track {
+  animation: marquee-left 26s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee-track {
+    animation: none;
+  }
+}
+
+/* Custom cursor active: hide the native cursor everywhere while it renders */
+html.cursor-hidden,
+html.cursor-hidden * {
+  cursor: none !important;
 }
 
 @keyframes meteor {

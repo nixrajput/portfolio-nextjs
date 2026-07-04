@@ -9,7 +9,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { HashScrollFix } from "@/components/util/HashScrollFix";
-import { FluidBackground } from "@/components/background/FluidBackground";
+import { AmbientBackground } from "@/components/background/AmbientBackground";
+import { CustomCursor } from "@/components/motion/CustomCursor";
 import { PersonJsonLd, WebSiteJsonLd } from "@/lib/seo/jsonld";
 import { SITE } from "@/lib/seo/site";
 
@@ -83,7 +84,6 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
       <body className={GeistSans.className}>
-        <FluidBackground />
         <PersonJsonLd />
         <WebSiteJsonLd />
         <ThemeProvider
@@ -92,8 +92,11 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
           enableSystem
           disableTransitionOnChange
         >
+          {/* Inside ThemeProvider: the canvas reads resolvedTheme for its blend mode */}
+          <AmbientBackground />
           <main>{children}</main>
           <ScrollToTop />
+          <CustomCursor />
         </ThemeProvider>
         <HashScrollFix />
         <VercelAnalytics />
