@@ -14,9 +14,20 @@ Personal portfolio website for [Nikhil Rajput](https://nixrajput.com), rebuilt f
 
 ---
 
+## Screenshots
+
+An immersive, cursor-reactive hero over a page-wide gradient background, with a first-class light and dark theme.
+
+| Dark theme                                                  | Light theme                                                   |
+| ----------------------------------------------------------- | ------------------------------------------------------------- |
+| ![Home page, dark theme](public/screenshots/hero-dark.webp) | ![Home page, light theme](public/screenshots/hero-light.webp) |
+
+---
+
 ## Table of Contents
 
 - [Nikhil Rajput — Portfolio (v2)](#nikhil-rajput--portfolio-v2)
+  - [Screenshots](#screenshots)
   - [Table of Contents](#table-of-contents)
   - [Stack](#stack)
   - [Architecture overview](#architecture-overview)
@@ -62,9 +73,10 @@ Personal portfolio website for [Nikhil Rajput](https://nixrajput.com), rebuilt f
 
 ## Architecture overview
 
-- **DB-driven content** — profile, projects, experiences, skills, services, social links, and taglines are stored in PostgreSQL and seeded via `bun run db:seed`. The admin panel allows live CRUD editing.
+- **DB-driven content** — profile, projects, experiences, skills, services, social links, taglines, and FAQs are stored in PostgreSQL and seeded via `bun run db:seed`. The admin panel allows live CRUD editing. The profile drives the hero (name, editable role marquee, "Currently" tagline, avatar) and the About section.
+- **Image uploads** — the profile avatar and skill icons are uploaded from the admin panel to Vercel Blob (SVG stored raw for crisp vector icons, raster formats optimized to WebP) and served from the CDN. Each field also accepts a plain URL, and existing static asset paths keep working.
 - **GitHub cache** — project metadata (stars, forks, descriptions) is fetched from the GitHub API at build time and revalidated server-side via `GITHUB_TOKEN`. Only repos listed in the database are enriched.
-- **Testimonials** — visitors can submit testimonials with an optional avatar upload to Vercel Blob. Submissions land in a moderation queue; the admin approves or rejects them before they appear publicly. Resend emails the admin on new submissions.
+- **Testimonials** — visitors submit testimonials through a validated form (inline per-field errors) with an optional cropped avatar uploaded to Vercel Blob. Submissions land in a moderation queue; the admin approves or rejects them before they appear publicly. Resend emails the admin on new submissions.
 - **Admin panel** — protected by GitHub OAuth (`AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET`). Access is restricted to the GitHub login set in `ADMIN_GITHUB_LOGIN` (default: `nixrajput`). The panel exposes CRUD tabs for all content types plus the testimonial moderation queue.
 - **SEO / GEO** — structured metadata, Open Graph, Twitter cards, Google verification, and `robots.txt` are generated from the database profile row and site config.
 
@@ -104,7 +116,7 @@ cp .env.example .env.local
 | `AUTH_GITHUB_SECRET`                    | Yes         | GitHub OAuth App client secret                                                      |
 | `ADMIN_GITHUB_LOGIN`                    | Yes         | GitHub username allowed to access the admin panel (e.g. `nixrajput`)                |
 | `GITHUB_TOKEN`                          | Recommended | GitHub personal access token for project metadata fetching (higher rate limits)     |
-| `BLOB_READ_WRITE_TOKEN`                 | Yes (prod)  | Vercel Blob token for testimonial avatar uploads                                    |
+| `BLOB_READ_WRITE_TOKEN`                 | Yes (prod)  | Vercel Blob token for image uploads (avatar, skill icons, testimonial avatars)      |
 | `RESEND_API_KEY`                        | Yes (prod)  | Resend API key for admin notification emails                                        |
 | `RESEND_FROM_EMAIL`                     | Yes (prod)  | From address for emails, e.g. `Portfolio <noreply@nixrajput.com>` (verified domain) |
 | `CONTACT_EMAIL`                         | Yes (prod)  | Email address to receive testimonial submission notifications                       |
@@ -172,8 +184,11 @@ The site is available at [http://localhost:4000](http://localhost:4000).
 The admin panel is at `/admin` and requires authentication via GitHub OAuth.
 
 - Only the GitHub account set in `ADMIN_GITHUB_LOGIN` (e.g. `nixrajput`) can sign in.
-- After signing in you have access to CRUD tabs for profile, projects, experiences, skills, services, social links, taglines, and funding links.
+- After signing in you have access to CRUD tabs for profile, projects, experiences, skills, services, social links, taglines, FAQs, and funding links.
+- The profile editor manages your name, bio, hero role marquee, "Currently" tagline, resume link, and avatar (upload or URL). Skill icons are uploaded or URL-pasted per skill.
 - Testimonial submissions appear in a moderation queue. Approve a testimonial to make it visible on the site; reject to discard it.
+
+Image uploads (avatar, skill icons) require `BLOB_READ_WRITE_TOKEN` to be set.
 
 ---
 
