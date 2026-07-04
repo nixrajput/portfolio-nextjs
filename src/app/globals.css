@@ -107,6 +107,18 @@
 html {
   scroll-behavior: smooth;
 }
+/*
+ * Suppress every transition/animation until `theme-ready` is set (one frame
+ * after next-themes applies the resolved theme class). Without this, the
+ * initial system-theme light->dark flip cross-fades through each element's
+ * own transition-* — the nav border/background and the hero divider are the
+ * most visible, reading as a flicker. `!important` beats utility transitions.
+ */
+html:not(.theme-ready) *,
+html:not(.theme-ready) *::before,
+html:not(.theme-ready) *::after {
+  transition: none !important;
+}
 html,
 body {
   max-width: 100vw;

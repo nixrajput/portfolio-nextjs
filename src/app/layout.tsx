@@ -83,6 +83,25 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
       suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
+      <head>
+        {/*
+         * First-paint transition guard. next-themes resolves the system theme
+         * on the client and flips the `dark` class; without this, every themed
+         * token (nav border/background, the hero divider, cards) would animate
+         * that initial light->dark flip through its own `transition-*`, which
+         * reads as a flicker. We mark `theme-ready` on the next frame after the
+         * theme class is applied; globals.css suppresses transitions until then
+         * so the settled theme paints once, with no cross-fade. Runs before
+         * paint (blocking, in <head>) so there is no unguarded frame.
+         */}
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html:
+              "requestAnimationFrame(function(){document.documentElement.classList.add('theme-ready')})",
+          }}
+        />
+      </head>
       <body className={GeistSans.className}>
         <PersonJsonLd />
         <WebSiteJsonLd />
