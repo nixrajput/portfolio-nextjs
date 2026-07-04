@@ -110,9 +110,7 @@ describe("zod validation", () => {
     await expect(
       updateProfile({
         name: "",
-        headline: "h",
         bio: "b",
-        summary: "s",
         stats: {},
         roles: [],
       }),

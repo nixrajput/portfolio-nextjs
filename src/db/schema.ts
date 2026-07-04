@@ -17,10 +17,7 @@ import type { AdapterAccountType } from "@auth/core/adapters";
 export const profile = pgTable("profile", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  headline: text("headline").notNull(),
   bio: text("bio").notNull(),
-  // entity-first summary used in JSON-LD / GEO
-  summary: text("summary").notNull(),
   // arbitrary stat blocks e.g. { years: 4, repos: 60, stars: 1200 }
   stats: jsonb("stats").$type<Record<string, string | number>>().notNull().default({}),
   roles: jsonb("roles").$type<string[]>().notNull().default([]),

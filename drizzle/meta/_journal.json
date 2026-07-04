@@ -92,6 +92,13 @@
       "when": 1783202161228,
       "tag": "0012_hero_tagline",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1783207913186,
+      "tag": "0013_drop_headline_summary",
+      "breakpoints": true
     }
   ]
 }
