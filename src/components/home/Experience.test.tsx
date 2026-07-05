@@ -16,7 +16,21 @@ vi.mock("framer-motion", () => ({
         {children}
       </li>
     ),
+    span: ({
+      children,
+      className,
+      style,
+      ...props
+    }: React.HTMLAttributes<HTMLSpanElement> & { style?: React.CSSProperties }) => (
+      <span className={className} style={style} {...props}>
+        {children}
+      </span>
+    ),
   },
+  // Scroll-progress hooks used by the connector rail; inert in jsdom.
+  useScroll: () => ({ scrollYProgress: { get: () => 0 } }),
+  useSpring: (v: unknown) => v,
+  useTransform: () => 0,
 }));
 
 // Mock useReducedMotion — default: no reduced motion

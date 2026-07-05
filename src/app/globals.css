@@ -46,16 +46,35 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Light theme — raw values for @theme var() references */
+/* Light theme — raw values for @theme var() references.
+   Ink/paper are hue-biased toward the brand violet (never pure black/white)
+   so text harmonizes with the ambient gradient. */
 :root {
   --max-width: 1200px;
-  --bg: #fafafa;
-  --fg: #0a0a0a;
-  --surface: #ffffff;
-  --surface-2: rgba(0, 0, 0, 0.02);
-  --border-color: rgba(0, 0, 0, 0.08);
-  --muted: rgba(10, 10, 10, 0.5);
+  --bg: #f7f6fb;
+  --fg: #191333;
+  /* Translucent so cards read as glass over the ambient canvas, not white slabs */
+  --surface: rgba(255, 255, 255, 0.6);
+  --surface-2: rgba(255, 255, 255, 0.85);
+  --border-color: rgba(30, 22, 64, 0.18);
+  --muted: rgba(30, 22, 64, 0.62);
   --ring: #7c3aed;
+  /* Raw brand vars for arbitrary-value utilities like border-(--brand-violet).
+     The @theme --color-brand-* tokens only generate the --color-* namespace,
+     so components referencing the bare names need these aliases. */
+  --brand-violet: #7c3aed;
+  --brand-cyan: #06b6d4;
+  --brand-pink: #ec4899;
+  /* Redesign tokens: hero name stroke + full-screen menu ground */
+  --name-stroke: rgba(30, 22, 64, 0.88);
+  --overlay-bg: rgba(247, 246, 251, 0.94);
+  /* Experience period label: brand cyan is too light on paper — use a deep teal */
+  --period: #0e7490;
+  /* Accent text on translucent brand chips (project language etc.): deep on paper */
+  --accent-on-chip: #6d28d9;
+  /* Opaque brand-tinted chip surface — subtle violet wash over paper, so the
+     chip reads as "brand" (not dead black) yet blocks the moving gradient. */
+  --chip-surface: #f0ecfb;
   /* Legacy aliases kept for existing components */
   --background: var(--bg);
   --foreground: var(--fg);
@@ -68,12 +87,20 @@
 /* Dark theme */
 .dark {
   --bg: #07070c;
-  --fg: #fafafa;
+  --fg: #f2f0ff;
   --surface: rgba(255, 255, 255, 0.04);
   --surface-2: rgba(255, 255, 255, 0.06);
-  --border-color: rgba(255, 255, 255, 0.1);
-  --muted: rgba(250, 250, 250, 0.62);
+  --border-color: rgba(226, 222, 255, 0.16);
+  --muted: rgba(226, 222, 255, 0.66);
   --ring: #06b6d4;
+  --name-stroke: rgba(238, 235, 255, 0.9);
+  --overlay-bg: rgba(7, 7, 12, 0.92);
+  /* Dark: the vivid cyan reads fine on the deep ground */
+  --period: #22d3ee;
+  /* Dark: a bright lavender so brand chips are legible on the deep ground */
+  --accent-on-chip: #c4b5fd;
+  /* Opaque deep-violet chip surface: immersive brand tone, not flat black. */
+  --chip-surface: #1a1430;
   /* Legacy aliases */
   --background: var(--bg);
   --foreground: var(--fg);
@@ -93,6 +120,18 @@
 html {
   scroll-behavior: smooth;
 }
+/*
+ * Suppress every transition/animation until `theme-ready` is set (one frame
+ * after next-themes applies the resolved theme class). Without this, the
+ * initial system-theme light->dark flip cross-fades through each element's
+ * own transition-* — the nav border/background and the hero divider are the
+ * most visible, reading as a flicker. `!important` beats utility transitions.
+ */
+html:not(.theme-ready) *,
+html:not(.theme-ready) *::before,
+html:not(.theme-ready) *::after {
+  transition: none !important;
+}
 html,
 body {
   max-width: 100vw;
@@ -100,15 +139,9 @@ body {
 }
 body {
   background-color: var(--background);
-  /* Light mode: very faint violet tint at top-right only — airy, not purple-washed */
-  background-image: radial-gradient(ellipse at 70% 0%, #f5f0ff 0%, transparent 50%);
   color: var(--foreground);
   font-size: 1rem;
   line-height: 1.5;
-}
-.dark body {
-  /* Dark mode: no extra tint — deep base is enough */
-  background-image: none;
 }
 
 /*
@@ -154,6 +187,120 @@ body {
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+}
+
+/* Shared horizontal rhythm: the hero's fluid gutter is the reference, so the
+   nav, every Section, and the Footer use the same edges — no max-width cap,
+   6vw gutters on >= sm, a comfortable 1.5rem on mobile. Change it here once. */
+@utility site-container {
+  padding-inline: 1.5rem;
+}
+@media (width >= 40rem) {
+  .site-container {
+    padding-inline: 6vw;
+  }
+}
+
+/* Hero display: transparent fill with a theme-aware stroke */
+@utility text-stroke-name {
+  -webkit-text-stroke: 2px var(--name-stroke);
+  color: transparent;
+  letter-spacing: 0.04em;
+}
+
+/* Text-protection scrim: quiets the ambient gradient under the hero headline
+   block only - corners and edges stay vivid. Both themes via var(--bg). */
+.hero-scrim {
+  background: radial-gradient(
+    95% 64% ellipse at 26% 52%,
+    color-mix(in srgb, var(--bg) 78%, transparent) 0%,
+    color-mix(in srgb, var(--bg) 42%, transparent) 42%,
+    transparent 70%
+  );
+}
+
+/* Hero roles marquee: duplicated track, translate by half for a seamless loop */
+@keyframes marquee-left {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.hero-marquee-track {
+  animation: marquee-left 26s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-marquee-track {
+    animation: none;
+  }
+}
+
+/* Custom cursor active: hide the native cursor everywhere while it renders */
+html.cursor-hidden,
+html.cursor-hidden * {
+  cursor: none !important;
+}
+
+/* ── Dialog motion (Radix data-state driven) ─────────────────────────────
+   Scale + fade on the brand ease curve. We animate the standalone `scale`
+   property (NOT `transform`) so it composes with Tailwind's
+   -translate-x/y-1/2 centering instead of overriding it — animating
+   `transform` here made the modal jump from a mis-centered spot to center
+   when the animation ended and the utility transform took back over.
+   animation-fill-mode: both holds the first/last frame so there is no
+   pre-animation flash either. */
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    scale: 0.94;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+@keyframes dialog-out {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 0.94;
+  }
+}
+.dialog-pop[data-state="open"] {
+  animation: dialog-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.dialog-pop[data-state="closed"] {
+  animation: dialog-out 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.dialog-overlay-fade[data-state="open"] {
+  animation: overlay-in 0.28s ease;
+}
+.dialog-overlay-fade[data-state="closed"] {
+  animation: overlay-out 0.2s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dialog-pop[data-state],
+  .dialog-overlay-fade[data-state] {
+    animation: none;
+  }
 }
 
 @keyframes meteor {

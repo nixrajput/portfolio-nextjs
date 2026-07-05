@@ -4,9 +4,7 @@ import { z } from "zod";
 
 export const profileInsertSchema = z.object({
   name: z.string().min(1),
-  headline: z.string().min(1),
   bio: z.string().min(1),
-  summary: z.string().min(1),
   stats: z.record(z.string(), z.union([z.string(), z.number()])).default({}),
   roles: z.array(z.string()).default([]),
   // Full http(s) URLs only — z.httpUrl() rejects javascript:/data: schemes
@@ -14,6 +12,7 @@ export const profileInsertSchema = z.object({
   // absolute asset URL, not a relative path.
   resumeUrl: z.httpUrl().nullable().optional(),
   avatarUrl: z.httpUrl().nullable().optional(),
+  heroTagline: z.string().nullable().optional(),
 });
 
 export const projectInsertSchema = z.object({

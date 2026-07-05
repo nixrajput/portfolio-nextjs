@@ -49,11 +49,11 @@ export { getProjects as getProjectsMerged };
 
 export async function getProfile(): Promise<{
   name: string;
-  headline: string;
   bio: string;
   roles: string[];
   avatarUrl: string;
   resumeUrl: string;
+  heroTagline: string | null;
   stats: { years: number; repos: number; stars: number };
 }> {
   const rows = await db.select().from(profile);
@@ -73,10 +73,10 @@ export async function getProfile(): Promise<{
 
   return {
     name: row.name,
-    headline: row.headline,
     bio: row.bio,
     avatarUrl: (row.avatarUrl as string) || FALLBACK_AVATAR,
     resumeUrl: (row.resumeUrl as string) ?? "",
+    heroTagline: row.heroTagline ?? null,
     roles: row.roles,
     stats: {
       years: Number(s.years ?? 0),

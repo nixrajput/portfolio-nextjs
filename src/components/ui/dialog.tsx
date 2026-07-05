@@ -23,8 +23,7 @@ export const DialogOverlay = React.forwardRef<
     ref={ref}
     className={cn(
       "fixed inset-0 z-50 bg-black/60 backdrop-blur-sm",
-      "data-[state=open]:animate-in data-[state=closed]:animate-out",
-      "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "dialog-overlay-fade",
       className,
     )}
     {...props}
@@ -45,8 +44,10 @@ export const DialogContent = React.forwardRef<
         "w-[calc(100%-2rem)] max-w-md",
         // Flex column: header fixed, body scrolls, footer fixed.
         "flex max-h-[90vh] flex-col",
-        "bg-background border-border rounded-2xl border shadow-2xl",
-        "transition-opacity data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
+        // Same glass ground as the nav MenuOverlay - one modal language.
+        "border-border rounded-2xl border bg-(--overlay-bg) shadow-2xl backdrop-blur-xl",
+        // Scale + fade in/out on the eased brand curve (smooth, not a snap).
+        "dialog-pop",
         className,
       )}
       {...props}
@@ -102,7 +103,7 @@ export const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn("text-foreground text-lg font-semibold", className)}
+    className={cn("text-foreground text-xl font-extrabold tracking-tight", className)}
     {...props}
   />
 ));

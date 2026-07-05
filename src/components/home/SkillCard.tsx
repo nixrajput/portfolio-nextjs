@@ -2,8 +2,14 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { cn } from "@/utils/cn";
+
+// Icons that are white/monochrome glyphs — invisible on the light-theme
+// surface. Invert them in light mode so they read as dark.
+const INVERT_IN_LIGHT = /nextjs|next-js|next\.|vercel|express|flask|github|apple/i;
 
 export function SkillCard({ name, iconPath }: { name: string; iconPath: string }) {
+  const invertLight = INVERT_IN_LIGHT.test(iconPath) || INVERT_IN_LIGHT.test(name);
   return (
     <motion.li
       whileHover={{ y: -4, scale: 1.03 }}
@@ -16,7 +22,15 @@ export function SkillCard({ name, iconPath }: { name: string; iconPath: string }
           alt=""
           fill
           sizes="48px"
-          className="object-contain p-1"
+          // unoptimized: icons are tiny (no optimizer gain) and this serves
+          // static paths, remote raster, and remote/uploaded SVG uniformly
+          // without the next/image SVG restriction.
+          unoptimized
+          className={cn(
+            "object-contain p-1",
+            // Light theme: invert white glyphs to dark; dark theme leaves them.
+            invertLight && "invert dark:invert-0",
+          )}
           onError={() => {}}
         />
       </span>

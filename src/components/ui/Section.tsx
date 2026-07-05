@@ -10,7 +10,7 @@ type SectionProps = {
 export function Section({ id, children, className, ...rest }: SectionProps) {
   return (
     <section id={id} className={cn("py-20 md:py-28", className)} {...rest}>
-      <div className="mx-auto max-w-6xl px-6">{children}</div>
+      <div className="site-container">{children}</div>
     </section>
   );
 }
@@ -18,16 +18,38 @@ export function Section({ id, children, className, ...rest }: SectionProps) {
 type SectionHeadingProps = {
   eyebrow?: string;
   title: string;
+  /** Menu index of the section (e.g. "02") - ties the header to the nav overlay numbering. */
+  number?: string;
+  /** Centered variant for centered sections (Contact, Support): no fill rule. */
+  align?: "left" | "center";
   className?: string;
 };
 
-export function SectionHeading({ eyebrow, title, className }: SectionHeadingProps) {
+export function SectionHeading({
+  eyebrow,
+  title,
+  number,
+  align = "left",
+  className,
+}: SectionHeadingProps) {
+  const centered = align === "center";
   return (
     <div className={cn("mb-12", className)}>
       {eyebrow && (
-        <p className="text-muted mb-3 font-mono text-xs tracking-widest uppercase">{eyebrow}</p>
+        <p
+          className={cn(
+            "text-muted mb-4 flex items-center gap-4 font-mono text-xs tracking-[0.3em] uppercase",
+            centered && "justify-center",
+          )}
+        >
+          <span>
+            {number && <span className="text-foreground/40 mr-3">{number}</span>}
+            {eyebrow}
+          </span>
+          {!centered && <span aria-hidden className="bg-border h-px flex-1" />}
+        </p>
       )}
-      <h2 className="text-3xl font-bold md:text-4xl">{title}</h2>
+      <h2 className="text-4xl font-extrabold tracking-tight text-balance md:text-5xl">{title}</h2>
     </div>
   );
 }

@@ -17,7 +17,7 @@ export function Card<T extends ElementType = "div">({
   return (
     <Tag
       className={cn(
-        "border-border bg-surface hover:border-foreground/20 hover:bg-surface-2 rounded-2xl border p-6 transition",
+        "border-border bg-surface hover:border-foreground/20 hover:bg-surface-2 rounded-2xl border p-6 backdrop-blur-sm transition",
         className,
       )}
       {...rest}

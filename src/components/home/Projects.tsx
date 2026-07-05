@@ -1,5 +1,6 @@
 import { Star, ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
+import { Magnetic } from "@/components/motion/Magnetic";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { ProjectCard } from "./ProjectCard";
@@ -14,7 +15,7 @@ export function Projects({ projects }: { projects: MergedProject[] }) {
   return (
     <Section id="projects" className="scroll-mt-24">
       <Reveal>
-        <SectionHeading eyebrow="Projects" title="Featured work" />
+        <SectionHeading number="05" eyebrow="Projects" title="Featured work" />
       </Reveal>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -52,16 +53,18 @@ export function Projects({ projects }: { projects: MergedProject[] }) {
       )}
 
       <div className="mt-12 text-center">
-        <Button
-          href={GITHUB_PROFILE}
-          variant="secondary"
-          size="md"
-          target="_blank"
-          rel="noopener noreferrer"
-          leftIcon={<ArrowUpRight className="size-4" aria-hidden />}
-        >
-          View all on GitHub
-        </Button>
+        <Magnetic>
+          <Button
+            href={GITHUB_PROFILE}
+            variant="secondary"
+            size="md"
+            target="_blank"
+            rel="noopener noreferrer"
+            leftIcon={<ArrowUpRight className="size-4" aria-hidden />}
+          >
+            View all on GitHub
+          </Button>
+        </Magnetic>
       </div>
     </Section>
   );

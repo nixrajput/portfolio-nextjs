@@ -169,9 +169,7 @@ describe("getProfile", () => {
       {
         id: 1,
         name: "Nikhil Rajput",
-        headline: "Full Stack Developer",
         bio: "Bio text",
-        summary: "Summary",
         stats: { years: 4, repos: 60, stars: 1200 },
         roles: ["Developer", "Designer"],
         resumeUrl: "/resume.pdf",
@@ -181,7 +179,6 @@ describe("getProfile", () => {
     ]);
     const result = await getProfile();
     expect(result.name).toBe("Nikhil Rajput");
-    expect(result.headline).toBe("Full Stack Developer");
     expect(result.bio).toBe("Bio text");
     expect(result.avatarUrl).toBe("/avatar.jpg");
     expect(result.resumeUrl).toBe("/resume.pdf");
@@ -194,9 +191,7 @@ describe("getProfile", () => {
       {
         id: 1,
         name: "Test",
-        headline: "Test headline",
         bio: "Bio",
-        summary: "Summary",
         stats: {},
         roles: [],
         resumeUrl: null,

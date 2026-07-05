@@ -1,5 +1,6 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
+import { installMatchMedia } from "@/test/matchMedia";
 import { Contact, platformIcon } from "./Contact";
 import type { SocialRow } from "./Contact";
 import { Github, Linkedin, Instagram, Send, Mail, Globe } from "lucide-react";
@@ -20,6 +21,9 @@ vi.mock("framer-motion", () => ({
 vi.mock("@/components/motion/Reveal", () => ({
   Reveal: ({ children }: { children: React.ReactNode }) => <>{children}</>,
 }));
+
+// Magnetic renders for real and reads matchMedia via useReducedMotion
+beforeEach(() => installMatchMedia());
 
 const mockSocials: SocialRow[] = [
   { platform: "github", url: "https://github.com/nixrajput", username: "nixrajput", order: 1 },

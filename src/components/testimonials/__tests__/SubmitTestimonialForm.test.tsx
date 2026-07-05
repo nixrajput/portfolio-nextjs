@@ -8,6 +8,21 @@ describe("SubmitTestimonialForm", () => {
   });
   afterEach(() => vi.unstubAllGlobals());
 
+  // Fill every required field with valid values so the form passes its
+  // client-side validation gate and actually submits.
+  function fillRequired() {
+    fireEvent.change(screen.getByLabelText(/your name/i), { target: { value: "Jane Smith" } });
+    fireEvent.change(screen.getByLabelText(/your email/i), {
+      target: { value: "jane@example.com" },
+    });
+    fireEvent.change(screen.getByLabelText(/how do you know me/i), {
+      target: { value: "Colleague" },
+    });
+    fireEvent.change(screen.getByLabelText(/your testimonial/i), {
+      target: { value: "A".repeat(25) },
+    });
+  }
+
   it("renders an off-screen honeypot field named website", () => {
     const { container } = render(<SubmitTestimonialForm />);
     const honeypot = container.querySelector('input[name="website"]') as HTMLInputElement;
@@ -28,18 +43,20 @@ describe("SubmitTestimonialForm", () => {
     // confirmation panel. The form's only job is to call onSuccess.
     const onSuccess = vi.fn();
     const { container } = render(<SubmitTestimonialForm onSuccess={onSuccess} />);
-    fireEvent.change(screen.getByLabelText(/your name/i), {
-      target: { value: "Jane" },
-    });
-    fireEvent.change(screen.getByLabelText(/how do you know me/i), {
-      target: { value: "Colleague" },
-    });
-    fireEvent.change(screen.getByLabelText(/your testimonial/i), {
-      target: { value: "A".repeat(25) },
-    });
+    fillRequired();
     fireEvent.submit(container.querySelector("form")!);
     await waitFor(() => expect(onSuccess).toHaveBeenCalledOnce());
     expect(container.querySelector("form")).toBeNull();
+  });
+
+  it("blocks submit and shows inline errors when required fields are empty", async () => {
+    const onSuccess = vi.fn();
+    const { container } = render(<SubmitTestimonialForm onSuccess={onSuccess} />);
+    fireEvent.submit(container.querySelector("form")!);
+    // One inline alert per required field; form stays mounted; no submit.
+    await waitFor(() => expect(screen.getAllByRole("alert").length).toBe(4));
+    expect(onSuccess).not.toHaveBeenCalled();
+    expect(container.querySelector("form")).not.toBeNull();
   });
 
   it("shows the server error message on failure", async () => {
@@ -48,6 +65,7 @@ describe("SubmitTestimonialForm", () => {
       json: async () => ({ error: "Too many submissions." }),
     });
     const { container } = render(<SubmitTestimonialForm />);
+    fillRequired();
     fireEvent.submit(container.querySelector("form")!);
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent(/too many/i));
   });
@@ -82,6 +100,7 @@ describe("SubmitTestimonialForm", () => {
   it("calls onStateChange with submitting then success on successful submit", async () => {
     const onStateChange = vi.fn();
     const { container } = render(<SubmitTestimonialForm onStateChange={onStateChange} />);
+    fillRequired();
     fireEvent.submit(container.querySelector("form")!);
     await waitFor(() => expect(onStateChange).toHaveBeenCalledWith("success"));
     expect(onStateChange).toHaveBeenCalledWith("submitting");

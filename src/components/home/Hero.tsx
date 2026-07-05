@@ -1,109 +1,137 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, Heart, Sparkles } from "lucide-react";
-import { Reveal } from "@/components/motion/Reveal";
+import { Heart, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { FlipWords } from "./FlipWords";
+import { Magnetic } from "@/components/motion/Magnetic";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export type HeroProfile = {
   name: string;
   roles: string[];
-  avatarUrl: string;
-  blurDataURL?: string;
-  resumeUrl?: string;
 };
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+/** Entrance helper: fade-up at a choreographed delay. */
+function fadeUp(reduce: boolean, delay: number) {
+  return {
+    initial: reduce ? false : ({ opacity: 0, y: 22 } as const),
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.8, ease: EASE, delay },
+  };
+}
+
 /**
- * Centered "spotlight" hero: avatar on top, a sweeping gradient spotlight
- * behind the name, and centered CTAs. Sits on the global fluid background.
+ * "Dark Observatory" hero: viewport-scale two-line name (solid + stroke)
+ * rising out of overflow masks, a drawing hairline rule, a roles marquee,
+ * and magnetic CTAs - over the page-wide AmbientBackground, with a local
+ * scrim guaranteeing text contrast in both themes.
  */
 export function Hero({
   profile,
   sponsorUrl,
-  tagline,
+  heroTagline,
 }: {
   profile: HeroProfile;
   sponsorUrl?: string;
-  tagline: string;
+  heroTagline?: string | null;
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 120]);
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, reduce ? 1 : 0]);
+
+  const [first, ...rest] = profile.name.split(" ");
+  const last = rest.join(" ");
+  // Duplicated track (x2) so the -50% translate loops seamlessly.
+  const marqueeItems = [...profile.roles, ...profile.roles];
 
   return (
     <section
       id="hero"
       ref={ref}
-      className="relative flex min-h-[100svh] scroll-mt-24 items-center justify-center overflow-hidden px-6"
+      className="relative flex min-h-svh scroll-mt-24 flex-col justify-center overflow-hidden"
     >
-      {/* Sweeping gradient spotlight behind the headline */}
-      <div className="pointer-events-none absolute top-1/3 left-1/2 -z-0 h-[40vh] w-[80vw] -translate-x-1/2 rounded-full bg-(image:--gradient-brand) opacity-20 blur-[120px]" />
+      {/* Text-protection scrim: quiets the gradient under the type only */}
+      <div aria-hidden className="hero-scrim pointer-events-none absolute inset-0" />
 
-      <motion.div
-        style={{ y, opacity }}
-        className="relative mx-auto flex max-w-3xl flex-col items-center py-28 text-center"
-      >
-        {/* Avatar */}
-        <Reveal>
-          <div className="relative mb-6 aspect-square w-28 sm:w-32">
-            <div className="absolute inset-0 -z-10 rounded-full bg-(image:--gradient-brand) opacity-40 blur-xl" />
-            <Image
-              src={profile.avatarUrl}
-              alt={`Portrait of ${profile.name}`}
-              fill
-              priority
-              sizes="128px"
-              placeholder={profile.blurDataURL ? "blur" : "empty"}
-              blurDataURL={profile.blurDataURL}
-              className="rounded-full border border-white/20 object-cover shadow-2xl"
-            />
-          </div>
-        </Reveal>
+      <motion.div style={{ y, opacity }} className="site-container relative">
+        {/* Status chip — a glowing brand dot + the tagline (an AI-era signal,
+            not personal data). No label; the pulsing dot reads as "live". */}
+        {heroTagline && (
+          <motion.p {...fadeUp(reduce, 0.35)} className="mb-[2.6vh]">
+            <span className="border-border bg-surface text-muted inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[9px] tracking-[0.18em] uppercase backdrop-blur-sm sm:text-[10px]">
+              <span
+                aria-hidden
+                className="size-1.5 animate-pulse rounded-full bg-(image:--gradient-brand) shadow-[0_0_8px_2px_rgba(124,58,237,0.6)] motion-reduce:animate-none"
+              />
+              {heroTagline}
+            </span>
+          </motion.p>
+        )}
 
-        {/* Motto pill */}
-        <Reveal delay={0.05}>
-          <span className="bg-surface border-border mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium">
-            <Sparkles className="size-3.5 text-violet-500" aria-hidden />
-            <span className="text-muted">{tagline}</span>
+        {/* Name: two masked lines, solid + stroke */}
+        <h1 className="leading-[0.92] font-extrabold tracking-tight uppercase select-none">
+          <span className="block overflow-hidden">
+            <motion.span
+              initial={reduce ? false : { y: "110%" }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.9, ease: EASE, delay: 0.5 }}
+              className="block text-[clamp(44px,16.5vw,90px)] sm:text-[clamp(50px,13.5vw,190px)]"
+            >
+              {first}
+            </motion.span>
           </span>
-        </Reveal>
+          {last && (
+            <span className="block overflow-hidden">
+              <motion.span
+                initial={reduce ? false : { y: "110%" }}
+                animate={{ y: 0 }}
+                transition={{ duration: 0.9, ease: EASE, delay: 0.62 }}
+                className="text-stroke-name block text-[clamp(44px,16.5vw,90px)] sm:text-[clamp(50px,13.5vw,190px)]"
+              >
+                {last}
+              </motion.span>
+            </span>
+          )}
+        </h1>
 
-        {/* Eyebrow */}
-        <Reveal delay={0.1}>
-          <h1 className="text-muted font-mono text-sm tracking-widest uppercase">Hi, I&apos;m</h1>
-        </Reveal>
+        {/* Hairline rule drawing in from the left */}
+        <motion.div
+          initial={reduce ? false : { scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1, ease: EASE, delay: 1.05 }}
+          className="bg-border mt-[4.2vh] h-px origin-left"
+        />
 
-        {/* Name */}
-        <Reveal delay={0.15}>
-          <p className="gradient-text mt-2 text-5xl leading-tight font-bold text-balance sm:text-6xl md:text-7xl">
-            {profile.name}
-          </p>
-        </Reveal>
-
-        {/* Role cycler */}
-        <Reveal delay={0.2}>
-          <div className="mt-4 text-xl font-medium sm:text-2xl">
-            <span className="text-muted">I&apos;m </span>
-            <FlipWords words={profile.roles} showArticle className="text-foreground" />
-          </div>
-        </Reveal>
+        {/* Roles marquee (decorative; roles appear in page copy elsewhere) */}
+        <motion.div
+          {...fadeUp(reduce, 1.25)}
+          aria-hidden="true"
+          data-testid="hero-marquee"
+          className="text-muted mt-[2.6vh] overflow-hidden mask-[linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)] font-mono text-[13px] whitespace-nowrap sm:text-[15px]"
+        >
+          <span className={reduce ? "inline-block" : "hero-marquee-track inline-block"}>
+            {marqueeItems.map((role, i) => (
+              <span key={`${role}-${i}`} className="mx-[1.4em]">
+                {role} <span className="ml-[1.4em] opacity-40">✦</span>
+              </span>
+            ))}
+          </span>
+        </motion.div>
 
         {/* CTAs */}
-        <Reveal delay={0.3}>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <motion.div {...fadeUp(reduce, 1.4)} className="mt-[4.4vh] flex flex-wrap gap-4">
+          <Magnetic>
             <Button variant="primary" size="lg" href="#projects">
-              View work
+              View work <ArrowRight className="size-4" aria-hidden />
             </Button>
-            {sponsorUrl && (
+          </Magnetic>
+          {sponsorUrl && (
+            <Magnetic>
               <Button
                 variant="secondary"
                 size="lg"
@@ -114,20 +142,10 @@ export function Hero({
               >
                 Sponsor
               </Button>
-            )}
-          </div>
-        </Reveal>
+            </Magnetic>
+          )}
+        </motion.div>
       </motion.div>
-
-      {/* Scroll-down chevron */}
-      <motion.a
-        href="#about"
-        aria-label="Scroll to about"
-        style={{ opacity }}
-        className="text-muted hover:text-foreground absolute bottom-8 left-1/2 -translate-x-1/2 transition-colors"
-      >
-        <ArrowDown className="size-5 animate-bounce motion-reduce:animate-none" aria-hidden />
-      </motion.a>
     </section>
   );
 }

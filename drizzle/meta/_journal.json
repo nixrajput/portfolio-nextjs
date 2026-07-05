@@ -78,6 +78,27 @@
       "when": 1782685943106,
       "tag": "0010_breezy_archangel",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1783178813962,
+      "tag": "0011_long_doctor_faustus",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1783202161228,
+      "tag": "0012_hero_tagline",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1783207913186,
+      "tag": "0013_drop_headline_summary",
+      "breakpoints": true
     }
   ]
 }

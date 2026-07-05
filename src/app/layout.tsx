@@ -9,7 +9,8 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { HashScrollFix } from "@/components/util/HashScrollFix";
-import { FluidBackground } from "@/components/background/FluidBackground";
+import { AmbientBackground } from "@/components/background/AmbientBackground";
+import { CustomCursor } from "@/components/motion/CustomCursor";
 import { PersonJsonLd, WebSiteJsonLd } from "@/lib/seo/jsonld";
 import { SITE } from "@/lib/seo/site";
 
@@ -82,8 +83,25 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
       suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
+      <head>
+        {/*
+         * First-paint transition guard. next-themes resolves the system theme
+         * on the client and flips the `dark` class; without this, every themed
+         * token (nav border/background, the hero divider, cards) would animate
+         * that initial light->dark flip through its own `transition-*`, which
+         * reads as a flicker. We mark `theme-ready` on the next frame after the
+         * theme class is applied; globals.css suppresses transitions until then
+         * so the settled theme paints once, with no cross-fade. Runs before
+         * paint (blocking, in <head>) so there is no unguarded frame.
+         */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "requestAnimationFrame(function(){document.documentElement.classList.add('theme-ready')})",
+          }}
+        />
+      </head>
       <body className={GeistSans.className}>
-        <FluidBackground />
         <PersonJsonLd />
         <WebSiteJsonLd />
         <ThemeProvider
@@ -92,8 +110,11 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
           enableSystem
           disableTransitionOnChange
         >
+          {/* Inside ThemeProvider: the canvas reads resolvedTheme for its blend mode */}
+          <AmbientBackground />
           <main>{children}</main>
           <ScrollToTop />
+          <CustomCursor />
         </ThemeProvider>
         <HashScrollFix />
         <VercelAnalytics />

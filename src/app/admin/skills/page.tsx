@@ -18,11 +18,11 @@ const fields: AdminField[] = [
   },
   {
     name: "iconPath",
-    label: "Icon path",
-    type: "text",
-    placeholder: "/skills/react.svg",
-    hint: "e.g. /skills/react.svg",
-    required: true,
+    label: "Icon",
+    type: "image",
+    folder: "skills",
+    placeholder: "https://… or upload (SVG/PNG)",
+    hint: "Upload an icon or paste a URL. SVG stays crisp; existing /skills/*.svg still work.",
   },
   {
     name: "level",

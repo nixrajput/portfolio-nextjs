@@ -1,6 +1,7 @@
 import { Github, Linkedin, Instagram, Send, Mail, Globe } from "lucide-react";
 import type { ComponentType, SVGProps } from "react";
 import { Reveal } from "@/components/motion/Reveal";
+import { Magnetic } from "@/components/motion/Magnetic";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { XIcon } from "@/components/brand/XIcon";
@@ -34,23 +35,31 @@ export function Contact({ socials, email }: { socials: SocialRow[]; email: strin
 
   return (
     <Section id="contact" className="scroll-mt-24">
-      <div className="mx-auto max-w-2xl text-center">
+      <div className="text-center">
         <Reveal>
-          <SectionHeading eyebrow="Contact" title="Let's build something" className="mb-4" />
+          <SectionHeading
+            number="08"
+            eyebrow="Contact"
+            title="Let's build something"
+            align="center"
+            className="mb-4"
+          />
           <p className="text-foreground/70 mb-8">
             Have a project, role, or idea in mind? The fastest way to reach me is email.
           </p>
         </Reveal>
 
         <Reveal delay={0.1}>
-          <Button
-            href={`mailto:${email}`}
-            variant="primary"
-            size="lg"
-            leftIcon={<Mail className="size-4" aria-hidden />}
-          >
-            {email}
-          </Button>
+          <Magnetic>
+            <Button
+              href={`mailto:${email}`}
+              variant="primary"
+              size="lg"
+              leftIcon={<Mail className="size-4" aria-hidden />}
+            >
+              {email}
+            </Button>
+          </Magnetic>
         </Reveal>
 
         <Reveal delay={0.15}>

@@ -52,6 +52,8 @@ docs/superpowers/
 desktop-full.png
 mobile-hero.png
 *.playwright.png
+# Root-level verification screenshots (rt-*, menu-*, resp-*, fix-*, chip*, etc.)
+/*.png
 
 # Playwright e2e output
 playwright-report/

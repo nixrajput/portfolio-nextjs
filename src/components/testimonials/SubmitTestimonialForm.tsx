@@ -8,10 +8,50 @@ import { getCroppedImageFile } from "@/lib/crop-image";
 
 type State = "idle" | "submitting" | "success" | "error";
 
-const inputClass =
-  "w-full rounded-lg border border-border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-(--color-brand-violet) transition";
+// The fields that must pass before the form can submit.
+type FieldName = "name" | "email" | "relationship" | "content";
+type FieldErrors = Partial<Record<FieldName, string>>;
+
+const inputBase =
+  "w-full rounded-lg border bg-transparent px-3 py-2 text-sm text-foreground placeholder:text-muted focus:outline-none focus:ring-2 transition";
+
+/** Border + focus ring turn red when a field has an error. */
+function fieldClass(hasError: boolean) {
+  return cn(
+    inputBase,
+    hasError
+      ? "border-red-500/70 focus:ring-red-500/60"
+      : "border-border focus:ring-(--color-brand-violet)",
+  );
+}
 
 export const TESTIMONIAL_FORM_ID = "submit-testimonial-form";
+
+/** Same rules the server enforces, mirrored client-side for inline feedback. */
+function validate(fd: FormData): FieldErrors {
+  const errors: FieldErrors = {};
+  const name = String(fd.get("name") ?? "").trim();
+  const email = String(fd.get("email") ?? "").trim();
+  const relationship = String(fd.get("relationship") ?? "").trim();
+  const content = String(fd.get("content") ?? "").trim();
+
+  if (name.length < 2) errors.name = "Please enter your name (at least 2 characters).";
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email))
+    errors.email = "Please enter a valid email address.";
+  if (relationship.length < 2) errors.relationship = "Tell me how you know me.";
+  if (content.length < 20) errors.content = "Your testimonial should be at least 20 characters.";
+  return errors;
+}
+
+/** Inline error line shown directly under the field it belongs to. */
+function FieldError({ id, message }: { id: string; message?: string }) {
+  if (!message) return null;
+  return (
+    <span id={id} role="alert" className="text-xs font-normal text-red-500">
+      {message}
+    </span>
+  );
+}
 
 export function SubmitTestimonialForm({
   onSuccess,
@@ -22,6 +62,7 @@ export function SubmitTestimonialForm({
 }) {
   const [state, setState] = useState<State>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Crop state: the selected image as a data URL, zoom/position, and the
@@ -58,11 +99,34 @@ export function SubmitTestimonialForm({
     croppedAreaRef.current = areaPixels;
   }, []);
 
+  // Re-validate a single field as the user fixes it, so its error clears live.
+  function clearFieldError(field: FieldName) {
+    setFieldErrors((prev) => {
+      if (!prev[field]) return prev;
+      const next = { ...prev };
+      delete next[field];
+      return next;
+    });
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // Block submission on invalid input; show inline errors and focus the
+    // first offending field (matches native behavior, but styled).
+    const errors = validate(formData);
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      setError(null);
+      const first = Object.keys(errors)[0] as FieldName;
+      form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      return;
+    }
+    setFieldErrors({});
     updateState("submitting");
     setError(null);
-    const formData = new FormData(e.currentTarget);
 
     // Replace the raw file input with the cropped square the user framed.
     formData.delete("image");
@@ -112,8 +176,12 @@ export function SubmitTestimonialForm({
           minLength={2}
           maxLength={80}
           placeholder="Jane Smith"
-          className={inputClass}
+          aria-invalid={Boolean(fieldErrors.name)}
+          aria-describedby={fieldErrors.name ? "err-name" : undefined}
+          onChange={() => clearFieldError("name")}
+          className={fieldClass(Boolean(fieldErrors.name))}
         />
+        <FieldError id="err-name" message={fieldErrors.name} />
       </label>
 
       {/* Email — kept private, used only to identify the submitter */}
@@ -125,8 +193,12 @@ export function SubmitTestimonialForm({
           required
           maxLength={200}
           placeholder="jane@example.com"
-          className={inputClass}
+          aria-invalid={Boolean(fieldErrors.email)}
+          aria-describedby={fieldErrors.email ? "err-email" : undefined}
+          onChange={() => clearFieldError("email")}
+          className={fieldClass(Boolean(fieldErrors.email))}
         />
+        <FieldError id="err-email" message={fieldErrors.email} />
         <span className="text-muted text-xs font-normal">
           Kept private — never shown on the site.
         </span>
@@ -141,8 +213,12 @@ export function SubmitTestimonialForm({
           minLength={2}
           maxLength={120}
           placeholder="e.g. College friend, professor, or colleague"
-          className={inputClass}
+          aria-invalid={Boolean(fieldErrors.relationship)}
+          aria-describedby={fieldErrors.relationship ? "err-relationship" : undefined}
+          onChange={() => clearFieldError("relationship")}
+          className={fieldClass(Boolean(fieldErrors.relationship))}
         />
+        <FieldError id="err-relationship" message={fieldErrors.relationship} />
       </label>
 
       {/* Testimonial body */}
@@ -155,8 +231,15 @@ export function SubmitTestimonialForm({
           maxLength={1000}
           rows={5}
           placeholder="Share what it's like to know or work with Nikhil…"
-          className={cn(inputClass, "max-h-60 resize-y overflow-y-auto")}
+          aria-invalid={Boolean(fieldErrors.content)}
+          aria-describedby={fieldErrors.content ? "err-content" : undefined}
+          onChange={() => clearFieldError("content")}
+          className={cn(
+            fieldClass(Boolean(fieldErrors.content)),
+            "max-h-60 resize-y overflow-y-auto",
+          )}
         />
+        <FieldError id="err-content" message={fieldErrors.content} />
       </label>
 
       {/* Social links — optional */}
@@ -170,7 +253,7 @@ export function SubmitTestimonialForm({
             name="linkedinUrl"
             type="text"
             placeholder="yourprofile or https://linkedin.com/in/yourprofile"
-            className={inputClass}
+            className={fieldClass(false)}
           />
         </label>
         <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
@@ -179,7 +262,7 @@ export function SubmitTestimonialForm({
             name="githubUrl"
             type="text"
             placeholder="yourusername or https://github.com/yourusername"
-            className={inputClass}
+            className={fieldClass(false)}
           />
         </label>
         <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
@@ -188,7 +271,7 @@ export function SubmitTestimonialForm({
             name="xUrl"
             type="text"
             placeholder="@yourhandle or https://x.com/yourhandle"
-            className={inputClass}
+            className={fieldClass(false)}
           />
         </label>
         <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
@@ -197,7 +280,7 @@ export function SubmitTestimonialForm({
             name="instagramUrl"
             type="text"
             placeholder="@yourhandle or https://instagram.com/yourhandle"
-            className={inputClass}
+            className={fieldClass(false)}
           />
         </label>
         <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
@@ -206,7 +289,7 @@ export function SubmitTestimonialForm({
             name="websiteUrl"
             type="url"
             placeholder="https://yoursite.com"
-            className={inputClass}
+            className={fieldClass(false)}
           />
         </label>
       </fieldset>
@@ -288,6 +371,8 @@ export function SubmitTestimonialForm({
         </label>
       </div>
 
+      {/* Server-side / submission error (network, rate limit, etc.) — field
+          validation is shown inline above; this is only for non-field errors. */}
       {error && (
         <p role="alert" className="text-sm text-red-500">
           {error}

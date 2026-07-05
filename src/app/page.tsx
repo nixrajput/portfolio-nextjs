@@ -10,7 +10,7 @@ import {
   getRandomTagline,
 } from "@/lib/queries";
 import { Hero } from "@/components/home/Hero";
-import { FloatingNavbar } from "@/components/navbar/FloatingNavbar";
+import { SiteNav } from "@/components/navbar/SiteNav";
 import { Footer } from "@/components/layout/Footer";
 
 // The homepage is DB-driven but its content changes rarely, so use ISR: it is
@@ -74,20 +74,25 @@ export default async function Home() {
 
   return (
     <>
-      <FloatingNavbar resumeUrl={profile.resumeUrl ?? undefined} sponsorUrl={sponsorUrl} />
-
-      <Hero
-        profile={{
-          name: profile.name,
-          roles: profile.roles,
-          avatarUrl: profile.avatarUrl ?? "/images/nikhil.png",
-          resumeUrl: profile.resumeUrl ?? undefined,
-        }}
-        sponsorUrl={sponsorUrl}
+      <SiteNav
         tagline={tagline}
+        socials={socials.map((s) => ({ platform: s.platform, url: s.url }))}
       />
 
-      <About profile={{ bio: profile.bio, stats: profile.stats }} />
+      <Hero
+        profile={{ name: profile.name, roles: profile.roles }}
+        sponsorUrl={sponsorUrl}
+        heroTagline={profile.heroTagline}
+      />
+
+      <About
+        profile={{
+          bio: profile.bio,
+          stats: profile.stats,
+          name: profile.name,
+          avatarUrl: profile.avatarUrl,
+        }}
+      />
 
       <Skills skills={skills} />
 
