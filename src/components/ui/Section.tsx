@@ -43,7 +43,7 @@ export function SectionHeading({
           )}
         >
           <span>
-            {number && <span className="text-foreground/40 mr-3">{number}</span>}
+            {number && <span className="gradient-text mr-3 font-semibold">{number}</span>}
             {eyebrow}
           </span>
           {!centered && <span aria-hidden className="bg-border h-px flex-1" />}

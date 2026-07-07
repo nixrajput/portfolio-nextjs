@@ -25,6 +25,11 @@ export const profile = pgTable("profile", {
   avatarUrl: text("avatar_url"),
   // Hero "Currently ·" line above the name (admin-editable, no personal data).
   heroTagline: text("hero_tagline"),
+  // Per-section show/hide, keyed by section id. Missing key = visible.
+  sectionVisibility: jsonb("section_visibility")
+    .$type<Record<string, boolean>>()
+    .notNull()
+    .default({}),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

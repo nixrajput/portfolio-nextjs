@@ -24,7 +24,7 @@ export default async function OpengraphImage() {
         position: "relative",
       }}
     >
-      {/* Violet glow blob top-left */}
+      {/* Teal glow blob top-left */}
       <div
         style={{
           position: "absolute",
@@ -33,7 +33,7 @@ export default async function OpengraphImage() {
           width: 480,
           height: 480,
           borderRadius: "50%",
-          background: "rgba(124, 58, 237, 0.25)",
+          background: "rgba(21, 94, 117, 0.25)",
           filter: "blur(80px)",
         }}
       />
@@ -46,11 +46,11 @@ export default async function OpengraphImage() {
           width: 400,
           height: 400,
           borderRadius: "50%",
-          background: "rgba(6, 182, 212, 0.18)",
+          background: "rgba(8, 145, 178, 0.18)",
           filter: "blur(80px)",
         }}
       />
-      {/* Pink glow blob top-right */}
+      {/* Ice glow blob top-right */}
       <div
         style={{
           position: "absolute",
@@ -59,7 +59,7 @@ export default async function OpengraphImage() {
           width: 320,
           height: 320,
           borderRadius: "50%",
-          background: "rgba(236, 72, 153, 0.15)",
+          background: "rgba(34, 211, 238, 0.15)",
           filter: "blur(80px)",
         }}
       />
@@ -80,7 +80,7 @@ export default async function OpengraphImage() {
             width: 72,
             height: 72,
             borderRadius: 16,
-            background: "linear-gradient(135deg, #7c3aed, #06b6d4)",
+            background: "linear-gradient(135deg, #155e75, #0891b2)",
             fontSize: 40,
             fontWeight: 800,
             color: "#ffffff",
@@ -92,7 +92,7 @@ export default async function OpengraphImage() {
           style={{
             marginLeft: 8,
             fontSize: 28,
-            color: "#ec4899",
+            color: "#22d3ee",
             fontWeight: 700,
           }}
         >

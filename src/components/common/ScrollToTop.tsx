@@ -31,7 +31,7 @@ const ScrollToTop = () => {
           transition={{ type: "spring", stiffness: 320, damping: 22 }}
           whileHover={reduce ? undefined : { scale: 1.08 }}
           whileTap={reduce ? undefined : { scale: 0.92 }}
-          className="group border-border bg-surface fixed right-6 bottom-6 z-40 grid size-12 place-items-center overflow-hidden rounded-full border [filter:drop-shadow(0_6px_20px_rgba(124,58,237,0.35))] backdrop-blur-md sm:right-8 sm:bottom-8"
+          className="group border-border bg-surface fixed right-6 bottom-6 z-40 grid size-12 place-items-center overflow-hidden rounded-full border [filter:drop-shadow(0_6px_20px_rgba(8,145,178,0.35))] backdrop-blur-md sm:right-8 sm:bottom-8"
         >
           {/* Gradient wash that fades in on hover */}
           <span

@@ -13,6 +13,7 @@ export const profileInsertSchema = z.object({
   resumeUrl: z.httpUrl().nullable().optional(),
   avatarUrl: z.httpUrl().nullable().optional(),
   heroTagline: z.string().nullable().optional(),
+  sectionVisibility: z.record(z.string(), z.boolean()).default({}),
 });
 
 export const projectInsertSchema = z.object({

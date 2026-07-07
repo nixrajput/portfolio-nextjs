@@ -53,7 +53,7 @@ export default function GlobalError({
             cursor: "pointer",
             fontWeight: 600,
             color: "#fff",
-            background: "linear-gradient(135deg, #7c3aed 0%, #06b6d4 50%, #ec4899 100%)",
+            background: "linear-gradient(135deg, #155e75 0%, #0891b2 100%)",
           }}
         >
           Try again

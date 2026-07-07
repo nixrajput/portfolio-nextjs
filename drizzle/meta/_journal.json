@@ -99,6 +99,13 @@
       "when": 1783207913186,
       "tag": "0013_drop_headline_summary",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1783411983961,
+      "tag": "0014_section_visibility",
+      "breakpoints": true
     }
   ]
 }

@@ -54,6 +54,7 @@ export async function getProfile(): Promise<{
   avatarUrl: string;
   resumeUrl: string;
   heroTagline: string | null;
+  sectionVisibility: Record<string, boolean>;
   stats: { years: number; repos: number; stars: number };
 }> {
   const rows = await db.select().from(profile);
@@ -77,6 +78,7 @@ export async function getProfile(): Promise<{
     avatarUrl: (row.avatarUrl as string) || FALLBACK_AVATAR,
     resumeUrl: (row.resumeUrl as string) ?? "",
     heroTagline: row.heroTagline ?? null,
+    sectionVisibility: (row.sectionVisibility as Record<string, boolean>) ?? {},
     roles: row.roles,
     stats: {
       years: Number(s.years ?? 0),

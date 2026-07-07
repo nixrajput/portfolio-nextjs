@@ -19,6 +19,7 @@ const SECTIONS: MenuSection[] = [
   { id: "projects", label: "Projects" },
   { id: "services", label: "Services" },
   { id: "testimonials", label: "Testimonials" },
+  { id: "faq", label: "FAQ" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -30,16 +31,22 @@ const SECTIONS: MenuSection[] = [
 export function SiteNav({
   tagline,
   socials,
+  hidden = [],
   sections = SECTIONS,
 }: {
   /** Motto shown center-stage in the top bar and menu footer. */
   tagline?: string;
   socials: { platform: string; url: string }[];
+  hidden?: string[];
   sections?: MenuSection[];
 }) {
+  const visibleSections = useMemo(
+    () => sections.filter((s) => !hidden.includes(s.id)),
+    [sections, hidden],
+  );
   // Stable identities: useScrollSpy re-subscribes its listeners whenever the
   // ids array changes, and MenuOverlay's keydown trap re-binds on onClose.
-  const ids = useMemo(() => sections.map((s) => s.id), [sections]);
+  const ids = useMemo(() => visibleSections.map((s) => s.id), [visibleSections]);
   const active = useScrollSpy(ids);
   const reduce = useReducedMotion();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -74,14 +81,16 @@ export function SiteNav({
           <div
             aria-hidden
             className={cn(
-              "bg-background/70 border-border pointer-events-none absolute inset-x-0 top-0 -bottom-px border-b backdrop-blur-md transition-opacity duration-300",
+              // Low tint + blur so the ambient page shows through and the bar
+              // reads as a subtle scrim, not a distinct block over the sections.
+              "bg-background/45 border-border/70 pointer-events-none absolute inset-x-0 top-0 -bottom-px border-b backdrop-blur-xl transition-opacity duration-300",
               scrolled ? "opacity-100" : "opacity-0",
             )}
           />
           <Link
             href="/"
             aria-label="Home"
-            className="relative z-10 shrink-0 [filter:drop-shadow(0_0_12px_rgba(124,58,237,0.4))] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:-rotate-4 hover:[filter:drop-shadow(0_0_16px_rgba(236,72,153,0.55))]"
+            className="relative z-10 shrink-0 [filter:drop-shadow(0_0_12px_rgba(8,145,178,0.4))] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:-rotate-4 hover:[filter:drop-shadow(0_0_16px_rgba(34,211,238,0.55))]"
           >
             <Logo />
           </Link>
@@ -121,7 +130,7 @@ export function SiteNav({
         open={menuOpen}
         onClose={closeMenu}
         active={active}
-        sections={sections}
+        sections={visibleSections}
         socials={socials}
         statusLine={tagline}
       />

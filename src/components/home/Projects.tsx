@@ -1,9 +1,10 @@
-import { Star, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "@/components/motion/Reveal";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { ProjectCard } from "./ProjectCard";
+import { RepoCard } from "./RepoCard";
 import type { MergedProject } from "@/lib/projects";
 
 const GITHUB_PROFILE = "https://github.com/nixrajput";
@@ -34,18 +35,7 @@ export function Projects({ projects }: { projects: MergedProject[] }) {
           <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((p) => (
               <li key={p.id}>
-                <a
-                  href={p.htmlUrl ?? `https://github.com/nixrajput/${p.repo}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border-border bg-surface hover:bg-surface-2 hover:border-foreground/20 flex items-center justify-between rounded-xl border px-4 py-2.5 text-sm transition-colors"
-                >
-                  <span className="truncate font-medium">{p.title}</span>
-                  <span className="text-muted ml-3 flex shrink-0 items-center gap-1">
-                    <Star className="size-3.5" aria-hidden />
-                    {p.stars ?? "—"}
-                  </span>
-                </a>
+                <RepoCard project={p} />
               </li>
             ))}
           </ul>

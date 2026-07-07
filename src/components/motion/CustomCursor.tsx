@@ -21,7 +21,7 @@ const getFineServer = () => false;
 /**
  * Site-wide custom cursor for fine pointers: a dot locked to the raw pointer
  * plus a ring easing behind it (scaled up over interactive elements). Theme
- * aware: cyan dot / violet ring on dark, violet dot / pink ring on light.
+ * aware: ice-cyan dot / cyan-teal ring on dark, deep-teal dot / deep-teal ring on light.
  * Renders nothing on touch devices or under reduced motion; hides the native
  * cursor via the `cursor-hidden` class on <html> only while active.
  */
@@ -109,14 +109,14 @@ export function CustomCursor() {
         data-cursor-part="dot"
         aria-hidden="true"
         className="pointer-events-none fixed top-0 left-0 z-[90] -mt-[3px] -ml-[3px] size-1.5 rounded-full opacity-0"
-        style={{ background: dark ? "#06b6d4" : "#7c3aed" }}
+        style={{ background: dark ? "#22d3ee" : "#155e75" }}
       />
       <div
         ref={ringRef}
         data-cursor-part="ring"
         aria-hidden="true"
         className="pointer-events-none fixed top-0 left-0 z-[90] -mt-[17px] -ml-[17px] size-[34px] rounded-full border-[1.5px] opacity-0 transition-[border-color] duration-300"
-        style={{ borderColor: dark ? "rgba(124,58,237,0.8)" : "rgba(219,39,119,0.75)" }}
+        style={{ borderColor: dark ? "rgba(8,145,178,0.8)" : "rgba(21,94,117,0.75)" }}
       />
     </>
   );
