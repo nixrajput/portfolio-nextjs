@@ -36,13 +36,13 @@ describe("SiteNav", () => {
     expect(screen.getAllByText(/rise above limit/i).length).toBeGreaterThan(1);
   });
 
-  it("opens the menu dialog with 8 numbered section links and socials", () => {
+  it("opens the menu dialog with 9 numbered section links and socials", () => {
     render(<SiteNav tagline="Rise above limit" socials={socials} />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
     const dialog = screen.getByRole("dialog", { name: /navigation/i });
     expect(dialog).toBeInTheDocument();
     const sectionLinks = screen.getAllByTestId("menu-section-link");
-    expect(sectionLinks).toHaveLength(8);
+    expect(sectionLinks).toHaveLength(9);
     expect(screen.getByRole("link", { name: /github/i })).toHaveAttribute("href", socials[0].url);
   });
 

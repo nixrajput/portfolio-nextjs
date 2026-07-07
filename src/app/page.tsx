@@ -52,19 +52,25 @@ const Contact = nextDynamic(() =>
 const Faq = nextDynamic(() =>
   import("@/components/sections/FaqSection").then((m) => ({ default: m.FaqSection })),
 );
-
 export default async function Home() {
-  const [profile, projects, experiences, skills, services, socials, funding, tagline] =
-    await Promise.all([
-      getProfile(),
-      getProjectsMerged(),
-      getExperiences(),
-      getSkills(),
-      getServices(),
-      getSocialLinks(),
-      getFundingLinks(),
-      getRandomTagline(),
-    ]);
+  // Profile gates everything and feeds the always-on Hero, so it loads first.
+  // A section is visible unless its key is explicitly false.
+  const profile = await getProfile();
+  const vis = profile.sectionVisibility;
+  const show = (id: string) => vis[id] !== false;
+
+  // Fetch only the data for VISIBLE sections - a hidden section runs no query
+  // (and its component chunk never loads via the gated dynamic import below).
+  // Socials + funding are shared (nav/footer + hero sponsor), so always load.
+  const [projects, experiences, skills, services, socials, funding, tagline] = await Promise.all([
+    show("projects") ? getProjectsMerged() : Promise.resolve([]),
+    show("experience") ? getExperiences() : Promise.resolve([]),
+    show("skills") ? getSkills() : Promise.resolve([]),
+    show("services") ? getServices() : Promise.resolve([]),
+    getSocialLinks(),
+    getFundingLinks(),
+    getRandomTagline(),
+  ]);
 
   const sponsorUrl = funding.find((f) => f.primary)?.url;
   // Derive contact email from social links (platform = "email") or fall back
@@ -77,6 +83,9 @@ export default async function Home() {
       <SiteNav
         tagline={tagline}
         socials={socials.map((s) => ({ platform: s.platform, url: s.url }))}
+        hidden={Object.entries(vis)
+          .filter(([, v]) => v === false)
+          .map(([k]) => k)}
       />
 
       <Hero
@@ -85,30 +94,32 @@ export default async function Home() {
         heroTagline={profile.heroTagline}
       />
 
-      <About
-        profile={{
-          bio: profile.bio,
-          stats: profile.stats,
-          name: profile.name,
-          avatarUrl: profile.avatarUrl,
-        }}
-      />
+      {show("about") && (
+        <About
+          profile={{
+            bio: profile.bio,
+            stats: profile.stats,
+            name: profile.name,
+            avatarUrl: profile.avatarUrl,
+          }}
+        />
+      )}
 
-      <Skills skills={skills} />
+      {show("skills") && <Skills skills={skills} />}
 
-      <Experience experiences={experiences} />
+      {show("experience") && <Experience experiences={experiences} />}
 
-      <Projects projects={projects} />
+      {show("projects") && <Projects projects={projects} />}
 
-      <Services services={services} />
+      {show("services") && <Services services={services} />}
 
-      <TestimonialsSection />
+      {show("testimonials") && <TestimonialsSection />}
 
-      <Support funding={funding} />
+      {show("support") && <Support funding={funding} />}
 
-      <Faq />
+      {show("faq") && <Faq />}
 
-      <Contact socials={socials} email={contactEmail} />
+      {show("contact") && <Contact socials={socials} email={contactEmail} />}
 
       <Footer socials={socials} />
     </>

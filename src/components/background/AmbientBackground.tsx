@@ -7,9 +7,9 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 // Brand hues shared by both layers.
 const BRAND: ReadonlyArray<readonly [number, number, number]> = [
-  [124, 58, 237], // violet
-  [6, 182, 212], // cyan
-  [236, 72, 153], // pink
+  [21, 94, 117], // deep teal   #155e75
+  [8, 145, 178], // cyan-teal   #0891b2
+  [34, 211, 238], // ice        #22d3ee
 ];
 
 // Nebula blobs: wide orbits on purpose - centers may overshoot the viewport
@@ -102,11 +102,11 @@ export function AmbientBackground() {
       const GR = Math.min(260, m * 0.28);
       const g1 = ctx.createRadialGradient(ptr.x, ptr.y, 0, ptr.x, ptr.y, GR);
       if (dark) {
-        g1.addColorStop(0, "rgba(6,182,212,0.17)");
-        g1.addColorStop(0.55, "rgba(124,58,237,0.10)");
-        g1.addColorStop(1, "rgba(124,58,237,0)");
+        g1.addColorStop(0, "rgba(34,211,238,0.17)");
+        g1.addColorStop(0.55, "rgba(8,145,178,0.10)");
+        g1.addColorStop(1, "rgba(21,94,117,0)");
       } else {
-        g1.addColorStop(0, "rgba(124,58,237,0.22)");
+        g1.addColorStop(0, "rgba(21,94,117,0.20)");
         g1.addColorStop(0.55, "rgba(8,145,178,0.10)");
         g1.addColorStop(1, "rgba(8,145,178,0)");
       }

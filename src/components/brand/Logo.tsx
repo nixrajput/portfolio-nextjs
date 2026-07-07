@@ -20,13 +20,12 @@ export function Logo({
       >
         <defs>
           <linearGradient id="logo-n" x1="0" y1="1" x2="1" y2="0">
-            <stop offset="0" stopColor="#7c3aed" />
-            <stop offset="0.5" stopColor="#06b6d4" />
-            <stop offset="1" stopColor="#ec4899" />
+            <stop offset="0" stopColor="#155e75" />
+            <stop offset="1" stopColor="#0891b2" />
           </linearGradient>
           <radialGradient id="logo-spark" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stopColor="#ec4899" stopOpacity="0.9" />
-            <stop offset="1" stopColor="#ec4899" stopOpacity="0" />
+            <stop offset="0" stopColor="#22d3ee" stopOpacity="0.9" />
+            <stop offset="1" stopColor="#22d3ee" stopOpacity="0" />
           </radialGradient>
         </defs>
         <path
@@ -38,7 +37,7 @@ export function Logo({
           strokeLinejoin="round"
         />
         <circle cx="21" cy="9" r="6" fill="url(#logo-spark)" />
-        <circle cx="21" cy="9" r="2.2" fill="#ec4899" />
+        <circle cx="21" cy="9" r="2.2" fill="#22d3ee" />
       </svg>
       {withWordmark ? (
         <span className="gradient-text font-mono text-lg leading-none font-semibold tracking-tight">

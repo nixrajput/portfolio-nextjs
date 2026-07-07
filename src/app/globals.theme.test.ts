@@ -10,9 +10,9 @@ describe("globals.css theme tokens", () => {
   });
 
   it("should define all brand color tokens with correct values", () => {
-    expect(globalsContent).toContain("--color-brand-violet: #7c3aed");
-    expect(globalsContent).toContain("--color-brand-cyan: #06b6d4");
-    expect(globalsContent).toContain("--color-brand-pink: #ec4899");
+    expect(globalsContent).toContain("--color-brand-violet: #155e75");
+    expect(globalsContent).toContain("--color-brand-cyan: #0891b2");
+    expect(globalsContent).toContain("--color-brand-pink: #22d3ee");
     // Semantic tokens replaced the old internal palette tokens.
     // --color-base / --color-surface / --color-light-base were internal;
     // they are now exposed as --color-background / --color-surface / etc.
@@ -24,11 +24,11 @@ describe("globals.css theme tokens", () => {
 
   it("should define hue-biased ink/paper and redesign tokens", () => {
     // light
-    expect(globalsContent).toContain("--bg: #f7f6fb");
-    expect(globalsContent).toContain("--fg: #191333");
+    expect(globalsContent).toContain("--bg: #f6f7f9");
+    expect(globalsContent).toContain("--fg: #14181f");
     // dark
-    expect(globalsContent).toContain("--bg: #07070c");
-    expect(globalsContent).toContain("--fg: #f2f0ff");
+    expect(globalsContent).toContain("--bg: #060c0e");
+    expect(globalsContent).toContain("--fg: #e8f4f7");
     // new tokens present in both theme blocks
     expect(globalsContent.match(/--name-stroke:/g)?.length).toBeGreaterThanOrEqual(2);
     expect(globalsContent.match(/--overlay-bg:/g)?.length).toBeGreaterThanOrEqual(2);

@@ -21,7 +21,7 @@ const variants: Record<Variant, string> = {
   // Full-strength brand gradient (matches the approved hero preview): the
   // gradient is oversized and shifts position on hover, with a soft glow.
   primary:
-    "bg-(image:--gradient-brand) bg-[size:160%_160%] bg-[position:0%_50%] text-white shadow-[0_10px_34px_-12px_rgba(124,58,237,0.55)] hover:bg-[position:90%_50%]",
+    "bg-(image:--gradient-brand) bg-[size:160%_160%] bg-[position:0%_50%] text-white shadow-[0_10px_34px_-12px_rgba(21,94,117,0.55)] hover:bg-[position:90%_50%]",
   // Hairline outline pill on a translucent surface (Observatory language).
   secondary:
     "border border-border bg-surface text-foreground backdrop-blur-sm hover:border-foreground",

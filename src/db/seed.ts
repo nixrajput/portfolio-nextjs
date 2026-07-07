@@ -39,6 +39,7 @@ const profileRow = {
   resumeUrl: null,
   avatarUrl: seededAvatarUrl,
   heroTagline: "Shipping with AI",
+  sectionVisibility: {},
 };
 
 const featuredSet = new Set([

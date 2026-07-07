@@ -25,6 +25,8 @@ export default async function ProfileEditor() {
       bio: String(formData.get("bio")),
       stats: row?.stats ?? {},
       roles,
+      // Visibility is managed on the dashboard; preserve it unchanged on save.
+      sectionVisibility: row?.sectionVisibility ?? {},
       resumeUrl: (formData.get("resumeUrl") as string) || null,
       avatarUrl: (formData.get("avatarUrl") as string) || null,
       heroTagline: (formData.get("heroTagline") as string) || null,

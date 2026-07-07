@@ -148,7 +148,7 @@ export function RecordFormDialog({
           onClick={() => setOpen(true)}
           className={cn(
             gradientButtonBase,
-            "inline-flex items-center gap-2 self-start px-4 py-2",
+            "inline-flex items-center gap-2 self-end px-4 py-2",
             "transition-[transform,box-shadow] duration-200 hover:shadow-md motion-safe:hover:-translate-y-0.5",
           )}
         >

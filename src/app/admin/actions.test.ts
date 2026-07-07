@@ -113,6 +113,7 @@ describe("zod validation", () => {
         bio: "b",
         stats: {},
         roles: [],
+        sectionVisibility: {},
       }),
     ).rejects.toThrow();
   });

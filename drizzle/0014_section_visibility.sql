@@ -1,0 +1,1 @@
+ALTER TABLE "profile" ADD COLUMN "section_visibility" jsonb DEFAULT '{}'::jsonb NOT NULL;

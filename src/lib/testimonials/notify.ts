@@ -31,11 +31,11 @@ export function buildTestimonialEmail(
       <h2>New testimonial awaiting moderation</h2>
       <p><strong>Name:</strong> ${escapeHtml(input.name)}</p>
       <p><strong>How they know me:</strong> ${escapeHtml(input.relationship)}</p>
-      <blockquote style="border-left:3px solid #7c3aed;padding-left:12px;color:#444">
+      <blockquote style="border-left:3px solid #155e75;padding-left:12px;color:#444">
         ${escapeHtml(input.content)}
       </blockquote>
       ${input.imageUrl ? `<p><img src="${escapeHtml(input.imageUrl)}" alt="avatar" width="64" height="64" style="border-radius:50%"/></p>` : "<p><em>No image provided.</em></p>"}
-      <p><a href="${approveUrl}" style="background:#7c3aed;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none">Review in admin</a></p>
+      <p><a href="${approveUrl}" style="background:#0891b2;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none">Review in admin</a></p>
     `,
   };
 }

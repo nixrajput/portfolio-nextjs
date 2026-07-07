@@ -66,7 +66,7 @@ export function Hero({
             <span className="border-border bg-surface text-muted inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[9px] tracking-[0.18em] uppercase backdrop-blur-sm sm:text-[10px]">
               <span
                 aria-hidden
-                className="size-1.5 animate-pulse rounded-full bg-(image:--gradient-brand) shadow-[0_0_8px_2px_rgba(124,58,237,0.6)] motion-reduce:animate-none"
+                className="size-1.5 animate-pulse rounded-full bg-(image:--gradient-brand) shadow-[0_0_8px_2px_rgba(21,94,117,0.6)] motion-reduce:animate-none"
               />
               {heroTagline}
             </span>

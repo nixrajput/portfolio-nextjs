@@ -59,6 +59,24 @@ export async function updateProfile(input: ProfileInput): Promise<void> {
   revalidatePortfolio();
 }
 
+// Save the homepage section-visibility map (dashboard Save button). Merges the
+// submitted keys into the existing map so any section not in the form keeps its
+// state.
+export async function setSectionVisibility(map: Record<string, boolean>): Promise<void> {
+  await requireAdmin();
+  const [existing] = await db
+    .select({ id: profile.id, sectionVisibility: profile.sectionVisibility })
+    .from(profile)
+    .limit(1);
+  if (!existing) return;
+  const next = { ...(existing.sectionVisibility ?? {}), ...map };
+  await db
+    .update(profile)
+    .set({ sectionVisibility: next, updatedAt: new Date() })
+    .where(eq(profile.id, existing.id));
+  revalidatePortfolio();
+}
+
 // ---------- Projects ----------
 export async function createProject(input: ProjectInput): Promise<void> {
   await requireAdmin();

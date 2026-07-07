@@ -20,10 +20,10 @@
  */
 
 @theme {
-  /* Brand colors (static) */
-  --color-brand-violet: #7c3aed;
-  --color-brand-cyan: #06b6d4;
-  --color-brand-pink: #ec4899;
+  /* Brand colors (Glacier ramp: deep teal -> cyan-teal -> ice highlight) */
+  --color-brand-violet: #155e75;
+  --color-brand-cyan: #0891b2;
+  --color-brand-pink: #22d3ee;
 
   /* Semantic design-system tokens — values come from :root / .dark vars */
   --color-background: var(--bg);
@@ -37,7 +37,7 @@
   --color-ring: var(--ring);
 
   /* Gradient — per-theme overrides set in :root / .dark below */
-  --gradient-brand: linear-gradient(135deg, #6d28d9 0%, #0891b2 50%, #db2777 100%);
+  --gradient-brand: linear-gradient(135deg, #155e75 0%, #0891b2 100%);
 
   /* Typography */
   --font-sans: var(--font-geist-sans);
@@ -51,61 +51,69 @@
    so text harmonizes with the ambient gradient. */
 :root {
   --max-width: 1200px;
-  --bg: #f7f6fb;
-  --fg: #191333;
+  --bg: #f6f7f9;
+  --fg: #14181f;
   /* Translucent so cards read as glass over the ambient canvas, not white slabs */
   --surface: rgba(255, 255, 255, 0.6);
-  --surface-2: rgba(255, 255, 255, 0.85);
-  --border-color: rgba(30, 22, 64, 0.18);
-  --muted: rgba(30, 22, 64, 0.62);
-  --ring: #7c3aed;
+  --surface-2: rgba(20, 24, 31, 0.03);
+  --border-color: rgba(20, 24, 31, 0.15);
+  --muted: rgba(20, 24, 31, 0.6);
+  --ring: #0e7490;
   /* Raw brand vars for arbitrary-value utilities like border-(--brand-violet).
      The @theme --color-brand-* tokens only generate the --color-* namespace,
      so components referencing the bare names need these aliases. */
-  --brand-violet: #7c3aed;
-  --brand-cyan: #06b6d4;
-  --brand-pink: #ec4899;
+  --brand-violet: #155e75;
+  --brand-cyan: #0891b2;
+  --brand-pink: #22d3ee;
   /* Redesign tokens: hero name stroke + full-screen menu ground */
-  --name-stroke: rgba(30, 22, 64, 0.88);
-  --overlay-bg: rgba(247, 246, 251, 0.94);
+  --name-stroke: rgba(20, 24, 31, 0.88);
+  --overlay-bg: rgba(246, 247, 249, 0.94);
   /* Experience period label: brand cyan is too light on paper — use a deep teal */
   --period: #0e7490;
   /* Accent text on translucent brand chips (project language etc.): deep on paper */
-  --accent-on-chip: #6d28d9;
+  --accent-on-chip: #155e75;
   /* Opaque brand-tinted chip surface — subtle violet wash over paper, so the
      chip reads as "brand" (not dead black) yet blocks the moving gradient. */
-  --chip-surface: #f0ecfb;
+  --chip-surface: #ecf5f8;
   /* Legacy aliases kept for existing components */
   --background: var(--bg);
   --foreground: var(--fg);
   /* Light gradient: deeper/more saturated so it reads rich on white */
-  --gradient-brand: linear-gradient(135deg, #6d28d9 0%, #0891b2 50%, #db2777 100%);
+  --gradient-brand: linear-gradient(135deg, #155e75 0%, #0891b2 100%);
+  /* Brand gradient for TEXT (gradient-text/stats). On paper the rich ramp reads
+     high-contrast, so it matches --gradient-brand; in dark it brightens (below)
+     so gradient text never fades into the deep ground. */
+  --gradient-ink: linear-gradient(135deg, #155e75 0%, #0891b2 100%);
   /* Nav active pill opacity for light (higher so the pill is visible) */
   --nav-pill-opacity: 0.28;
 }
 
 /* Dark theme */
 .dark {
-  --bg: #07070c;
-  --fg: #f2f0ff;
+  --bg: #060c0e;
+  --fg: #e8f4f7;
   --surface: rgba(255, 255, 255, 0.04);
   --surface-2: rgba(255, 255, 255, 0.06);
-  --border-color: rgba(226, 222, 255, 0.16);
-  --muted: rgba(226, 222, 255, 0.66);
-  --ring: #06b6d4;
-  --name-stroke: rgba(238, 235, 255, 0.9);
-  --overlay-bg: rgba(7, 7, 12, 0.92);
+  --border-color: rgba(209, 233, 240, 0.16);
+  --muted: rgba(209, 233, 240, 0.62);
+  --ring: #0891b2;
+  --name-stroke: rgba(224, 242, 247, 0.9);
+  --overlay-bg: rgba(6, 12, 14, 0.92);
   /* Dark: the vivid cyan reads fine on the deep ground */
   --period: #22d3ee;
   /* Dark: a bright lavender so brand chips are legible on the deep ground */
-  --accent-on-chip: #c4b5fd;
+  --accent-on-chip: #7dd3e8;
   /* Opaque deep-violet chip surface: immersive brand tone, not flat black. */
-  --chip-surface: #1a1430;
+  --chip-surface: #0c1f27;
   /* Legacy aliases */
   --background: var(--bg);
   --foreground: var(--fg);
   /* Dark gradient: vivid original hues */
-  --gradient-brand: linear-gradient(135deg, #7c3aed 0%, #06b6d4 50%, #ec4899 100%);
+  --gradient-brand: linear-gradient(135deg, #155e75 0%, #0891b2 100%);
+  /* Brand gradient for TEXT in dark: a brighter ice ramp so both ends clear the
+     deep ground (the brand ramp's #155e75 end is nearly invisible on #060c0e).
+     Used by gradient-text everywhere (logo wordmark, tagline, stats, headings). */
+  --gradient-ink: linear-gradient(135deg, #22d3ee 0%, #7dd3e8 100%);
   /* Nav active pill opacity for dark */
   --nav-pill-opacity: 0.2;
 }
@@ -182,8 +190,10 @@ body {
   scrollbar-width: none;
 }
 
+/* Brand gradient clipped to text. Uses --gradient-ink (theme-aware: rich on
+   paper, bright ice in dark) so gradient text is legible in both themes. */
 @utility gradient-text {
-  background-image: var(--gradient-brand);
+  background-image: var(--gradient-ink);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
