@@ -86,9 +86,12 @@ export function MenuOverlay({
           animate={reduce ? undefined : { opacity: 1 }}
           exit={reduce ? undefined : { opacity: 0 }}
           transition={{ duration: 0.35 }}
-          className="site-container fixed inset-0 z-[60] flex flex-col overflow-hidden bg-(--overlay-bg) py-6 backdrop-blur-xl sm:py-10"
+          className="site-container fixed inset-0 z-[60] flex flex-col overflow-hidden bg-(--overlay-bg) pb-6 backdrop-blur-xl sm:pb-10"
         >
-          <div className="flex shrink-0 items-center justify-end">
+          {/* Close button sits in an h-16 row matching the nav bar exactly, so
+              it lands in the same spot as the Menu open button (no layout
+              shift / CLS between the two states). */}
+          <div className="flex h-16 shrink-0 items-center justify-end">
             <button
               ref={closeRef}
               type="button"
@@ -105,7 +108,7 @@ export function MenuOverlay({
               links + the footer stay within the screen on any device; the label
               also clamps by width (min-w-0 truncate) as a narrow-screen guard. */}
           <div className="flex min-h-0 flex-1 flex-col justify-center py-2">
-            <ul className="flex flex-col gap-[clamp(2px,0.6vh,10px)]">
+            <ul className="flex flex-col gap-[clamp(6px,1.6vh,24px)]">
               {sections.map((s, i) => (
                 <li key={s.id}>
                   <motion.span
