@@ -64,6 +64,18 @@ export function SubmitTestimonialForm({
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const errorRef = useRef<HTMLParagraphElement>(null);
+
+  // Set a submission error, switch to the error state, and scroll the top
+  // banner into view so it is seen even if the modal body was scrolled down.
+  function fail(message: string) {
+    setError(message);
+    updateState("error");
+    requestAnimationFrame(() => {
+      const el = errorRef.current;
+      if (el && typeof el.scrollIntoView === "function") el.scrollIntoView({ block: "nearest" });
+    });
+  }
 
   // Crop state: the selected image as a data URL, zoom/position, and the
   // pixel area to crop. The cropped file is generated on submit.
@@ -135,8 +147,7 @@ export function SubmitTestimonialForm({
         const cropped = await getCroppedImageFile(imageSrc, croppedAreaRef.current);
         formData.set("image", cropped);
       } catch {
-        setError("Could not process the image. Try a different one.");
-        updateState("error");
+        fail("Could not process the image. Try a different one.");
         return;
       }
     }
@@ -151,8 +162,7 @@ export function SubmitTestimonialForm({
       return;
     }
     const body = (await res.json().catch(() => ({}))) as { error?: string };
-    setError(body.error ?? "Something went wrong. Please try again.");
-    updateState("error");
+    fail(body.error ?? "Something went wrong. Please try again.");
   }
 
   // The success view is owned by the modal (a curated confirmation panel that
@@ -167,6 +177,19 @@ export function SubmitTestimonialForm({
       className="flex flex-col gap-4"
       noValidate
     >
+      {/* Submission / server error (network, rate limit, image or upstream
+          failure) shown at the TOP so it is the first thing seen on a failed
+          submit - per-field validation stays inline under each field below. */}
+      {error && (
+        <p
+          ref={errorRef}
+          role="alert"
+          className="rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-500"
+        >
+          {error}
+        </p>
+      )}
+
       {/* Name */}
       <label className="text-foreground flex flex-col gap-1 text-sm font-medium">
         Your name
@@ -370,14 +393,6 @@ export function SubmitTestimonialForm({
           <input name="website" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
-
-      {/* Server-side / submission error (network, rate limit, etc.) — field
-          validation is shown inline above; this is only for non-field errors. */}
-      {error && (
-        <p role="alert" className="text-sm text-red-500">
-          {error}
-        </p>
-      )}
     </form>
   );
 }

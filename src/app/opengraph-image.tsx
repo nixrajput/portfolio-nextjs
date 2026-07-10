@@ -1,7 +1,10 @@
 import { ImageResponse } from "next/og";
 import { SITE } from "@/lib/seo/site";
 
-export const runtime = "edge";
+// Node runtime (not edge): the webpack build bundles next/og's satori+resvg
+// past Vercel's 1 MB edge-function limit. OG image generation is cached and
+// not latency-critical, so the Node serverless runtime (no size cap) fits.
+export const runtime = "nodejs";
 export const alt = SITE.title;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
