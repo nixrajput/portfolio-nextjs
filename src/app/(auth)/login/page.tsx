@@ -6,7 +6,7 @@ import { Github } from "lucide-react";
 // it points at /login rather than inheriting the root layout's "/" (which would
 // wrongly claim the homepage as this page's canonical).
 export const metadata = {
-  title: "Sign in",
+  title: "Login",
   robots: { index: false },
   alternates: { canonical: "/login" },
 };
@@ -27,7 +27,7 @@ export default async function SignInPage() {
           className="bg-foreground text-background inline-flex items-center gap-2 rounded-md px-5 py-2.5"
         >
           <Github className="h-4 w-4" aria-hidden />
-          Sign in with GitHub
+          Login with GitHub
         </button>
       </form>
     </main>
