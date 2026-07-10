@@ -1,11 +1,11 @@
 {
   "name": "portfolio-nextjs",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack -p 4000",
-    "build": "next build --turbopack",
-    "vercel-build": "drizzle-kit migrate && next build --turbopack",
+    "build": "next build --webpack",
+    "vercel-build": "drizzle-kit migrate && next build --webpack",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

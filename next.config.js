@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // sharp is a native addon used server-side (testimonial/avatar image
+  // optimization in src/lib/blob.ts). Mark it external so Next loads it via a
+  // plain require from node_modules at runtime instead of letting Turbopack
+  // rewrite it into a hashed external module it cannot dlopen on Vercel
+  // (see vercel/next.js#86866).
+  serverExternalPackages: ["sharp"],
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "**.githubusercontent.com" },
