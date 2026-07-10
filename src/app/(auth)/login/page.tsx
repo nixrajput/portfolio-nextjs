@@ -2,6 +2,15 @@ import { signIn, auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { Github } from "lucide-react";
 
+// Admin sign-in page: keep it out of the index, and override the canonical so
+// it points at /login rather than inheriting the root layout's "/" (which would
+// wrongly claim the homepage as this page's canonical).
+export const metadata = {
+  title: "Sign in",
+  robots: { index: false },
+  alternates: { canonical: "/login" },
+};
+
 export default async function SignInPage() {
   const session = await auth();
   if (session?.user) redirect("/admin");
