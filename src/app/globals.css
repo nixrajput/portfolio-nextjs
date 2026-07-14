@@ -350,7 +350,9 @@ html.cursor-hidden * {
     transform: translateY(0);
   }
   to {
-    transform: translateY(-50%);
+    /* -100% = one set's height (the duplicate is out of flow, so the track's
+       own height equals a single set + its trailing gap). */
+    transform: translateY(-100%);
   }
 }
 .marquee-track {

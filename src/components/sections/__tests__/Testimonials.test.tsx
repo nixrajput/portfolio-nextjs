@@ -100,6 +100,16 @@ describe("Testimonials", () => {
     expect(screen.getAllByText("JD").length).toBeGreaterThan(0);
   });
 
+  it("clones a single testimonial for the loop but announces it once", () => {
+    const { container } = render(<Testimonials items={items} />);
+    // The seamless marquee renders a lone card twice (visible + off-screen
+    // clone), so the DOM holds two copies...
+    expect(screen.getAllByText(/Brilliant work/)).toHaveLength(2);
+    // ...but exactly one is exposed to the a11y tree; the clone is aria-hidden
+    // so screen readers never announce the testimonial twice.
+    expect(container.querySelectorAll('[aria-hidden="true"] figure')).toHaveLength(1);
+  });
+
   it("renders empty state with CTA button (not a link) that opens dialog", async () => {
     render(<Testimonials items={[]} />);
     expect(screen.getByText(/No testimonials yet/)).toBeInTheDocument();
