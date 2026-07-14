@@ -100,6 +100,13 @@ describe("Testimonials", () => {
     expect(screen.getAllByText("JD").length).toBeGreaterThan(0);
   });
 
+  it("does not duplicate a single testimonial (no seamless-loop clone)", () => {
+    render(<Testimonials items={items} />);
+    // A lone card has nothing to scroll, so it must render exactly once -
+    // the aria-hidden duplicate set that drives the marquee loop is absent.
+    expect(screen.getAllByText(/Brilliant work/)).toHaveLength(1);
+  });
+
   it("renders empty state with CTA button (not a link) that opens dialog", async () => {
     render(<Testimonials items={[]} />);
     expect(screen.getByText(/No testimonials yet/)).toBeInTheDocument();

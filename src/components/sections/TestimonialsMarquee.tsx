@@ -53,8 +53,25 @@ function MarqueeCard({ t }: { t: TestimonialCard }) {
   );
 }
 
-/** One auto-scrolling column. Items are rendered twice for a seamless loop. */
+/**
+ * One column. With 2+ cards it auto-scrolls, rendering items twice for a
+ * seamless loop (the CSS keyframe translates by -50%, i.e. one full set). With
+ * a single card there is nothing to scroll, so it renders once as a static
+ * card - no duplicate, no fixed height, no edge-fade mask.
+ */
 function MarqueeColumn({ items, duration }: { items: TestimonialCard[]; duration: number }) {
+  const shouldScroll = items.length >= 2;
+
+  if (!shouldScroll) {
+    return (
+      <div className="flex flex-col gap-5">
+        {items.map((t) => (
+          <MarqueeCard key={t.id} t={t} />
+        ))}
+      </div>
+    );
+  }
+
   return (
     // mask-image fades the CONTENT at the edges instead of painting a
     // background-colored overlay on top (which read as solid blocks over the
