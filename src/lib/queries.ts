@@ -1,4 +1,4 @@
-import { asc, eq, sql } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 
 import { db } from "@/db/client";
 import {
@@ -10,15 +10,23 @@ import {
   fundingLinks,
   taglines,
   faqs,
-  githubCache,
 } from "@/db/schema";
 import type { Experience, Skill, Service, Faq } from "@/db/schema";
 import { getProjects } from "@/lib/projects";
 import type { MergedProject } from "@/lib/projects";
+import { getCachedUserStats } from "@/lib/github-cache";
 
 // Bundled asset shown when the profile has no avatar set yet (e.g. before the
 // admin uploads one). Served from `public/`, so a relative src is correct here.
 const FALLBACK_AVATAR = "/images/nikhil.png";
+
+// GitHub account backing the live stats (same owner as the curated repos).
+const GITHUB_USERNAME = "nixrajput";
+
+// Years building = current year minus the first year the user contributed.
+function yearsBuilding(firstContributionYear: number): number {
+  return Math.max(0, new Date().getFullYear() - firstContributionYear);
+}
 
 // ── Public row types ────────────────────────────────────────────────────────
 
@@ -55,7 +63,7 @@ export async function getProfile(): Promise<{
   resumeUrl: string;
   heroTagline: string | null;
   sectionVisibility: Record<string, boolean>;
-  stats: { years: number; repos: number; stars: number };
+  stats: { years: number; repos: number; stars: number; followers: number };
 }> {
   const rows = await db.select().from(profile);
   const row = rows[0];
@@ -63,14 +71,22 @@ export async function getProfile(): Promise<{
 
   const s = row.stats as Record<string, unknown>;
 
-  // Derive the live total star count from the GitHub cache when available;
-  // fall back to the seeded value if the cache is empty (before first fetch).
-  // `repos` stays from the seed — the cache only holds curated repos, not the
-  // full public-repo count.
-  const [agg] = await db
-    .select({ totalStars: sql<number>`coalesce(sum(${githubCache.stars}), 0)` })
-    .from(githubCache);
-  const cachedStars = Number(agg?.totalStars ?? 0);
+  // All four GitHub-derived stats come from the persistent user cache: served
+  // from the last-known-good row instantly and refreshed in the background, so
+  // they never flash blank. Each falls back to the seeded stats blob only on a
+  // cold cache with a failed first fetch.
+  //  - repos:     public repo count
+  //  - stars:     sum of stargazers across ALL public repos
+  //  - followers: follower count
+  //  - years:     whole years since the first contribution
+  const userStats = await getCachedUserStats(GITHUB_USERNAME);
+  const followers = userStats ? userStats.followers : Number(s.followers ?? 0);
+  const repos =
+    userStats && userStats.publicRepos > 0 ? userStats.publicRepos : Number(s.repos ?? 0);
+  const stars = userStats && userStats.totalStars > 0 ? userStats.totalStars : Number(s.stars ?? 0);
+  const years = userStats?.firstContributionYear
+    ? yearsBuilding(userStats.firstContributionYear)
+    : Number(s.years ?? 0);
 
   return {
     name: row.name,
@@ -80,11 +96,7 @@ export async function getProfile(): Promise<{
     heroTagline: row.heroTagline ?? null,
     sectionVisibility: (row.sectionVisibility as Record<string, boolean>) ?? {},
     roles: row.roles,
-    stats: {
-      years: Number(s.years ?? 0),
-      repos: Number(s.repos ?? 0),
-      stars: cachedStars > 0 ? cachedStars : Number(s.stars ?? 0),
-    },
+    stats: { years, repos, stars, followers },
   };
 }
 

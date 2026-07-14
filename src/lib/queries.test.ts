@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // ── Hoist mock state so vi.mock factories can reference it ────────────────────
 
@@ -50,6 +50,10 @@ vi.mock("@/db/client", () => ({
 vi.mock("@/lib/projects", () => ({
   getProjects: vi.fn().mockResolvedValue([{ repo: "a", featured: true, hidden: false }]),
 }));
+
+// Mock the GitHub user cache so getProfile's live account-stats read stays offline.
+const { getCachedUserStatsMock } = vi.hoisted(() => ({ getCachedUserStatsMock: vi.fn() }));
+vi.mock("@/lib/github-cache", () => ({ getCachedUserStats: getCachedUserStatsMock }));
 
 // ── Import after mocks are registered ────────────────────────────────────────
 
@@ -164,7 +168,17 @@ describe("getFundingLinks", () => {
 });
 
 describe("getProfile", () => {
-  it("shapes profile row reading roles from dedicated column", async () => {
+  // Pin "now" so years-since-account-created is deterministic.
+  beforeEach(() => vi.useFakeTimers().setSystemTime(new Date("2026-01-01T00:00:00Z")));
+  afterEach(() => vi.useRealTimers());
+
+  it("shapes profile row deriving all GitHub stats from the user cache", async () => {
+    getCachedUserStatsMock.mockResolvedValue({
+      followers: 112,
+      publicRepos: 72,
+      totalStars: 340,
+      firstContributionYear: 2018, // 8 years before pinned now (2026)
+    });
     _setRows([
       {
         id: 1,
@@ -179,14 +193,18 @@ describe("getProfile", () => {
     ]);
     const result = await getProfile();
     expect(result.name).toBe("Nikhil Rajput");
-    expect(result.bio).toBe("Bio text");
-    expect(result.avatarUrl).toBe("/avatar.jpg");
-    expect(result.resumeUrl).toBe("/resume.pdf");
     expect(result.roles).toEqual(["Developer", "Designer"]);
-    expect(result.stats).toEqual({ years: 4, repos: 60, stars: 1200 });
+    // years/repos/stars/followers all come from the live cache, not the seed.
+    expect(result.stats).toEqual({ years: 8, repos: 72, stars: 340, followers: 112 });
   });
 
   it("returns empty roles and defaults from column defaults", async () => {
+    getCachedUserStatsMock.mockResolvedValue({
+      followers: 5,
+      publicRepos: 9,
+      totalStars: 11,
+      firstContributionYear: 2024, // 2 years before pinned now (2026)
+    });
     _setRows([
       {
         id: 1,
@@ -204,7 +222,26 @@ describe("getProfile", () => {
     // A missing avatar falls back to the bundled asset so the hero never breaks.
     expect(result.avatarUrl).toBe("/images/nikhil.png");
     expect(result.resumeUrl).toBe("");
-    expect(result.stats).toEqual({ years: 0, repos: 0, stars: 0 });
+    expect(result.stats).toEqual({ years: 2, repos: 9, stars: 11, followers: 5 });
+  });
+
+  it("falls back to the seeded stats when the GitHub cache is empty", async () => {
+    // Cold cache + failed fetch → getCachedUserStats returns null.
+    getCachedUserStatsMock.mockResolvedValue(null);
+    _setRows([
+      {
+        id: 1,
+        name: "Test",
+        bio: "Bio",
+        stats: { years: 4, repos: 60, stars: 250, followers: 42 },
+        roles: [],
+        resumeUrl: null,
+        avatarUrl: null,
+        updatedAt: new Date(),
+      },
+    ]);
+    const result = await getProfile();
+    expect(result.stats).toEqual({ years: 4, repos: 60, stars: 250, followers: 42 });
   });
 
   it("throws when profile row is missing", async () => {

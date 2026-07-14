@@ -9,6 +9,7 @@ import {
   HandCoins,
   HelpCircle,
   MessageSquareQuote,
+  Quote,
   User,
   Clock,
   CheckCircle2,
@@ -23,10 +24,9 @@ import {
   socialLinks,
   fundingLinks,
   faqs,
+  taglines,
   testimonials,
 } from "@/db/schema";
-import { SectionVisibilityToggles } from "@/components/admin/SectionVisibilityToggles";
-
 export const dynamic = "force-dynamic";
 
 // One count card per collection-style section in the sidebar. Profile is a
@@ -40,6 +40,7 @@ const cards = [
   { href: "/admin/social-links", label: "Social Links", icon: Link2, key: "socialLinks" },
   { href: "/admin/funding-links", label: "Funding Links", icon: HandCoins, key: "fundingLinks" },
   { href: "/admin/faqs", label: "FAQs", icon: HelpCircle, key: "faqs" },
+  { href: "/admin/taglines", label: "Taglines", icon: Quote, key: "taglines" },
   {
     href: "/admin/testimonials",
     label: "Testimonials",
@@ -61,6 +62,7 @@ export default async function AdminDashboard() {
     [social],
     [funding],
     [faq],
+    [tagline],
     [profileRow],
     [testimonialStats],
   ] = await Promise.all([
@@ -71,10 +73,8 @@ export default async function AdminDashboard() {
     db.select({ n: count }).from(socialLinks),
     db.select({ n: count }).from(fundingLinks),
     db.select({ n: count }).from(faqs),
-    db
-      .select({ id: profile.id, sectionVisibility: profile.sectionVisibility })
-      .from(profile)
-      .limit(1),
+    db.select({ n: count }).from(taglines),
+    db.select({ id: profile.id }).from(profile).limit(1),
     db
       .select({
         total: count,
@@ -93,10 +93,10 @@ export default async function AdminDashboard() {
     socialLinks: Number(social.n),
     fundingLinks: Number(funding.n),
     faqs: Number(faq.n),
+    taglines: Number(tagline.n),
     testimonials: Number(testimonialStats.total),
   };
   const profileConfigured = Boolean(profileRow);
-  const sectionVisibility = (profileRow?.sectionVisibility ?? {}) as Record<string, boolean>;
   const approvedCount = Number(testimonialStats.approved);
   const pendingCount = Number(testimonialStats.pending);
   const rejectedCount = Number(testimonialStats.rejected);
@@ -182,19 +182,6 @@ export default async function AdminDashboard() {
             </span>
           ) : null}
         </Link>
-      </div>
-
-      {/* Visible sections: switches auto-save; a section toggled off is not
-          rendered, code-split, or data-fetched on the site (or its nav entry). */}
-      <div className="border-border bg-surface rounded-2xl border p-5">
-        <div className="mb-4">
-          <h2 className="text-foreground font-semibold">Visible sections</h2>
-          <p className="text-muted mt-0.5 text-sm">
-            Turn a section off to hide it from the site and the menu. Hidden sections do not load on
-            the frontend.
-          </p>
-        </div>
-        <SectionVisibilityToggles visibility={sectionVisibility} />
       </div>
     </div>
   );

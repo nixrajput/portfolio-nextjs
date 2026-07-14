@@ -8,7 +8,7 @@ import { cn } from "@/utils/cn";
 
 export type AboutProfile = {
   bio: string;
-  stats: { years: number; repos: number; stars: number };
+  stats: { years: number; repos: number; stars: number; followers: number };
   name?: string;
   avatarUrl?: string;
 };
@@ -20,13 +20,21 @@ type StatGridProps = {
 
 function StatGrid({ stats, className }: StatGridProps) {
   const items: { value: number; label: string }[] = [
-    { value: stats.years, label: "Years building" },
+    { value: stats.years, label: "Years of building" },
     { value: stats.repos, label: "Public repos" },
     { value: stats.stars, label: "GitHub stars" },
+    { value: stats.followers, label: "GitHub followers" },
   ];
 
   return (
-    <Card className={cn("divide-border mt-12 grid grid-cols-3 divide-x p-0", className)}>
+    // 2x2 on mobile, 4-across from md up. divide-y separates the mobile rows;
+    // the vertical dividers only apply once the grid is a single row (md).
+    <Card
+      className={cn(
+        "divide-border mt-12 grid grid-cols-2 divide-x divide-y p-0 md:grid-cols-4 md:divide-y-0",
+        className,
+      )}
+    >
       {items.map(({ value, label }, i) => (
         <AnimatedStat key={label} value={value} label={label} delay={0.1 + i * 0.08} />
       ))}
