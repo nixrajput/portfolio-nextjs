@@ -27,8 +27,6 @@ import {
   taglines,
   testimonials,
 } from "@/db/schema";
-import { SectionVisibilityToggles } from "@/components/admin/SectionVisibilityToggles";
-
 export const dynamic = "force-dynamic";
 
 // One count card per collection-style section in the sidebar. Profile is a
@@ -76,10 +74,7 @@ export default async function AdminDashboard() {
     db.select({ n: count }).from(fundingLinks),
     db.select({ n: count }).from(faqs),
     db.select({ n: count }).from(taglines),
-    db
-      .select({ id: profile.id, sectionVisibility: profile.sectionVisibility })
-      .from(profile)
-      .limit(1),
+    db.select({ id: profile.id }).from(profile).limit(1),
     db
       .select({
         total: count,
@@ -102,7 +97,6 @@ export default async function AdminDashboard() {
     testimonials: Number(testimonialStats.total),
   };
   const profileConfigured = Boolean(profileRow);
-  const sectionVisibility = (profileRow?.sectionVisibility ?? {}) as Record<string, boolean>;
   const approvedCount = Number(testimonialStats.approved);
   const pendingCount = Number(testimonialStats.pending);
   const rejectedCount = Number(testimonialStats.rejected);
@@ -188,19 +182,6 @@ export default async function AdminDashboard() {
             </span>
           ) : null}
         </Link>
-      </div>
-
-      {/* Visible sections: clicking a card auto-saves; a hidden section is not
-          rendered, code-split, or data-fetched on the site (or its nav entry). */}
-      <div>
-        <div className="mb-4">
-          <h2 className="text-foreground font-semibold">Homepage sections</h2>
-          <p className="text-muted mt-0.5 text-sm">
-            Click a section to show or hide it. Changes save instantly; hidden sections never load
-            on the site or its menu.
-          </p>
-        </div>
-        <SectionVisibilityToggles visibility={sectionVisibility} />
       </div>
     </div>
   );

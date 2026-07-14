@@ -15,6 +15,7 @@ import {
   MessageSquareQuote,
   HelpCircle,
   Quote,
+  Settings,
   ExternalLink,
   PanelLeftClose,
   PanelLeft,
@@ -123,7 +124,7 @@ function UserMenu({
       {open ? (
         <div
           role="menu"
-          className="border-border bg-surface absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-xl border shadow-lg"
+          className="border-border bg-background absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-xl border shadow-lg"
         >
           <div className="border-border flex items-center gap-3 border-b px-3 py-3">
             <BrandInitialsAvatar name={userName} src={userImage} className="size-9" />
@@ -132,6 +133,15 @@ function UserMenu({
               <div className="text-muted text-xs">Administrator</div>
             </div>
           </div>
+          <Link
+            href="/admin/settings"
+            role="menuitem"
+            onClick={() => setOpen(false)}
+            className="text-foreground hover:bg-foreground/5 border-border flex w-full items-center gap-2 border-b px-3 py-2.5 text-sm transition"
+          >
+            <Settings className="size-4" aria-hidden />
+            Settings
+          </Link>
           <form action={logoutAction}>
             <button
               type="submit"
@@ -259,7 +269,7 @@ export function AdminShell({
             className="absolute inset-0 bg-black/50 backdrop-blur-sm"
             onClick={() => setMobileOpen(false)}
           />
-          <aside className="border-border bg-surface absolute inset-y-0 left-0 flex w-64 flex-col border-r p-4">
+          <aside className="border-border bg-background absolute inset-y-0 left-0 flex w-64 flex-col border-r p-4">
             <div className="mb-6 flex items-center justify-between px-2">
               <Link
                 href="/admin"

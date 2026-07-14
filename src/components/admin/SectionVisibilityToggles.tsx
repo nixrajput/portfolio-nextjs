@@ -41,9 +41,9 @@ function toState(visibility: Record<string, boolean>): Record<string, boolean> {
 }
 
 /**
- * Dashboard control: one card per toggleable homepage section. Clicking a card
- * flips its visibility and saves immediately (optimistic - the card reflects the
- * new state at once and rolls back if the save fails). A hidden section is not
+ * A row per toggleable homepage section: icon, name, description, and a switch.
+ * Flipping a switch saves immediately (optimistic - the switch reflects the new
+ * state at once and rolls back if the save fails). A hidden section is not
  * rendered, code-split, or data-fetched on the site.
  */
 export function SectionVisibilityToggles({ visibility }: { visibility: Record<string, boolean> }) {
@@ -68,53 +68,48 @@ export function SectionVisibilityToggles({ visibility }: { visibility: Record<st
   };
 
   return (
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <ul className="divide-border divide-y">
       {SECTIONS.map((s) => {
         const on = state[s.id];
         const Icon = s.icon;
         return (
-          <button
-            key={s.id}
-            type="button"
-            role="switch"
-            aria-checked={on}
-            aria-label={`${s.label} section, ${on ? "visible" : "hidden"}`}
-            onClick={() => toggle(s.id)}
-            disabled={pendingId === s.id}
-            className={cn(
-              "group border-border bg-surface flex items-start gap-3 rounded-2xl border p-4 text-left transition",
-              "hover:border-foreground/20 focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none",
-              !on && "opacity-55 saturate-0",
-            )}
-          >
+          <li key={s.id} className="flex items-center gap-4 py-3.5 first:pt-0 last:pb-0">
             <span
               className={cn(
                 "grid size-9 shrink-0 place-items-center rounded-lg transition-colors",
-                on
-                  ? "bg-(image:--gradient-brand) text-white"
-                  : "bg-foreground/10 text-muted",
+                on ? "bg-(image:--gradient-brand) text-white" : "bg-foreground/10 text-muted",
               )}
             >
               <Icon className="size-4.5" aria-hidden />
             </span>
 
-            <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-              <span className="flex items-center gap-2">
-                <span className="text-foreground truncate text-sm font-semibold">{s.label}</span>
-                <span
-                  className={cn(
-                    "ml-auto shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium",
-                    on ? "bg-emerald-500/12 text-emerald-500" : "bg-foreground/8 text-muted",
-                  )}
-                >
-                  {on ? "Visible" : "Hidden"}
-                </span>
-              </span>
-              <span className="text-muted truncate text-xs">{s.description}</span>
-            </span>
-          </button>
+            <div className="min-w-0 flex-1">
+              <div className="text-foreground text-sm font-medium">{s.label}</div>
+              <div className="text-muted truncate text-xs">{s.description}</div>
+            </div>
+
+            <button
+              type="button"
+              role="switch"
+              aria-checked={on}
+              aria-label={`${s.label} section, ${on ? "visible" : "hidden"}`}
+              onClick={() => toggle(s.id)}
+              disabled={pendingId === s.id}
+              className={cn(
+                "focus-visible:ring-ring relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors focus-visible:ring-2 focus-visible:outline-none disabled:opacity-60",
+                on ? "bg-(image:--gradient-brand)" : "bg-foreground/20",
+              )}
+            >
+              <span
+                className={cn(
+                  "inline-block size-5 rounded-full bg-white shadow-sm transition-transform",
+                  on ? "translate-x-[22px]" : "translate-x-0.5",
+                )}
+              />
+            </button>
+          </li>
         );
       })}
-    </div>
+    </ul>
   );
 }
