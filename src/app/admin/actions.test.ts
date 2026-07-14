@@ -26,6 +26,9 @@ import {
   deleteProject,
   reorderProjects,
   updateProfile,
+  createTagline,
+  updateTagline,
+  deleteTagline,
 } from "./actions";
 
 function authedSession() {
@@ -144,5 +147,31 @@ describe("zod validation", () => {
         hidden: false,
       }),
     ).resolves.toBeUndefined();
+  });
+});
+
+describe("taglines", () => {
+  it("blocks creating a tagline without a session", async () => {
+    mockAuth.mockResolvedValue(null);
+    await expect(createTagline({ text: "Hi", active: true, order: 0 })).rejects.toThrow(
+      "Unauthorized",
+    );
+  });
+
+  it("rejects an empty tagline text", async () => {
+    mockAuth.mockResolvedValue(authedSession());
+    await expect(createTagline({ text: "", active: true, order: 0 })).rejects.toThrow();
+  });
+
+  it("accepts a valid tagline and updates/deletes by uuid", async () => {
+    mockAuth.mockResolvedValue(authedSession());
+    const id = "11111111-1111-1111-1111-111111111111";
+    await expect(
+      createTagline({ text: "Rise above limits", active: true, order: 0 }),
+    ).resolves.toBeUndefined();
+    await expect(
+      updateTagline(id, { text: "Ship it", active: false, order: 1 }),
+    ).resolves.toBeUndefined();
+    await expect(deleteTagline(id)).resolves.toBeUndefined();
   });
 });

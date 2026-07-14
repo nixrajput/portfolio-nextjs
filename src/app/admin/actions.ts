@@ -11,6 +11,7 @@ import {
   socialLinks,
   fundingLinks,
   faqs,
+  taglines,
 } from "@/db/schema";
 import {
   profileInsertSchema,
@@ -21,6 +22,7 @@ import {
   socialLinkInsertSchema,
   fundingLinkInsertSchema,
   faqInsertSchema,
+  taglineInsertSchema,
   reorderSchema,
   type ProfileInput,
   type ProjectInput,
@@ -30,6 +32,7 @@ import {
   type SocialLinkInput,
   type FundingLinkInput,
   type FaqInput,
+  type TaglineInput,
   type ReorderInput,
 } from "@/lib/schemas";
 import { auth } from "@/auth";
@@ -278,5 +281,24 @@ export async function updateFaq(id: number, input: FaqInput): Promise<void> {
 export async function deleteFaq(id: number): Promise<void> {
   await requireAdmin();
   await db.delete(faqs).where(eq(faqs.id, id));
+  revalidatePortfolio();
+}
+
+// ---------- Taglines ----------
+export async function createTagline(input: TaglineInput): Promise<void> {
+  await requireAdmin();
+  await db.insert(taglines).values(taglineInsertSchema.parse(input));
+  revalidatePortfolio();
+}
+
+export async function updateTagline(id: string, input: TaglineInput): Promise<void> {
+  await requireAdmin();
+  await db.update(taglines).set(taglineInsertSchema.parse(input)).where(eq(taglines.id, id));
+  revalidatePortfolio();
+}
+
+export async function deleteTagline(id: string): Promise<void> {
+  await requireAdmin();
+  await db.delete(taglines).where(eq(taglines.id, id));
   revalidatePortfolio();
 }

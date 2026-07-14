@@ -14,6 +14,7 @@ import {
   HandCoins,
   MessageSquareQuote,
   HelpCircle,
+  Quote,
   ExternalLink,
   PanelLeftClose,
   PanelLeft,
@@ -36,6 +37,7 @@ const NAV = [
   { href: "/admin/funding-links", label: "Funding Links", icon: HandCoins },
   { href: "/admin/testimonials", label: "Testimonials", icon: MessageSquareQuote },
   { href: "/admin/faqs", label: "FAQs", icon: HelpCircle },
+  { href: "/admin/taglines", label: "Taglines", icon: Quote },
 ];
 
 function NavLinks({ collapsed, onNavigate }: { collapsed?: boolean; onNavigate?: () => void }) {

@@ -9,6 +9,7 @@ import {
   HandCoins,
   HelpCircle,
   MessageSquareQuote,
+  Quote,
   User,
   Clock,
   CheckCircle2,
@@ -23,6 +24,7 @@ import {
   socialLinks,
   fundingLinks,
   faqs,
+  taglines,
   testimonials,
 } from "@/db/schema";
 import { SectionVisibilityToggles } from "@/components/admin/SectionVisibilityToggles";
@@ -40,6 +42,7 @@ const cards = [
   { href: "/admin/social-links", label: "Social Links", icon: Link2, key: "socialLinks" },
   { href: "/admin/funding-links", label: "Funding Links", icon: HandCoins, key: "fundingLinks" },
   { href: "/admin/faqs", label: "FAQs", icon: HelpCircle, key: "faqs" },
+  { href: "/admin/taglines", label: "Taglines", icon: Quote, key: "taglines" },
   {
     href: "/admin/testimonials",
     label: "Testimonials",
@@ -61,6 +64,7 @@ export default async function AdminDashboard() {
     [social],
     [funding],
     [faq],
+    [tagline],
     [profileRow],
     [testimonialStats],
   ] = await Promise.all([
@@ -71,6 +75,7 @@ export default async function AdminDashboard() {
     db.select({ n: count }).from(socialLinks),
     db.select({ n: count }).from(fundingLinks),
     db.select({ n: count }).from(faqs),
+    db.select({ n: count }).from(taglines),
     db
       .select({ id: profile.id, sectionVisibility: profile.sectionVisibility })
       .from(profile)
@@ -93,6 +98,7 @@ export default async function AdminDashboard() {
     socialLinks: Number(social.n),
     fundingLinks: Number(funding.n),
     faqs: Number(faq.n),
+    taglines: Number(tagline.n),
     testimonials: Number(testimonialStats.total),
   };
   const profileConfigured = Boolean(profileRow);
@@ -184,14 +190,14 @@ export default async function AdminDashboard() {
         </Link>
       </div>
 
-      {/* Visible sections: switches auto-save; a section toggled off is not
+      {/* Visible sections: clicking a card auto-saves; a hidden section is not
           rendered, code-split, or data-fetched on the site (or its nav entry). */}
-      <div className="border-border bg-surface rounded-2xl border p-5">
+      <div>
         <div className="mb-4">
-          <h2 className="text-foreground font-semibold">Visible sections</h2>
+          <h2 className="text-foreground font-semibold">Homepage sections</h2>
           <p className="text-muted mt-0.5 text-sm">
-            Turn a section off to hide it from the site and the menu. Hidden sections do not load on
-            the frontend.
+            Click a section to show or hide it. Changes save instantly; hidden sections never load
+            on the site or its menu.
           </p>
         </div>
         <SectionVisibilityToggles visibility={sectionVisibility} />
