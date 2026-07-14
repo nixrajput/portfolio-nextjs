@@ -106,6 +106,25 @@ export const githubRepoSchema = z.object({
 
 export const githubRepoListSchema = z.array(githubRepoSchema);
 
+// GitHub GraphQL user stats (single query: followers, owned public non-fork
+// repos + their stars, and the years the user has contributed in).
+export const githubUserStatsSchema = z.object({
+  data: z.object({
+    user: z
+      .object({
+        followers: z.object({ totalCount: z.number() }),
+        repositories: z.object({
+          totalCount: z.number(),
+          nodes: z.array(z.object({ stargazerCount: z.number() })),
+        }),
+        contributionsCollection: z.object({
+          contributionYears: z.array(z.number()),
+        }),
+      })
+      .nullable(),
+  }),
+});
+
 // ---------- Inferred types ----------
 export type ProfileInput = z.infer<typeof profileInsertSchema>;
 export type ProjectInput = z.infer<typeof projectInsertSchema>;
@@ -118,3 +137,4 @@ export type TaglineInput = z.infer<typeof taglineInsertSchema>;
 export type FaqInput = z.infer<typeof faqInsertSchema>;
 export type ReorderInput = z.infer<typeof reorderSchema>;
 export type GithubRepo = z.infer<typeof githubRepoSchema>;
+export type GithubUserStatsResponse = z.infer<typeof githubUserStatsSchema>;

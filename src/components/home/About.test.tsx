@@ -14,7 +14,7 @@ beforeEach(() => installMatchMedia({ "(prefers-reduced-motion: reduce)": true })
 
 const mockProfile = {
   bio: "I build fast, accessible web apps and love open source.",
-  stats: { years: 4, repos: 120, stars: 250 },
+  stats: { years: 4, repos: 120, stars: 250, followers: 87 },
 };
 
 describe("About", () => {
@@ -27,9 +27,10 @@ describe("About", () => {
 
   it("renders stat labels", () => {
     render(<About profile={mockProfile} />);
-    expect(screen.getByText("Years building")).toBeInTheDocument();
+    expect(screen.getByText("Years of building")).toBeInTheDocument();
     expect(screen.getByText("Public repos")).toBeInTheDocument();
     expect(screen.getByText("GitHub stars")).toBeInTheDocument();
+    expect(screen.getByText("GitHub followers")).toBeInTheDocument();
   });
 
   it("renders stat values with + suffix for values >= 100", () => {
@@ -40,6 +41,8 @@ describe("About", () => {
     expect(screen.getByText("120+")).toBeInTheDocument();
     // stars = 250 → "250+"
     expect(screen.getByText("250+")).toBeInTheDocument();
+    // followers = 87 → no suffix (< 100)
+    expect(screen.getByText("87")).toBeInTheDocument();
   });
 
   it("renders the section with correct id", () => {

@@ -191,6 +191,20 @@ export const githubCache = pgTable("github_cache", {
   fetchedAt: timestamp("fetched_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+// Account-level GitHub stats (followers, public repo count) cached persistently
+// so the About stats render instantly from the last-known-good row and refresh
+// in the background - they never flash blank while a fresh fetch is in flight.
+export const githubUserCache = pgTable("github_user_cache", {
+  username: varchar("username", { length: 255 }).primaryKey(),
+  followers: integer("followers").notNull().default(0),
+  publicRepos: integer("public_repos").notNull().default(0),
+  // Sum of stargazers across all owned public non-fork repos.
+  totalStars: integer("total_stars").notNull().default(0),
+  // Earliest year the user contributed on GitHub, for deriving "years building".
+  firstContributionYear: integer("first_contribution_year"),
+  fetchedAt: timestamp("fetched_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 // Inferred types
 export type Profile = typeof profile.$inferSelect;
 export type NewProfile = typeof profile.$inferInsert;
@@ -214,3 +228,5 @@ export type Faq = typeof faqs.$inferSelect;
 export type NewFaq = typeof faqs.$inferInsert;
 export type GithubCache = typeof githubCache.$inferSelect;
 export type NewGithubCache = typeof githubCache.$inferInsert;
+export type GithubUserCache = typeof githubUserCache.$inferSelect;
+export type NewGithubUserCache = typeof githubUserCache.$inferInsert;

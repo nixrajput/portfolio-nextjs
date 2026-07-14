@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getRepo, listUserRepos } from "./github";
+import { getRepo, getUserStats, listUserRepos } from "./github";
 
 const repoFixture = {
   name: "siphon",
@@ -54,5 +54,50 @@ describe("listUserRepos", () => {
     );
     const repos = await listUserRepos("nixrajput");
     expect(repos).toHaveLength(1);
+  });
+});
+
+describe("getUserStats", () => {
+  const statsResponse = {
+    data: {
+      user: {
+        followers: { totalCount: 112 },
+        repositories: {
+          totalCount: 61,
+          nodes: [{ stargazerCount: 500 }, { stargazerCount: 115 }],
+        },
+        contributionsCollection: { contributionYears: [2026, 2020, 2015, 2018] },
+      },
+    },
+  };
+
+  it("sums stars and picks the earliest contribution year", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response(JSON.stringify(statsResponse), { status: 200 })),
+    );
+    const stats = await getUserStats("nixrajput");
+    expect(stats).toEqual({
+      followers: 112,
+      publicRepos: 61,
+      totalStars: 615,
+      firstContributionYear: 2015,
+    });
+  });
+
+  it("returns null when the user is absent", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response(JSON.stringify({ data: { user: null } }), { status: 200 })),
+    );
+    expect(await getUserStats("ghost")).toBeNull();
+  });
+
+  it("throws on a non-ok response so the caller can fall back", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => new Response("nope", { status: 401 })),
+    );
+    await expect(getUserStats("nixrajput")).rejects.toThrow();
   });
 });

@@ -1,6 +1,12 @@
-import { githubRepoListSchema, githubRepoSchema, type GithubRepo } from "./schemas";
+import {
+  githubRepoListSchema,
+  githubRepoSchema,
+  githubUserStatsSchema,
+  type GithubRepo,
+} from "./schemas";
 
 const GITHUB_API = "https://api.github.com";
+const GITHUB_GRAPHQL = "https://api.github.com/graphql";
 const REVALIDATE_SECONDS = 3600;
 
 function authHeaders(): HeadersInit {
@@ -12,6 +18,51 @@ function authHeaders(): HeadersInit {
     Accept: "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28",
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+}
+
+export type GithubUserStats = {
+  followers: number;
+  publicRepos: number;
+  totalStars: number;
+  firstContributionYear: number | null;
+};
+
+// Single GraphQL query for all account-level stats: followers, owned public
+// non-fork repo count + their stargazer sum, and the years the user contributed
+// in (the earliest is the first year they built on GitHub). GraphQL requires a
+// token; without one the request 401s and the caller falls back to the cache.
+const USER_STATS_QUERY = `query($login:String!){
+  user(login:$login){
+    followers{totalCount}
+    repositories(privacy:PUBLIC ownerAffiliations:OWNER isFork:false first:100){
+      totalCount
+      nodes{stargazerCount}
+    }
+    contributionsCollection{contributionYears}
+  }
+}`;
+
+/** Fetch account-level stats via the GraphQL API. Returns null if the user is
+ *  absent. Throws on transport/schema errors so the caller can fall back. */
+export async function getUserStats(username: string): Promise<GithubUserStats | null> {
+  const res = await fetch(GITHUB_GRAPHQL, {
+    method: "POST",
+    headers: { ...authHeaders(), "Content-Type": "application/json" },
+    body: JSON.stringify({ query: USER_STATS_QUERY, variables: { login: username } }),
+    next: { revalidate: REVALIDATE_SECONDS, tags: ["github"] },
+  });
+  if (!res.ok) throw new Error(`GitHub getUserStats ${username} failed: ${res.status}`);
+  const parsed = githubUserStatsSchema.parse(await res.json());
+  const user = parsed.data.user;
+  if (!user) return null;
+
+  const years = user.contributionsCollection.contributionYears;
+  return {
+    followers: user.followers.totalCount,
+    publicRepos: user.repositories.totalCount,
+    totalStars: user.repositories.nodes.reduce((sum, r) => sum + r.stargazerCount, 0),
+    firstContributionYear: years.length > 0 ? Math.min(...years) : null,
   };
 }
 

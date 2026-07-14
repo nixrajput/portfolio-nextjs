@@ -1,8 +1,8 @@
-import { inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { db } from "@/db/client";
-import { githubCache } from "@/db/schema";
-import type { GithubCache } from "@/db/schema";
-import { getRepo } from "@/lib/github";
+import { githubCache, githubUserCache } from "@/db/schema";
+import type { GithubCache, GithubUserCache } from "@/db/schema";
+import { getRepo, getUserStats } from "@/lib/github";
 
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -15,7 +15,7 @@ export type CachedRepoStats = {
   htmlUrl: string | null;
 };
 
-function isStale(row: GithubCache): boolean {
+function isStale(row: { fetchedAt: Date }): boolean {
   return Date.now() - row.fetchedAt.getTime() > CACHE_TTL_MS;
 }
 
@@ -130,4 +130,61 @@ export async function getCachedRepoData(slugs: string[]): Promise<Map<string, Ca
   );
 
   return result;
+}
+
+export type CachedUserStats = {
+  followers: number;
+  publicRepos: number;
+  totalStars: number;
+  firstContributionYear: number | null;
+};
+
+function userRowToStats(row: GithubUserCache): CachedUserStats {
+  return {
+    followers: row.followers,
+    publicRepos: row.publicRepos,
+    totalStars: row.totalStars,
+    firstContributionYear: row.firstContributionYear,
+  };
+}
+
+/**
+ * Reads github_user_cache for a username, serving the last-known-good row
+ * instantly. Missing or stale (>24h) rows are refreshed via one GitHub GraphQL
+ * query (followers, owned public non-fork repo count + their star sum, and the
+ * first year the user contributed) and upserted. On fetch failure, falls back
+ * to the existing row; only a cold cache with a failed first fetch yields nulls.
+ * Never throws.
+ */
+export async function getCachedUserStats(username: string): Promise<CachedUserStats | null> {
+  const [cached] = await db
+    .select()
+    .from(githubUserCache)
+    .where(eq(githubUserCache.username, username));
+
+  if (cached && !isStale(cached)) return userRowToStats(cached);
+
+  try {
+    const live = await getUserStats(username);
+    if (live) {
+      const row = { username, ...live, fetchedAt: new Date() };
+      await db
+        .insert(githubUserCache)
+        .values(row)
+        .onConflictDoUpdate({
+          target: githubUserCache.username,
+          set: {
+            followers: row.followers,
+            publicRepos: row.publicRepos,
+            totalStars: row.totalStars,
+            firstContributionYear: row.firstContributionYear,
+            fetchedAt: row.fetchedAt,
+          },
+        });
+      return live;
+    }
+    return cached ? userRowToStats(cached) : null;
+  } catch {
+    return cached ? userRowToStats(cached) : null;
+  }
 }
