@@ -54,42 +54,34 @@ function MarqueeCard({ t }: { t: TestimonialCard }) {
 }
 
 /**
- * One column. With 2+ cards it auto-scrolls, rendering items twice for a
- * seamless loop (the CSS keyframe translates by -50%, i.e. one full set). With
- * a single card there is nothing to scroll, so it renders once as a static
- * card - no duplicate, no fixed height, no edge-fade mask.
+ * One auto-scrolling column, seamless for any item count (including one).
+ *
+ * The box's height is defined by ONE set (the in-flow first block, which carries
+ * its own trailing gap via `pb-5`), so only one set is ever in view and the box
+ * hugs a lone card. The duplicate is taken out of flow (`absolute top-full`) so
+ * it doesn't grow the box; `top-full` places it exactly one block-height below,
+ * i.e. one set + gap. The track animates by `-100%` of that same block height,
+ * landing the duplicate precisely where the original began - drift-free for any
+ * count, including a single card.
  */
 function MarqueeColumn({ items, duration }: { items: TestimonialCard[]; duration: number }) {
-  const shouldScroll = items.length >= 2;
-
-  if (!shouldScroll) {
-    return (
-      <div className="flex flex-col gap-5">
-        {items.map((t) => (
-          <MarqueeCard key={t.id} t={t} />
-        ))}
-      </div>
-    );
-  }
+  const set = (dup: boolean) => (
+    <div className="flex flex-col gap-5 pb-5" aria-hidden={dup || undefined}>
+      {items.map((t) => (
+        <MarqueeCard key={dup ? `dup-${t.id}` : t.id} t={t} />
+      ))}
+    </div>
+  );
 
   return (
     // mask-image fades the CONTENT at the edges instead of painting a
     // background-colored overlay on top (which read as solid blocks over the
     // ambient gradient).
-    <div className="marquee-group relative h-[34rem] overflow-hidden mask-[linear-gradient(180deg,transparent,#000_9%,#000_91%,transparent)]">
-      <div
-        className="marquee-track flex flex-col gap-5"
-        style={{ animationDuration: `${duration}s` }}
-      >
-        {items.map((t) => (
-          <MarqueeCard key={t.id} t={t} />
-        ))}
-        {/* Duplicate set for a seamless loop — hidden from a11y + test queries. */}
-        {items.map((t) => (
-          <div key={`dup-${t.id}`} aria-hidden="true">
-            <MarqueeCard t={t} />
-          </div>
-        ))}
+    <div className="marquee-group relative max-h-[34rem] overflow-hidden mask-[linear-gradient(180deg,transparent,#000_9%,#000_91%,transparent)]">
+      <div className="marquee-track relative" style={{ animationDuration: `${duration}s` }}>
+        {set(false)}
+        {/* Duplicate set, out of flow so it doesn't grow the box; seamless loop. */}
+        <div className="absolute inset-x-0 top-full">{set(true)}</div>
       </div>
     </div>
   );
