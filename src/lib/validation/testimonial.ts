@@ -27,10 +27,8 @@ const optionalUrl = z
     }
   });
 
-// A social field that accepts EITHER a full profile URL OR a bare handle
-// (with or without a leading "@"). A handle is normalized to the platform's
-// canonical profile URL; a provided URL is kept only if it is a safe http(s)
-// URL. The stored value is therefore always a clean, render-safe link.
+// Accepts a full URL or a bare handle. A handle is normalized to the canonical profile URL and
+// a URL is kept only if it is safe http(s), so the stored value is always render-safe.
 function socialHandle(baseUrl: string, handlePattern: RegExp, label: string) {
   return z
     .string()

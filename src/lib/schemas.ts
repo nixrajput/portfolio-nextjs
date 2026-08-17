@@ -27,6 +27,15 @@ export const projectInsertSchema = z.object({
   featured: z.boolean().default(false),
   order: z.number().int().nonnegative().default(0),
   hidden: z.boolean().default(false),
+  // Quick-view media. httpUrl() not string().url(), matching the fields above: string().url()
+  // accepts javascript: and data:, which these reach an <img src> as. An empty string from a
+  // cleared upload field becomes null rather than failing.
+  coverImage: z
+    .union([z.httpUrl(), z.literal(""), z.null()])
+    .transform((v) => (v === "" ? null : v))
+    .nullable()
+    .optional(),
+  screenshots: z.array(z.httpUrl()).max(6).default([]),
 });
 
 export const experienceInsertSchema = z.object({

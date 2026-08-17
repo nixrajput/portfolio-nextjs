@@ -11,11 +11,7 @@ import { gradientButtonBase } from "@/components/admin/styles";
 // Re-export so existing `@/components/admin/ui` consumers keep working.
 export { gradientButtonBase };
 
-// ---------------------------------------------------------------------------
-// Admin UI primitives — branded form fields, cards, tables, and badges shared
-// across the admin CRUD pages. Built on the same semantic tokens + gradient as
-// the public site so the panel feels like part of the product.
-// ---------------------------------------------------------------------------
+// Admin UI primitives, built on the same semantic tokens as the public site.
 
 const fieldBase =
   "w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground " +
@@ -76,7 +72,7 @@ export function CheckboxField({
         type="checkbox"
         name={name}
         defaultChecked={defaultChecked}
-        className="size-4 accent-(--color-brand-violet)"
+        className="size-4 accent-(--color-brand-deep)"
       />
       <span className="text-foreground">{label}</span>
     </label>
@@ -127,7 +123,7 @@ export function Badge({
 }) {
   const tones: Record<string, string> = {
     muted: "bg-foreground/8 text-muted",
-    brand: "bg-(--color-brand-violet)/12 text-(--color-brand-violet)",
+    brand: "bg-(--color-brand-deep)/12 text-(--color-brand-deep)",
     success: "bg-emerald-500/12 text-emerald-500",
     warning: "bg-amber-500/12 text-amber-500",
   };

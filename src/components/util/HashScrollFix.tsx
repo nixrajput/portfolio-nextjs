@@ -3,16 +3,9 @@
 import { useEffect } from "react";
 
 /**
- * On a direct load or reload of a URL with a hash (e.g. /#testimonials), the
- * browser's native hash jump fires before the page reaches its final height:
- * below-the-fold sections are lazy-loaded (next/dynamic) and scroll-reveal
- * animations start collapsed and grow, which keeps pushing the target down. A
- * single scroll lands in the wrong place.
- *
- * So we poll: re-scroll to the target on a short interval (instant scroll) and
- * stop only once its offset has been stable across several ticks, or after a
- * max duration. This adapts to however long hydration + reveal growth takes.
- * In-page nav clicks still use the CSS `scroll-behavior: smooth`.
+ * The native hash jump fires before the page reaches its final height - lazy sections and
+ * scroll-reveal growth keep pushing the target down - so a single scroll lands wrong. Polls
+ * until the target's offset is stable across several ticks instead.
  */
 export function HashScrollFix() {
   useEffect(() => {

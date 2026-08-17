@@ -15,7 +15,7 @@ function TimelineEntry({ exp, index, last }: { exp: ExperienceRow; index: number
     <div className="flex gap-6">
       {/* Rail dot (the connector line is drawn once for the whole list) */}
       <div className="relative flex w-3 justify-center">
-        <span className="bg-background z-10 mt-1 size-3 shrink-0 rounded-full border-2 border-(--brand-violet) ring-4 ring-(--brand-violet)/10" />
+        <span className="bg-background z-10 mt-1 size-3 shrink-0 rounded-full border-2 border-(--brand-deep) ring-4 ring-(--brand-deep)/10" />
       </div>
 
       {/* Card content */}

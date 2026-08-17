@@ -20,7 +20,7 @@ type StatGridProps = {
 
 function StatGrid({ stats, className }: StatGridProps) {
   const items: { value: number; label: string }[] = [
-    { value: stats.years, label: "Years of building" },
+    { value: stats.years, label: "Years of experience" },
     { value: stats.repos, label: "Public repos" },
     { value: stats.stars, label: "GitHub stars" },
     { value: stats.followers, label: "GitHub followers" },

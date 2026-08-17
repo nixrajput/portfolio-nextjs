@@ -5,10 +5,8 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { cn } from "@/utils/cn";
 
-// ---------------------------------------------------------------------------
-// Real Radix-based Dialog — same export names as the old native <dialog> shim.
-// Radix provides: focus trap, Escape close, scroll lock, portal rendering.
-// ---------------------------------------------------------------------------
+// Radix-based, keeping the export names of the old native <dialog> shim. Radix supplies the
+// focus trap, Escape close, scroll lock and portal.
 
 export const Dialog = DialogPrimitive.Root;
 export const DialogTrigger = DialogPrimitive.Trigger;

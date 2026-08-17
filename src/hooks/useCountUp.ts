@@ -4,11 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 /**
- * Count-up animation toward `target`, started when `active` first becomes true.
- * Duration scales with magnitude (a bigger number counts for longer, so the
- * per-tick step feels comparable across 4, 60, and 300+), clamped to a sane
- * range. Eased out for a natural settle. Returns the final value immediately
- * under reduced motion.
+ * Duration scales with magnitude so the per-tick step feels comparable across 4, 60 and 300+.
+ * Returns the final value immediately under reduced motion.
  */
 export function useCountUp(target: number, active: boolean): number {
   const reduce = useReducedMotion();

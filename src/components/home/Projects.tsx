@@ -3,44 +3,21 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
-import { ProjectCard } from "./ProjectCard";
-import { RepoCard } from "./RepoCard";
+import { ProjectsBrowser } from "./ProjectsBrowser";
 import type { MergedProject } from "@/lib/projects";
 
 const GITHUB_PROFILE = "https://github.com/nixrajput";
 
+/** Server shell: heading and CTA stay server-rendered, and ProjectsBrowser owns the
+ *  parts that need selection state (showcase, filter, grid, quick view). */
 export function Projects({ projects }: { projects: MergedProject[] }) {
-  const featured = projects.filter((p) => p.featured);
-  const rest = projects.filter((p) => !p.featured);
-
   return (
     <Section id="projects" className="scroll-mt-24">
       <Reveal>
         <SectionHeading number="05" eyebrow="Projects" title="Featured work" />
       </Reveal>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {featured.map((p, i) => (
-          <Reveal key={p.id} delay={(i % 3) * 0.05} className="h-full">
-            <ProjectCard project={p} />
-          </Reveal>
-        ))}
-      </div>
-
-      {rest.length > 0 && (
-        <div className="mt-16">
-          <h3 className="text-muted mb-4 text-sm font-semibold tracking-wider uppercase">
-            More repositories
-          </h3>
-          <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            {rest.map((p) => (
-              <li key={p.id}>
-                <RepoCard project={p} />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <ProjectsBrowser projects={projects} />
 
       <div className="mt-12 text-center">
         <Magnetic>

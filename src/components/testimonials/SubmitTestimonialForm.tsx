@@ -21,7 +21,7 @@ function fieldClass(hasError: boolean) {
     inputBase,
     hasError
       ? "border-red-500/70 focus:ring-red-500/60"
-      : "border-border focus:ring-(--color-brand-violet)",
+      : "border-border focus:ring-(--color-brand-deep)",
   );
 }
 
@@ -358,7 +358,7 @@ export function SubmitTestimonialForm({
                 value={zoom}
                 aria-label="Zoom"
                 onChange={(e) => setZoom(Number(e.target.value))}
-                className="flex-1 accent-(--color-brand-violet)"
+                className="flex-1 accent-(--color-brand-deep)"
               />
               <button
                 type="button"
@@ -377,7 +377,7 @@ export function SubmitTestimonialForm({
             onClick={() => fileInputRef.current?.click()}
             className={cn(
               "border-border flex cursor-pointer flex-col items-center gap-2 rounded-lg border border-dashed px-4 py-5 text-center transition",
-              "hover:border-(--color-brand-violet) hover:bg-[color-mix(in_srgb,var(--color-brand-violet)_5%,transparent)]",
+              "hover:border-(--color-brand-deep) hover:bg-[color-mix(in_srgb,var(--color-brand-deep)_5%,transparent)]",
             )}
           >
             <UploadCloud className="text-muted h-6 w-6" aria-hidden />

@@ -35,7 +35,7 @@ export function ServiceCard({ service }: { service: ServiceRow }) {
   const glowY = useTransform(my, (v) => `${v * 100}%`);
 
   const glowBg = useTransform([glowX, glowY] as const, ([x, y]) => {
-    return `radial-gradient(220px circle at ${x} ${y}, color-mix(in oklab, var(--color-brand-violet) 22%, transparent), transparent 70%)`;
+    return `radial-gradient(220px circle at ${x} ${y}, color-mix(in oklab, var(--color-brand-deep) 22%, transparent), transparent 70%)`;
   });
 
   function onMove(e: React.MouseEvent<HTMLDivElement>) {

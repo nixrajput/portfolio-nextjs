@@ -1,10 +1,10 @@
 "use client";
 
+import { BRAND, GROUND } from "@/lib/brand";
+
 /**
- * Global error boundary — replaces the root layout when it (or the root) throws,
- * so it must render its own <html>/<body> and cannot depend on app styles.
- * Like the route boundary, it never renders `error.message` (could leak
- * database/internal details); only a friendly message + the safe `digest`.
+ * Replaces the root layout when it throws, so it must render its own <html>/<body> and cannot
+ * depend on app styles. Never renders `error.message` - only the safe `digest`.
  */
 export default function GlobalError({
   error,
@@ -26,7 +26,7 @@ export default function GlobalError({
           gap: "1rem",
           padding: "1.5rem",
           textAlign: "center",
-          background: "#07070c",
+          background: GROUND.dark,
           color: "#fafafa",
           fontFamily: "system-ui, -apple-system, Segoe UI, Roboto, sans-serif",
         }}
@@ -53,7 +53,7 @@ export default function GlobalError({
             cursor: "pointer",
             fontWeight: 600,
             color: "#fff",
-            background: "linear-gradient(135deg, #155e75 0%, #0891b2 100%)",
+            background: `linear-gradient(135deg, ${BRAND.deep} 0%, ${BRAND.mid} 100%)`,
           }}
         >
           Try again

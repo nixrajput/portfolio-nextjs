@@ -1,5 +1,5 @@
 {
-  "includeCoAuthoredBy": true,
+  "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
       "Edit",
@@ -36,18 +36,55 @@
     "deny": [
       "Read(./.env)",
       "Read(./.env.*)",
+      "Read(./**/.env)",
+      "Read(./**/.env.*)",
+      "Read(/**/.env)",
+      "Read(/**/.env.*)",
       "Read(/secrets/**)",
+      "Read(./secrets/**)",
       "Read(./config/credentials.json)",
       "Read(./**/*.key)",
       "Read(./**/*.pem)",
       "Read(./**/*.crt)",
+      "Read(./**/*.cert)",
+      "Read(./**/*.p12)",
+      "Read(./**/*.pfx)",
+      "Read(/**/*.key)",
+      "Read(/**/*.pem)",
+      "Read(/**/*.crt)",
+      "Read(/**/*.cert)",
+      "Read(/**/*.p12)",
+      "Read(/**/*.pfx)",
       "Write(./.env)",
       "Write(./.env.*)",
+      "Write(./**/.env)",
+      "Write(./**/.env.*)",
+      "Write(/**/.env)",
+      "Write(/**/.env.*)",
       "Write(/secrets/**)",
+      "Write(./secrets/**)",
       "Write(./config/credentials.json)",
       "Write(./**/*.key)",
       "Write(./**/*.pem)",
-      "Write(./**/*.crt)"
+      "Write(./**/*.crt)",
+      "Write(./**/*.cert)",
+      "Write(./**/*.p12)",
+      "Write(./**/*.pfx)",
+      "Edit(./.env)",
+      "Edit(./.env.*)",
+      "Edit(./**/.env)",
+      "Edit(./**/.env.*)",
+      "Edit(/**/.env)",
+      "Edit(/**/.env.*)",
+      "Edit(/secrets/**)",
+      "Edit(./secrets/**)",
+      "Edit(./config/credentials.json)",
+      "Edit(./**/*.key)",
+      "Edit(./**/*.pem)",
+      "Edit(./**/*.crt)",
+      "Edit(./**/*.cert)",
+      "Edit(./**/*.p12)",
+      "Edit(./**/*.pfx)"
     ],
     "ask": [
       "Bash(rm *)",
@@ -99,10 +136,6 @@
     ]
   },
   "enableAllProjectMcpServers": true,
-  "enabledPlugins": {
-    "ruby-lsp@claude-plugins-official": true,
-    "shopify-plugin@shopify-ai-toolkit": true
-  },
   "outputStyle": "Explanatory",
-  "alwaysThinkingEnabled": false
+  "alwaysThinkingEnabled": true
 }

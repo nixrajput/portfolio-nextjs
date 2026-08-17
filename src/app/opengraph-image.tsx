@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { SITE } from "@/lib/seo/site";
+import { BRAND, GROUND, brandRgba } from "@/lib/brand";
 
 // Node runtime (not edge): the webpack build bundles next/og's satori+resvg
 // past Vercel's 1 MB edge-function limit. OG image generation is cached and
@@ -23,11 +24,11 @@ export default async function OpengraphImage() {
         justifyContent: "center",
         alignItems: "flex-start",
         padding: "80px",
-        background: "#07070c",
+        background: GROUND.dark,
         position: "relative",
       }}
     >
-      {/* Teal glow blob top-left */}
+      {/* Deep-hue glow blob top-left */}
       <div
         style={{
           position: "absolute",
@@ -36,11 +37,11 @@ export default async function OpengraphImage() {
           width: 480,
           height: 480,
           borderRadius: "50%",
-          background: "rgba(21, 94, 117, 0.25)",
+          background: brandRgba(BRAND.deep, 0.25),
           filter: "blur(80px)",
         }}
       />
-      {/* Cyan glow blob bottom-right */}
+      {/* Mid-hue glow blob bottom-right */}
       <div
         style={{
           position: "absolute",
@@ -49,11 +50,11 @@ export default async function OpengraphImage() {
           width: 400,
           height: 400,
           borderRadius: "50%",
-          background: "rgba(8, 145, 178, 0.18)",
+          background: brandRgba(BRAND.mid, 0.18),
           filter: "blur(80px)",
         }}
       />
-      {/* Ice glow blob top-right */}
+      {/* Bright-hue glow blob top-right */}
       <div
         style={{
           position: "absolute",
@@ -62,7 +63,7 @@ export default async function OpengraphImage() {
           width: 320,
           height: 320,
           borderRadius: "50%",
-          background: "rgba(34, 211, 238, 0.15)",
+          background: brandRgba(BRAND.bright, 0.15),
           filter: "blur(80px)",
         }}
       />
@@ -83,7 +84,7 @@ export default async function OpengraphImage() {
             width: 72,
             height: 72,
             borderRadius: 16,
-            background: "linear-gradient(135deg, #155e75, #0891b2)",
+            background: `linear-gradient(135deg, ${BRAND.deep}, ${BRAND.mid})`,
             fontSize: 40,
             fontWeight: 800,
             color: "#ffffff",
@@ -95,7 +96,7 @@ export default async function OpengraphImage() {
           style={{
             marginLeft: 8,
             fontSize: 28,
-            color: "#22d3ee",
+            color: BRAND.bright,
             fontWeight: 700,
           }}
         >

@@ -50,6 +50,7 @@ describe("requireAdmin guard", () => {
         featured: false,
         order: 0,
         hidden: false,
+        screenshots: [],
       }),
     ).rejects.toThrow("Unauthorized");
   });
@@ -79,6 +80,7 @@ describe("zod validation", () => {
         featured: false,
         order: 0,
         hidden: false,
+        screenshots: [],
       }),
     ).rejects.toThrow();
   });
@@ -92,6 +94,7 @@ describe("zod validation", () => {
         featured: false,
         order: 0,
         hidden: false,
+        screenshots: [],
       }),
     ).rejects.toThrow();
   });
@@ -105,6 +108,7 @@ describe("zod validation", () => {
         featured: false,
         order: 0,
         hidden: false,
+        screenshots: [],
       }),
     ).resolves.toBeUndefined();
   });
@@ -145,6 +149,7 @@ describe("zod validation", () => {
         featured: false,
         order: 0,
         hidden: false,
+        screenshots: [],
       }),
     ).resolves.toBeUndefined();
   });

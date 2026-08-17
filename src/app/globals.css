@@ -1,29 +1,16 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/*
- * Tailwind v4 opacity modifier fix.
- *
- * Opacity modifiers (/10, /60, /[0.02]) only work on colors registered in
- * @theme as --color-*. We cannot put theme-mode-switched values directly in
- * @theme (it does not support :root/.dark overrides). The solution:
- *
- *   1. In :root / .dark, define raw CSS vars with actual color values
- *      (no var() references — @theme needs to see the raw channel values
- *       OR we use oklch/rgb literals that Tailwind can parse).
- *   2. In @theme, alias those raw vars as --color-* tokens.
- *
- * Because @theme evaluates @theme at build time with CSS var() references,
- * the actual runtime token switching is done by reassigning the underlying
- * vars in :root/.dark. Tailwind v4 resolves the var() at runtime, so
- * opacity channel arithmetic works correctly.
- */
+/* Opacity modifiers (/10, /60) only work on colors registered in @theme, and @theme cannot
+ * hold theme-switched values. Hence the indirection: @theme aliases --color-* to vars whose
+ * raw values flip in :root/.dark. Inlining a literal there kills every modifier. */
 
 @theme {
-  /* Brand colors (Glacier ramp: deep teal -> cyan-teal -> ice highlight) */
-  --color-brand-violet: #155e75;
-  --color-brand-cyan: #0891b2;
-  --color-brand-pink: #22d3ee;
+  /* Default brand ramp, mirroring src/lib/brand.ts (Iris: deep indigo -> violet ->
+     orchid). Other palettes override these at runtime via [data-palette] below. */
+  --color-brand-deep: #3730a3;
+  --color-brand-mid: #7c3aed;
+  --color-brand-bright: #c084fc;
 
   /* Semantic design-system tokens — values come from :root / .dark vars */
   --color-background: var(--bg);
@@ -37,7 +24,7 @@
   --color-ring: var(--ring);
 
   /* Gradient — per-theme overrides set in :root / .dark below */
-  --gradient-brand: linear-gradient(135deg, #155e75 0%, #0891b2 100%);
+  --gradient-brand: linear-gradient(135deg, #3730a3 0%, #7c3aed 100%);
 
   /* Typography */
   --font-sans: var(--font-geist-sans);
@@ -47,94 +34,261 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Light theme — raw values for @theme var() references.
-   Ink/paper are hue-biased toward the brand violet (never pure black/white)
+   Ink/paper are hue-biased toward the brand ramp (never pure black/white)
    so text harmonizes with the ambient gradient. */
 :root {
   --max-width: 1200px;
-  --bg: #f6f7f9;
-  --fg: #14181f;
+  --bg: #f8f7fb;
+  --fg: #18162b;
   /* Translucent so cards read as glass over the ambient canvas, not white slabs */
   --surface: rgba(255, 255, 255, 0.6);
-  --surface-2: rgba(20, 24, 31, 0.03);
-  --border-color: rgba(20, 24, 31, 0.15);
-  --muted: rgba(20, 24, 31, 0.6);
-  --ring: #0e7490;
-  /* Raw brand vars for arbitrary-value utilities like border-(--brand-violet).
+  --surface-2: rgba(24, 22, 43, 0.03);
+  --border-color: rgba(24, 22, 43, 0.15);
+  --muted: rgba(24, 22, 43, 0.6);
+  --ring: #4f46e5;
+  /* Raw brand vars for arbitrary-value utilities like border-(--brand-deep).
      The @theme --color-brand-* tokens only generate the --color-* namespace,
      so components referencing the bare names need these aliases. */
-  --brand-violet: #155e75;
-  --brand-cyan: #0891b2;
-  --brand-pink: #22d3ee;
+  --brand-deep: #3730a3;
+  --brand-mid: #7c3aed;
+  --brand-bright: #c084fc;
+  /* Same ramp as channel lists, so arbitrary-value glows can pick their own alpha:
+     shadow-[0_0_8px_rgb(var(--brand-deep-rgb)/0.6)]. Without these, decorative glows
+     end up as literal rgba() in className strings - which is exactly how five of them
+     stayed Glacier teal through a palette change, invisible to a hex search. */
+  --brand-deep-rgb: 55 48 163;
+  --brand-mid-rgb: 124 58 237;
+  --brand-bright-rgb: 192 132 252;
   /* Redesign tokens: hero name stroke + full-screen menu ground */
-  --name-stroke: rgba(20, 24, 31, 0.88);
-  --overlay-bg: rgba(246, 247, 249, 0.94);
-  /* Experience period label: brand cyan is too light on paper — use a deep teal */
-  --period: #0e7490;
+  --name-stroke: rgba(24, 22, 43, 0.88);
+  --overlay-bg: rgba(248, 247, 251, 0.94);
+  /* Experience period label: the bright ramp end is too light on paper - use a deeper one */
+  --period: #4f46e5;
   /* Accent text on translucent brand chips (project language etc.): deep on paper */
-  --accent-on-chip: #155e75;
-  /* Opaque brand-tinted chip surface — subtle violet wash over paper, so the
+  --accent-on-chip: #3730a3;
+  /* Opaque brand-tinted chip surface - a subtle brand wash over paper, so the
      chip reads as "brand" (not dead black) yet blocks the moving gradient. */
-  --chip-surface: #ecf5f8;
+  --chip-surface: #f0edfa;
   /* Legacy aliases kept for existing components */
   --background: var(--bg);
   --foreground: var(--fg);
   /* Light gradient: deeper/more saturated so it reads rich on white */
-  --gradient-brand: linear-gradient(135deg, #155e75 0%, #0891b2 100%);
+  --gradient-brand: linear-gradient(135deg, #3730a3 0%, #7c3aed 100%);
   /* Brand gradient for TEXT (gradient-text/stats). On paper the rich ramp reads
      high-contrast, so it matches --gradient-brand; in dark it brightens (below)
      so gradient text never fades into the deep ground. */
-  --gradient-ink: linear-gradient(135deg, #155e75 0%, #0891b2 100%);
+  --gradient-ink: linear-gradient(135deg, #3730a3 0%, #7c3aed 100%);
   /* Nav active pill opacity for light (higher so the pill is visible) */
   --nav-pill-opacity: 0.28;
 }
 
 /* Dark theme */
 .dark {
-  --bg: #060c0e;
-  --fg: #e8f4f7;
+  --bg: #0a0813;
+  --fg: #ece9f7;
   --surface: rgba(255, 255, 255, 0.04);
   --surface-2: rgba(255, 255, 255, 0.06);
+  --border-color: rgba(236, 233, 247, 0.16);
+  --muted: rgba(236, 233, 247, 0.62);
+  --ring: #7c3aed;
+  --name-stroke: rgba(236, 233, 247, 0.9);
+  --overlay-bg: rgba(10, 8, 19, 0.92);
+  /* Dark: the bright ramp end reads fine on the deep ground */
+  --period: #c084fc;
+  /* Dark: a brightened tint so brand chips are legible on the deep ground */
+  --accent-on-chip: #d8b4fe;
+  /* Opaque deep chip surface: immersive brand tone, not flat black. */
+  --chip-surface: #1a1230;
+  /* Legacy aliases */
+  --background: var(--bg);
+  --foreground: var(--fg);
+  /* Dark gradient: the deep-to-mid ramp */
+  --gradient-brand: linear-gradient(135deg, #3730a3 0%, #7c3aed 100%);
+  /* Brand gradient for TEXT in dark: a brighter ramp so both ends clear the deep
+     ground - the ramp's deep end is nearly invisible on it. Used by gradient-text
+     everywhere (logo wordmark, tagline, stats, headings). */
+  --gradient-ink: linear-gradient(135deg, #c084fc 0%, #ddd6fe 100%);
+  /* Nav active pill opacity for dark */
+  --nav-pill-opacity: 0.2;
+}
+/* ── Selectable palettes ──────────────────────────────────────────────────────
+   Iris is the default and lives in :root/.dark above; these four are applied at
+   runtime by data-palette on <html> (see hooks/usePalette). The ramp is
+   theme-independent, so it is set once per palette; grounds, chrome and gradients
+   differ per theme.
+
+   Every selector is two simple selectors, never a bare [data-palette]: at (0,2,0) they beat
+   :root and .dark outright, so the result does not depend on source order. A bare
+   [data-palette] ties with :root at (0,1,0) and would silently lose if this block moved. */
+
+:root[data-palette="glacier"] {
+  --brand-deep: #155e75;
+  --brand-mid: #0891b2;
+  --brand-bright: #22d3ee;
+  --brand-deep-rgb: 21 94 117;
+  --brand-mid-rgb: 8 145 178;
+  --brand-bright-rgb: 34 211 238;
+  --color-brand-deep: #155e75;
+  --color-brand-mid: #0891b2;
+  --color-brand-bright: #22d3ee;
+  --gradient-brand: linear-gradient(135deg, #155e75 0%, #0891b2 100%);
+}
+[data-palette="glacier"]:not(.dark) {
+  --bg: #f6f7f9;
+  --fg: #14181f;
+  --surface-2: rgba(20, 24, 31, 0.03);
+  --border-color: rgba(20, 24, 31, 0.15);
+  --muted: rgba(20, 24, 31, 0.6);
+  --ring: #0e7490;
+  --name-stroke: rgba(20, 24, 31, 0.88);
+  --overlay-bg: rgba(246, 247, 249, 0.94);
+  --period: #0e7490;
+  --accent-on-chip: #155e75;
+  --chip-surface: #ecf5f8;
+  --gradient-ink: linear-gradient(135deg, #155e75 0%, #0891b2 100%);
+}
+[data-palette="glacier"].dark {
+  --bg: #060c0e;
+  --fg: #e8f4f7;
   --border-color: rgba(209, 233, 240, 0.16);
   --muted: rgba(209, 233, 240, 0.62);
   --ring: #0891b2;
   --name-stroke: rgba(224, 242, 247, 0.9);
   --overlay-bg: rgba(6, 12, 14, 0.92);
-  /* Dark: the vivid cyan reads fine on the deep ground */
   --period: #22d3ee;
-  /* Dark: a bright lavender so brand chips are legible on the deep ground */
   --accent-on-chip: #7dd3e8;
-  /* Opaque deep-violet chip surface: immersive brand tone, not flat black. */
   --chip-surface: #0c1f27;
-  /* Legacy aliases */
-  --background: var(--bg);
-  --foreground: var(--fg);
-  /* Dark gradient: vivid original hues */
-  --gradient-brand: linear-gradient(135deg, #155e75 0%, #0891b2 100%);
-  /* Brand gradient for TEXT in dark: a brighter ice ramp so both ends clear the
-     deep ground (the brand ramp's #155e75 end is nearly invisible on #060c0e).
-     Used by gradient-text everywhere (logo wordmark, tagline, stats, headings). */
   --gradient-ink: linear-gradient(135deg, #22d3ee 0%, #7dd3e8 100%);
-  /* Nav active pill opacity for dark */
-  --nav-pill-opacity: 0.2;
 }
-/*
- * NOTE: Do NOT add a global "star { padding: 0; margin: 0 }" reset here.
- * Tailwind v4 Preflight (via @import "tailwindcss") already resets margins
- * and box-sizing correctly INSIDE a cascade layer. An unlayered universal
- * reset overrides every Tailwind padding/margin utility, because unlayered
- * CSS beats layered utilities regardless of specificity, silently breaking
- * spacing app-wide. Preflight handles the reset properly.
- */
+
+:root[data-palette="ember"] {
+  --brand-deep: #7c2d12;
+  --brand-mid: #d97706;
+  --brand-bright: #fbbf24;
+  --brand-deep-rgb: 124 45 18;
+  --brand-mid-rgb: 217 119 6;
+  --brand-bright-rgb: 251 191 36;
+  --color-brand-deep: #7c2d12;
+  --color-brand-mid: #d97706;
+  --color-brand-bright: #fbbf24;
+  --gradient-brand: linear-gradient(135deg, #7c2d12 0%, #d97706 100%);
+}
+[data-palette="ember"]:not(.dark) {
+  --bg: #faf8f4;
+  --fg: #1c1917;
+  --surface-2: rgba(28, 25, 23, 0.03);
+  --border-color: rgba(28, 25, 23, 0.15);
+  --muted: rgba(28, 25, 23, 0.6);
+  --ring: #b45309;
+  --name-stroke: rgba(28, 25, 23, 0.88);
+  --overlay-bg: rgba(250, 248, 244, 0.94);
+  --period: #b45309;
+  --accent-on-chip: #7c2d12;
+  --chip-surface: #fdf3e3;
+  --gradient-ink: linear-gradient(135deg, #7c2d12 0%, #d97706 100%);
+}
+[data-palette="ember"].dark {
+  --bg: #0f0a06;
+  --fg: #fdf3e3;
+  --border-color: rgba(253, 243, 227, 0.16);
+  --muted: rgba(253, 243, 227, 0.62);
+  --ring: #d97706;
+  --name-stroke: rgba(253, 243, 227, 0.9);
+  --overlay-bg: rgba(15, 10, 6, 0.92);
+  --period: #fbbf24;
+  --accent-on-chip: #fcd34d;
+  --chip-surface: #2a1a08;
+  --gradient-ink: linear-gradient(135deg, #fbbf24 0%, #fde68a 100%);
+}
+
+:root[data-palette="verdant"] {
+  --brand-deep: #14532d;
+  --brand-mid: #059669;
+  --brand-bright: #34d399;
+  --brand-deep-rgb: 20 83 45;
+  --brand-mid-rgb: 5 150 105;
+  --brand-bright-rgb: 52 211 153;
+  --color-brand-deep: #14532d;
+  --color-brand-mid: #059669;
+  --color-brand-bright: #34d399;
+  --gradient-brand: linear-gradient(135deg, #14532d 0%, #059669 100%);
+}
+[data-palette="verdant"]:not(.dark) {
+  --bg: #f5f9f6;
+  --fg: #14201a;
+  --surface-2: rgba(20, 32, 26, 0.03);
+  --border-color: rgba(20, 32, 26, 0.15);
+  --muted: rgba(20, 32, 26, 0.6);
+  --ring: #047857;
+  --name-stroke: rgba(20, 32, 26, 0.88);
+  --overlay-bg: rgba(245, 249, 246, 0.94);
+  --period: #047857;
+  --accent-on-chip: #14532d;
+  --chip-surface: #e9f5ee;
+  --gradient-ink: linear-gradient(135deg, #14532d 0%, #059669 100%);
+}
+[data-palette="verdant"].dark {
+  --bg: #05100b;
+  --fg: #e6f6ed;
+  --border-color: rgba(230, 246, 237, 0.16);
+  --muted: rgba(230, 246, 237, 0.62);
+  --ring: #059669;
+  --name-stroke: rgba(230, 246, 237, 0.9);
+  --overlay-bg: rgba(5, 16, 11, 0.92);
+  --period: #34d399;
+  --accent-on-chip: #6ee7b7;
+  --chip-surface: #0a2016;
+  --gradient-ink: linear-gradient(135deg, #34d399 0%, #a7f3d0 100%);
+}
+
+:root[data-palette="magenta"] {
+  --brand-deep: #831843;
+  --brand-mid: #db2777;
+  --brand-bright: #fb7185;
+  --brand-deep-rgb: 131 24 67;
+  --brand-mid-rgb: 219 39 119;
+  --brand-bright-rgb: 251 113 133;
+  --color-brand-deep: #831843;
+  --color-brand-mid: #db2777;
+  --color-brand-bright: #fb7185;
+  --gradient-brand: linear-gradient(135deg, #831843 0%, #db2777 100%);
+}
+[data-palette="magenta"]:not(.dark) {
+  --bg: #fdf7f9;
+  --fg: #1f1419;
+  --surface-2: rgba(31, 20, 25, 0.03);
+  --border-color: rgba(31, 20, 25, 0.15);
+  --muted: rgba(31, 20, 25, 0.6);
+  --ring: #be185d;
+  --name-stroke: rgba(31, 20, 25, 0.88);
+  --overlay-bg: rgba(253, 247, 249, 0.94);
+  --period: #be185d;
+  --accent-on-chip: #831843;
+  --chip-surface: #fbeaf1;
+  --gradient-ink: linear-gradient(135deg, #831843 0%, #db2777 100%);
+}
+[data-palette="magenta"].dark {
+  --bg: #100509;
+  --fg: #fbe9ef;
+  --border-color: rgba(251, 233, 239, 0.16);
+  --muted: rgba(251, 233, 239, 0.62);
+  --ring: #db2777;
+  --name-stroke: rgba(251, 233, 239, 0.9);
+  --overlay-bg: rgba(16, 5, 9, 0.92);
+  --period: #fb7185;
+  --accent-on-chip: #fda4af;
+  --chip-surface: #2a0a16;
+  --gradient-ink: linear-gradient(135deg, #fb7185 0%, #fecdd3 100%);
+}
+
+/* Do NOT add a universal `* { margin: 0 }` reset here: unlayered CSS beats layered utilities
+ * regardless of specificity, so it silently breaks spacing app-wide. Preflight already does
+ * this correctly inside its layer. */
 html {
   scroll-behavior: smooth;
 }
-/*
- * Suppress every transition/animation until `theme-ready` is set (one frame
- * after next-themes applies the resolved theme class). Without this, the
- * initial system-theme light->dark flip cross-fades through each element's
- * own transition-* — the nav border/background and the hero divider are the
- * most visible, reading as a flicker. `!important` beats utility transitions.
- */
+/* Without this the initial system-theme flip cross-fades through each element's own
+ * transition-*, reading as a flicker. `!important` beats utility transitions. */
 html:not(.theme-ready) *,
 html:not(.theme-ready) *::before,
 html:not(.theme-ready) *::after {
@@ -152,22 +306,9 @@ body {
   line-height: 1.5;
 }
 
-/*
- * NOTE: no unlayered element resets for `a`, `button`, or `*` here. An
- * unlayered rule like `a { color: inherit }` or `button { background:
- * transparent }` overrides Tailwind's `text-*`/`bg-*` utilities (unlayered CSS
- * beats layered utilities regardless of specificity) — this silently broke
- * button/link text colors and backgrounds app-wide (e.g. a primary <a> button
- * rendering black text instead of white). Tailwind Preflight already resets
- * anchors (color: inherit) and buttons inside its layer, so utilities win.
- * We only keep link styling as a Tailwind utility (link-reset) where needed.
- */
-/*
- * Anchor base: only remove underline. Do NOT set `color` here — Tailwind
- * Preflight already makes anchors inherit color in its base layer (lower than
- * utilities), so explicit text-* utilities on a link win. Setting color here
- * (even via @apply) creates a same-layer fight that breaks button text colors.
- */
+/* No unlayered resets for `a`, `button` or `*`, and no `color` on the anchor below: unlayered
+ * CSS beats layered utilities regardless of specificity, which silently broke button and link
+ * colors app-wide. Preflight already resets both inside its layer, so utilities win. */
 @layer base {
   a {
     text-decoration: none;
@@ -339,7 +480,7 @@ html.cursor-hidden * {
   transform: translateY(-50%);
   width: 50px;
   height: 1px;
-  background: linear-gradient(90deg, var(--color-brand-cyan), transparent);
+  background: linear-gradient(90deg, var(--color-brand-mid), transparent);
 }
 
 /* Vertical marquee for the testimonials grid. The track renders its items

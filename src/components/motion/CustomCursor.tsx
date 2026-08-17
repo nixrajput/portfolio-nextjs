@@ -19,11 +19,9 @@ const getFine = () => window.matchMedia(FINE_QUERY).matches;
 const getFineServer = () => false;
 
 /**
- * Site-wide custom cursor for fine pointers: a dot locked to the raw pointer
- * plus a ring easing behind it (scaled up over interactive elements). Theme
- * aware: ice-cyan dot / cyan-teal ring on dark, deep-teal dot / deep-teal ring on light.
- * Renders nothing on touch devices or under reduced motion; hides the native
- * cursor via the `cursor-hidden` class on <html> only while active.
+ * Fine pointers only: a dot on the raw pointer plus a ring easing behind it. Colours come from
+ * the brand CSS variables so it follows a runtime palette change. Renders nothing on touch or
+ * under reduced motion, and hides the native cursor via `cursor-hidden` only while active.
  */
 export function CustomCursor() {
   const reduced = useReducedMotion();
@@ -109,14 +107,16 @@ export function CustomCursor() {
         data-cursor-part="dot"
         aria-hidden="true"
         className="pointer-events-none fixed top-0 left-0 z-[90] -mt-[3px] -ml-[3px] size-1.5 rounded-full opacity-0"
-        style={{ background: dark ? "#22d3ee" : "#155e75" }}
+        style={{ background: dark ? "var(--brand-bright)" : "var(--brand-deep)" }}
       />
       <div
         ref={ringRef}
         data-cursor-part="ring"
         aria-hidden="true"
         className="pointer-events-none fixed top-0 left-0 z-[90] -mt-[17px] -ml-[17px] size-[34px] rounded-full border-[1.5px] opacity-0 transition-[border-color] duration-300"
-        style={{ borderColor: dark ? "rgba(8,145,178,0.8)" : "rgba(21,94,117,0.75)" }}
+        style={{
+          borderColor: dark ? "rgb(var(--brand-mid-rgb)/0.8)" : "rgb(var(--brand-deep-rgb)/0.75)",
+        }}
       />
     </>
   );

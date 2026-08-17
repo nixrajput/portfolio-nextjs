@@ -19,13 +19,16 @@ export function Logo({
         style={{ display: "block" }}
       >
         <defs>
+          {/* CSS variables rather than brand.ts constants: SVG stop-color resolves them,
+              so the mark follows a runtime palette change instead of staying on the
+              default. brand.ts is still the source of the default those vars hold. */}
           <linearGradient id="logo-n" x1="0" y1="1" x2="1" y2="0">
-            <stop offset="0" stopColor="#155e75" />
-            <stop offset="1" stopColor="#0891b2" />
+            <stop offset="0" stopColor="var(--brand-deep)" />
+            <stop offset="1" stopColor="var(--brand-mid)" />
           </linearGradient>
           <radialGradient id="logo-spark" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stopColor="#22d3ee" stopOpacity="0.9" />
-            <stop offset="1" stopColor="#22d3ee" stopOpacity="0" />
+            <stop offset="0" stopColor="var(--brand-bright)" stopOpacity="0.9" />
+            <stop offset="1" stopColor="var(--brand-bright)" stopOpacity="0" />
           </radialGradient>
         </defs>
         <path
@@ -37,7 +40,7 @@ export function Logo({
           strokeLinejoin="round"
         />
         <circle cx="21" cy="9" r="6" fill="url(#logo-spark)" />
-        <circle cx="21" cy="9" r="2.2" fill="#22d3ee" />
+        <circle cx="21" cy="9" r="2.2" fill="var(--brand-bright)" />
       </svg>
       {withWordmark ? (
         <span className="gradient-text font-mono text-lg leading-none font-semibold tracking-tight">

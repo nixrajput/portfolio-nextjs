@@ -23,6 +23,9 @@ const base: MergedProject = {
   description: "A thing.",
   homepage: null,
   htmlUrl: "https://github.com/nixrajput/rippl",
+  coverImage: null,
+  screenshots: [],
+  readmeExcerpt: null,
 };
 
 describe("ProjectCard", () => {

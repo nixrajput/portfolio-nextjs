@@ -1,42 +1,126 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import { describe, it, expect } from "vitest";
+import { BRAND, GROUND, INK, hexToRgb } from "@/lib/brand";
+import { DEFAULT_PALETTE, PALETTES } from "@/lib/palettes";
 
-describe("globals.css theme tokens", () => {
-  const globalsContent = readFileSync(join(process.cwd(), "src/app/globals.css"), "utf-8");
+/**
+ * Drift guard between brand.ts and globals.css. Every expectation is DERIVED from brand.ts,
+ * never hardcoded: hardcoding the hexes in both places lets the test pass while the two files
+ * disagree, which is how manifest.ts drifted to #07070c.
+ */
+describe("globals.css mirrors brand.ts", () => {
+  const css = readFileSync(join(process.cwd(), "src/app/globals.css"), "utf-8");
 
-  it("should contain @theme block", () => {
-    expect(globalsContent).toContain("@theme {");
+  it("registers the brand ramp as @theme colour tokens", () => {
+    expect(css).toContain("@theme {");
+    expect(css).toContain(`--color-brand-deep: ${BRAND.deep}`);
+    expect(css).toContain(`--color-brand-mid: ${BRAND.mid}`);
+    expect(css).toContain(`--color-brand-bright: ${BRAND.bright}`);
   });
 
-  it("should define all brand color tokens with correct values", () => {
-    expect(globalsContent).toContain("--color-brand-violet: #155e75");
-    expect(globalsContent).toContain("--color-brand-cyan: #0891b2");
-    expect(globalsContent).toContain("--color-brand-pink: #22d3ee");
-    // Semantic tokens replaced the old internal palette tokens.
-    // --color-base / --color-surface / --color-light-base were internal;
-    // they are now exposed as --color-background / --color-surface / etc.
-    // via the var(--bg) / var(--surface) indirection pattern.
-    expect(globalsContent).toContain("--color-background: var(--bg)");
-    expect(globalsContent).toContain("--color-foreground: var(--fg)");
-    expect(globalsContent).toContain("--color-surface: var(--surface)");
+  it("exposes the raw brand ramp for arbitrary-value utilities", () => {
+    // Components use border-(--brand-deep)/40, which reads the bare name rather than
+    // the --color-* namespace, so both have to exist and agree.
+    expect(css).toContain(`--brand-deep: ${BRAND.deep}`);
+    expect(css).toContain(`--brand-mid: ${BRAND.mid}`);
+    expect(css).toContain(`--brand-bright: ${BRAND.bright}`);
   });
 
-  it("should define hue-biased ink/paper and redesign tokens", () => {
-    // light
-    expect(globalsContent).toContain("--bg: #f6f7f9");
-    expect(globalsContent).toContain("--fg: #14181f");
-    // dark
-    expect(globalsContent).toContain("--bg: #060c0e");
-    expect(globalsContent).toContain("--fg: #e8f4f7");
-    // new tokens present in both theme blocks
-    expect(globalsContent.match(/--name-stroke:/g)?.length).toBeGreaterThanOrEqual(2);
-    expect(globalsContent.match(/--overlay-bg:/g)?.length).toBeGreaterThanOrEqual(2);
+  it("mirrors the ramp as channel lists for arbitrary-value glows", () => {
+    // Glows live in Tailwind arbitrary values, which cannot read brand.ts. Five stayed on the
+    // old palette because they were literal decimal rgba() - invisible to a hex search.
+    expect(css).toContain(`--brand-deep-rgb: ${hexToRgb(BRAND.deep).join(" ")}`);
+    expect(css).toContain(`--brand-mid-rgb: ${hexToRgb(BRAND.mid).join(" ")}`);
+    expect(css).toContain(`--brand-bright-rgb: ${hexToRgb(BRAND.bright).join(" ")}`);
   });
 
-  it("should define gradient and font tokens", () => {
-    expect(globalsContent).toContain("--gradient-brand:");
-    expect(globalsContent).toContain("--font-sans: var(--font-geist-sans)");
-    expect(globalsContent).toContain("--font-mono: var(--font-geist-mono)");
+  it("mirrors the grounds and ink for both themes", () => {
+    expect(css).toContain(`--bg: ${GROUND.light}`);
+    expect(css).toContain(`--fg: ${INK.light}`);
+    expect(css).toContain(`--bg: ${GROUND.dark}`);
+    expect(css).toContain(`--fg: ${INK.dark}`);
+  });
+
+  it("keeps the @theme -> :root/.dark indirection that opacity modifiers depend on", () => {
+    // Tailwind v4 only generates /40-style modifiers for colours registered in @theme,
+    // and @theme cannot hold theme-switched values. Inlining a literal here instead of
+    // var(--bg) silently kills every opacity modifier in the codebase.
+    expect(css).toContain("--color-background: var(--bg)");
+    expect(css).toContain("--color-foreground: var(--fg)");
+    expect(css).toContain("--color-surface: var(--surface)");
+  });
+
+  it("defines the per-theme tokens in both theme blocks", () => {
+    for (const token of [
+      "--name-stroke",
+      "--overlay-bg",
+      "--chip-surface",
+      "--accent-on-chip",
+      "--period",
+      "--gradient-brand",
+      "--gradient-ink",
+      "--nav-pill-opacity",
+    ]) {
+      const occurrences = css.match(new RegExp(`${token}:`, "g"))?.length ?? 0;
+      expect(occurrences, `${token} should be set for light and dark`).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it("defines a [data-palette] block for every selectable palette except the default", () => {
+    for (const { id } of PALETTES) {
+      if (id === DEFAULT_PALETTE) {
+        // Iris is :root/.dark, so an override block would be dead weight that could
+        // silently disagree with the default.
+        expect(css, "the default palette must not have an override block").not.toContain(
+          `[data-palette="${id}"]`,
+        );
+        continue;
+      }
+      // The :root prefix is the point: a bare [data-palette] ties with :root at (0,1,0) and
+      // would win only by source order.
+      expect(css).toContain(`:root[data-palette="${id}"] {`);
+      expect(css).toContain(`[data-palette="${id}"]:not(.dark) {`);
+      expect(css).toContain(`[data-palette="${id}"].dark {`);
+    }
+  });
+
+  it("mirrors each palette's picker swatch ramp in its CSS block", () => {
+    // The swatches in AppearanceMenu are drawn from palettes.ts while the applied colours
+    // come from this CSS, so a mismatch would show one colour and apply another.
+    for (const { id, ramp } of PALETTES) {
+      if (id === DEFAULT_PALETTE) continue;
+      const start = css.indexOf(`:root[data-palette="${id}"] {`);
+      const block = css.slice(start, css.indexOf("}", start));
+      const [deep, mid, bright] = ramp;
+      expect(block, `${id} deep`).toContain(`--brand-deep: ${deep}`);
+      expect(block, `${id} mid`).toContain(`--brand-mid: ${mid}`);
+      expect(block, `${id} bright`).toContain(`--brand-bright: ${bright}`);
+      // And the channel lists that the arbitrary-value glows read.
+      expect(block, `${id} deep channels`).toContain(
+        `--brand-deep-rgb: ${hexToRgb(deep).join(" ")}`,
+      );
+      expect(block, `${id} bright channels`).toContain(
+        `--brand-bright-rgb: ${hexToRgb(bright).join(" ")}`,
+      );
+    }
+  });
+
+  it("keeps the pre-paint allowlist in layout.tsx in step with PALETTES", () => {
+    // layout.tsx hardcodes the ids because the script runs before any module loads. Nothing
+    // else compares the two, so a new palette could be selectable yet never survive a reload.
+    const layout = readFileSync(join(process.cwd(), "src/app/layout.tsx"), "utf-8");
+    const listed = layout.match(/\[((?:'[a-z]+',?\s*)+)\]\.indexOf\(p\)/)?.[1];
+    expect(listed, "pre-paint allowlist not found in layout.tsx").toBeDefined();
+    const ids = [...(listed ?? "").matchAll(/'([a-z]+)'/g)].map((m) => m[1]).sort();
+    const expected = PALETTES.map((p) => p.id)
+      .filter((id) => id !== DEFAULT_PALETTE)
+      .sort();
+    expect(ids).toEqual(expected);
+  });
+
+  it("defines the font tokens", () => {
+    expect(css).toContain("--font-sans: var(--font-geist-sans)");
+    expect(css).toContain("--font-mono: var(--font-geist-mono)");
   });
 });

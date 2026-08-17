@@ -21,7 +21,7 @@ const variants: Record<Variant, string> = {
   // Full-strength brand gradient (matches the approved hero preview): the
   // gradient is oversized and shifts position on hover, with a soft glow.
   primary:
-    "bg-(image:--gradient-brand) bg-[size:160%_160%] bg-[position:0%_50%] text-white shadow-[0_10px_34px_-12px_rgba(21,94,117,0.55)] hover:bg-[position:90%_50%]",
+    "bg-(image:--gradient-brand) bg-[size:160%_160%] bg-[position:0%_50%] text-white shadow-[0_10px_34px_-12px_rgb(var(--brand-deep-rgb)/0.55)] hover:bg-[position:90%_50%]",
   // Hairline outline pill on a translucent surface (Observatory language).
   secondary:
     "border border-border bg-surface text-foreground backdrop-blur-sm hover:border-foreground",
@@ -48,10 +48,8 @@ type AsAnchor = ButtonBaseProps & AnchorHTMLAttributes<HTMLAnchorElement> & { hr
 
 type ButtonProps = AsButton | AsAnchor;
 
-// forwardRef + className merge so the Button composes with Radix `asChild`
-// (Slot) triggers — Slot clones the child and passes its own ref/className,
-// which a plain function component would drop (causing an unstyled/invisible
-// trigger button).
+// forwardRef + className merge so this composes with Radix `asChild`: Slot passes its own
+// ref/className, which a plain function component drops, giving an invisible trigger.
 export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   function Button(
     { variant = "primary", size = "md", leftIcon, children, className, ...rest },

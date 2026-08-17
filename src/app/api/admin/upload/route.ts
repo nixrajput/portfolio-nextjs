@@ -1,16 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { BLOB_FOLDERS, uploadIcon, type BlobFolder } from "@/lib/blob";
+import { BLOB_FOLDERS, uploadIcon, uploadProjectMedia, type BlobFolder } from "@/lib/blob";
 
 export const runtime = "nodejs"; // sharp requires the Node runtime
 
 // Only these folders are writable from the admin uploader.
-const ALLOWED_FOLDERS = new Set<BlobFolder>([BLOB_FOLDERS.avatar, BLOB_FOLDERS.skills]);
+const ALLOWED_FOLDERS = new Set<BlobFolder>([
+  BLOB_FOLDERS.avatar,
+  BLOB_FOLDERS.skills,
+  BLOB_FOLDERS.projects,
+]);
 
 /**
  * Admin-only image upload. Accepts a file + target folder, stores it in Vercel
  * Blob (SVG raw, raster optimized), and returns the public CDN URL. Used by the
- * admin ImageUploadField for the profile avatar and skill icons.
+ * admin image fields for the profile avatar, skill icons and project media.
  */
 export async function POST(req: NextRequest) {
   const session = await auth();
@@ -30,7 +34,12 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const url = await uploadIcon(file, folder);
+    // Project media needs a much larger box than an icon: uploadIcon fits inside 128px,
+    // which is correct for a skill icon and would reduce a screenshot to a thumbnail.
+    const url =
+      folder === BLOB_FOLDERS.projects
+        ? await uploadProjectMedia(file)
+        : await uploadIcon(file, folder);
     return NextResponse.json({ url }, { status: 201 });
   } catch (err) {
     // Surface the size/type validation message without leaking internals.

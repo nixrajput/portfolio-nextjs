@@ -7,7 +7,7 @@ import { cn } from "@/utils/cn";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { Logo } from "@/components/brand/Logo";
-import { ThemeToggle } from "./ThemeToggle";
+import { AppearanceMenu } from "./AppearanceMenu";
 import { Magnetic } from "@/components/motion/Magnetic";
 import { MenuOverlay, type MenuSection } from "./MenuOverlay";
 
@@ -71,13 +71,8 @@ export function SiteNav({
       >
         {/* Same gutters as the hero/sections so nav edges align with content */}
         <div className="site-container relative flex h-16 w-full items-center justify-between">
-          {/*
-           * Scroll chrome as ONE opacity-faded layer. Border is always 1px
-           * (transparent -> visible) and blur is always mounted, so nothing
-           * snaps or shifts layout on scroll — only this layer's opacity
-           * cross-fades. The panel is inset to the container width so the bar
-           * background matches the section max-width, not the full viewport.
-           */}
+          {/* One opacity-faded layer: the border is always 1px and the blur always mounted,
+              so scrolling shifts no layout - only this layer's opacity cross-fades. */}
           <div
             aria-hidden
             className={cn(
@@ -90,7 +85,7 @@ export function SiteNav({
           <Link
             href="/"
             aria-label="Home"
-            className="relative z-10 shrink-0 [filter:drop-shadow(0_0_12px_rgba(8,145,178,0.4))] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:-rotate-4 hover:[filter:drop-shadow(0_0_16px_rgba(34,211,238,0.55))]"
+            className="relative z-10 shrink-0 [filter:drop-shadow(0_0_12px_rgb(var(--brand-mid-rgb)/0.4))] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:-rotate-4 hover:[filter:drop-shadow(0_0_16px_rgb(var(--brand-bright-rgb)/0.55))]"
           >
             <Logo />
           </Link>
@@ -105,7 +100,7 @@ export function SiteNav({
           )}
 
           <span className="relative z-10 flex items-center gap-2">
-            <ThemeToggle />
+            <AppearanceMenu />
             <Magnetic>
               <button
                 type="button"

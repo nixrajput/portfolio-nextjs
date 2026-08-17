@@ -2,7 +2,8 @@ import { eq, inArray } from "drizzle-orm";
 import { db } from "@/db/client";
 import { githubCache, githubUserCache } from "@/db/schema";
 import type { GithubCache, GithubUserCache } from "@/db/schema";
-import { getRepo, getUserStats } from "@/lib/github";
+import { getReadme, getRepo, getUserStats } from "@/lib/github";
+import { toExcerpt } from "@/lib/readme";
 
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -13,6 +14,7 @@ export type CachedRepoStats = {
   description: string | null;
   homepage: string | null;
   htmlUrl: string | null;
+  readmeExcerpt: string | null;
 };
 
 function isStale(row: { fetchedAt: Date }): boolean {
@@ -32,6 +34,7 @@ function rowToStats(row: GithubCache, slug: string): CachedRepoStats {
     description: row.description,
     homepage: row.homepage,
     htmlUrl: `https://github.com/${slug}`,
+    readmeExcerpt: row.readmeExcerpt,
   };
 }
 
@@ -43,25 +46,35 @@ function nullStats(slug: string): CachedRepoStats {
     description: null,
     homepage: null,
     htmlUrl: `https://github.com/${slug}`,
+    readmeExcerpt: null,
   };
 }
 
 /**
- * Reads github_cache for the given "owner/repo" slugs.
- * Missing or stale (>24h) rows are fetched from GitHub and upserted.
- * On fetch failure, falls back to existing cache row; if no cache, returns zero stats.
- * Never throws — resilient to GitHub rate limits and network errors.
+ * Writes "" over a NULL excerpt when GitHub could not be reached, so the NULL refresh trigger
+ * terminates. Without it a repo that 404s is retried on every single regeneration.
+ */
+async function stampChecked(cached: GithubCache | undefined, repoName: string): Promise<void> {
+  if (!cached || cached.readmeExcerpt !== null) return;
+  try {
+    await db.update(githubCache).set({ readmeExcerpt: "" }).where(eq(githubCache.repo, repoName));
+  } catch {
+    /* never throw from the cache path */
+  }
+}
+
+/**
+ * Missing or stale (>24h) rows refresh from GitHub and upsert. Never throws: a rate limit or
+ * network error falls back to the existing row, so the section always renders.
  */
 export async function getCachedRepoData(slugs: string[]): Promise<Map<string, CachedRepoStats>> {
   const result = new Map<string, CachedRepoStats>();
 
   if (slugs.length === 0) return result;
 
-  // Map slug → repoName (what's stored in DB as PK)
   const slugToName = new Map(slugs.map((s) => [s, slugToRepoName(s)]));
   const repoNames = [...slugToName.values()];
 
-  // Read all cached rows for these repo names in one query
   const cachedRows = await db
     .select()
     .from(githubCache)
@@ -69,24 +82,33 @@ export async function getCachedRepoData(slugs: string[]): Promise<Map<string, Ca
 
   const cacheByName = new Map(cachedRows.map((r) => [r.repo, r]));
 
-  // Process each slug: refresh if missing or stale
   await Promise.all(
     slugs.map(async (slug) => {
       const repoName = slugToName.get(slug)!;
       const cached = cacheByName.get(repoName);
 
-      const needsRefresh = !cached || isStale(cached);
+      // NULL means the row predates the readme_excerpt column, not that the repo has no
+      // README (that stores ""), so refreshing on NULL is what backfills existing rows.
+      const needsRefresh = !cached || isStale(cached) || cached.readmeExcerpt === null;
 
       if (!needsRefresh) {
-        // Fresh cache — serve directly
         result.set(slug, rowToStats(cached!, slug));
         return;
       }
 
-      // Attempt live fetch from GitHub
       try {
         const live = await getRepo(slug);
         if (live) {
+          // Never NULL: "" records "checked, no README". Also "" on failure, because NULL is
+          // the refresh trigger above and would refetch on every regeneration.
+          let readmeExcerpt = cached?.readmeExcerpt ?? "";
+          try {
+            const markdown = await getReadme(slug);
+            readmeExcerpt = markdown === null ? "" : toExcerpt(markdown);
+          } catch {
+            /* keep whatever we had; the next 24h refresh tries again */
+          }
+
           const upsertRow = {
             repo: repoName,
             stars: live.stargazers_count,
@@ -94,6 +116,7 @@ export async function getCachedRepoData(slugs: string[]): Promise<Map<string, Ca
             language: live.language,
             description: live.description,
             homepage: live.homepage,
+            readmeExcerpt,
             fetchedAt: new Date(),
           };
           await db
@@ -107,6 +130,7 @@ export async function getCachedRepoData(slugs: string[]): Promise<Map<string, Ca
                 language: upsertRow.language,
                 description: upsertRow.description,
                 homepage: upsertRow.homepage,
+                readmeExcerpt: upsertRow.readmeExcerpt,
                 fetchedAt: upsertRow.fetchedAt,
               },
             });
@@ -117,13 +141,16 @@ export async function getCachedRepoData(slugs: string[]): Promise<Map<string, Ca
             description: live.description,
             homepage: live.homepage,
             htmlUrl: live.html_url,
+            readmeExcerpt,
           });
         } else {
-          // 404 from GitHub — fall back to existing cache or zero stats
+          // 404: renamed, deleted or made private. Stamp the row so a NULL excerpt cannot keep
+          // re-triggering the backfill above on every regeneration, forever.
+          await stampChecked(cached, repoName);
           result.set(slug, cached ? rowToStats(cached, slug) : nullStats(slug));
         }
       } catch {
-        // Fetch failed — fall back to stale cache or zero stats; never throw
+        await stampChecked(cached, repoName);
         result.set(slug, cached ? rowToStats(cached, slug) : nullStats(slug));
       }
     }),
@@ -149,12 +176,9 @@ function userRowToStats(row: GithubUserCache): CachedUserStats {
 }
 
 /**
- * Reads github_user_cache for a username, serving the last-known-good row
- * instantly. Missing or stale (>24h) rows are refreshed via one GitHub GraphQL
- * query (followers, owned public non-fork repo count + their star sum, and the
- * first year the user contributed) and upserted. On fetch failure, falls back
- * to the existing row; only a cold cache with a failed first fetch yields nulls.
- * Never throws.
+ * Serves the last-known-good row instantly; stale (>24h) rows refresh via one GraphQL query
+ * and upsert. Never throws - a fetch failure falls back to the existing row, so only a cold
+ * cache with a failed first fetch yields null.
  */
 export async function getCachedUserStats(username: string): Promise<CachedUserStats | null> {
   const [cached] = await db

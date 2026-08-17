@@ -67,6 +67,35 @@ describe("mergeProjects", () => {
     expect(out.map((p) => p.repo)).toEqual(["high", "low"]);
   });
 
+  it("drops a tag that duplicates the language chip, case-insensitively", () => {
+    // Curation rows legitimately list the language among tags, and the card renders the
+    // language as its own chip - so without this the seed data shows "Dart Dart".
+    const out = mergeProjects(
+      [curation({ repo: "a", tags: ["Flutter", "TypeScript", "typescript", "Hive"] })],
+      [repo("a", 0)], // repo() reports language: "TypeScript"
+    );
+    expect(out[0].tags).toEqual(["Flutter", "Hive"]);
+  });
+
+  it("keeps every tag when the repo reports no language", () => {
+    const out = mergeProjects(
+      [curation({ repo: "a", tags: ["Flutter", "Hive"] })],
+      [{ ...repo("a", 0), language: null }],
+    );
+    expect(out[0].tags).toEqual(["Flutter", "Hive"]);
+  });
+
+  it("threads the README excerpt through by repo, defaulting to null", () => {
+    const out = mergeProjects(
+      // Mixed case on purpose: the map is keyed lowercase, matching getProjects.
+      [curation({ repo: "Alpha" }), curation({ repo: "b" })],
+      [repo("Alpha", 0), repo("b", 0)],
+      new Map([["alpha", "An excerpt."]]),
+    );
+    expect(out.find((p) => p.repo === "Alpha")?.readmeExcerpt).toBe("An excerpt.");
+    expect(out.find((p) => p.repo === "b")?.readmeExcerpt).toBeNull();
+  });
+
   it("prefers customBlurb over github description, falls back when null", () => {
     const out = mergeProjects(
       [curation({ repo: "a", customBlurb: "Custom" }), curation({ repo: "b" })],

@@ -5,10 +5,8 @@ import { RotateCw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
 /**
- * Route error boundary. We deliberately do NOT render `error.message` — it can
- * contain database/internal details (connection strings, SQL, stack frames)
- * that must never reach the client. Next.js logs the full error server-side;
- * we surface only a friendly message and the safe `digest` as a reference code.
+ * Never renders `error.message`: it can carry connection strings, SQL or stack frames. Next
+ * logs the full error server-side, so only the safe `digest` is surfaced as a reference.
  */
 export default function Error({
   error,

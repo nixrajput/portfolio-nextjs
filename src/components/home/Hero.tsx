@@ -24,10 +24,8 @@ function fadeUp(reduce: boolean, delay: number) {
 }
 
 /**
- * "Dark Observatory" hero: viewport-scale two-line name (solid + stroke)
- * rising out of overflow masks, a drawing hairline rule, a roles marquee,
- * and magnetic CTAs - over the page-wide AmbientBackground, with a local
- * scrim guaranteeing text contrast in both themes.
+ * Viewport-scale two-line name rising out of overflow masks, over the page-wide
+ * AmbientBackground, with a local scrim guaranteeing text contrast in both themes.
  */
 export function Hero({
   profile,
@@ -66,7 +64,7 @@ export function Hero({
             <span className="border-border bg-surface text-muted inline-flex items-center gap-2 rounded-full border px-3 py-1.5 font-mono text-[9px] tracking-[0.18em] uppercase backdrop-blur-sm sm:text-[10px]">
               <span
                 aria-hidden
-                className="size-1.5 animate-pulse rounded-full bg-(image:--gradient-brand) shadow-[0_0_8px_2px_rgba(21,94,117,0.6)] motion-reduce:animate-none"
+                className="size-1.5 animate-pulse rounded-full bg-(image:--gradient-brand) shadow-[0_0_8px_2px_rgb(var(--brand-deep-rgb)/0.6)] motion-reduce:animate-none"
               />
               {heroTagline}
             </span>

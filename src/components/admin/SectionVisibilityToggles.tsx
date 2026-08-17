@@ -41,10 +41,8 @@ function toState(visibility: Record<string, boolean>): Record<string, boolean> {
 }
 
 /**
- * A row per toggleable homepage section: icon, name, description, and a switch.
- * Flipping a switch saves immediately (optimistic - the switch reflects the new
- * state at once and rolls back if the save fails). A hidden section is not
- * rendered, code-split, or data-fetched on the site.
+ * Saves optimistically on flip, rolling back if it fails. A hidden section is not rendered,
+ * code-split or data-fetched on the site at all.
  */
 export function SectionVisibilityToggles({ visibility }: { visibility: Record<string, boolean> }) {
   const [state, setState] = useState(() => toState(visibility));
