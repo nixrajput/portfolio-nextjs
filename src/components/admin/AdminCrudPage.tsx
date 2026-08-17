@@ -5,18 +5,9 @@ import { RecordFormDialog, type AdminField } from "@/components/admin/RecordForm
 type ServerAction = (formData: FormData) => Promise<void>;
 
 /**
- * The shared scaffold for every admin CRUD section: a header, a "create" dialog,
- * and a list of records each with an inline "edit" dialog plus delete.
- *
- * What varies per section (table, validation, the CRUD actions, the field
- * config, how a row renders) is passed in. The create/update/delete actions are
- * declared as `"use server"` closures IN THE PAGE MODULE and handed in here —
- * they cannot be created inside this component because Server Actions must be
- * defined at module scope, which is also why each page keeps its own thin
- * wrappers. This component owns only the markup that was identical across pages.
- *
- * `rows` is the already-mapped display shape; `editFor(row)` returns the record
- * object to prefill the edit dialog (usually the raw DB row).
+ * Shared scaffold for every admin CRUD section. The CRUD actions are passed in as
+ * `"use server"` closures declared in the PAGE module: Server Actions must be defined at
+ * module scope, so they cannot be created inside this component - hence each page's wrappers.
  */
 export function AdminCrudPage<T extends { id: number | string }>({
   title,

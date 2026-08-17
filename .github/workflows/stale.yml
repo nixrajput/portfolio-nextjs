@@ -1,0 +1,30 @@
+name: Stale
+
+# Marks inactive issues/PRs stale, then closes them after a grace period.
+on:
+  schedule:
+    - cron: "0 4 * * *" # daily 04:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/stale@v9
+        with:
+          days-before-stale: 210
+          days-before-close: 30
+          stale-issue-label: stale
+          stale-pr-label: stale
+          exempt-issue-labels: pinned,security,blocked
+          exempt-pr-labels: pinned,security,blocked
+          stale-issue-message: >
+            This issue has been inactive for 210 days and is now marked stale.
+            Comment to keep it open; it will close in 30 days otherwise.
+          stale-pr-message: >
+            This PR has been inactive for 210 days and is now marked stale.
+            Push or comment to keep it open; it will close in 30 days otherwise.

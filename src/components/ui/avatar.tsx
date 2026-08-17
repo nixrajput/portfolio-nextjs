@@ -3,10 +3,7 @@
 import * as React from "react";
 import { cn } from "@/utils/cn";
 
-// ---------------------------------------------------------------------------
-// Native Avatar — no Radix dependency.
-// API matches the shadcn/radix shape so existing callers compile unchanged.
-// ---------------------------------------------------------------------------
+// Native, no Radix dependency. API matches the shadcn/radix shape so callers compile unchanged.
 
 export type AvatarProps = React.HTMLAttributes<HTMLSpanElement>;
 
@@ -100,10 +97,7 @@ export function initialsFromName(name: string): string {
   return (parts[0]![0] ?? "").toUpperCase() + (parts[1]![0] ?? "").toUpperCase();
 }
 
-// ---------------------------------------------------------------------------
-// BrandInitialsAvatar — all-in-one helper used by the testimonials display.
-// Shows the image when `src` is provided; falls back to gradient initials.
-// ---------------------------------------------------------------------------
+// Falls back to gradient initials when `src` is absent.
 
 export function BrandInitialsAvatar({
   name,

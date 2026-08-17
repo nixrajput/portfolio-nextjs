@@ -10,24 +10,35 @@ export type MergedProject = Project & {
   description: string | null;
   homepage: string | null;
   htmlUrl: string | null;
+  readmeExcerpt: string | null;
 };
 
 /** Pure: merge curation rows with live repos, drop hidden, sort featured-first. */
-export function mergeProjects(curation: Project[], repos: GithubRepo[]): MergedProject[] {
+export function mergeProjects(
+  curation: Project[],
+  repos: GithubRepo[],
+  readmeExcerpts: Map<string, string | null> = new Map(),
+): MergedProject[] {
   const byName = new Map(repos.map((r) => [r.name.toLowerCase(), r]));
 
   const merged: MergedProject[] = curation
     .filter((c) => !c.hidden)
     .map((c) => {
       const live = byName.get(c.repo.toLowerCase());
+      const language = live ? live.language : null;
       return {
         ...c,
+        // The language is rendered as its own chip, so a tag repeating it is a visible
+        // duplicate ("Dart Dart" on three cards). Curation data legitimately lists the
+        // language among tags, so drop it here rather than editing every row.
+        tags: c.tags.filter((t) => t.toLowerCase() !== (language ?? "").toLowerCase()),
         stars: live ? live.stargazers_count : null,
         forks: live ? live.forks_count : null,
-        language: live ? live.language : null,
+        language,
         description: c.customBlurb ?? (live ? live.description : null),
         homepage: live ? live.homepage : null,
         htmlUrl: live ? live.html_url : null,
+        readmeExcerpt: readmeExcerpts.get(c.repo.toLowerCase()) ?? null,
       };
     });
 
@@ -70,5 +81,12 @@ export async function getProjects(): Promise<MergedProject[]> {
     };
   });
 
-  return mergeProjects(curation, repos);
+  const readmeExcerpts = new Map(
+    curation.map((c) => [
+      c.repo.toLowerCase(),
+      cacheMap.get(`${OWNER}/${c.repo}`)?.readmeExcerpt ?? null,
+    ]),
+  );
+
+  return mergeProjects(curation, repos, readmeExcerpts);
 }

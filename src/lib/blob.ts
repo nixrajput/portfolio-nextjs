@@ -12,6 +12,7 @@ export const BLOB_FOLDERS = {
   hero: "hero",
   avatar: "avatar",
   skills: "skills",
+  projects: "projects",
 } as const;
 
 export type BlobFolder = (typeof BLOB_FOLDERS)[keyof typeof BLOB_FOLDERS];
@@ -31,10 +32,8 @@ type ResizeOptions = {
 };
 
 /**
- * Optimize an uploaded image (resize + re-encode WebP) and store it in the
- * given Blob folder under a random key. Returns the public CDN URL. The folder
- * argument keeps each kind of upload in its own prefix (e.g. testimonials/,
- * hero/) so the Blob store stays organized and reusable across features.
+ * Resize, re-encode to WebP, store under a random key in `folder`, return the CDN URL. Blob is
+ * flat, so the folder is only a key prefix that keeps each kind of upload separable.
  */
 export async function optimizeAndUploadImage(
   file: File,
@@ -87,4 +86,17 @@ export async function uploadIcon(file: File, folder: BlobFolder): Promise<string
   }
   // Raster icons: fit inside a 128px box (preserve aspect), WebP.
   return optimizeAndUploadImage(file, folder, { width: 128, height: 128, fit: "inside" });
+}
+
+/**
+ * Project cover images and quick-view screenshots. Deliberately NOT uploadIcon: that fits
+ * inside a 128px box, which is right for a skill icon and destroys a screenshot. `inside`
+ * rather than `cover` so a tall mobile screenshot is not centre-cropped into nonsense.
+ */
+export async function uploadProjectMedia(file: File): Promise<string> {
+  return optimizeAndUploadImage(file, BLOB_FOLDERS.projects, {
+    width: 1600,
+    height: 1000,
+    fit: "inside",
+  });
 }

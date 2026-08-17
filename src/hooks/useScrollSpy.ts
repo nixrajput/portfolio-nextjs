@@ -3,10 +3,8 @@
 import { useEffect, useState } from "react";
 
 /**
- * Returns the id of the section currently considered "active".
- * Active = the last section whose top has scrolled past `offsetPx` from the
- * viewport top. Pure DOM read; no IntersectionObserver so it is deterministic
- * to unit-test against a stubbed `getBoundingClientRect`.
+ * Active = the last section whose top has scrolled past `offsetPx`. A pure DOM read rather than
+ * IntersectionObserver, so it is deterministic against a stubbed getBoundingClientRect.
  */
 export function pickActive(ids: string[], tops: Record<string, number>, offsetPx: number): string {
   let active = ids[0] ?? "";

@@ -21,12 +21,8 @@ const toneClasses: Record<Tone, string> = {
 };
 
 /**
- * A button that asks for confirmation in an AlertDialog before running an
- * action. Use for every action that mutates or destroys data in the admin
- * (approve, reject, feature, delete) so the user reconfirms first.
- *
- * `onConfirm` may be a server action; it runs inside a transition so the UI
- * stays responsive and the row refreshes when it resolves.
+ * Use for every admin action that mutates or destroys data. `onConfirm` may be a server
+ * action, so it runs inside a transition and the row refreshes when it resolves.
  */
 export function ConfirmButton({
   children,

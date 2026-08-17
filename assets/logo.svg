@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96" role="img" aria-label="Nikhil Rajput">
+  <!-- README mark. A dark tile on purpose: it is rendered on GitHub in either theme, so a
+       transparent mark would disappear against one of them. Colours mirror the default Iris
+       ramp in src/lib/brand.ts; this file is static and cannot follow a runtime palette. -->
+  <defs>
+    <linearGradient id="stroke" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#3730a3"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <radialGradient id="spark" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#c084fc" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#c084fc" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tile" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#141024"/>
+      <stop offset="1" stop-color="#0a0813"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="22" fill="url(#tile)"/>
+  <rect x="0.5" y="0.5" width="95" height="95" rx="21.5" fill="none" stroke="#7c3aed" stroke-opacity="0.28"/>
+  <g transform="translate(16 16) scale(2)">
+    <path d="M9 23 V11 L21 21 V9" fill="none" stroke="url(#stroke)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="21" cy="9" r="7" fill="url(#spark)"/>
+    <circle cx="21" cy="9" r="2.2" fill="#c084fc"/>
+  </g>
+</svg>

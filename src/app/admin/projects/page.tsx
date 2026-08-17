@@ -24,10 +24,41 @@ const fields: AdminField[] = [
     placeholder: "Flutter, Dart",
     hint: "Comma-separated",
   },
-  { name: "order", label: "Order", type: "number" },
+  {
+    name: "coverImage",
+    label: "Cover image",
+    type: "image",
+    folder: "projects",
+    hint: "Shown in the featured showcase and the quick view. Falls back to the brand gradient.",
+  },
+  {
+    name: "screenshots",
+    label: "Screenshots",
+    type: "images",
+    max: 6,
+    hint: "Gallery in the quick view. Drag order is the display order.",
+  },
+  {
+    name: "order",
+    label: "Order",
+    type: "number",
+    hint: "Lower comes first. The leading featured rows get the large showcase.",
+  },
   { name: "featured", label: "Featured", type: "checkbox" },
   { name: "hidden", label: "Hidden", type: "checkbox" },
 ];
+
+/** Parse the screenshots hidden input, which MultiImageUploadField submits as JSON. */
+function parseScreenshots(value: FormDataEntryValue | null): string[] {
+  if (typeof value !== "string" || value.trim() === "") return [];
+  try {
+    const parsed: unknown = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed.filter((v): v is string => typeof v === "string") : [];
+  } catch {
+    // A malformed value must not wipe the rest of the record on save.
+    return [];
+  }
+}
 
 function parse(formData: FormData) {
   return {
@@ -41,6 +72,8 @@ function parse(formData: FormData) {
     featured: formData.get("featured") === "on",
     order: Number(formData.get("order") || 0),
     hidden: formData.get("hidden") === "on",
+    coverImage: (formData.get("coverImage") as string) || null,
+    screenshots: parseScreenshots(formData.get("screenshots")),
   };
 }
 

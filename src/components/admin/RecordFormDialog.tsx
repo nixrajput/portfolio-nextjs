@@ -19,6 +19,7 @@ import {
   gradientButtonBase,
 } from "@/components/admin/ui";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
+import { MultiImageUploadField } from "@/components/admin/MultiImageUploadField";
 import { cn } from "@/utils/cn";
 
 export type AdminField =
@@ -47,9 +48,17 @@ export type AdminField =
       name: string;
       label: string;
       type: "image";
-      folder: "avatar" | "skills";
+      folder: "avatar" | "skills" | "projects";
       placeholder?: string;
       hint?: string;
+    }
+  | {
+      name: string;
+      label: string;
+      /** Ordered list of images, submitted as a JSON array. */
+      type: "images";
+      hint?: string;
+      max?: number;
     };
 
 /** Render one field, pre-filled from `record` when editing. */
@@ -80,6 +89,17 @@ function FieldControl({ field, record }: { field: AdminField; record?: Record<st
           folder={field.folder}
           defaultValue={raw == null ? "" : String(raw)}
           placeholder={field.placeholder}
+        />
+      </Field>
+    );
+  }
+  if (field.type === "images") {
+    return (
+      <Field label={field.label} hint={field.hint}>
+        <MultiImageUploadField
+          name={field.name}
+          defaultValue={Array.isArray(raw) ? (raw as string[]) : []}
+          max={field.max}
         />
       </Field>
     );
@@ -118,10 +138,8 @@ function FieldControl({ field, record }: { field: AdminField; record?: Record<st
 }
 
 /**
- * A create/edit dialog driven by a field config. In "create" mode it shows an
- * "Add new" trigger and blank fields; in "edit" mode an icon trigger and fields
- * pre-filled from `record`. On submit it posts to `formAction` (a server action
- * that reads the FormData) and closes.
+ * Create/edit dialog driven by a field config. Submits to `formAction`, a server action that
+ * reads the FormData, then closes.
  */
 export function RecordFormDialog({
   mode,

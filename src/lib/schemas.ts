@@ -27,6 +27,14 @@ export const projectInsertSchema = z.object({
   featured: z.boolean().default(false),
   order: z.number().int().nonnegative().default(0),
   hidden: z.boolean().default(false),
+  // Quick-view media. Validated as URLs so a stray form value cannot end up as an <img
+  // src>; an empty string from a cleared upload field becomes null rather than failing.
+  coverImage: z
+    .union([z.string().url(), z.literal(""), z.null()])
+    .transform((v) => (v === "" ? null : v))
+    .nullable()
+    .optional(),
+  screenshots: z.array(z.string().url()).max(6).default([]),
 });
 
 export const experienceInsertSchema = z.object({

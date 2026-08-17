@@ -1,0 +1,37 @@
+name: Scorecard analysis
+
+# OpenSSF Scorecard: supply-chain posture of the repo itself (branch protection,
+# pinned actions, token permissions). Push/schedule only - never a PR gate, which
+# would deadlock PRs since it runs on push.
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: "30 4 * * 1" # Mondays 04:30 UTC
+  workflow_dispatch: {}
+
+permissions: read-all
+
+jobs:
+  analysis:
+    name: Scorecard analysis
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # publish results to the OpenSSF API
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      # No floating v2 tag is published for this action, so pin the minor.
+      - uses: ossf/scorecard-action@v2.4.4
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          # Published to the OpenSSF API (that is what the badge reads) but
+          # deliberately NOT uploaded to code scanning: nearly every finding is
+          # a posture check this repo has decided against (no CodeQL, no
+          # Dependabot, single-maintainer reviews), so the alerts were a
+          # permanent backlog rather than a queue of work.
+          publish_results: true

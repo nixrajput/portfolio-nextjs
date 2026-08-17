@@ -13,11 +13,8 @@ import {
 } from "./schema";
 import { requireEnv } from "@/lib/env";
 
-// ---------------------------------------------------------------------------
-// Seed data — the initial content inserted only on a fresh (empty) database.
-// Assembled into SEED_DATA and inserted once by seed(); later content changes
-// are made in the admin panel or the DB, not by re-running the seed.
-// ---------------------------------------------------------------------------
+// Inserted only on a fresh (empty) database. Later content changes are made in the admin
+// panel, not by re-running the seed.
 
 const taglineRows = [
   { text: "Rise above limits", active: true, order: 0 },
@@ -43,40 +40,47 @@ const profileRow = {
 };
 
 const featuredSet = new Set([
+  "mcp-vitest",
+  "ai-sdk-threads",
   "social-media-app-flutter",
   "flutter_carousel_widget",
   "get_time_ago",
   "social-media-api-nodejs",
-  "ecommerce-mern",
   "siphon",
 ]);
+// Array position IS the `order` (see the .map() below) and order doubles as the showcase
+// ranking, so this sequence is the order they lead with. Language tags are omitted where
+// GitHub reports the language: it renders as its own chip and mergeProjects strips duplicates.
 const projectRows: (typeof projects.$inferInsert)[] = [
+  { repo: "mcp-vitest", title: "mcp-vitest", tags: ["MCP", "Vitest", "Testing"] },
+  {
+    repo: "ai-sdk-threads",
+    title: "ai-sdk-threads",
+    tags: ["AI SDK", "Persistence", "Drizzle"],
+  },
   {
     repo: "social-media-app-flutter",
     title: "Social Media App",
-    tags: ["Flutter", "Dart", "GetX", "Hive"],
+    tags: ["Flutter", "GetX", "Hive"],
   },
   {
     repo: "flutter_carousel_widget",
     title: "Flutter Carousel Widget",
-    tags: ["Flutter", "Dart", "Carousel"],
+    tags: ["Flutter", "Carousel"],
   },
-  {
-    repo: "get_time_ago",
-    title: "GetTimeAgo",
-    tags: ["Dart", "DateTime", "Formatting"],
-  },
+  { repo: "get_time_ago", title: "GetTimeAgo", tags: ["DateTime", "Formatting"] },
   {
     repo: "social-media-api-nodejs",
     title: "Social Media API",
     tags: ["Node.js", "Express.js", "MongoDB", "WebSocket"],
   },
+  // Not TypeScript: siphon is a Go binary that shells out to pg_dump/pg_restore.
+  { repo: "siphon", title: "Siphon", tags: ["CLI", "Postgres", "MySQL"] },
   {
     repo: "ecommerce-mern",
     title: "E-commerce App",
     tags: ["React.js", "Redux", "Material UI", "Stripe"],
   },
-  { repo: "siphon", title: "Siphon", tags: ["TypeScript", "CLI"] },
   {
     repo: "video-calling-app-flutter",
     title: "Video Calling App",
@@ -496,10 +500,8 @@ const SEED_DATA = {
 };
 
 /**
- * Seed-if-empty: insert the canonical content ONLY when the database has no
- * profile row (a fresh first deploy). It never wipes or overwrites, so any
- * later edits — in the admin panel or directly in the DB — are preserved.
- * Subsequent content changes are made manually, not by re-running the seed.
+ * Inserts ONLY when there is no profile row, and never wipes or overwrites, so re-running this
+ * against a populated database preserves every admin edit.
  */
 async function seed() {
   const [existing] = await db.select({ id: profile.id }).from(profile).limit(1);

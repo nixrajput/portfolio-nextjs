@@ -17,18 +17,9 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { SubmitTestimonialForm, TESTIMONIAL_FORM_ID } from "./SubmitTestimonialForm";
 
 /**
- * Controlled modal. We do NOT use Radix `DialogTrigger asChild` (its Slot
- * composition was dropping the trigger Button's gradient className, rendering
- * an invisible button). Instead we clone the trigger child to attach an
- * onClick that opens the controlled Dialog — the Button keeps all its own
- * styling intact.
- *
- * Two views, switched on submission:
- *   - form view:    fixed header → scrollable form fields → footer with submit
- *   - success view: a curated confirmation panel (no auto-close) the visitor
- *                   reads and dismisses with a single Close button.
- * The success state lives here (not in the form) so the whole header/body/
- * footer can swap — the form merely signals success via onSuccess.
+ * Controlled rather than `DialogTrigger asChild`: Radix's Slot dropped the trigger Button's
+ * gradient className and rendered an invisible button, so the child is cloned instead. Success
+ * state lives here, not in the form, so the whole header/body/footer can swap.
  */
 export function SubmitTestimonialModal({
   children,

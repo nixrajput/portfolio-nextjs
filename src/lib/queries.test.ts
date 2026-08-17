@@ -2,20 +2,24 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // ── Hoist mock state so vi.mock factories can reference it ────────────────────
 
-const { _getRows, _setRows, selectMock, chainFrom } = vi.hoisted(() => {
+const { _getRows, _setRows, _setPeriodRows, selectMock, chainFrom } = vi.hoisted(() => {
   let rows: unknown[] = [];
+  // getProfile now makes a second select for the experience periods that back the
+  // "years of experience" stat. The mock cannot tell tables apart, so that query is
+  // matched on the projection instead - see selectMock below.
+  let periodRows: unknown[] = [];
 
-  function makeFromResult() {
+  function makeFromResult(result: () => unknown[]) {
     return {
-      orderBy: vi.fn().mockImplementation(() => Promise.resolve(rows)),
+      orderBy: vi.fn().mockImplementation(() => Promise.resolve(result())),
       where: vi.fn().mockImplementation(() => ({
         // getRandomTagline awaits .where() directly
         then: (resolve: (v: unknown) => unknown, reject?: (e: unknown) => unknown) =>
-          Promise.resolve(rows).then(resolve, reject),
+          Promise.resolve(result()).then(resolve, reject),
       })),
       // make the result directly awaitable (no .orderBy) for getProfile path
       then: (resolve: (v: unknown) => unknown, reject?: (e: unknown) => unknown) =>
-        Promise.resolve(rows).then(resolve, reject),
+        Promise.resolve(result()).then(resolve, reject),
     };
   }
 
@@ -23,17 +27,21 @@ const { _getRows, _setRows, selectMock, chainFrom } = vi.hoisted(() => {
     orderBy: vi.fn().mockImplementation(() => Promise.resolve(rows)),
   };
 
-  // db.select().from(table) — returns a thenable for `await db.select().from(profile)`
-  const fromMock = vi.fn().mockImplementation(() => makeFromResult());
-
-  const selectMock = vi.fn().mockReturnValue({ from: fromMock });
+  // db.select() with no projection returns the row set; db.select({ period }) is the
+  // experience-periods read, so it gets the period rows.
+  const selectMock = vi.fn().mockImplementation((projection?: Record<string, unknown>) => {
+    const isPeriodQuery = projection !== undefined && "period" in projection;
+    return { from: vi.fn(() => makeFromResult(() => (isPeriodQuery ? periodRows : rows))) };
+  });
 
   return {
     _getRows: () => rows,
     _setRows: (r: unknown[]) => {
       rows = r;
       chainFrom.orderBy.mockImplementation(() => Promise.resolve(rows));
-      fromMock.mockImplementation(() => makeFromResult());
+    },
+    _setPeriodRows: (r: unknown[]) => {
+      periodRows = r;
     },
     selectMock,
     chainFrom,
@@ -168,16 +176,22 @@ describe("getFundingLinks", () => {
 });
 
 describe("getProfile", () => {
-  // Pin "now" so years-since-account-created is deterministic.
-  beforeEach(() => vi.useFakeTimers().setSystemTime(new Date("2026-01-01T00:00:00Z")));
+  // Pin "now" so the derived years figure is deterministic.
+  beforeEach(() => {
+    vi.useFakeTimers().setSystemTime(new Date("2026-01-01T00:00:00Z"));
+    // Earliest start 2021 → 5 years of professional experience at the pinned date.
+    _setPeriodRows([{ period: "Jul 2024 – Present" }, { period: "May 2021 – Jul 2022" }]);
+  });
   afterEach(() => vi.useRealTimers());
 
-  it("shapes profile row deriving all GitHub stats from the user cache", async () => {
+  it("shapes profile row deriving GitHub stats from the user cache", async () => {
     getCachedUserStatsMock.mockResolvedValue({
       followers: 112,
       publicRepos: 72,
       totalStars: 340,
-      firstContributionYear: 2018, // 8 years before pinned now (2026)
+      // Deliberately different from the experience-derived figure: years must NOT come
+      // from GitHub any more, so a 2018 account cannot produce 8 here.
+      firstContributionYear: 2018,
     });
     _setRows([
       {
@@ -194,8 +208,8 @@ describe("getProfile", () => {
     const result = await getProfile();
     expect(result.name).toBe("Nikhil Rajput");
     expect(result.roles).toEqual(["Developer", "Designer"]);
-    // years/repos/stars/followers all come from the live cache, not the seed.
-    expect(result.stats).toEqual({ years: 8, repos: 72, stars: 340, followers: 112 });
+    // repos/stars/followers from the live cache; years from the experience rows.
+    expect(result.stats).toEqual({ years: 5, repos: 72, stars: 340, followers: 112 });
   });
 
   it("returns empty roles and defaults from column defaults", async () => {
@@ -203,7 +217,7 @@ describe("getProfile", () => {
       followers: 5,
       publicRepos: 9,
       totalStars: 11,
-      firstContributionYear: 2024, // 2 years before pinned now (2026)
+      firstContributionYear: 2024,
     });
     _setRows([
       {
@@ -222,11 +236,12 @@ describe("getProfile", () => {
     // A missing avatar falls back to the bundled asset so the hero never breaks.
     expect(result.avatarUrl).toBe("/images/nikhil.png");
     expect(result.resumeUrl).toBe("");
-    expect(result.stats).toEqual({ years: 2, repos: 9, stars: 11, followers: 5 });
+    expect(result.stats).toEqual({ years: 5, repos: 9, stars: 11, followers: 5 });
   });
 
-  it("falls back to the seeded stats when the GitHub cache is empty", async () => {
-    // Cold cache + failed fetch → getCachedUserStats returns null.
+  it("falls back to the seeded GitHub stats when the cache is empty, but keeps derived years", async () => {
+    // Cold cache + failed fetch → getCachedUserStats returns null. Years is unaffected
+    // because it no longer comes from GitHub at all.
     getCachedUserStatsMock.mockResolvedValue(null);
     _setRows([
       {
@@ -241,7 +256,26 @@ describe("getProfile", () => {
       },
     ]);
     const result = await getProfile();
-    expect(result.stats).toEqual({ years: 4, repos: 60, stars: 250, followers: 42 });
+    expect(result.stats).toEqual({ years: 5, repos: 60, stars: 250, followers: 42 });
+  });
+
+  it("falls back to the seeded years only when no experience row yields a start year", async () => {
+    getCachedUserStatsMock.mockResolvedValue(null);
+    _setPeriodRows([{ period: "Present" }]);
+    _setRows([
+      {
+        id: 1,
+        name: "Test",
+        bio: "Bio",
+        stats: { years: 4, repos: 60, stars: 250, followers: 42 },
+        roles: [],
+        resumeUrl: null,
+        avatarUrl: null,
+        updatedAt: new Date(),
+      },
+    ]);
+    const result = await getProfile();
+    expect(result.stats.years).toBe(4);
   });
 
   it("throws when profile row is missing", async () => {

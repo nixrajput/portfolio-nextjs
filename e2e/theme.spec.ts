@@ -1,15 +1,43 @@
 import { expect, test } from "@playwright/test";
 
-test("theme toggle button is present and clickable", async ({ page }) => {
+test("appearance popover offers theme and palette choices", async ({ page }) => {
   await page.goto("/");
 
-  // The ThemeToggle aria-label is "Theme: <current>. Switch to <next>."
-  const toggle = page.getByRole("button", { name: /theme/i }).first();
-  await expect(toggle).toBeVisible();
-  await toggle.click();
+  await page.getByRole("button", { name: /appearance settings/i }).click();
 
-  // After click the html element should still exist — we just verify no crash
-  await expect(page.locator("html")).toBeVisible();
+  // Theme is a segmented control now, not a cycling button: all three states must be
+  // present, since the point of the change was that "System" is reachable in one click.
+  for (const mode of ["Light", "Dark", "System"]) {
+    await expect(page.getByRole("button", { name: mode, exact: true })).toBeVisible();
+  }
+  await expect(page.getByRole("button", { name: "Iris", exact: true })).toBeVisible();
+});
+
+test("choosing a palette applies it and survives a reload", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByRole("button", { name: /appearance settings/i }).click();
+  await page.getByRole("button", { name: "Ember", exact: true }).click();
+
+  await expect(page.locator("html")).toHaveAttribute("data-palette", "ember");
+
+  // The pre-paint script in layout.tsx is what makes this survive; without it the page
+  // renders the default for a frame and then snaps.
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-palette", "ember");
+});
+
+test("returning to the default palette removes the override attribute", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByRole("button", { name: /appearance settings/i }).click();
+  await page.getByRole("button", { name: "Verdant", exact: true }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-palette", "verdant");
+
+  await page.getByRole("button", { name: "Iris", exact: true }).click();
+  // Iris lives in :root, so the default is the ABSENCE of the attribute rather than
+  // data-palette="iris" - a second definition that could drift from the first.
+  await expect(page.locator("html")).not.toHaveAttribute("data-palette", /.*/);
 });
 
 test("mobile hamburger opens the nav menu", async ({ page }) => {

@@ -5,10 +5,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 /**
- * Subtle scroll parallax: translates its children on the Y axis as the element
- * passes through the viewport. `strength` is the peak offset in px (positive =
- * moves up as you scroll down, giving a depth/lag feel). No-op under reduced
- * motion. Transform-only, so it is GPU-cheap and Lighthouse-safe.
+ * `strength` is the peak Y offset in px (positive moves up as you scroll down). Transform-only
+ * so it stays GPU-cheap, and a no-op under reduced motion.
  */
 export function Parallax({
   children,

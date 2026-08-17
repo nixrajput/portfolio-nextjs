@@ -84,20 +84,24 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
       className={`${GeistSans.variable} ${GeistMono.variable}`}
     >
       <head>
-        {/*
-         * First-paint transition guard. next-themes resolves the system theme
-         * on the client and flips the `dark` class; without this, every themed
-         * token (nav border/background, the hero divider, cards) would animate
-         * that initial light->dark flip through its own `transition-*`, which
-         * reads as a flicker. We mark `theme-ready` on the next frame after the
-         * theme class is applied; globals.css suppresses transitions until then
-         * so the settled theme paints once, with no cross-fade. Runs before
-         * paint (blocking, in <head>) so there is no unguarded frame.
-         */}
+        {/* Without this, the initial system-theme flip animates through every element's own
+            transition-* and reads as a flicker. globals.css suppresses transitions until
+            `theme-ready`; blocking and in <head> so no unguarded frame exists. */}
         <script
           dangerouslySetInnerHTML={{
             __html:
               "requestAnimationFrame(function(){document.documentElement.classList.add('theme-ready')})",
+          }}
+        />
+        {/* Applies the stored palette before paint, or the page shows the default for a frame
+            and snaps. The default is the ABSENCE of the attribute, hence no else branch. Key
+            duplicates PALETTE_STORAGE_KEY in lib/palettes.ts. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var p=localStorage.getItem('palette');" +
+              "if(p&&['glacier','ember','verdant','magenta'].indexOf(p)>-1)" +
+              "document.documentElement.dataset.palette=p}catch(e){}",
           }}
         />
       </head>
@@ -110,7 +114,8 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
           enableSystem
           disableTransitionOnChange
         >
-          {/* Inside ThemeProvider: the canvas reads resolvedTheme for its blend mode */}
+          {/* Inside ThemeProvider: the canvas reads resolvedTheme for its blend mode.
+              The palette needs no provider - usePalette is an external-store hook. */}
           <AmbientBackground />
           <main>{children}</main>
           <ScrollToTop />

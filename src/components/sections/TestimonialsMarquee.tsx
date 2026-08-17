@@ -16,9 +16,9 @@ function MarqueeCard({ t }: { t: TestimonialCard }) {
   ].filter((s) => s.url);
 
   return (
-    <figure className="group border-border bg-surface flex flex-col gap-4 rounded-2xl border p-5 backdrop-blur-sm transition-colors hover:border-(--brand-violet)/40">
+    <figure className="group border-border bg-surface flex flex-col gap-4 rounded-2xl border p-5 backdrop-blur-sm transition-colors hover:border-(--brand-deep)/40">
       <Quote
-        className="size-5 shrink-0 text-(--color-brand-violet) transition-colors group-hover:text-(--color-brand-pink)"
+        className="size-5 shrink-0 text-(--color-brand-deep) transition-colors group-hover:text-(--color-brand-bright)"
         aria-hidden
       />
       <blockquote className="text-foreground/85 text-sm leading-relaxed">{t.content}</blockquote>
@@ -54,15 +54,9 @@ function MarqueeCard({ t }: { t: TestimonialCard }) {
 }
 
 /**
- * One auto-scrolling column, seamless for any item count (including one).
- *
- * The box's height is defined by ONE set (the in-flow first block, which carries
- * its own trailing gap via `pb-5`), so only one set is ever in view and the box
- * hugs a lone card. The duplicate is taken out of flow (`absolute top-full`) so
- * it doesn't grow the box; `top-full` places it exactly one block-height below,
- * i.e. one set + gap. The track animates by `-100%` of that same block height,
- * landing the duplicate precisely where the original began - drift-free for any
- * count, including a single card.
+ * Seamless for ANY item count, including one. The box height comes from one in-flow set; the
+ * duplicate is `absolute top-full` so it does not grow the box, and the track animates by
+ * -100% of that same height, landing the duplicate exactly where the original began.
  */
 function MarqueeColumn({ items, duration }: { items: TestimonialCard[]; duration: number }) {
   const set = (dup: boolean) => (
@@ -88,10 +82,8 @@ function MarqueeColumn({ items, duration }: { items: TestimonialCard[]; duration
 }
 
 /**
- * Testimonials as a marquee grid: items distributed round-robin across columns
- * that auto-scroll vertically at different speeds, pausing on hover. Under
- * reduced motion the tracks don't animate (CSS), so it reads as a static grid.
- * On small screens it collapses to a single column.
+ * Round-robin across columns that auto-scroll at different speeds, pausing on hover. Under
+ * reduced motion the CSS tracks do not animate, so it reads as a static grid.
  */
 export function TestimonialsMarquee({ items }: { items: TestimonialCard[] }) {
   // Distribute round-robin into up to 3 columns (fewer if few items).

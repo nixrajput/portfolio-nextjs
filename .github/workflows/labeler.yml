@@ -1,0 +1,32 @@
+name: Labeler
+
+# Auto-labels PRs by the paths they touch (config in .github/labeler.yml).
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@v5
+        with:
+          sync-labels: true
+      - name: Assign PR author
+        uses: actions/github-script@v8
+        continue-on-error: true
+        with:
+          script: |
+            const pr = context.payload.pull_request
+            if (pr.assignees.length > 0) return
+            await github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr.number,
+              assignees: [pr.user.login],
+            })

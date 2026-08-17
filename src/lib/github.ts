@@ -28,10 +28,8 @@ export type GithubUserStats = {
   firstContributionYear: number | null;
 };
 
-// Single GraphQL query for all account-level stats: followers, owned public
-// non-fork repo count + their stargazer sum, and the years the user contributed
-// in (the earliest is the first year they built on GitHub). GraphQL requires a
-// token; without one the request 401s and the caller falls back to the cache.
+// One query for every account-level stat. GraphQL requires a token: without one this 401s and
+// the caller falls back to the cached row.
 const USER_STATS_QUERY = `query($login:String!){
   user(login:$login){
     followers{totalCount}
@@ -75,6 +73,20 @@ export async function getRepo(slug: string): Promise<GithubRepo | null> {
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`GitHub getRepo ${slug} failed: ${res.status}`);
   return githubRepoSchema.parse(await res.json());
+}
+
+/** Fetch a repo's README as raw markdown. Returns null when the repo has none (404),
+ *  which is common enough that it is not an error. Throws on other failures so the
+ *  caller can fall back to cache. */
+export async function getReadme(slug: string): Promise<string | null> {
+  const res = await fetch(`${GITHUB_API}/repos/${slug}/readme`, {
+    // The raw media type returns markdown directly instead of base64 JSON.
+    headers: { ...authHeaders(), Accept: "application/vnd.github.raw" },
+    next: { revalidate: REVALIDATE_SECONDS, tags: ["github"] },
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`GitHub getReadme ${slug} failed: ${res.status}`);
+  return res.text();
 }
 
 /** List a user's public repos (paginated, 100/page, sorted by pushed). */

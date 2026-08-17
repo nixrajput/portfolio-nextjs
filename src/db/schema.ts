@@ -44,6 +44,10 @@ export const projects = pgTable("projects", {
   featured: boolean("featured").notNull().default(false),
   order: integer("order").notNull().default(0),
   hidden: boolean("hidden").notNull().default(false),
+  // Quick-view media, uploaded to Vercel Blob via /api/admin/upload. A featured card
+  // falls back to a generated gradient when coverImage is null, so this stays optional.
+  coverImage: text("cover_image"),
+  screenshots: jsonb("screenshots").$type<string[]>().notNull().default([]),
 });
 
 export const experiences = pgTable("experiences", {
@@ -188,6 +192,10 @@ export const githubCache = pgTable("github_cache", {
   language: text("language"),
   description: text("description"),
   homepage: text("homepage"),
+  // First ~600 chars of the repo README, stripped of badges/HTML/frontmatter, for the
+  // project quick view. Only the excerpt is stored: the full README would be several KB
+  // per repo shipped to every visitor, and the quick view never shows more than this.
+  readmeExcerpt: text("readme_excerpt"),
   fetchedAt: timestamp("fetched_at", { withTimezone: true }).notNull().defaultNow(),
 });
 

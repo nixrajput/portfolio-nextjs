@@ -1,0 +1,29 @@
+# .github/labeler.yml - path-based PR auto-labels (actions/labeler@v5 format).
+# Labels are additive: an admin component PR gets both `admin` and `frontend`.
+admin:
+  - changed-files:
+      - any-glob-to-any-file: ["src/app/admin/**", "src/components/admin/**"]
+frontend:
+  - changed-files:
+      - any-glob-to-any-file: ["src/components/**", "src/hooks/**", "src/app/**/*.tsx"]
+styling:
+  - changed-files:
+      - any-glob-to-any-file: ["src/app/globals.css", "postcss.config.js"]
+database:
+  - changed-files:
+      - any-glob-to-any-file: ["src/db/**", "drizzle/**", "drizzle.config.ts"]
+api:
+  - changed-files:
+      - any-glob-to-any-file: ["src/app/api/**", "src/auth.ts"]
+tests:
+  - changed-files:
+      - any-glob-to-any-file: ["**/*.test.ts", "**/*.test.tsx", "e2e/**", "src/test/**"]
+ci:
+  - changed-files:
+      - any-glob-to-any-file: [".github/**", ".githooks/**", "scripts/**"]
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file: ["package.json", "bun.lockb"]
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: ["*.md"]

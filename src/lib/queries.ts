@@ -15,6 +15,7 @@ import type { Experience, Skill, Service, Faq } from "@/db/schema";
 import { getProjects } from "@/lib/projects";
 import type { MergedProject } from "@/lib/projects";
 import { getCachedUserStats } from "@/lib/github-cache";
+import { professionalYears } from "@/lib/experience";
 
 // Bundled asset shown when the profile has no avatar set yet (e.g. before the
 // admin uploads one). Served from `public/`, so a relative src is correct here.
@@ -22,11 +23,6 @@ const FALLBACK_AVATAR = "/images/nikhil.png";
 
 // GitHub account backing the live stats (same owner as the curated repos).
 const GITHUB_USERNAME = "nixrajput";
-
-// Years building = current year minus the first year the user contributed.
-function yearsBuilding(firstContributionYear: number): number {
-  return Math.max(0, new Date().getFullYear() - firstContributionYear);
-}
 
 // ── Public row types ────────────────────────────────────────────────────────
 
@@ -71,22 +67,19 @@ export async function getProfile(): Promise<{
 
   const s = row.stats as Record<string, unknown>;
 
-  // All four GitHub-derived stats come from the persistent user cache: served
-  // from the last-known-good row instantly and refreshed in the background, so
-  // they never flash blank. Each falls back to the seeded stats blob only on a
-  // cold cache with a failed first fetch.
-  //  - repos:     public repo count
-  //  - stars:     sum of stargazers across ALL public repos
-  //  - followers: follower count
-  //  - years:     whole years since the first contribution
+  // Served from the last-known-good cache row so they never flash blank, falling back to the
+  // seeded stats only on a cold cache with a failed first fetch.
   const userStats = await getCachedUserStats(GITHUB_USERNAME);
   const followers = userStats ? userStats.followers : Number(s.followers ?? 0);
   const repos =
     userStats && userStats.publicRepos > 0 ? userStats.publicRepos : Number(s.repos ?? 0);
   const stars = userStats && userStats.totalStars > 0 ? userStats.totalStars : Number(s.stars ?? 0);
-  const years = userStats?.firstContributionYear
-    ? yearsBuilding(userStats.firstContributionYear)
-    : Number(s.years ?? 0);
+
+  // Years is NOT GitHub-derived: it is professional experience, taken from the experience
+  // rows. GitHub's first-contribution year answers a different question (how long the
+  // account has existed) and counted hobby years as professional ones.
+  const periods = await db.select({ period: experiences.period }).from(experiences);
+  const years = professionalYears(periods.map((p) => p.period)) ?? Number(s.years ?? 0);
 
   return {
     name: row.name,
@@ -138,10 +131,8 @@ export async function getFundingLinks(): Promise<FundingRow[]> {
   }));
 }
 
-// Returns a random active tagline text.
-// The page uses ISR (1h revalidation), so the tagline rotates on each
-// revalidation cycle. In dev and after admin edits (revalidatePortfolio),
-// it runs fresh. The random pick happens in JS after fetching all active rows.
+// The pick happens in JS, so the tagline rotates once per ISR regeneration rather than per
+// visitor - see the revalidate window in app/page.tsx.
 export async function getRandomTagline(): Promise<string> {
   const rows = await db.select().from(taglines).where(eq(taglines.active, true));
   if (rows.length === 0) return "Rise above limits";

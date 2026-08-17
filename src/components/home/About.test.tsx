@@ -27,7 +27,7 @@ describe("About", () => {
 
   it("renders stat labels", () => {
     render(<About profile={mockProfile} />);
-    expect(screen.getByText("Years of building")).toBeInTheDocument();
+    expect(screen.getByText("Years of experience")).toBeInTheDocument();
     expect(screen.getByText("Public repos")).toBeInTheDocument();
     expect(screen.getByText("GitHub stars")).toBeInTheDocument();
     expect(screen.getByText("GitHub followers")).toBeInTheDocument();

@@ -6,10 +6,8 @@ import { UploadCloud, Loader2 } from "lucide-react";
 import { cn } from "@/utils/cn";
 
 /**
- * Admin image field: upload a file (stored in Blob, returns a CDN URL) OR paste
- * any URL. The resolved URL is kept in a hidden input named `name`, so the
- * enclosing <form> submits it exactly like a plain text field — no change to
- * the server action. Shows a live preview and accepts existing static paths.
+ * Upload a file or paste a URL; either way the result lands in a hidden input named `name`, so
+ * the enclosing form submits it like a plain text field and the server action needs no change.
  */
 export function ImageUploadField({
   name,
@@ -19,7 +17,7 @@ export function ImageUploadField({
   previewRounded = "rounded-lg",
 }: {
   name: string;
-  folder: "avatar" | "skills";
+  folder: "avatar" | "skills" | "projects";
   defaultValue?: string;
   placeholder?: string;
   previewRounded?: string;

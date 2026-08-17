@@ -1,0 +1,24 @@
+name: Dependency Review
+
+# Fails a PR that introduces a dependency with a known vulnerability or a
+# disallowed licence. With CodeQL and Dependabot deliberately absent fleet-wide,
+# this and Scorecard are the supply-chain gate.
+on:
+  pull_request:
+    branches: [master, v2]
+
+permissions:
+  contents: read
+
+jobs:
+  dependency-review:
+    name: dependency review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: moderate
+          comment-summary-in-pr: on-failure

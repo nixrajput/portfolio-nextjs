@@ -1,12 +1,8 @@
 import { cn } from "@/utils/cn";
 
 /**
- * Shared brand-gradient button base — the single source of truth for the
- * gradient pill used across admin buttons (SubmitButton, the dialog submit in
- * RecordFormDialog, and the "brand" tone in ConfirmButton). Lives in its own
- * module (no component imports) so it can be shared without creating a circular
- * import between ui.tsx, RecordDeleteButton, and ConfirmButton. Compose width
- * and layout classes via `cn`.
+ * In its own module with no component imports, to avoid a circular import between ui.tsx,
+ * RecordDeleteButton and ConfirmButton, which all need this gradient.
  */
 export const gradientButtonBase = cn(
   "relative isolate overflow-hidden rounded-lg border border-white/15",

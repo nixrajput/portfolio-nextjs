@@ -1,6 +1,13 @@
 #!/bin/sh
-# Pre-push gate. Runs ESLint + Prettier-check before every push so unformatted
-# or lint-broken code never reaches the remote.
+# Pre-push gate. Runs lint + format check + spell check + typecheck + tests before
+# every push, so unformatted, lint-broken, misspelled, type-broken or test-breaking
+# code never reaches the remote.
+#
+# `bun run build` is deliberately NOT here, unlike the sibling docs repos. This build
+# is `next build --webpack` AND needs a reachable, migrated, seeded Postgres because
+# the homepage is ISR-prerendered at build time. That is a minute-plus gate that
+# teaches people to reach for --no-verify, which costs more than it catches. CI owns
+# the build, and it is a required status check there.
 #
 # Enable once per clone:   git config core.hooksPath .githooks
 # Bypass in an emergency:  git push --no-verify
@@ -10,11 +17,14 @@ REPO_ROOT=$(git rev-parse --show-toplevel)
 cd "$REPO_ROOT"
 
 if [ ! -d node_modules ]; then
-  echo "pre-push: node_modules missing — run 'bun install' first." >&2
+  echo "pre-push: node_modules missing - run 'bun install' first." >&2
   exit 1
 fi
 
-echo "pre-push: running lint + format check…"
-bun run lint || { echo "pre-push: ESLint failed — fix it or run 'bun run lint:fix'." >&2; exit 1; }
-bun run format:check || { echo "pre-push: formatting issues — run 'bun run format'." >&2; exit 1; }
+echo "pre-push: running lint + format + spell + typecheck + tests..."
+bun run lint || { echo "pre-push: ESLint failed - fix it or run 'bun run lint:fix'." >&2; exit 1; }
+bun run format:check || { echo "pre-push: formatting issues - run 'bun run format'." >&2; exit 1; }
+bun run check:spell || { echo "pre-push: spelling issues - fix them or add the word to cspell.json." >&2; exit 1; }
+bun run typecheck || { echo "pre-push: type errors - fix them before pushing." >&2; exit 1; }
+bun run test || { echo "pre-push: tests failed - fix them before pushing." >&2; exit 1; }
 echo "pre-push: checks passed."
