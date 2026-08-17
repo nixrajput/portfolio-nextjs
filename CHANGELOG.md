@@ -9,12 +9,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Selectable brand palettes.** Five palettes (Iris, Glacier, Ember, Verdant, Magenta) chosen from a new appearance popover in the nav, persisted in `localStorage` and applied before first paint so there is no flash. Iris is the default.
+- **Appearance popover** replacing the cycling theme button: light/dark/system are all visible, so returning to "system" is one click instead of cycling past the other two.
+- **Project quick view.** A modal per project with cover image, README excerpt, language/stars/forks, tags and a screenshot gallery.
+- **Featured showcase and language filter** in the Projects section: leading featured projects get large cells, everything else drops into a filterable grid with per-language counts.
+- **Project media in the admin panel** — a cover image and up to six ordered screenshots, uploaded to Vercel Blob through a new 1600×1000 pipeline (`uploadProjectMedia`) rather than the 128px icon path.
+- **README excerpts** cached per repo (`github_cache.readme_excerpt`), stripped of badge walls, HTML logo blocks and tables of contents.
+- `bun run check:routes` — asserts every route serves the right **content**, not merely a 200. Covers the homepage, metadata routes, icons and the admin auth gate.
+- `bun run check:vitals` — per-route JS payload and TTFB budgets, measured against a production build. Refuses to measure a dev server or a different site.
+- `bun run check:spell` — cspell over source, scripts and root markdown.
+- `dependency-review`, `scorecard`, `stale` and `labeler` workflows, matching the rest of the fleet.
+- Palette and theme fields on the bug-report template, and a palette checklist in the PR template: with five palettes and three theme modes a visual report is not reproducible without them.
+
 ### Changed
 
+- **Brand palette consolidated into `src/lib/brand.ts`.** It had been hardcoded across eight files and had already drifted — `manifest.ts` and `global-error.tsx` used `#07070c` as the dark ground while `globals.css` said `#060c0e`. `globals.theme.test.ts` now derives its expectations from `brand.ts`, so the CSS mirror cannot drift silently.
+- Brand tokens renamed to hue-neutral names (`--brand-deep` / `--brand-mid` / `--brand-bright`); the old `violet` / `cyan` / `pink` names had stopped being true at the Glacier rebrand.
+- **Ambient background retuned per theme.** `multiply` on paper accumulates where `lighter` on a near-black ground falls off fast, so one shared alpha could only be right for one of them — light mode had become a full-viewport wash with no focal point. Alphas are now per-theme and blob radii are tighter (0.34–0.42, from 0.46–0.55).
+- **Years of experience is derived from the experience rows** instead of GitHub's first-contribution year, which measured how long the account had existed and counted hobby years as professional. Label updated to "Years of experience".
+- Pre-push hook extended from lint + format to lint + format + spell + typecheck + tests. The build stays in CI: it is a webpack build needing a live seeded database, and a minute-plus gate teaches people to reach for `--no-verify`.
+- `AGENTS.md` rewritten: the duplicated copy of the global working-discipline rules was removed in favour of project-specific pitfalls.
 - Admin dashboard now surfaces a stat for every content section (projects, experiences, skills, services, social links, funding links, FAQs, testimonials) plus a profile status and testimonial moderation breakdown.
 - Extracted a shared `AdminCrudPage` so the eight content sections no longer duplicate their list/dialog scaffold.
 
 ### Fixed
+
+- A tag duplicating a project's language rendered twice on the card ("Dart Dart" on three projects); the language chip now wins and the duplicate tag is dropped.
+- Five decorative glows kept the old palette through a rebrand because they were literal `rgba()` in decimal, invisible to a hex search. They now read `--brand-*-rgb` channel lists.
+- `siphon` was tagged `TypeScript`; it is a Go binary.
+- `README.md` claimed the production build uses Turbopack. It uses webpack, deliberately, because Turbopack breaks `sharp` on Vercel.
+- `.claude/settings.json` denied only relative `./**/.env` paths, so an absolute path was not covered; added absolute variants plus `.p12`/`.pfx`/`.cert` and `Edit(...)` rules.
+- `includeCoAuthoredBy` was `true`, contradicting the repo's own `.gitmessage`, which forbids those trailers.
 
 - **Security:** admin-managed link URLs are validated with `z.httpUrl()`, rejecting `javascript:`/`data:` schemes that could otherwise be stored and rendered as an `href`.
 - **Security:** the `/api/revalidate` secret is compared in constant time, and the avatar URL in admin notification emails is HTML-escaped.

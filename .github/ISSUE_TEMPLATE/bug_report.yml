@@ -21,6 +21,7 @@ body:
         - Projects section
         - Experience / Skills
         - Testimonials
+        - Theming / brand palette
         - Admin panel
         - SEO / Meta
         - CI / Build
@@ -46,6 +47,38 @@ body:
         1. Go to '...'
         2. Click on '...'
         3. See error
+    validations:
+      required: true
+
+  - type: dropdown
+    id: theme
+    attributes:
+      label: Theme
+      description: Visual bugs are often specific to one theme, so please say which you saw it in.
+      multiple: false
+      options:
+        - Dark
+        - Light
+        - System (following the OS)
+        - Not applicable / not a visual bug
+    validations:
+      required: true
+
+  - type: dropdown
+    id: palette
+    attributes:
+      label: Brand palette
+      description: >
+        The palette picker lives in the appearance menu in the nav. Iris is the default. A colour or
+        contrast bug can exist in one palette and not the others, so this is needed to reproduce it.
+      multiple: false
+      options:
+        - Iris (default)
+        - Glacier
+        - Ember
+        - Verdant
+        - Magenta
+        - Not applicable / not a visual bug
     validations:
       required: true
 

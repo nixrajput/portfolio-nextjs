@@ -70,13 +70,31 @@ Closes #42
 Run the full local gate and make sure everything is green:
 
 ```bash
-bunx eslint .          # must be 0 errors
-bunx tsc --noEmit      # must be clean
-bunx vitest run        # all unit tests must pass
+bun run lint           # must be 0 errors
+bun run format:check   # or run `bun run format` to fix
+bun run check:spell    # add new words to cspell.json
+bun run typecheck      # must be clean
+bun run test           # all unit tests must pass
 bun run test:e2e       # optional but encouraged for UI changes
 ```
 
-CI runs the same checks — a failing CI gate will block merge.
+The first five are exactly what `.githooks/pre-push` runs, so a push does this for you once
+hooks are enabled (step 4 of the README setup).
+
+CI runs the same checks plus the production build and two checks that need a running server:
+
+```bash
+bun run build && bun run start
+bun run check:routes   # asserts routes serve the right content, not just a 200
+bun run check:vitals   # per-route JS payload and TTFB budgets
+```
+
+The build is deliberately left out of the pre-push hook: it is a webpack build that also
+needs a reachable, seeded database, and a minute-plus gate teaches people to reach for
+`--no-verify`.
+
+A failing CI gate will block merge. Every PR must also bump the `version` in
+`package.json` — the `package.json version bumped` check enforces it.
 
 ## Pull request guidelines
 

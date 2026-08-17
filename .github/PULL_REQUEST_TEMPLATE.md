@@ -6,6 +6,7 @@
 
 - [ ] Bug fix
 - [ ] New feature
+- [ ] Brand palette / theming
 - [ ] Refactor / code cleanup
 - [ ] Documentation
 - [ ] CI / tooling
@@ -24,9 +25,17 @@ Closes #<!-- issue number -->
 
 ## Verification checklist
 
-- [ ] `bunx eslint .` — 0 errors
-- [ ] `bunx tsc --noEmit` — clean
-- [ ] `bunx vitest run` — all tests pass
+- [ ] `bun run lint` - 0 errors
+- [ ] `bun run format:check` - clean
+- [ ] `bun run check:spell` - clean
+- [ ] `bun run typecheck` - clean
+- [ ] `bun run test` - all tests pass
 - [ ] Build succeeds (`bun run build`)
+- [ ] `version` bumped in `package.json` (required by CI)
 - [ ] Docs updated where applicable (README, CHANGELOG, inline comments)
 - [ ] No unrelated changes included in this PR
+
+## Theming changes only
+
+- [ ] Followed the palette steps in [AGENTS.md](https://github.com/nixrajput/portfolio-nextjs/blob/master/AGENTS.md#adding-a-brand-palette)
+- [ ] Checked in both light and dark, and screenshots attached below
