@@ -74,7 +74,9 @@ export async function getCachedRepoData(slugs: string[]): Promise<Map<string, Ca
       const repoName = slugToName.get(slug)!;
       const cached = cacheByName.get(repoName);
 
-      const needsRefresh = !cached || isStale(cached);
+      // NULL means the row predates the readme_excerpt column, not that the repo has no
+      // README (that stores ""), so refreshing on NULL is what backfills existing rows.
+      const needsRefresh = !cached || isStale(cached) || cached.readmeExcerpt === null;
 
       if (!needsRefresh) {
         result.set(slug, rowToStats(cached!, slug));
@@ -84,14 +86,14 @@ export async function getCachedRepoData(slugs: string[]): Promise<Map<string, Ca
       try {
         const live = await getRepo(slug);
         if (live) {
-          // A second request, so its failure must not cost the stats we already have - and
-          // keeping the cached excerpt stops a rate-limited refresh blanking it for 24h.
-          let readmeExcerpt = cached?.readmeExcerpt ?? null;
+          // Never NULL: "" records "checked, no README". Also "" on failure, because NULL is
+          // the refresh trigger above and would refetch on every regeneration.
+          let readmeExcerpt = cached?.readmeExcerpt ?? "";
           try {
             const markdown = await getReadme(slug);
-            if (markdown !== null) readmeExcerpt = toExcerpt(markdown);
+            readmeExcerpt = markdown === null ? "" : toExcerpt(markdown);
           } catch {
-            /* keep the cached excerpt */
+            /* keep whatever we had; the next 24h refresh tries again */
           }
 
           const upsertRow = {

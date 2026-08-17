@@ -21,14 +21,22 @@ vi.mock("@/db/client", () => ({
 }));
 
 // --- Mock getRepo from github.ts ---
-const { mockGetRepo } = vi.hoisted(() => ({ mockGetRepo: vi.fn() }));
-vi.mock("@/lib/github", () => ({ getRepo: mockGetRepo }));
+const { mockGetRepo, mockGetReadme } = vi.hoisted(() => ({
+  mockGetRepo: vi.fn(),
+  mockGetReadme: vi.fn(),
+}));
+vi.mock("@/lib/github", () => ({ getRepo: mockGetRepo, getReadme: mockGetReadme }));
 
 // Import AFTER mocks are set up
 import { getCachedRepoData } from "./github-cache";
 
 // Helper: build a cache row
-function cacheRow(repoName: string, stars: number, ageMs: number) {
+function cacheRow(
+  repoName: string,
+  stars: number,
+  ageMs: number,
+  readmeExcerpt: string | null = "",
+) {
   return {
     repo: repoName,
     stars,
@@ -36,6 +44,7 @@ function cacheRow(repoName: string, stars: number, ageMs: number) {
     language: "TypeScript",
     description: `${repoName} desc`,
     homepage: null,
+    readmeExcerpt,
     fetchedAt: new Date(Date.now() - ageMs),
   };
 }
@@ -76,6 +85,7 @@ function setupMockInsert() {
 beforeEach(() => {
   vi.clearAllMocks();
   setupMockInsert();
+  mockGetReadme.mockResolvedValue("# repo\n\nSome prose.");
 });
 
 const TWENTY_THREE_HOURS = 23 * 60 * 60 * 1000;
@@ -90,6 +100,50 @@ describe("getCachedRepoData", () => {
 
     expect(mockGetRepo).not.toHaveBeenCalled();
     expect(result.get("nixrajput/my-repo")?.stars).toBe(50);
+  });
+
+  it("refreshes a FRESH row whose excerpt is NULL, backfilling rows that predate the column", async () => {
+    // The prod case: the column was added while existing rows were still inside their 24h
+    // window, so without this they would render blank until the TTL happened to roll.
+    mockDbSelect([cacheRow("my-repo", 50, TWENTY_THREE_HOURS, null)]);
+    mockGetRepo.mockResolvedValue(githubRepo("my-repo", 50));
+
+    const result = await getCachedRepoData(["nixrajput/my-repo"]);
+
+    expect(mockGetRepo).toHaveBeenCalled();
+    expect(result.get("nixrajput/my-repo")?.readmeExcerpt).toBe("repo Some prose.");
+  });
+
+  it("does NOT refresh a fresh row whose excerpt is an empty string", async () => {
+    // "" means "checked, this repo has no README". Treating it as incomplete would refetch on
+    // every regeneration forever.
+    mockDbSelect([cacheRow("no-readme", 3, TWENTY_THREE_HOURS, "")]);
+
+    await getCachedRepoData(["nixrajput/no-readme"]);
+
+    expect(mockGetRepo).not.toHaveBeenCalled();
+  });
+
+  it("stores an empty string, never NULL, when the repo has no README", async () => {
+    mockDbSelect([cacheRow("no-readme", 3, TWENTY_FIVE_HOURS, null)]);
+    mockGetRepo.mockResolvedValue(githubRepo("no-readme", 3));
+    mockGetReadme.mockResolvedValue(null);
+
+    await getCachedRepoData(["nixrajput/no-readme"]);
+
+    expect(mockValues).toHaveBeenCalledWith(expect.objectContaining({ readmeExcerpt: "" }));
+  });
+
+  it("stores an empty string when the README fetch throws, so it cannot loop", async () => {
+    // NULL is the refresh trigger, so writing NULL here would refetch every regeneration for
+    // as long as GitHub stayed unavailable.
+    mockDbSelect([cacheRow("rate-limited", 7, TWENTY_FIVE_HOURS, null)]);
+    mockGetRepo.mockResolvedValue(githubRepo("rate-limited", 7));
+    mockGetReadme.mockRejectedValue(new Error("403 rate limited"));
+
+    await getCachedRepoData(["nixrajput/rate-limited"]);
+
+    expect(mockValues).toHaveBeenCalledWith(expect.objectContaining({ readmeExcerpt: "" }));
   });
 
   it("fetches from GitHub and upserts for stale rows (>24h)", async () => {

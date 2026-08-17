@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `bun run check:vitals` — per-route JS payload and TTFB budgets, measured against a production build. Refuses to measure a dev server or a different site.
 - `bun run check:spell` — cspell over source, scripts and root markdown.
 - `dependency-review`, `scorecard`, `stale` and `labeler` workflows, matching the rest of the fleet.
+- Removed `public/screenshots/` and `scripts/populate-cache.ts`: the first became unreferenced when the README's screenshots section went, and the second was an undocumented cache warmer that the self-healing backfill makes unnecessary.
 - Palette and theme fields on the bug-report template, and a palette checklist in the PR template: with five palettes and three theme modes a visual report is not reproducible without them.
 
 ### Changed
@@ -36,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- README excerpts stayed blank on an existing deployment. The cache only refreshed on a >24h TTL, so rows written before the `readme_excerpt` column existed were served as-is and rendered nothing. A NULL excerpt now counts as stale, which backfills them on the first request after deploy; `""` records "checked, no README" so a repo without one is not refetched forever.
+- Featured projects would not have changed on an already-populated database: `db:seed` returns early when a profile row exists, so editing its featured list only affects a fresh install. Migration `0017` applies the same change to existing data on deploy.
 - A tag duplicating a project's language rendered twice on the card ("Dart Dart" on three projects); the language chip now wins and the duplicate tag is dropped.
 - Five decorative glows kept the old palette through a rebrand because they were literal `rgba()` in decimal, invisible to a hex search. They now read `--brand-*-rgb` channel lists.
 - `siphon` was tagged `TypeScript`; it is a Go binary.
