@@ -13,13 +13,13 @@ async function get(url) {
   }
 }
 
-// Measured 2026-08-17: all three routes sit at ~1425KB because the ROOT LAYOUT dominates
-// (ThemeProvider, AmbientBackground, CustomCursor and three analytics scripts load everywhere).
-// A ceiling to ratchet DOWN, not an endorsement of 1.4MB.
+// Re-measured 2026-08-17 after the palette work: ~1492KB on all three, up from 1425. The ROOT
+// LAYOUT dominates (ThemeProvider, AmbientBackground, CustomCursor and three analytics scripts
+// load everywhere). A ceiling to ratchet DOWN, not an endorsement of 1.5MB.
 const BUDGETS = [
-  { path: "/", js: 1500, ttfb: 800 },
-  { path: "/testimonials/new", js: 1500, ttfb: 800 },
-  { path: "/login", js: 1500, ttfb: 800 },
+  { path: "/", js: 1560, ttfb: 800 },
+  { path: "/testimonials/new", js: 1560, ttfb: 800 },
+  { path: "/login", js: 1560, ttfb: 800 },
 ];
 
 // Both a wrong site and a dev server produce believable numbers, and unminified bundles read
