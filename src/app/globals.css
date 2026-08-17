@@ -117,11 +117,11 @@
    theme-independent, so it is set once per palette; grounds, chrome and gradients
    differ per theme.
 
-   Selectors are written :not(.dark) / .dark rather than bare [data-palette] so
-   specificity (0,2,0) beats :root and .dark outright and the result does not depend
-   on source order. Values are generated - see scratchpad/gen-palette-css.mjs. */
+   Every selector is two simple selectors, never a bare [data-palette]: at (0,2,0) they beat
+   :root and .dark outright, so the result does not depend on source order. A bare
+   [data-palette] ties with :root at (0,1,0) and would silently lose if this block moved. */
 
-[data-palette="glacier"] {
+:root[data-palette="glacier"] {
   --brand-deep: #155e75;
   --brand-mid: #0891b2;
   --brand-bright: #22d3ee;
@@ -161,7 +161,7 @@
   --gradient-ink: linear-gradient(135deg, #22d3ee 0%, #7dd3e8 100%);
 }
 
-[data-palette="ember"] {
+:root[data-palette="ember"] {
   --brand-deep: #7c2d12;
   --brand-mid: #d97706;
   --brand-bright: #fbbf24;
@@ -201,7 +201,7 @@
   --gradient-ink: linear-gradient(135deg, #fbbf24 0%, #fde68a 100%);
 }
 
-[data-palette="verdant"] {
+:root[data-palette="verdant"] {
   --brand-deep: #14532d;
   --brand-mid: #059669;
   --brand-bright: #34d399;
@@ -241,7 +241,7 @@
   --gradient-ink: linear-gradient(135deg, #34d399 0%, #a7f3d0 100%);
 }
 
-[data-palette="magenta"] {
+:root[data-palette="magenta"] {
   --brand-deep: #831843;
   --brand-mid: #db2777;
   --brand-bright: #fb7185;

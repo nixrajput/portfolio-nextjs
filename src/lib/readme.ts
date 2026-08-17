@@ -1,5 +1,38 @@
 const EXCERPT_MAX = 600;
 
+// READMEs use entities freely in the prose the excerpt lands on ("In-process &middot; both SDK
+// majors", "&plusmn;2.3%"). Stripping tags does not touch them, so undecoded they reach the page
+// verbatim - React escapes the ampersand and the visitor reads "&middot;".
+const NAMED_ENTITIES: Record<string, string> = {
+  nbsp: " ",
+  middot: "\u00b7",
+  bull: "\u2022",
+  plusmn: "\u00b1",
+  mdash: "-",
+  ndash: "-",
+  hellip: "\u2026",
+  rarr: "\u2192",
+  larr: "\u2190",
+  times: "\u00d7",
+  check: "\u2713",
+  quot: '"',
+  apos: "'",
+  laquo: "\u00ab",
+  raquo: "\u00bb",
+  deg: "\u00b0",
+  copy: "\u00a9",
+  reg: "\u00ae",
+  trade: "\u2122",
+};
+
+/** Entities except `&amp;`, which is decoded last so `&amp;lt;` does not become a tag. */
+function decodeEntities(text: string): string {
+  return text
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(Number.parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(Number(dec)))
+    .replace(/&([a-z]+);/gi, (m, name) => NAMED_ENTITIES[name.toLowerCase()] ?? m);
+}
+
 /**
  * README markdown to a plain-text excerpt for the project quick view. Replacement ORDER is
  * load-bearing throughout: each pattern below relies on the previous ones not having run
@@ -41,8 +74,16 @@ export function toExcerpt(markdown: string, maxLength = EXCERPT_MAX): string {
     .replace(/\s+/g, " ")
     .trim();
 
-  if (text.length <= maxLength) return text;
-  const cut = text.slice(0, maxLength);
+  // After the markdown passes, so a decoded < cannot be read as a tag by them, and stripped
+  // again in case an entity decoded into markup. &amp; goes last for the same reason.
+  const decoded = decodeEntities(text)
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (decoded.length <= maxLength) return decoded;
+  const cut = decoded.slice(0, maxLength);
   const lastSpace = cut.lastIndexOf(" ");
   return `${(lastSpace > maxLength * 0.6 ? cut.slice(0, lastSpace) : cut).trimEnd()}...`;
 }

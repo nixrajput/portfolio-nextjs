@@ -3,20 +3,33 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 // --- Mock the DB client ---
 // Factories must not reference outer variables (they are hoisted).
 // We use vi.hoisted() to create the fns before hoisting runs.
-const { mockSelect, mockFrom, mockWhere, mockInsert, mockValues, mockOnConflictDoUpdate } =
-  vi.hoisted(() => ({
-    mockSelect: vi.fn(),
-    mockFrom: vi.fn(),
-    mockWhere: vi.fn(),
-    mockInsert: vi.fn(),
-    mockValues: vi.fn(),
-    mockOnConflictDoUpdate: vi.fn(),
-  }));
+const {
+  mockSelect,
+  mockFrom,
+  mockWhere,
+  mockInsert,
+  mockValues,
+  mockOnConflictDoUpdate,
+  mockUpdate,
+  mockSet,
+  mockUpdateWhere,
+} = vi.hoisted(() => ({
+  mockSelect: vi.fn(),
+  mockFrom: vi.fn(),
+  mockWhere: vi.fn(),
+  mockInsert: vi.fn(),
+  mockValues: vi.fn(),
+  mockOnConflictDoUpdate: vi.fn(),
+  mockUpdate: vi.fn(),
+  mockSet: vi.fn(),
+  mockUpdateWhere: vi.fn(),
+}));
 
 vi.mock("@/db/client", () => ({
   db: {
     select: mockSelect,
     insert: mockInsert,
+    update: mockUpdate,
   },
 }));
 
@@ -80,6 +93,9 @@ function setupMockInsert() {
   mockOnConflictDoUpdate.mockResolvedValue([]);
   mockValues.mockReturnValue({ onConflictDoUpdate: mockOnConflictDoUpdate });
   mockInsert.mockReturnValue({ values: mockValues });
+  mockUpdateWhere.mockResolvedValue([]);
+  mockSet.mockReturnValue({ where: mockUpdateWhere });
+  mockUpdate.mockReturnValue({ set: mockSet });
 }
 
 beforeEach(() => {
@@ -144,6 +160,35 @@ describe("getCachedRepoData", () => {
     await getCachedRepoData(["nixrajput/rate-limited"]);
 
     expect(mockValues).toHaveBeenCalledWith(expect.objectContaining({ readmeExcerpt: "" }));
+  });
+
+  it("stamps a NULL excerpt when the repo 404s, so the backfill cannot loop", async () => {
+    // A renamed/deleted/private repo takes the else branch and performs no upsert, so without
+    // stamping, needsRefresh stays true and getRepo is retried every regeneration forever.
+    mockDbSelect([cacheRow("gone", 5, TWENTY_THREE_HOURS, null)]);
+    mockGetRepo.mockResolvedValue(null);
+
+    await getCachedRepoData(["nixrajput/gone"]);
+
+    expect(mockSet).toHaveBeenCalledWith({ readmeExcerpt: "" });
+  });
+
+  it("stamps a NULL excerpt when getRepo throws", async () => {
+    mockDbSelect([cacheRow("flaky", 5, TWENTY_THREE_HOURS, null)]);
+    mockGetRepo.mockRejectedValue(new Error("503"));
+
+    await getCachedRepoData(["nixrajput/flaky"]);
+
+    expect(mockSet).toHaveBeenCalledWith({ readmeExcerpt: "" });
+  });
+
+  it("does not stamp a row whose excerpt is already a string", async () => {
+    mockDbSelect([cacheRow("gone", 5, TWENTY_FIVE_HOURS, "existing excerpt")]);
+    mockGetRepo.mockResolvedValue(null);
+
+    await getCachedRepoData(["nixrajput/gone"]);
+
+    expect(mockSet).not.toHaveBeenCalled();
   });
 
   it("fetches from GitHub and upserts for stale rows (>24h)", async () => {

@@ -53,7 +53,10 @@ export function mergeProjects(
  *  Cache is 24h-TTL; stale/missing rows are refreshed from GitHub.
  *  GitHub failures fall back to existing cache so the section always renders. */
 export async function getProjects(): Promise<MergedProject[]> {
-  const curation = await db.select().from(projectsTable);
+  const all = await db.select().from(projectsTable);
+  // Hidden rows never render, so fetching stats and a README for them buys nothing and costs
+  // two GitHub calls plus a cache row each.
+  const curation = all.filter((c) => !c.hidden);
 
   const OWNER = "nixrajput";
   const slugs = curation.map((c) => `${OWNER}/${c.repo}`);

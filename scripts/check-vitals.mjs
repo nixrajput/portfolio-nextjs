@@ -41,8 +41,10 @@ let failed = false;
 for (const { path, js: jsBudget, ttfb: ttfbBudget } of BUDGETS) {
   const started = Date.now();
   const res = await get(`${base}${path}`);
-  const html = await res.text();
+  // Before res.text(): measuring after it makes this time-to-LAST-byte, which grows with page
+  // size and reports a payload change as a latency regression.
   const ttfb = Date.now() - started;
+  const html = await res.text();
 
   if (!res.ok) {
     console.error(`FAIL: ${path} returned ${res.status}`);

@@ -29,9 +29,9 @@ export function MultiImageUploadField({
     setError(null);
     setUploading(true);
     try {
-      // Sequential, not Promise.all: the route optimizes with sharp, and a burst of
-      // large images in parallel is what pushes a serverless function over its memory cap.
-      const added: string[] = [];
+      // Sequential, so a burst of large images cannot push the sharp route over its memory
+      // cap, and committed one at a time so a failure on file 3 keeps 1 and 2 - they are
+      // already stored in Blob and would otherwise be orphaned there.
       for (const file of files.slice(0, max - urls.length)) {
         const body = new FormData();
         body.append("file", file);
@@ -39,9 +39,8 @@ export function MultiImageUploadField({
         const res = await fetch("/api/admin/upload", { method: "POST", body });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Upload failed");
-        added.push(data.url);
+        setUrls((prev) => [...prev, data.url]);
       }
-      setUrls((prev) => [...prev, ...added]);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Upload failed");
     } finally {
@@ -66,7 +65,7 @@ export function MultiImageUploadField({
       {urls.length > 0 && (
         <ul className="flex flex-col gap-2">
           {urls.map((url, i) => (
-            <li key={url} className="border-border flex items-center gap-2 rounded-lg border p-2">
+            <li key={i} className="border-border flex items-center gap-2 rounded-lg border p-2">
               <span className="border-border bg-surface-2 relative size-12 shrink-0 overflow-hidden rounded border">
                 {/* unoptimized: the URL is an external CDN. */}
                 <Image src={url} alt="" fill sizes="48px" className="object-cover" unoptimized />
@@ -94,7 +93,9 @@ export function MultiImageUploadField({
               <button
                 type="button"
                 aria-label={`Remove screenshot ${i + 1}`}
-                onClick={() => setUrls((prev) => prev.filter((u) => u !== url))}
+                // By index, not value: the same URL can legitimately appear twice, and
+                // filtering by value removed every copy.
+                onClick={() => setUrls((prev) => prev.filter((_, j) => j !== i))}
                 className="text-muted p-1 hover:text-red-400"
               >
                 <X className="size-3.5" aria-hidden />

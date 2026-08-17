@@ -21,19 +21,26 @@ export function ProjectsBrowser({ projects }: { projects: MergedProject[] }) {
   const [language, setLanguage] = useState(ALL);
   const [quickView, setQuickView] = useState<MergedProject | null>(null);
 
-  // projects arrives already sorted featured-first by mergeProjects.
-  const showcase = projects.filter((p) => p.featured).slice(0, MAX_SHOWCASE);
-  const showcaseIds = new Set(showcase.map((p) => p.id));
-  const rest = projects.filter((p) => !showcaseIds.has(p.id));
+  // All three derived together and keyed on `projects` alone. Splitting them meant the memo
+  // depended on a `rest` array rebuilt every render, so it never actually memoised anything
+  // while its dependency list read as though it did.
+  const { showcase, rest, languages } = useMemo(() => {
+    // projects arrives already sorted featured-first by mergeProjects.
+    const lead = projects.filter((p) => p.featured).slice(0, MAX_SHOWCASE);
+    const leadIds = new Set(lead.map((p) => p.id));
+    const others = projects.filter((p) => !leadIds.has(p.id));
 
-  const languages = useMemo(() => {
-    // Counted over `rest` only, so a filter chip's number matches what the grid shows.
+    // Counted over the grid only, so a filter chip's number matches what it reveals.
     const counts = new Map<string, number>();
-    for (const p of rest) {
+    for (const p of others) {
       if (p.language) counts.set(p.language, (counts.get(p.language) ?? 0) + 1);
     }
-    return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-  }, [rest]);
+    return {
+      showcase: lead,
+      rest: others,
+      languages: [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])),
+    };
+  }, [projects]);
 
   const filtered = language === ALL ? rest : rest.filter((p) => p.language === language);
 

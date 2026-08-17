@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useSyncExternalStore } from "react";
 import { DEFAULT_PALETTE, PALETTE_STORAGE_KEY, isPaletteId, type PaletteId } from "@/lib/palettes";
 
 /**
@@ -40,14 +40,21 @@ function applyToDocument(palette: PaletteId): void {
 export function usePalette(): { palette: PaletteId; setPalette: (next: PaletteId) => void } {
   const palette = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
+  // The only place the attribute is written, so it tracks the store rather than just the click.
+  // Without it another tab's `storage` event moved the ticked option but left that tab's
+  // colours on the old palette.
+  useEffect(() => {
+    applyToDocument(palette);
+  }, [palette]);
+
   const setPalette = useCallback((next: PaletteId) => {
     try {
       window.localStorage.setItem(PALETTE_STORAGE_KEY, next);
     } catch {
       // Private browsing can reject writes; the choice still applies for this session.
     }
-    applyToDocument(next);
-    // `storage` does not fire in the originating tab, so notify this one directly.
+    // `storage` does not fire in the originating tab, so notify this one directly; the effect
+    // above then applies it.
     listeners.forEach((l) => l());
   }, []);
 

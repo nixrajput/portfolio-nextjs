@@ -99,6 +99,31 @@ One CLI, many databases.`;
     expect(toExcerpt(md)).toBe("Works with Postgres out of the box.");
   });
 
+  it("decodes HTML entities, which READMEs use freely in prose", () => {
+    // Found live in the mcp-vitest and ai-sdk-threads READMEs, and those are showcase slots
+    // 1 and 2, so undecoded they were the most prominent text on the page.
+    expect(toExcerpt("In-process &middot; both majors at &plusmn;2.3%")).toBe(
+      "In-process \u00b7 both majors at \u00b12.3%",
+    );
+    expect(toExcerpt("A &amp; B &mdash; C")).toBe("A & B - C");
+  });
+
+  it("decodes numeric and hex entities", () => {
+    expect(toExcerpt("see &#8594; it &#x2713;")).toBe("see \u2192 it \u2713");
+  });
+
+  it("leaves an unknown entity alone rather than mangling it", () => {
+    expect(toExcerpt("&copyright; stays")).toBe("&copyright; stays");
+  });
+
+  it("does not let a decoded entity reconstruct a tag", () => {
+    // &lt;script&gt; decodes to <script>, which must not survive as markup even though the
+    // render sink escapes it anyway.
+    expect(toExcerpt("before &lt;script&gt;alert(1)&lt;/script&gt; after")).not.toContain(
+      "<script>",
+    );
+  });
+
   it("returns short input unchanged and without an ellipsis", () => {
     expect(toExcerpt("Short.")).toBe("Short.");
   });

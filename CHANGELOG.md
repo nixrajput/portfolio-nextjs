@@ -15,20 +15,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Appearance popover** replacing the cycling theme button: light/dark/system are all visible, so returning to "system" is one click instead of cycling past the other two.
 - **Project quick view.** A modal per project with cover image, README excerpt, language/stars/forks, tags and a screenshot gallery.
 - **Featured showcase and language filter** in the Projects section: leading featured projects get large cells, everything else drops into a filterable grid with per-language counts.
-- **Project media in the admin panel** — a cover image and up to six ordered screenshots, uploaded to Vercel Blob through a new 1600×1000 pipeline (`uploadProjectMedia`) rather than the 128px icon path.
+- **Project media in the admin panel** - a cover image and up to six ordered screenshots, uploaded to Vercel Blob through a new 1600×1000 pipeline (`uploadProjectMedia`) rather than the 128px icon path.
 - **README excerpts** cached per repo (`github_cache.readme_excerpt`), stripped of badge walls, HTML logo blocks and tables of contents.
-- `bun run check:routes` — asserts every route serves the right **content**, not merely a 200. Covers the homepage, metadata routes, icons and the admin auth gate.
-- `bun run check:vitals` — per-route JS payload and TTFB budgets, measured against a production build. Refuses to measure a dev server or a different site.
-- `bun run check:spell` — cspell over source, scripts and root markdown.
+- `bun run check:routes` - asserts every route serves the right **content**, not merely a 200. Covers the homepage, metadata routes, icons and the admin auth gate.
+- `bun run check:vitals` - per-route JS payload and TTFB budgets, measured against a production build. Refuses to measure a dev server or a different site.
+- `bun run check:spell` - cspell over source, scripts and root markdown.
 - `dependency-review`, `scorecard`, `stale` and `labeler` workflows, matching the rest of the fleet.
 - Removed `public/screenshots/` and `scripts/populate-cache.ts`: the first became unreferenced when the README's screenshots section went, and the second was an undocumented cache warmer that the self-healing backfill makes unnecessary.
 - Palette and theme fields on the bug-report template, and a palette checklist in the PR template: with five palettes and three theme modes a visual report is not reproducible without them.
 
 ### Changed
 
-- **Brand palette consolidated into `src/lib/brand.ts`.** It had been hardcoded across eight files and had already drifted — `manifest.ts` and `global-error.tsx` used `#07070c` as the dark ground while `globals.css` said `#060c0e`. `globals.theme.test.ts` now derives its expectations from `brand.ts`, so the CSS mirror cannot drift silently.
+- **Brand palette consolidated into `src/lib/brand.ts`.** It had been hardcoded across eight files and had already drifted - `manifest.ts` and `global-error.tsx` used `#07070c` as the dark ground while `globals.css` said `#060c0e`. `globals.theme.test.ts` now derives its expectations from `brand.ts`, so the CSS mirror cannot drift silently.
 - Brand tokens renamed to hue-neutral names (`--brand-deep` / `--brand-mid` / `--brand-bright`); the old `violet` / `cyan` / `pink` names had stopped being true at the Glacier rebrand.
-- **Ambient background retuned per theme.** `multiply` on paper accumulates where `lighter` on a near-black ground falls off fast, so one shared alpha could only be right for one of them — light mode had become a full-viewport wash with no focal point. Alphas are now per-theme and blob radii are tighter (0.34–0.42, from 0.46–0.55).
+- **Ambient background retuned per theme.** `multiply` on paper accumulates where `lighter` on a near-black ground falls off fast, so one shared alpha could only be right for one of them - light mode had become a full-viewport wash with no focal point. Alphas are now per-theme and blob radii are tighter (0.34–0.42, from 0.46–0.55).
 - **Years of experience is derived from the experience rows** instead of GitHub's first-contribution year, which measured how long the account had existed and counted hobby years as professional. Label updated to "Years of experience".
 - Pre-push hook extended from lint + format to lint + format + spell + typecheck + tests. The build stays in CI: it is a webpack build needing a live seeded database, and a minute-plus gate teaches people to reach for `--no-verify`.
 - `AGENTS.md` rewritten: the duplicated copy of the global working-discipline rules was removed in favour of project-specific pitfalls.
@@ -37,6 +37,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- README excerpts rendered HTML entities verbatim, so visitors read "&middot;" and "&plusmn;" under "From the README" on the two leading showcase projects. `toExcerpt` now decodes named, numeric and hex entities.
+- A palette chosen in one tab ticked in another tab's menu but left its colours unchanged: the `data-palette` attribute was written only by the click handler, never on a store change. It now tracks the store, which also recovers a stored id the pre-paint allowlist did not know.
+- The `readme_excerpt` backfill could retry forever for a repo that was renamed, deleted or made private: those paths performed no write, so the NULL refresh trigger never cleared.
+- A failed screenshot upload discarded every image already uploaded in the same batch, orphaning them in Blob. Uploads now commit one at a time.
+- Two identical screenshot URLs shared a React key, so removing one deleted both.
+- Bare `[data-palette]` blocks tied with `:root` at specificity (0,1,0) and won only by source order, contradicting the comment above them. They are now `:root[data-palette]`, and the theme test requires the prefix.
+- `check:vitals` measured its `ttfb` field after reading the response body, making it time-to-last-byte, so a larger page reported as a latency regression.
+- Hidden projects were still fetched from GitHub, costing a repo call, a README call and a cache row each for rows the site never renders.
 - README excerpts stayed blank on an existing deployment. The cache only refreshed on a >24h TTL, so rows written before the `readme_excerpt` column existed were served as-is and rendered nothing. A NULL excerpt now counts as stale, which backfills them on the first request after deploy; `""` records "checked, no README" so a repo without one is not refetched forever.
 - Featured projects would not have changed on an already-populated database: `db:seed` returns early when a profile row exists, so editing its featured list only affects a fresh install. Migration `0017` applies the same change to existing data on deploy.
 - A tag duplicating a project's language rendered twice on the card ("Dart Dart" on three projects); the language chip now wins and the duplicate tag is dropped.
@@ -54,7 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [2.0.0] — 2025-01-01
+## [2.0.0] - 2025-01-01
 
 Complete rebuild on Next.js 16 with a database-driven content layer, admin panel, and full CI/test suite. The v1 codebase (Next.js + Sass + static data files) is retired entirely.
 
@@ -64,10 +72,10 @@ Complete rebuild on Next.js 16 with a database-driven content layer, admin panel
 - **React 19** throughout.
 - **Tailwind CSS v4** design system replacing the old Sass setup.
 - **Drizzle ORM + PostgreSQL** (via postgres-js): all portfolio content (profile, projects, experiences, skills, services, social links, taglines, funding links, testimonials) is now stored in and served from a relational database.
-- **Admin panel** at `/admin` — full CRUD for all content types, protected by GitHub OAuth (Auth.js v5). Access restricted to the `ADMIN_GITHUB_LOGIN` GitHub account.
-- **Testimonials feature** — public submission form with optional avatar upload to Vercel Blob, moderation queue in the admin panel, and Resend email notifications to the admin on new submissions.
-- **GitHub cache** — project metadata (stars, forks, descriptions) fetched from the GitHub API server-side and revalidated hourly; enriches DB project rows without exposing the token to the client.
-- **SEO / GEO** — structured metadata, Open Graph, Twitter cards, Google Search Console verification, and `robots.txt` generated from the DB profile row.
+- **Admin panel** at `/admin` - full CRUD for all content types, protected by GitHub OAuth (Auth.js v5). Access restricted to the `ADMIN_GITHUB_LOGIN` GitHub account.
+- **Testimonials feature** - public submission form with optional avatar upload to Vercel Blob, moderation queue in the admin panel, and Resend email notifications to the admin on new submissions.
+- **GitHub cache** - project metadata (stars, forks, descriptions) fetched from the GitHub API server-side and revalidated hourly; enriches DB project rows without exposing the token to the client.
+- **SEO / GEO** - structured metadata, Open Graph, Twitter cards, Google Search Console verification, and `robots.txt` generated from the DB profile row.
 - **Vercel Analytics** and **Google Analytics** integration.
 - **Vitest** unit tests with Testing Library; **Playwright** end-to-end tests.
 - **CI** workflow running lint, type-check, unit tests, and Lighthouse audits on every push.
@@ -79,10 +87,10 @@ Complete rebuild on Next.js 16 with a database-driven content layer, admin panel
 ### Removed
 
 - Sentry error monitoring (not required for a personal portfolio).
-- All static `data/` TypeScript files — content is now DB-driven.
-- Sass / SCSS stylesheets — replaced by Tailwind CSS v4.
+- All static `data/` TypeScript files - content is now DB-driven.
+- Sass / SCSS stylesheets - replaced by Tailwind CSS v4.
 - Poppins font.
-- npm / pnpm / Yarn support — Bun is the only supported package manager.
+- npm / pnpm / Yarn support - Bun is the only supported package manager.
 
 ### Changed
 
@@ -91,7 +99,7 @@ Complete rebuild on Next.js 16 with a database-driven content layer, admin panel
 
 ---
 
-## [1.1.0] — 2024-01-01
+## [1.1.0] - 2024-01-01
 
 Legacy v1 release (Next.js + Sass + static data).
 

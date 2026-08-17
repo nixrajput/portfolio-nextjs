@@ -33,15 +33,15 @@ Please read and follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 Use lowercase, hyphen-separated names that describe the work:
 
-- `feat/<short-description>` — new feature
-- `fix/<short-description>` — bug fix
-- `docs/<short-description>` — documentation only
-- `chore/<short-description>` — maintenance, tooling, deps
-- `refactor/<short-description>` — code restructuring without behaviour change
+- `feat/<short-description>` - new feature
+- `fix/<short-description>` - bug fix
+- `docs/<short-description>` - documentation only
+- `chore/<short-description>` - maintenance, tooling, deps
+- `refactor/<short-description>` - code restructuring without behaviour change
 
 ## Commit messages
 
-This project uses [Conventional Commits](https://www.conventionalcommits.org/). A `.gitmessage` template is committed to the repo — configure it once:
+This project uses [Conventional Commits](https://www.conventionalcommits.org/). A `.gitmessage` template is committed to the repo - configure it once:
 
 ```bash
 git config commit.template .gitmessage
@@ -94,7 +94,7 @@ needs a reachable, seeded database, and a minute-plus gate teaches people to rea
 `--no-verify`.
 
 A failing CI gate will block merge. Every PR must also bump the `version` in
-`package.json` — the `package.json version bumped` check enforces it.
+`package.json` - the `package.json version bumped` check enforces it.
 
 ## Pull request guidelines
 

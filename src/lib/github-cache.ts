@@ -51,6 +51,19 @@ function nullStats(slug: string): CachedRepoStats {
 }
 
 /**
+ * Writes "" over a NULL excerpt when GitHub could not be reached, so the NULL refresh trigger
+ * terminates. Without it a repo that 404s is retried on every single regeneration.
+ */
+async function stampChecked(cached: GithubCache | undefined, repoName: string): Promise<void> {
+  if (!cached || cached.readmeExcerpt !== null) return;
+  try {
+    await db.update(githubCache).set({ readmeExcerpt: "" }).where(eq(githubCache.repo, repoName));
+  } catch {
+    /* never throw from the cache path */
+  }
+}
+
+/**
  * Missing or stale (>24h) rows refresh from GitHub and upsert. Never throws: a rate limit or
  * network error falls back to the existing row, so the section always renders.
  */
@@ -131,9 +144,13 @@ export async function getCachedRepoData(slugs: string[]): Promise<Map<string, Ca
             readmeExcerpt,
           });
         } else {
+          // 404: renamed, deleted or made private. Stamp the row so a NULL excerpt cannot keep
+          // re-triggering the backfill above on every regeneration, forever.
+          await stampChecked(cached, repoName);
           result.set(slug, cached ? rowToStats(cached, slug) : nullStats(slug));
         }
       } catch {
+        await stampChecked(cached, repoName);
         result.set(slug, cached ? rowToStats(cached, slug) : nullStats(slug));
       }
     }),

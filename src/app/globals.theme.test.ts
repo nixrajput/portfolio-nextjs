@@ -77,7 +77,9 @@ describe("globals.css mirrors brand.ts", () => {
         );
         continue;
       }
-      expect(css).toContain(`[data-palette="${id}"] {`);
+      // The :root prefix is the point: a bare [data-palette] ties with :root at (0,1,0) and
+      // would win only by source order.
+      expect(css).toContain(`:root[data-palette="${id}"] {`);
       expect(css).toContain(`[data-palette="${id}"]:not(.dark) {`);
       expect(css).toContain(`[data-palette="${id}"].dark {`);
     }
@@ -88,7 +90,7 @@ describe("globals.css mirrors brand.ts", () => {
     // come from this CSS, so a mismatch would show one colour and apply another.
     for (const { id, ramp } of PALETTES) {
       if (id === DEFAULT_PALETTE) continue;
-      const start = css.indexOf(`[data-palette="${id}"] {`);
+      const start = css.indexOf(`:root[data-palette="${id}"] {`);
       const block = css.slice(start, css.indexOf("}", start));
       const [deep, mid, bright] = ramp;
       expect(block, `${id} deep`).toContain(`--brand-deep: ${deep}`);
@@ -102,6 +104,19 @@ describe("globals.css mirrors brand.ts", () => {
         `--brand-bright-rgb: ${hexToRgb(bright).join(" ")}`,
       );
     }
+  });
+
+  it("keeps the pre-paint allowlist in layout.tsx in step with PALETTES", () => {
+    // layout.tsx hardcodes the ids because the script runs before any module loads. Nothing
+    // else compares the two, so a new palette could be selectable yet never survive a reload.
+    const layout = readFileSync(join(process.cwd(), "src/app/layout.tsx"), "utf-8");
+    const listed = layout.match(/\[((?:'[a-z]+',?\s*)+)\]\.indexOf\(p\)/)?.[1];
+    expect(listed, "pre-paint allowlist not found in layout.tsx").toBeDefined();
+    const ids = [...(listed ?? "").matchAll(/'([a-z]+)'/g)].map((m) => m[1]).sort();
+    const expected = PALETTES.map((p) => p.id)
+      .filter((id) => id !== DEFAULT_PALETTE)
+      .sort();
+    expect(ids).toEqual(expected);
   });
 
   it("defines the font tokens", () => {
