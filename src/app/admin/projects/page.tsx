@@ -29,14 +29,19 @@ const fields: AdminField[] = [
     label: "Cover image",
     type: "image",
     folder: "projects",
-    hint: "Shown in the featured showcase and the quick view. Falls back to the brand gradient.",
+    hint:
+      "Shown in the featured showcase and the quick view; falls back to the brand gradient. " +
+      "Uploads always work. A pasted URL must be on a host listed in next.config.js " +
+      "remotePatterns, or next/image serves it as a broken image on the public site.",
   },
   {
     name: "screenshots",
     label: "Screenshots",
     type: "images",
     max: 6,
-    hint: "Gallery in the quick view. Drag order is the display order.",
+    hint:
+      "Gallery in the quick view, in this order. Uploads always work; a pasted URL must be " +
+      "on a host in next.config.js remotePatterns.",
   },
   {
     name: "order",

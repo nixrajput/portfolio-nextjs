@@ -37,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Years of experience subtracted calendar years, so a career one month old could report a full extra year. It now counts elapsed months. The live figure is unchanged at 5.
+- The quick view's only close button sat on the cover image with no backdrop, so a light cover in light theme made the dismiss control invisible. The cover now carries a top scrim.
 - README excerpts rendered HTML entities verbatim, so visitors read "&middot;" and "&plusmn;" under "From the README" on the two leading showcase projects. `toExcerpt` now decodes named, numeric and hex entities.
 - A palette chosen in one tab ticked in another tab's menu but left its colours unchanged: the `data-palette` attribute was written only by the click handler, never on a store change. It now tracks the store, which also recovers a stored id the pre-paint allowlist did not know.
 - The `readme_excerpt` backfill could retry forever for a repo that was renamed, deleted or made private: those paths performed no write, so the NULL refresh trigger never cleared.

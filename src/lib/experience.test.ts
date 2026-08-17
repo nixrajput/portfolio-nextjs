@@ -25,6 +25,25 @@ describe("professionalYears", () => {
     expect(professionalYears(["May 2021 – Jul 2022"], NOW)).toBe(5);
   });
 
+  it("counts elapsed months, not calendar years", () => {
+    // The bug this replaces: subtracting years alone called a one-month-old career 6 years.
+    expect(professionalYears(["Dec 2020 - Present"], new Date("2026-01-02"))).toBe(5);
+    expect(professionalYears(["Dec 2020 - Present"], new Date("2026-12-02"))).toBe(6);
+  });
+
+  it("reads the month before the year, not a later one in the same period", () => {
+    // "Jan 2020 - Dec 2021" must start in January; a naive month scan finds December.
+    expect(professionalYears(["Jan 2020 - Dec 2021"], new Date("2026-06-01"))).toBe(6);
+  });
+
+  it("treats a year with no month as January", () => {
+    expect(professionalYears(["2021"], new Date("2026-06-01"))).toBe(5);
+  });
+
+  it("picks the earliest by month when two rows share the earliest year", () => {
+    expect(professionalYears(["Nov 2021 - x", "Mar 2021 - y"], new Date("2026-06-01"))).toBe(5);
+  });
+
   it("returns null when there is nothing to derive from, so callers can fall back", () => {
     expect(professionalYears([], NOW)).toBeNull();
     expect(professionalYears(["Present", "ongoing"], NOW)).toBeNull();

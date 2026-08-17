@@ -179,7 +179,8 @@ describe("getProfile", () => {
   // Pin "now" so the derived years figure is deterministic.
   beforeEach(() => {
     vi.useFakeTimers().setSystemTime(new Date("2026-01-01T00:00:00Z"));
-    // Earliest start 2021 → 5 years of professional experience at the pinned date.
+    // Earliest start May 2021 against the pinned 2026-01-01 is 4 years 8 months, so 4 complete
+    // years. professionalYears counts elapsed months, not calendar-year subtraction.
     _setPeriodRows([{ period: "Jul 2024 – Present" }, { period: "May 2021 – Jul 2022" }]);
   });
   afterEach(() => vi.useRealTimers());
@@ -209,7 +210,7 @@ describe("getProfile", () => {
     expect(result.name).toBe("Nikhil Rajput");
     expect(result.roles).toEqual(["Developer", "Designer"]);
     // repos/stars/followers from the live cache; years from the experience rows.
-    expect(result.stats).toEqual({ years: 5, repos: 72, stars: 340, followers: 112 });
+    expect(result.stats).toEqual({ years: 4, repos: 72, stars: 340, followers: 112 });
   });
 
   it("returns empty roles and defaults from column defaults", async () => {
@@ -236,7 +237,7 @@ describe("getProfile", () => {
     // A missing avatar falls back to the bundled asset so the hero never breaks.
     expect(result.avatarUrl).toBe("/images/nikhil.png");
     expect(result.resumeUrl).toBe("");
-    expect(result.stats).toEqual({ years: 5, repos: 9, stars: 11, followers: 5 });
+    expect(result.stats).toEqual({ years: 4, repos: 9, stars: 11, followers: 5 });
   });
 
   it("falls back to the seeded GitHub stats when the cache is empty, but keeps derived years", async () => {
@@ -256,7 +257,7 @@ describe("getProfile", () => {
       },
     ]);
     const result = await getProfile();
-    expect(result.stats).toEqual({ years: 5, repos: 60, stars: 250, followers: 42 });
+    expect(result.stats).toEqual({ years: 4, repos: 60, stars: 250, followers: 42 });
   });
 
   it("falls back to the seeded years only when no experience row yields a start year", async () => {

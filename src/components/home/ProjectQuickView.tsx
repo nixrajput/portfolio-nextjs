@@ -53,10 +53,16 @@ export function ProjectQuickView({
           ) : (
             <div className="size-full bg-(image:--gradient-brand) opacity-80" />
           )}
+          {/* DialogContent's close button sits at top-4 right-4 with no backdrop of its own, so
+              over an arbitrary cover photo it can vanish. This guarantees its contrast. */}
+          <div
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/45 to-transparent"
+          />
         </div>
 
         <DialogHeader>
-          <div className="flex items-start justify-between gap-3 pr-8">
+          <div className="flex items-start justify-between gap-3">
             <DialogTitle>{project.title}</DialogTitle>
             <div className="text-muted flex shrink-0 items-center gap-3 text-sm">
               <span className="flex items-center gap-1" aria-label={`${project.stars ?? 0} stars`}>
