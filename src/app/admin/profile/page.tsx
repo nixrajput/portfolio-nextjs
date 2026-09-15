@@ -3,7 +3,7 @@ import { profile } from "@/db/schema";
 import { updateProfile } from "../actions";
 import { AdminPageHeader } from "@/components/admin/AdminPageHeader";
 import { Panel, Field, Input, Textarea, SubmitButton } from "@/components/admin/ui";
-import { ImageUploadField } from "@/components/admin/ImageUploadField";
+import { AvatarField } from "@/components/admin/AvatarField";
 
 export const dynamic = "force-dynamic";
 
@@ -39,6 +39,8 @@ export default async function ProfileEditor() {
 
       <Panel>
         <form action={action} className="flex flex-col gap-4">
+          <AvatarField name="avatarUrl" defaultValue={row?.avatarUrl ?? ""} />
+
           <Field label="Name">
             <Input name="name" defaultValue={row?.name} placeholder="Name" />
           </Field>
@@ -60,18 +62,6 @@ export default async function ProfileEditor() {
           </Field>
           <Field label="Resume URL" hint="Full https URL to your resume/CV.">
             <Input name="resumeUrl" defaultValue={row?.resumeUrl ?? ""} placeholder="https://…" />
-          </Field>
-          <Field
-            label="Avatar"
-            hint="Upload a portrait or paste an image URL. Shown in the About section."
-          >
-            <ImageUploadField
-              name="avatarUrl"
-              folder="avatar"
-              defaultValue={row?.avatarUrl ?? ""}
-              placeholder="https://… or upload a portrait"
-              previewRounded="rounded-full"
-            />
           </Field>
           <Field
             label="Hero tagline"

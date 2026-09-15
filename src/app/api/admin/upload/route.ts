@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { BLOB_FOLDERS, uploadIcon, uploadProjectMedia, type BlobFolder } from "@/lib/blob";
+import {
+  BLOB_FOLDERS,
+  uploadAvatar,
+  uploadIcon,
+  uploadProjectMedia,
+  type BlobFolder,
+} from "@/lib/blob";
 
 export const runtime = "nodejs"; // sharp requires the Node runtime
 
@@ -34,12 +40,14 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // Project media needs a much larger box than an icon: uploadIcon fits inside 128px,
-    // which is correct for a skill icon and would reduce a screenshot to a thumbnail.
+    // Each folder gets its own box: uploadIcon fits inside 128px, which is correct for a skill
+    // icon and would reduce a screenshot to a thumbnail or a portrait to a blur.
     const url =
       folder === BLOB_FOLDERS.projects
         ? await uploadProjectMedia(file)
-        : await uploadIcon(file, folder);
+        : folder === BLOB_FOLDERS.avatar
+          ? await uploadAvatar(file)
+          : await uploadIcon(file, folder);
     return NextResponse.json({ url }, { status: 201 });
   } catch (err) {
     // Surface the size/type validation message without leaking internals.

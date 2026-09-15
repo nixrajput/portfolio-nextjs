@@ -62,6 +62,23 @@ export async function updateProfile(input: ProfileInput): Promise<void> {
   revalidatePortfolio();
 }
 
+/**
+ * The avatar commits on upload instead of on form submit, so it needs an action of its own.
+ * Reuses the full schema's own rule for the field: httpUrl rejects javascript:/data:, which this
+ * value reaches an <img src> as.
+ */
+export async function setProfileAvatar(url: string | null): Promise<void> {
+  await requireAdmin();
+  const avatarUrl = profileInsertSchema.shape.avatarUrl.parse(url || null) ?? null;
+  const [existing] = await db.select({ id: profile.id }).from(profile).limit(1);
+  if (!existing) return;
+  await db
+    .update(profile)
+    .set({ avatarUrl, updatedAt: new Date() })
+    .where(eq(profile.id, existing.id));
+  revalidatePortfolio();
+}
+
 // Save the homepage section-visibility map (dashboard Save button). Merges the
 // submitted keys into the existing map so any section not in the form keeps its
 // state.

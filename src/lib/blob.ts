@@ -29,6 +29,7 @@ type ResizeOptions = {
   height: number;
   /** "cover" center-crops to the box; "inside" preserves aspect within it. */
   fit?: "cover" | "inside";
+  quality?: number;
 };
 
 /**
@@ -53,7 +54,7 @@ export async function optimizeAndUploadImage(
       fit: resize.fit ?? "cover",
       position: "center",
     })
-    .webp({ quality: 80 })
+    .webp({ quality: resize.quality ?? 80 })
     .toBuffer();
 
   const key = `${folder}/${crypto.randomUUID()}.webp`;
@@ -66,6 +67,16 @@ export async function optimizeAndUploadImage(
   return blob.url;
 }
 
+async function putRawSvg(file: File, folder: BlobFolder): Promise<string> {
+  const key = `${folder}/${crypto.randomUUID()}.svg`;
+  const blob = await put(key, Buffer.from(await file.arrayBuffer()), {
+    access: "public",
+    contentType: SVG_TYPE,
+    token: process.env.BLOB_READ_WRITE_TOKEN,
+  });
+  return blob.url;
+}
+
 /**
  * Upload an icon-style image (skill icons, etc.). SVGs are stored raw so they
  * stay crisp at any size; raster formats are resized + re-encoded to WebP via
@@ -75,17 +86,27 @@ export async function uploadIcon(file: File, folder: BlobFolder): Promise<string
   if (file.size > MAX_BYTES) {
     throw new Error("Image too large (max 5MB)");
   }
-  if (file.type === SVG_TYPE) {
-    const key = `${folder}/${crypto.randomUUID()}.svg`;
-    const blob = await put(key, Buffer.from(await file.arrayBuffer()), {
-      access: "public",
-      contentType: SVG_TYPE,
-      token: process.env.BLOB_READ_WRITE_TOKEN,
-    });
-    return blob.url;
-  }
+  if (file.type === SVG_TYPE) return putRawSvg(file, folder);
   // Raster icons: fit inside a 128px box (preserve aspect), WebP.
   return optimizeAndUploadImage(file, folder, { width: 128, height: 128, fit: "inside" });
+}
+
+/**
+ * Profile portrait. Deliberately NOT uploadIcon: its 128px box is right for a skill icon and is
+ * what made the rendered avatar blurry - About displays it at up to 384 CSS px, so ~768 real
+ * pixels on a 2x screen. `inside` keeps the uploaded aspect; the card crops via CSS object-cover.
+ */
+export async function uploadAvatar(file: File): Promise<string> {
+  if (file.size > MAX_BYTES) {
+    throw new Error("Image too large (max 5MB)");
+  }
+  if (file.type === SVG_TYPE) return putRawSvg(file, BLOB_FOLDERS.avatar);
+  return optimizeAndUploadImage(file, BLOB_FOLDERS.avatar, {
+    width: 1024,
+    height: 1024,
+    fit: "inside",
+    quality: 90,
+  });
 }
 
 /**

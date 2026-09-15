@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useAnnounceValue } from "@/hooks/useAnnounceValue";
 import Image from "next/image";
 import { UploadCloud, Loader2, X, ArrowLeft, ArrowRight } from "lucide-react";
 
@@ -22,6 +23,8 @@ export function MultiImageUploadField({
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+  const serialized = JSON.stringify(urls);
+  const hiddenRef = useAnnounceValue(serialized);
 
   const atLimit = urls.length >= max;
 
@@ -60,7 +63,7 @@ export function MultiImageUploadField({
 
   return (
     <div className="flex flex-col gap-2">
-      <input type="hidden" name={name} value={JSON.stringify(urls)} readOnly />
+      <input ref={hiddenRef} type="hidden" name={name} value={serialized} readOnly />
 
       {urls.length > 0 && (
         <ul className="flex flex-col gap-2">

@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { UploadCloud, Loader2 } from "lucide-react";
 import { cn } from "@/utils/cn";
+import { useAnnounceValue } from "@/hooks/useAnnounceValue";
 
 /**
  * Upload a file or paste a URL; either way the result lands in a hidden input named `name`, so
@@ -26,6 +27,7 @@ export function ImageUploadField({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const hiddenRef = useAnnounceValue(url);
 
   async function onFile(file: File) {
     setError(null);
@@ -48,7 +50,7 @@ export function ImageUploadField({
   return (
     <div className="flex flex-col gap-2">
       {/* The value the form actually submits. */}
-      <input type="hidden" name={name} value={url} readOnly />
+      <input ref={hiddenRef} type="hidden" name={name} value={url} readOnly />
 
       <div className="flex items-center gap-3">
         {url ? (
@@ -58,8 +60,16 @@ export function ImageUploadField({
               previewRounded,
             )}
           >
-            {/* unoptimized: url may be an external CDN or raw SVG */}
-            <Image src={url} alt="" fill sizes="48px" className="object-contain p-1" unoptimized />
+            {/* unoptimized: url may be an external CDN or raw SVG. A portrait is cropped to fill
+                the box; an icon is contained so a logo is never cut. */}
+            <Image
+              src={url}
+              alt=""
+              fill
+              sizes="48px"
+              className={folder === "avatar" ? "object-cover" : "object-contain p-1"}
+              unoptimized
+            />
           </span>
         ) : (
           <span

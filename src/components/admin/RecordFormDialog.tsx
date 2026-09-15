@@ -17,6 +17,7 @@ import {
   Select,
   CheckboxField,
   gradientButtonBase,
+  SubmitButton,
 } from "@/components/admin/ui";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import { MultiImageUploadField } from "@/components/admin/MultiImageUploadField";
@@ -207,9 +208,7 @@ export function RecordFormDialog({
               </div>
             </DialogBody>
             <DialogFooter>
-              <button type="submit" className={cn(gradientButtonBase, "w-full px-4 py-2.5")}>
-                {mode === "create" ? "Create" : "Save changes"}
-              </button>
+              <SubmitButton>{mode === "create" ? "Create" : "Save changes"}</SubmitButton>
             </DialogFooter>
           </form>
         </DialogContent>
