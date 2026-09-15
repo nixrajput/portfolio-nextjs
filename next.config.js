@@ -36,6 +36,8 @@ const nextConfig = {
     ];
   },
   images: {
+    // 90 for the About portrait: it renders large enough that the default 75 shows artefacts.
+    qualities: [75, 90],
     remotePatterns: [
       { protocol: "https", hostname: "**.githubusercontent.com" },
       { protocol: "https", hostname: "**.github.com" },

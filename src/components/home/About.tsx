@@ -1,6 +1,5 @@
-import Image from "next/image";
 import { Reveal } from "@/components/motion/Reveal";
-import { Parallax } from "@/components/motion/Parallax";
+import { AvatarPortrait } from "./AvatarPortrait";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Card } from "@/components/ui/Card";
 import { AnimatedStat } from "./AnimatedStat";
@@ -74,22 +73,7 @@ export function About({ profile }: { profile: AboutProfile }) {
 
           {profile.avatarUrl && (
             <Reveal delay={0.14} className="mx-auto shrink-0 md:mx-0">
-              <Parallax strength={28} className="group relative">
-                {/* Gradient halo behind the portrait */}
-                <div
-                  aria-hidden
-                  className="absolute -inset-3 rounded-4xl bg-(image:--gradient-brand) opacity-25 blur-2xl transition-opacity duration-500 group-hover:opacity-45"
-                />
-                <div className="border-border relative aspect-4/5 w-56 overflow-hidden rounded-3xl border backdrop-blur-sm sm:w-64">
-                  <Image
-                    src={profile.avatarUrl}
-                    alt={`Portrait of ${profile.name ?? "Nikhil Rajput"}`}
-                    fill
-                    sizes="(max-width: 640px) 224px, 256px"
-                    className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
-                  />
-                </div>
-              </Parallax>
+              <AvatarPortrait src={profile.avatarUrl} name={profile.name ?? "Nikhil Rajput"} />
             </Reveal>
           )}
         </div>

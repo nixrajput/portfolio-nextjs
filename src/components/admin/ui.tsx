@@ -10,6 +10,7 @@ import { gradientButtonBase } from "@/components/admin/styles";
 
 // Re-export so existing `@/components/admin/ui` consumers keep working.
 export { gradientButtonBase };
+export { SubmitButton } from "@/components/admin/SubmitButton";
 
 // Admin UI primitives, built on the same semantic tokens as the public site.
 
@@ -101,15 +102,6 @@ export function Panel({
       ) : null}
       {children}
     </section>
-  );
-}
-
-/** Full-width gradient submit button for admin forms. */
-export function SubmitButton({ children }: { children: ReactNode }) {
-  return (
-    <button type="submit" className={cn(gradientButtonBase, "w-full px-4 py-2.5")}>
-      {children}
-    </button>
   );
 }
 

@@ -13,10 +13,9 @@ import { Hero } from "@/components/home/Hero";
 import { SiteNav } from "@/components/navbar/SiteNav";
 import { Footer } from "@/components/layout/Footer";
 
-// ISR: prerendered at build time, so the build needs a reachable database.
-// 60s not 3600s because a cached page runs no server code, so this window decides how soon a
-// load can notice the 24h GitHub TTL expired - at 3600 the real interval became ~25h.
-export const revalidate = 60;
+// ISR: prerendered at build time, so the build needs a reachable database. 12h is a Neon compute
+// budget decision, not a freshness one - admin saves publish immediately. See AGENTS.md.
+export const revalidate = 43200;
 
 // Below-the-fold sections: lazy-loaded to keep the hero bundle lean.
 // Note: These are Server Components — next/dynamic with ssr:true (default)
