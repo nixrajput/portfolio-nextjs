@@ -20,6 +20,8 @@ export default async function ProfileEditor() {
       .split(/[\n,]/)
       .map((r) => r.trim())
       .filter(Boolean);
+    // avatarUrl is deliberately absent: AvatarField owns that column and writes it on upload.
+    // Zod drops the absent optional, so Drizzle leaves the column alone rather than nulling it.
     await updateProfile({
       name: String(formData.get("name")),
       bio: String(formData.get("bio")),
@@ -28,7 +30,6 @@ export default async function ProfileEditor() {
       // Visibility is managed on the dashboard; preserve it unchanged on save.
       sectionVisibility: row?.sectionVisibility ?? {},
       resumeUrl: (formData.get("resumeUrl") as string) || null,
-      avatarUrl: (formData.get("avatarUrl") as string) || null,
       heroTagline: (formData.get("heroTagline") as string) || null,
     });
   }
@@ -39,7 +40,7 @@ export default async function ProfileEditor() {
 
       <Panel>
         <form action={action} className="flex flex-col gap-4">
-          <AvatarField name="avatarUrl" defaultValue={row?.avatarUrl ?? ""} />
+          <AvatarField defaultValue={row?.avatarUrl ?? ""} />
 
           <Field label="Name">
             <Input name="name" defaultValue={row?.name} placeholder="Name" />

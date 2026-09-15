@@ -37,6 +37,7 @@ import {
 } from "@/lib/schemas";
 import { auth } from "@/auth";
 import { revalidatePortfolio } from "@/lib/revalidate";
+import { isAllowedImageHost } from "@/lib/image-hosts";
 
 async function requireAdmin() {
   const session = await auth();
@@ -63,15 +64,20 @@ export async function updateProfile(input: ProfileInput): Promise<void> {
 }
 
 /**
- * The avatar commits on upload instead of on form submit, so it needs an action of its own.
- * Reuses the full schema's own rule for the field: httpUrl rejects javascript:/data:, which this
- * value reaches an <img src> as.
+ * The avatar commits on upload instead of on form submit, so it needs an action of its own. It is
+ * the only writer of this column - the profile form no longer submits it, which is what stops a
+ * Save mid-upload from putting the previous URL back.
  */
 export async function setProfileAvatar(url: string | null): Promise<void> {
   await requireAdmin();
+  // httpUrl rejects javascript:/data:, which this value reaches an <img src> as.
   const avatarUrl = profileInsertSchema.shape.avatarUrl.parse(url || null) ?? null;
+  // Rejected here rather than on render: a bad host fails silently on the public page only.
+  if (avatarUrl && !isAllowedImageHost(avatarUrl)) {
+    throw new Error("That image host is not allowed. Upload the file instead of linking to it.");
+  }
   const [existing] = await db.select({ id: profile.id }).from(profile).limit(1);
-  if (!existing) return;
+  if (!existing) throw new Error("No profile row to attach an avatar to. Seed the profile first.");
   await db
     .update(profile)
     .set({ avatarUrl, updatedAt: new Date() })

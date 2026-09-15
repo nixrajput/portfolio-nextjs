@@ -13,11 +13,11 @@ const SHAPE = "rounded-[2rem_0.6rem_2rem_0.6rem]";
 type Status = { kind: "idle" | "saved" | "error"; message?: string };
 
 /**
- * Commits through setProfileAvatar on upload rather than waiting for the form's Save, so it does
- * not announce itself to admin/SubmitButton - already saved is not dirty. Still submits a hidden
- * input, or a later Save would blank the avatar it never knew about.
+ * Sole writer of profile.avatarUrl: commits through setProfileAvatar on upload rather than joining
+ * the form. It submits no field at all, so a Save fired mid-upload cannot put the previous URL
+ * back, and it stays invisible to admin/SubmitButton because already-saved is not dirty.
  */
-export function AvatarField({ name, defaultValue = "" }: { name: string; defaultValue?: string }) {
+export function AvatarField({ defaultValue = "" }: { defaultValue?: string }) {
   const [url, setUrl] = useState(defaultValue);
   const [draftUrl, setDraftUrl] = useState("");
   const [open, setOpen] = useState(false);
@@ -65,8 +65,6 @@ export function AvatarField({ name, defaultValue = "" }: { name: string; default
     // Column with items-center, not a row: a flex row stretches its children, which overrode the
     // preview's aspect ratio and made it grow taller every time the panel opened.
     <div className="border-border bg-surface-2/40 flex flex-col items-center gap-4 rounded-xl border p-5">
-      <input type="hidden" name={name} value={url} readOnly />
-
       {/* Shape, ratio and object-cover all match About, so this is the crop that ships.
           type="button" matters: it sits inside the profile form. */}
       <button
