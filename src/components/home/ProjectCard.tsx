@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Meteors } from "@/components/ui/Meteors";
 import type { MergedProject } from "@/lib/projects";
+import { pluralize } from "@/utils/plural";
 
 export type { MergedProject };
 
@@ -43,10 +44,16 @@ export function ProjectCard({
         <div className="flex items-start justify-between gap-3">
           <h3 className="text-lg leading-snug font-bold">{project.title}</h3>
           <div className="text-muted flex shrink-0 items-center gap-3 text-sm">
-            <span className="flex items-center gap-1" aria-label={`${project.stars ?? 0} stars`}>
+            <span
+              className="flex items-center gap-1"
+              aria-label={pluralize(project.stars ?? 0, "star")}
+            >
               <Star className="size-4" aria-hidden /> {project.stars ?? "—"}
             </span>
-            <span className="flex items-center gap-1" aria-label={`${project.forks ?? 0} forks`}>
+            <span
+              className="flex items-center gap-1"
+              aria-label={pluralize(project.forks ?? 0, "fork")}
+            >
               <GitFork className="size-4" aria-hidden /> {project.forks ?? "—"}
             </span>
           </div>

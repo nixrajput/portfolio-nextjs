@@ -1,6 +1,7 @@
 import { SITE } from "@/lib/seo/site";
 import { getProfile, getProjectsMerged, getExperiences, getSkills, getFaqs } from "@/lib/queries";
 import type { SkillRow } from "@/lib/queries";
+import { pluralize } from "@/utils/plural";
 
 export const dynamic = "force-static";
 
@@ -33,7 +34,7 @@ export async function GET() {
   const projectLines = projects
     .map((p) => {
       const url = p.htmlUrl ?? `https://github.com/nixrajput/${p.repo}`;
-      const stats = p.stars === null ? "" : ` (${p.stars} GitHub stars)`;
+      const stats = p.stars === null ? "" : ` (${pluralize(p.stars, "GitHub star")})`;
       const tags = p.tags.length ? ` Tags: ${p.tags.join(", ")}.` : "";
       return `- **${p.title}**${p.featured ? " (featured)" : ""} - ${p.description ?? ""}${stats} - ${url}.${tags}`;
     })

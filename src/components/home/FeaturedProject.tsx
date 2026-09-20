@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Star, GitFork, ExternalLink, Github, Maximize2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import type { MergedProject } from "@/lib/projects";
+import { pluralize } from "@/utils/plural";
 
 /**
  * Large showcase cell for a featured project. Sits above the filterable grid so the
@@ -43,10 +44,16 @@ export function FeaturedProject({
         <div className="text-muted mb-3 flex items-center gap-3 text-xs font-semibold tracking-wider uppercase">
           <span className="text-(--accent-on-chip)">Featured</span>
           <span aria-hidden>·</span>
-          <span className="flex items-center gap-1" aria-label={`${project.stars ?? 0} stars`}>
+          <span
+            className="flex items-center gap-1"
+            aria-label={pluralize(project.stars ?? 0, "star")}
+          >
             <Star className="size-3.5" aria-hidden /> {project.stars ?? "—"}
           </span>
-          <span className="flex items-center gap-1" aria-label={`${project.forks ?? 0} forks`}>
+          <span
+            className="flex items-center gap-1"
+            aria-label={pluralize(project.forks ?? 0, "fork")}
+          >
             <GitFork className="size-3.5" aria-hidden /> {project.forks ?? "—"}
           </span>
         </div>
