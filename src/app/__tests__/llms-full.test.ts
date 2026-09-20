@@ -60,9 +60,15 @@ describe("llms-full.txt", () => {
     expect(text).toContain("### Who is Nikhil Rajput?");
   });
 
-  it("omits sections the admin has hidden, like the homepage does", async () => {
+  it("omits a hidden section entirely, heading included", async () => {
     const text = await (await GET()).text();
     expect(text).not.toContain("Should not render");
+    // The heading is the part a status or substring check misses: an empty section still
+    // renders "## Tech Stack" with nothing under it and reads as missing data.
+    expect(text).not.toContain("## Tech Stack");
+    expect(text).toContain("## Projects");
+    expect(text).toContain("## Experience");
+    expect(text).toContain("## FAQ");
   });
 
   it("carries no hand-typed figures or projects", async () => {
@@ -70,5 +76,38 @@ describe("llms-full.txt", () => {
     for (const stale of ["1 000+", "100 000+", "nx-admin", "NixLab Blog", "five years"]) {
       expect(text).not.toContain(stale);
     }
+  });
+});
+
+describe("llms-full.txt with every optional section hidden", () => {
+  it("drops those headings and still renders the fixed sections", async () => {
+    vi.resetModules();
+    vi.doMock("@/lib/queries", () => ({
+      getProfile: async () => ({
+        name: "Nikhil Rajput",
+        bio: "Bio paragraph from the database.",
+        roles: ["SDE-1"],
+        avatarUrl: "",
+        resumeUrl: "",
+        heroTagline: null,
+        sectionVisibility: { skills: false, projects: false, experience: false, faq: false },
+        stats: { years: 5, repos: 77, stars: 631, followers: 114 },
+      }),
+      getProjectsMerged: async () => [],
+      getExperiences: async () => [],
+      getSkills: async () => [],
+      getFaqs: async () => [],
+    }));
+    const { GET: gated } = await import("../llms-full.txt/route");
+    const text = await (await gated()).text();
+
+    for (const heading of ["## Tech Stack", "## Projects", "## Experience", "## FAQ"]) {
+      expect(text).not.toContain(heading);
+    }
+    expect(text).toContain("## By the numbers");
+    expect(text).toContain("## Open-Source");
+    expect(text).toContain("## Contact");
+    // No heading may be left with a blank body, whichever sections are on.
+    expect(text).not.toMatch(/^## .+\n\n(?=## )/m);
   });
 });

@@ -4,6 +4,11 @@ import type { SkillRow } from "@/lib/queries";
 
 export const dynamic = "force-static";
 
+/** Heading plus body, or nothing: a hidden or empty section must not leave a bare heading. */
+function section(heading: string, content: string): string {
+  return content ? `## ${heading}\n\n${content}\n\n` : "";
+}
+
 function groupSkills(skills: SkillRow[]): string {
   const groups = new Map<string, string[]>();
   for (const s of skills) groups.set(s.category, [...(groups.get(s.category) ?? []), s.name]);
@@ -20,10 +25,29 @@ export async function GET() {
     show("projects") ? getProjectsMerged() : Promise.resolve([]),
     show("experience") ? getExperiences() : Promise.resolve([]),
     show("skills") ? getSkills() : Promise.resolve([]),
-    getFaqs(),
+    show("faq") ? getFaqs() : Promise.resolve([]),
   ]);
   const current = experiences.find((e) => e.isCurrent);
   const { years, repos, stars, followers } = profile.stats;
+
+  const projectLines = projects
+    .map((p) => {
+      const url = p.htmlUrl ?? `https://github.com/nixrajput/${p.repo}`;
+      const stats = p.stars === null ? "" : ` (${p.stars} GitHub stars)`;
+      const tags = p.tags.length ? ` Tags: ${p.tags.join(", ")}.` : "";
+      return `- **${p.title}**${p.featured ? " (featured)" : ""} - ${p.description ?? ""}${stats} - ${url}.${tags}`;
+    })
+    .join("\n");
+
+  const experienceLines = experiences
+    .map((e) => {
+      const where = e.location ? `, ${e.location}` : "";
+      const bullets = e.description.map((d) => `  - ${d}`).join("\n");
+      return `- **${e.role}** - ${e.org}${where} · ${e.period}${bullets ? `\n${bullets}` : ""}`;
+    })
+    .join("\n");
+
+  const faqLines = faqs.map((f) => `### ${f.question}\n${f.answer}`).join("\n\n");
 
   const body = `# ${SITE.name} - Full Profile
 
@@ -48,32 +72,7 @@ ${profile.bio}
 - **GitHub stars across owned repositories:** ${stars}
 - **GitHub followers:** ${followers}
 
-## Tech Stack
-
-${groupSkills(skills)}
-
-## Projects
-
-${projects
-  .map((p) => {
-    const url = p.htmlUrl ?? `https://github.com/nixrajput/${p.repo}`;
-    const stats = p.stars === null ? "" : ` (${p.stars} GitHub stars)`;
-    const tags = p.tags.length ? ` Tags: ${p.tags.join(", ")}.` : "";
-    return `- **${p.title}**${p.featured ? " (featured)" : ""} - ${p.description ?? ""}${stats} - ${url}.${tags}`;
-  })
-  .join("\n")}
-
-## Experience
-
-${experiences
-  .map((e) => {
-    const where = e.location ? `, ${e.location}` : "";
-    const bullets = e.description.map((d) => `  - ${d}`).join("\n");
-    return `- **${e.role}** - ${e.org}${where} · ${e.period}${bullets ? `\n${bullets}` : ""}`;
-  })
-  .join("\n")}
-
-## Open-Source
+${section("Tech Stack", groupSkills(skills))}${section("Projects", projectLines)}${section("Experience", experienceLines)}## Open-Source
 
 GitHub: https://github.com/nixrajput
 
@@ -86,11 +85,7 @@ Nikhil is open to:
 
 He is not actively job-seeking but welcomes conversations about interesting projects.
 
-## FAQ
-
-${faqs.map((f) => `### ${f.question}\n${f.answer}`).join("\n\n")}
-
-## Contact
+${section("FAQ", faqLines)}## Contact
 
 - Site: ${SITE.url}
 - Email: via the Contact section at ${SITE.url}/#contact
