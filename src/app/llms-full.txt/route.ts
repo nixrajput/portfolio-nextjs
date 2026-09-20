@@ -1,71 +1,80 @@
 import { SITE } from "@/lib/seo/site";
-import { getFaqs } from "@/lib/queries";
+import { getProfile, getProjectsMerged, getExperiences, getSkills, getFaqs } from "@/lib/queries";
+import type { SkillRow } from "@/lib/queries";
 
 export const dynamic = "force-static";
 
+/** Heading plus body, or nothing: a hidden or empty section must not leave a bare heading. */
+function section(heading: string, content: string): string {
+  return content ? `## ${heading}\n\n${content}\n\n` : "";
+}
+
+function groupSkills(skills: SkillRow[]): string {
+  const groups = new Map<string, string[]>();
+  for (const s of skills) groups.set(s.category, [...(groups.get(s.category) ?? []), s.name]);
+  return [...groups]
+    .map(([category, names]) => `### ${category}\n- ${names.join(", ")}`)
+    .join("\n\n");
+}
+
 export async function GET() {
-  const faqs = await getFaqs();
+  // Same source as the homepage, so this file cannot drift from what the site shows.
+  const profile = await getProfile();
+  const show = (id: string) => profile.sectionVisibility[id] !== false;
+  const [projects, experiences, skills, faqs] = await Promise.all([
+    show("projects") ? getProjectsMerged() : Promise.resolve([]),
+    show("experience") ? getExperiences() : Promise.resolve([]),
+    show("skills") ? getSkills() : Promise.resolve([]),
+    show("faq") ? getFaqs() : Promise.resolve([]),
+  ]);
+  const current = experiences.find((e) => e.isCurrent);
+  const { years, repos, stars, followers } = profile.stats;
+
+  const projectLines = projects
+    .map((p) => {
+      const url = p.htmlUrl ?? `https://github.com/nixrajput/${p.repo}`;
+      const stats = p.stars === null ? "" : ` (${p.stars} GitHub stars)`;
+      const tags = p.tags.length ? ` Tags: ${p.tags.join(", ")}.` : "";
+      return `- **${p.title}**${p.featured ? " (featured)" : ""} - ${p.description ?? ""}${stats} - ${url}.${tags}`;
+    })
+    .join("\n");
+
+  const experienceLines = experiences
+    .map((e) => {
+      const where = e.location ? `, ${e.location}` : "";
+      const bullets = e.description.map((d) => `  - ${d}`).join("\n");
+      return `- **${e.role}** - ${e.org}${where} · ${e.period}${bullets ? `\n${bullets}` : ""}`;
+    })
+    .join("\n");
+
+  const faqLines = faqs.map((f) => `### ${f.question}\n${f.answer}`).join("\n\n");
+
   const body = `# ${SITE.name} - Full Profile
 
 > ${SITE.description}
 
 ## Identity
 
-- **Name:** Nikhil Rajput
+- **Name:** ${profile.name}
 - **Handle:** nixrajput
-- **Role:** Software Development Engineer (SDE) & AI Lead
-- **Based in:** India
+- **Role:** ${profile.roles.join(" · ")}
+${current ? `- **Currently:** ${current.role} at ${current.org} (${current.period})\n` : ""}- **Based in:** India
 - **Founder of:** NixLab - a personal software studio for open-source tools and products
 
 ## Bio
 
-Nikhil Rajput is a Software Development Engineer and AI Lead from India with over five years of professional experience building web and mobile products. He focuses on full-stack development, performance engineering, and developer tooling.
+${profile.bio}
 
-He is the founder of NixLab, under which he maintains open-source packages used by thousands of developers worldwide - including flutter_carousel_widget (Flutter widget library), get_time_ago (time formatting library), and Rippl (a social networking platform).
+## By the numbers
 
-## Tech Stack
+- **Years of professional experience:** ${years}
+- **Public repositories:** ${repos}
+- **GitHub stars across owned repositories:** ${stars}
+- **GitHub followers:** ${followers}
 
-### Front-end
-- TypeScript, JavaScript
-- React, Next.js
-- Flutter, Dart
-- Tailwind CSS
-
-### Back-end
-- Node.js, Express
-- REST APIs, GraphQL
-
-### Data
-- PostgreSQL, Drizzle ORM
-- MongoDB
-
-### Tooling
-- Git, GitHub Actions, Vercel, Docker
-
-## Featured Projects
-
-1. **Rippl** - A social networking platform built with Flutter and Node.js; real-time feeds, image uploads, and social graph.
-2. **flutter_carousel_widget** - A fully customisable Flutter carousel widget with 1 000+ GitHub stars and 100 000+ pub.dev downloads.
-3. **get_time_ago** - A lightweight Dart/Flutter library for human-readable relative timestamps; supports 20+ locales.
-4. **NixLab Blog** - A Next.js + MDX blog with syntax highlighting, RSS, and OpenGraph image generation.
-5. **Portfolio (this site)** - Full-stack Next.js 16 portfolio with DB-driven content, server-rendered GitHub stats, testimonials, and FAQPage JSON-LD.
-6. **nx-admin** - A React-based admin dashboard template with TypeScript, Role-based access control, and a component library.
-
-## Experience Summary
-
-- 5+ years building full-stack products across web and mobile
-- Led AI integration initiatives and internal tooling at scale
-- Maintains open-source libraries with combined 100 000+ monthly downloads
-- Regular contributor to the Flutter and React ecosystems
-
-## Open-Source
+${section("Tech Stack", groupSkills(skills))}${section("Projects", projectLines)}${section("Experience", experienceLines)}## Open-Source
 
 GitHub: https://github.com/nixrajput
-
-Highlights:
-- flutter_carousel_widget - 1 000+ stars, 100 000+ downloads
-- get_time_ago - 20+ locale support
-- Rippl social platform - Flutter + Node.js
 
 ## Availability
 
@@ -76,11 +85,7 @@ Nikhil is open to:
 
 He is not actively job-seeking but welcomes conversations about interesting projects.
 
-## FAQ
-
-${faqs.map((f) => `### ${f.question}\n${f.answer}`).join("\n\n")}
-
-## Contact
+${section("FAQ", faqLines)}## Contact
 
 - Site: ${SITE.url}
 - Email: via the Contact section at ${SITE.url}/#contact
