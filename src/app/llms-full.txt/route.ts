@@ -33,7 +33,7 @@ export async function GET() {
   const projectLines = projects
     .map((p) => {
       const url = p.htmlUrl ?? `https://github.com/nixrajput/${p.repo}`;
-      const stats = p.stars === null ? "" : ` (${p.stars} GitHub stars)`;
+      const stats = p.stars === null ? "" : ` (${p.stars} GitHub star${p.stars === 1 ? "" : "s"})`;
       const tags = p.tags.length ? ` Tags: ${p.tags.join(", ")}.` : "";
       return `- **${p.title}**${p.featured ? " (featured)" : ""} - ${p.description ?? ""}${stats} - ${url}.${tags}`;
     })

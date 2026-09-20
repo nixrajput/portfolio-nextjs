@@ -23,6 +23,24 @@ vi.mock("@/lib/queries", () => ({
       featured: true,
       htmlUrl: "https://github.com/nixrajput/flutter_carousel_widget",
     },
+    {
+      repo: "siphon",
+      title: "Siphon",
+      description: "Sync any database, anywhere.",
+      stars: 1,
+      tags: [],
+      featured: false,
+      htmlUrl: "https://github.com/nixrajput/siphon",
+    },
+    {
+      repo: "pg-sync",
+      title: "pg-sync",
+      description: "No stars yet.",
+      stars: 0,
+      tags: [],
+      featured: false,
+      htmlUrl: "https://github.com/nixrajput/pg-sync",
+    },
   ],
   getExperiences: async () => [
     {
@@ -58,6 +76,14 @@ describe("llms-full.txt", () => {
     );
     expect(text).toContain("  - Leading AI integration.");
     expect(text).toContain("### Who is Nikhil Rajput?");
+  });
+
+  it("pluralises the star count on the number, not always", async () => {
+    const text = await (await GET()).text();
+    expect(text).toContain("(1 GitHub star)");
+    expect(text).toContain("(47 GitHub stars)");
+    expect(text).toContain("(0 GitHub stars)");
+    expect(text).not.toContain("(1 GitHub stars)");
   });
 
   it("omits a hidden section entirely, heading included", async () => {
