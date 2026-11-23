@@ -1,4 +1,5 @@
-import { Github, Linkedin, Instagram, Send, Mail, Globe } from "lucide-react";
+import { Send, Mail, Globe } from "lucide-react";
+import { GithubIcon, LinkedinIcon, InstagramIcon } from "@/components/brand/BrandIcons";
 import type { ComponentType, SVGProps } from "react";
 import { Reveal } from "@/components/motion/Reveal";
 import { Magnetic } from "@/components/motion/Magnetic";
@@ -10,11 +11,11 @@ import { XIcon } from "@/components/brand/XIcon";
 export type SocialIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
 const ICONS: Record<string, SocialIcon> = {
-  github: Github,
-  linkedin: Linkedin,
+  github: GithubIcon,
+  linkedin: LinkedinIcon,
   twitter: XIcon,
   x: XIcon,
-  instagram: Instagram,
+  instagram: InstagramIcon,
   telegram: Send,
   email: Mail,
 };

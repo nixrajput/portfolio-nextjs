@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Star, GitFork, ExternalLink, Github, Maximize2 } from "lucide-react";
+import { Star, GitFork, ExternalLink, Maximize2 } from "lucide-react";
+import { GithubIcon } from "@/components/brand/BrandIcons";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Meteors } from "@/components/ui/Meteors";
@@ -101,7 +102,7 @@ export function ProjectCard({
             size="sm"
             target="_blank"
             rel="noopener noreferrer"
-            leftIcon={<Github className="size-3.5" aria-hidden />}
+            leftIcon={<GithubIcon className="size-3.5" aria-hidden />}
           >
             Code
           </Button>
