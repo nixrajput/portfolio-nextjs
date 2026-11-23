@@ -1,19 +1,21 @@
 import { describe, expect, it } from "vitest";
-import { isAllowedLogin } from "./auth-callbacks";
+import { isAdminProfile } from "./auth-callbacks";
 
-describe("isAllowedLogin", () => {
-  it("allows the configured admin login (case-insensitive)", () => {
-    expect(isAllowedLogin("nixrajput", "nixrajput")).toBe(true);
-    expect(isAllowedLogin("NixRajput", "nixrajput")).toBe(true);
+const ADMIN_ID = "10887215";
+
+describe("isAdminProfile", () => {
+  it("allows the configured GitHub user id", () => {
+    expect(isAdminProfile({ login: "nixrajput", id: 10887215 }, ADMIN_ID)).toBe(true);
   });
-  it("rejects any other login", () => {
-    expect(isAllowedLogin("someone-else", "nixrajput")).toBe(false);
+  it("rejects a renamed account that reuses the admin login with a different id", () => {
+    expect(isAdminProfile({ login: "nixrajput", id: 99999999 }, ADMIN_ID)).toBe(false);
   });
-  it("rejects null/undefined login", () => {
-    expect(isAllowedLogin(null, "nixrajput")).toBe(false);
-    expect(isAllowedLogin(undefined, "nixrajput")).toBe(false);
+  it("rejects a profile without an id", () => {
+    expect(isAdminProfile({ login: "nixrajput" }, ADMIN_ID)).toBe(false);
+    expect(isAdminProfile(undefined, ADMIN_ID)).toBe(false);
   });
-  it("rejects everyone when admin login is unset", () => {
-    expect(isAllowedLogin("nixrajput", undefined)).toBe(false);
+  it("rejects everyone when the admin id is unset", () => {
+    expect(isAdminProfile({ login: "nixrajput", id: 10887215 }, undefined)).toBe(false);
+    expect(isAdminProfile({ login: "nixrajput", id: 10887215 }, "")).toBe(false);
   });
 });

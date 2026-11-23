@@ -84,7 +84,7 @@
 - **GitHub cache** - stars, forks, languages, descriptions and a README excerpt per repo, plus account-level followers/stars/repo counts, are cached in Postgres with a **24-hour TTL** and served from the last-known-good row so they never flash blank. A GitHub outage or rate limit falls back to the stale row rather than erroring. Only repos listed in the database are enriched.
 - **Theming and brand palette** - light/dark/system plus five selectable brand palettes (Iris by default), chosen from the appearance menu in the nav and remembered in `localStorage`. `src/lib/brand.ts` is the build-time source of truth for the default; `globals.css` mirrors it as CSS variables and `src/app/globals.theme.test.ts` fails if the two drift. Server-rendered artifacts that cannot be per-visitor (Open Graph image, PWA manifest, notification emails) always use the default.
 - **Testimonials** - visitors submit testimonials through a validated form (inline per-field errors) with an optional cropped avatar uploaded to Vercel Blob. Submissions land in a moderation queue; the admin approves or rejects them before they appear publicly. Resend emails the admin on new submissions.
-- **Admin panel** - protected by GitHub OAuth (`AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET`). Access is restricted to the GitHub login set in `ADMIN_GITHUB_LOGIN` (default: `nixrajput`). The panel exposes CRUD tabs for all content types plus the testimonial moderation queue.
+- **Admin panel** - protected by GitHub OAuth (`AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET`). Access is restricted to the GitHub user id set in `ADMIN_GITHUB_ID` (`10887215` for `nixrajput`). The panel exposes CRUD tabs for all content types plus the testimonial moderation queue.
 - **SEO / GEO** - structured metadata, Open Graph, Twitter cards, Google verification, and `robots.txt` are generated from the database profile row and site config.
 
 ---
@@ -121,7 +121,7 @@ cp .env.example .env.local
 | `AUTH_SECRET`                           | Yes         | Random secret for Auth.js session encryption (`openssl rand -base64 32`)                      |
 | `AUTH_GITHUB_ID`                        | Yes         | GitHub OAuth App client ID                                                                    |
 | `AUTH_GITHUB_SECRET`                    | Yes         | GitHub OAuth App client secret                                                                |
-| `ADMIN_GITHUB_LOGIN`                    | Yes         | GitHub username allowed to access the admin panel (e.g. `nixrajput`)                          |
+| `ADMIN_GITHUB_ID`                       | Yes         | Numeric GitHub user id allowed into the admin panel (`10887215` for `nixrajput`). Find yours with `gh api users/<login> --jq .id` |
 | `GITHUB_TOKEN`                          | Recommended | GitHub personal access token for project metadata fetching (higher rate limits)               |
 | `BLOB_READ_WRITE_TOKEN`                 | Yes (prod)  | Vercel Blob token for image uploads (avatar, skill icons, project media, testimonial avatars) |
 | `RESEND_API_KEY`                        | Yes (prod)  | Resend API key for admin notification emails                                                  |
@@ -203,7 +203,7 @@ bun run check:vitals    # refuses a dev server: unminified bundles give meaningl
 
 The admin panel is at `/admin` and requires authentication via GitHub OAuth.
 
-- Only the GitHub account set in `ADMIN_GITHUB_LOGIN` (e.g. `nixrajput`) can sign in.
+- Only the GitHub account whose numeric user id is set in `ADMIN_GITHUB_ID` (`10887215` for `nixrajput`) can sign in. The id is checked, not the login, because a renamed login can be claimed by someone else.
 - After signing in you have access to CRUD tabs for profile, projects, experiences, skills, services, social links, taglines, FAQs, and funding links.
 - The profile editor manages your name, bio, hero role marquee, "Currently" tagline, resume link, and avatar (upload or URL). Skill icons are uploaded or URL-pasted per skill.
 - The projects editor curates which repos appear and how: title, blurb, tags, order, featured/hidden flags, a cover image, and up to six screenshots for the quick view. `order` doubles as the showcase ranking - the leading featured rows get the large cells above the grid, and the rest keep a "Featured" badge inside it.
@@ -227,6 +227,8 @@ The site is deployed on [Vercel](https://vercel.com/). The main branch deploys a
 5. Push to `master` - Vercel runs the `vercel-build` script, which applies pending migrations and then builds. It does **not** seed; data seeding is the one-time manual step above, and further content changes are made in the admin panel.
 
 The local `DATABASE_URL` stays pointed at your local Postgres for development; only the Vercel environment uses the production database.
+
+**Upgrading to 2.5.0:** set `ADMIN_GITHUB_ID=10887215` in the Vercel project (Production and Preview) before you merge. 2.5.0 checks the GitHub user id instead of `ADMIN_GITHUB_LOGIN`, so without it nobody can sign in to `/admin`. `ADMIN_GITHUB_LOGIN` can be removed afterwards.
 
 ---
 
