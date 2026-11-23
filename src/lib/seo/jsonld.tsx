@@ -1,9 +1,9 @@
 import { SITE } from "./site";
 
+// `<` is escaped so admin-authored text such as an FAQ answer cannot close the script tag.
 function JsonLd({ data }: { data: Record<string, unknown> }) {
-  return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />
-  );
+  const json = JSON.stringify(data).replace(/</g, "\\u003c");
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: json }} />;
 }
 
 export function PersonJsonLd() {
