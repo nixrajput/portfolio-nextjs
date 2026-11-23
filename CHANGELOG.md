@@ -62,6 +62,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A missing profile avatar falls back to a bundled asset instead of rendering a broken image.
 - Migrated to Tailwind v4 CSS-variable shorthand and dropped deprecated Zod 4 APIs.
 
+### Security
+
+- Upgraded Next.js to 16.4.6, closing 39 Next.js advisories. Every dependency is pinned exactly, at its latest release except TypeScript and lucide-react.
+- Added a Content-Security-Policy, HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy` and `Permissions-Policy` headers to every response.
+- JSON-LD escapes `<`, so admin-authored FAQ text cannot close its script tag.
+- `bun run db:seed` writes demo testimonials only to a localhost database, so seeding production never publishes them.
+- GitHub Actions are pinned by commit SHA, and the version check now compares against the real base version.
+
 ---
 
 ## [2.0.0] - 2025-01-01
