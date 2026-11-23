@@ -10,7 +10,8 @@ on:
     - cron: "30 4 * * 1" # Mondays 04:30 UTC
   workflow_dispatch: {}
 
-permissions: read-all
+permissions:
+  contents: read
 
 jobs:
   analysis:
@@ -18,14 +19,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write # publish results to the OpenSSF API
+      security-events: write
       contents: read
       actions: read
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      # No floating v2 tag is published for this action, so pin the minor.
-      - uses: ossf/scorecard-action@v2.4.4
+      - uses: ossf/scorecard-action@23f22cd43608bae7a1f1fa2603d7314dee9538a5 # v2.6.0
         with:
           results_file: results.sarif
           results_format: sarif
