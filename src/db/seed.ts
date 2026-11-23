@@ -11,7 +11,7 @@ import {
   faqs,
   testimonials,
 } from "./schema";
-import { requireEnv } from "@/lib/env";
+import { isLocalDatabaseUrl, requireEnv } from "@/lib/env";
 
 // Inserted only on a fresh (empty) database. Later content changes are made in the admin
 // panel, not by re-running the seed.
@@ -529,12 +529,13 @@ async function seed() {
 
 /**
  * Seed demo testimonials for LOCAL UI testing only. These are fabricated, so
- * they must never reach production — skipped when NODE_ENV is "production".
+ * they must never reach production. `bun run` leaves NODE_ENV unset, so the
+ * database host decides: anything but localhost is skipped.
  * Seeds only when the table is empty so real submissions are never wiped.
  */
 async function seedDemoTestimonials() {
-  if (process.env.NODE_ENV === "production") {
-    console.log("Production environment; skipping demo testimonials.");
+  if (process.env.NODE_ENV === "production" || !isLocalDatabaseUrl(process.env.DATABASE_URL)) {
+    console.log("Not a local database; skipping demo testimonials.");
     return;
   }
   const existing = await db.select({ id: testimonials.id }).from(testimonials).limit(1);
