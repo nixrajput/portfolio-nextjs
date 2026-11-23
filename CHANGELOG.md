@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `AGENTS.md` rewritten: the duplicated copy of the global working-discipline rules was removed in favour of project-specific pitfalls.
 - Admin dashboard now surfaces a stat for every content section (projects, experiences, skills, services, social links, funding links, FAQs, testimonials) plus a profile status and testimonial moderation breakdown.
 - Extracted a shared `AdminCrudPage` so the eight content sections no longer duplicate their list/dialog scaffold.
+- Service icons load one at a time by lucide icon name (for example `code`), so pages no longer ship every lucide icon.
 
 ### Fixed
 
@@ -64,8 +65,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-- Upgraded Next.js to 16.4.6, closing 39 Next.js advisories. Every dependency is pinned exactly, at its latest release except TypeScript and lucide-react.
+- Upgraded Next.js to 16.4.6, closing 39 Next.js advisories. Every dependency is pinned exactly, at its latest release except TypeScript.
 - Added a Content-Security-Policy, HSTS, `nosniff`, `X-Frame-Options`, `Referrer-Policy` and `Permissions-Policy` headers to every response.
+- Admin sign-in checks the GitHub user id in `ADMIN_GITHUB_ID`, not the login, so a renamed account's reused login cannot sign in.
 - JSON-LD escapes `<`, so admin-authored FAQ text cannot close its script tag.
 - `bun run db:seed` writes demo testimonials only to a localhost database, so seeding production never publishes them.
 - GitHub Actions are pinned by commit SHA, and the version check now compares against the real base version.
