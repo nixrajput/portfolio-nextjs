@@ -22,3 +22,13 @@ export function requirePublicEnv(name: string): string {
   }
   return value;
 }
+
+/** True only for a database on this machine, the one place fabricated demo rows may go. */
+export function isLocalDatabaseUrl(url: string | undefined): boolean {
+  if (!url) return false;
+  try {
+    return ["localhost", "127.0.0.1", "[::1]"].includes(new URL(url).hostname);
+  } catch {
+    return false;
+  }
+}

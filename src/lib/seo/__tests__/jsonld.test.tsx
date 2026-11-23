@@ -37,4 +37,13 @@ describe("JSON-LD", () => {
     expect(first.acceptedAnswer["@type"]).toBe("Answer");
     expect(typeof first.acceptedAnswer.text).toBe("string");
   });
+
+  it("cannot close its script tag from FAQ content", () => {
+    const answer = "</script><script>alert(1)</script>";
+    const { container } = render(<FaqJsonLd faqs={[{ question: "Q?", answer }]} />);
+    expect(container.querySelectorAll("script")).toHaveLength(1);
+    const script = container.querySelector("script")!;
+    expect(script.innerHTML).not.toContain("</script");
+    expect(parse(script.innerHTML).mainEntity[0].acceptedAnswer.text).toBe(answer);
+  });
 });

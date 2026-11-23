@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Star, GitFork, ExternalLink, Github, Maximize2 } from "lucide-react";
+import { Star, GitFork, ExternalLink, Maximize2 } from "lucide-react";
+import { GithubIcon } from "@/components/brand/BrandIcons";
 import { Button } from "@/components/ui/Button";
 import type { MergedProject } from "@/lib/projects";
 import { pluralize } from "@/utils/plural";
@@ -96,7 +97,7 @@ export function FeaturedProject({
             size="sm"
             target="_blank"
             rel="noopener noreferrer"
-            leftIcon={<Github className="size-3.5" aria-hidden />}
+            leftIcon={<GithubIcon className="size-3.5" aria-hidden />}
           >
             Code
           </Button>

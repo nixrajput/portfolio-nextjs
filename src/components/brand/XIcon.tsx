@@ -1,9 +1,9 @@
 import type { SVGProps } from "react";
 
 /**
- * The X (formerly Twitter) brand mark. lucide-react only ships the deprecated
- * Twitter "bird" icon, so we provide the current X logo as a small SVG that
- * accepts the same props (className/size) as a lucide icon.
+ * The X (formerly Twitter) brand mark. lucide-react ships no brand icons, so we
+ * provide the current X logo as a small SVG that accepts the same props
+ * (className/size) as a lucide icon.
  */
 export function XIcon({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (

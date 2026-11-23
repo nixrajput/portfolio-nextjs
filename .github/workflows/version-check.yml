@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out PR head
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
@@ -29,9 +29,15 @@ jobs:
 
       - name: Read base (master) version
         id: base
+        shell: bash
+        env:
+          BASE_REF: ${{ github.base_ref }}
         run: |
-          # Read package.json from the PR's base branch without switching trees.
-          base_version=$(git show "origin/${{ github.base_ref }}:package.json" | jq -r .version)
+          # The PR checkout has no base branch ref, so fetch it. Without the fetch the
+          # base version read as empty and every PR passed.
+          git fetch --no-tags --depth=1 origin "$BASE_REF"
+          base_version=$(git show FETCH_HEAD:package.json | jq -r .version)
+          test -n "$base_version"
           echo "version=$base_version" >> "$GITHUB_OUTPUT"
 
       - name: Compare versions

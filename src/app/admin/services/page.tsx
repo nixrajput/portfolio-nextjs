@@ -25,10 +25,10 @@ const fields: AdminField[] = [
   },
   {
     name: "icon",
-    label: "Icon path",
+    label: "Icon",
     type: "text",
-    placeholder: "/icons/web.svg",
-    hint: "Optional",
+    placeholder: "code",
+    hint: "Optional. A lucide icon name from lucide.dev/icons, for example code.",
   },
   { name: "order", label: "Order", type: "number" },
 ];
