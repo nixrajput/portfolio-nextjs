@@ -40,11 +40,33 @@ jobs:
           test -n "$base_version"
           echo "version=$base_version" >> "$GITHUB_OUTPUT"
 
+      # Not paths-ignore on the trigger: this is a required check, so a skipped run would
+      # leave the PR pending forever. HEAD is the PR merge commit, so a tree diff against
+      # the fetched base lists the PR's files without needing history.
+      - name: Does this PR change anything that ships
+        id: scope
+        run: |
+          changed=$(git diff --name-only FETCH_HEAD HEAD)
+          echo "changed files:"; printf '%s\n' "$changed" | sed 's/^/  /'
+          total=$(printf '%s\n' "$changed" | grep -c . || true)
+          infra=$(printf '%s\n' "$changed" | grep -cE '^(\.github/|\.nvmrc$)' || true)
+          echo "total=${total:-0} infra-only=${infra:-0}"
+          if [ "${total:-0}" -gt "${infra:-0}" ]; then
+            echo "ships=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ships=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Compare versions
         env:
           PR_VERSION: ${{ steps.pr.outputs.version }}
           BASE_VERSION: ${{ steps.base.outputs.version }}
+          SHIPS: ${{ steps.scope.outputs.ships }}
         run: |
+          if [ "$SHIPS" != "true" ]; then
+            echo "Only .github/ or the runtime pin changed; version bump not required."
+            exit 0
+          fi
           echo "Base (master): $BASE_VERSION"
           echo "PR:            $PR_VERSION"
 
