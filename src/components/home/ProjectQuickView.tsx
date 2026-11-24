@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Star, GitFork, ExternalLink, Github } from "lucide-react";
+import { Star, GitFork, ExternalLink } from "lucide-react";
+import { GithubIcon } from "@/components/brand/BrandIcons";
 import {
   Dialog,
   DialogContent,
@@ -143,7 +144,7 @@ export function ProjectQuickView({
             size="sm"
             target="_blank"
             rel="noopener noreferrer"
-            leftIcon={<Github className="size-3.5" aria-hidden />}
+            leftIcon={<GithubIcon className="size-3.5" aria-hidden />}
           >
             View code
           </Button>

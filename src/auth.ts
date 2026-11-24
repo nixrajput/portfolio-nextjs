@@ -3,7 +3,7 @@ import GitHub from "next-auth/providers/github";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { dbForAdapter } from "@/db/client";
 import { authUsers, authAccounts, authSessions, authVerificationTokens } from "@/db/schema";
-import { isAllowedLogin } from "@/lib/auth-callbacks";
+import { isAdminProfile } from "@/lib/auth-callbacks";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   // Derive the OAuth redirect_uri from the request host so a single GitHub
@@ -24,10 +24,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    // GitHub profile exposes `login`; reject anyone but the admin.
+    // GitHub's profile.id is the numeric user id; reject anyone but the admin.
     async signIn({ profile }) {
-      const login = (profile as { login?: string } | undefined)?.login;
-      return isAllowedLogin(login, process.env.ADMIN_GITHUB_LOGIN);
+      return isAdminProfile(profile, process.env.ADMIN_GITHUB_ID);
     },
   },
   pages: { signIn: "/login" },

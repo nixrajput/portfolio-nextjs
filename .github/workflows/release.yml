@@ -24,7 +24,7 @@ jobs:
       contents: write # create the tag and the GitHub Release
     steps:
       - name: Check out
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0 # full history + tags for release-note generation
           persist-credentials: false
@@ -40,11 +40,12 @@ jobs:
         id: exists
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
         run: |
-          if gh release view "${{ steps.version.outputs.tag }}" >/dev/null 2>&1 \
-            || git ls-remote --tags origin "refs/tags/${{ steps.version.outputs.tag }}" | grep -q .; then
+          if gh release view "$TAG" >/dev/null 2>&1 \
+            || git ls-remote --tags origin "refs/tags/$TAG" | grep -q .; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "Tag ${{ steps.version.outputs.tag }} already exists — skipping release."
+            echo "Tag $TAG already exists - skipping release."
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
@@ -54,11 +55,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.version.outputs.tag }}
+          SHA: ${{ github.sha }}
         run: |
           # Tag the merge commit and publish a release with notes auto-generated
           # from the PRs/commits since the previous tag.
           gh release create "$TAG" \
-            --target "${{ github.sha }}" \
+            --target "$SHA" \
             --title "$TAG" \
             --generate-notes
           echo "Released $TAG ✓"

@@ -1,6 +1,6 @@
 import { signIn, auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { Github } from "lucide-react";
+import { GithubIcon } from "@/components/brand/BrandIcons";
 
 // Admin sign-in page: keep it out of the index, and override the canonical so
 // it points at /login rather than inheriting the root layout's "/" (which would
@@ -26,7 +26,7 @@ export default async function SignInPage() {
           type="submit"
           className="bg-foreground text-background inline-flex items-center gap-2 rounded-md px-5 py-2.5"
         >
-          <Github className="h-4 w-4" aria-hidden />
+          <GithubIcon className="h-4 w-4" aria-hidden />
           Login with GitHub
         </button>
       </form>

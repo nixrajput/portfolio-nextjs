@@ -4,12 +4,15 @@ on:
   pull_request:
     branches: [master, v2]
 
+permissions:
+  contents: read
+
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:16
+        image: postgres:16.16@sha256:3950ad7c3148ca2175ef1b6c36c9efbf78957ae8fbe8b3a5d7c35af50500382f
         env:
           POSTGRES_USER: lh
           POSTGRES_PASSWORD: lh
@@ -23,11 +26,17 @@ jobs:
           --health-retries 5
 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: oven-sh/setup-bun@v2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          bun-version: latest
+          persist-credentials: false
+
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
+        with:
+          bun-version: 1.4.5
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
@@ -53,7 +62,7 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://nixrajput.com
 
       - name: Run Lighthouse CI
-        run: bunx @lhci/cli@latest autorun
+        run: bunx @lhci/cli@0.16.1 autorun
         env:
           DATABASE_URL: postgres://lh:lh@localhost:5432/portfolio_lh
           AUTH_SECRET: ci-dummy-secret

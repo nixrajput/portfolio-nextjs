@@ -12,9 +12,43 @@ if (siteUrl) {
   }
 }
 
+// Scripts keep 'unsafe-inline': a nonce needs per-request rendering, which the ISR homepage does
+// not do. The inline scripts are the theme pre-paint, the palette, gtag init and Next's own.
+const isDev = process.env.NODE_ENV !== "production";
+const csp = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://www.googletagmanager.com https://va.vercel-scripts.com https://vercel.live`,
+  "style-src 'self' 'unsafe-inline' https://vercel.live",
+  // https: because the admin previews any pasted image URL before it is saved.
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' data: https://vercel.live https://assets.vercel.com",
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://vercel.live wss://ws-us3.pusher.com",
+  "frame-src https://vercel.live",
+  "object-src 'none'",
+  "base-uri 'self'",
+  // github.com: the no-JS sign-in form posts here and is redirected to GitHub OAuth.
+  "form-action 'self' https://github.com",
+  "frame-ancestors 'none'",
+].join("; ");
+
+const securityHeaders = [
+  { key: "Content-Security-Policy", value: csp },
+  { key: "Strict-Transport-Security", value: "max-age=63072000" },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+  },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  async headers() {
+    return [{ source: "/:path*", headers: securityHeaders }];
+  },
   // sharp is a native addon used server-side (testimonial/avatar image
   // optimization in src/lib/blob.ts). Mark it external so Next loads it via a
   // plain require from node_modules at runtime instead of letting Turbopack

@@ -1,6 +1,8 @@
 "use client";
 
-import { Quote, Linkedin, Github, Twitter, Instagram, Globe } from "lucide-react";
+import { Quote, Globe } from "lucide-react";
+import { GithubIcon, LinkedinIcon, InstagramIcon } from "@/components/brand/BrandIcons";
+import { XIcon } from "@/components/brand/XIcon";
 import { BrandInitialsAvatar } from "@/components/ui/avatar";
 import { cn } from "@/utils/cn";
 import type { TestimonialCard } from "./Testimonials";
@@ -8,10 +10,10 @@ import type { TestimonialCard } from "./Testimonials";
 /** A single boxed testimonial card — clean bordered surface, no gradient fill. */
 function MarqueeCard({ t }: { t: TestimonialCard }) {
   const socials = [
-    { label: "LinkedIn", url: t.linkedinUrl, Icon: Linkedin },
-    { label: "GitHub", url: t.githubUrl, Icon: Github },
-    { label: "X / Twitter", url: t.xUrl, Icon: Twitter },
-    { label: "Instagram", url: t.instagramUrl, Icon: Instagram },
+    { label: "LinkedIn", url: t.linkedinUrl, Icon: LinkedinIcon },
+    { label: "GitHub", url: t.githubUrl, Icon: GithubIcon },
+    { label: "X / Twitter", url: t.xUrl, Icon: XIcon },
+    { label: "Instagram", url: t.instagramUrl, Icon: InstagramIcon },
     { label: "Website", url: t.websiteUrl, Icon: Globe },
   ].filter((s) => s.url);
 
