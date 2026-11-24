@@ -49,7 +49,7 @@ jobs:
           changed=$(git diff --name-only FETCH_HEAD HEAD)
           echo "changed files:"; printf '%s\n' "$changed" | sed 's/^/  /'
           total=$(printf '%s\n' "$changed" | grep -c . || true)
-          infra=$(printf '%s\n' "$changed" | grep -cE '^(\.github/|\.nvmrc$)' || true)
+          infra=$(printf '%s\n' "$changed" | grep -cE '^(\.github/|\.claude/|\.nvmrc$|AGENTS\.md$|CLAUDE\.md$)' || true)
           echo "total=${total:-0} infra-only=${infra:-0}"
           if [ "${total:-0}" -gt "${infra:-0}" ]; then
             echo "ships=true" >> "$GITHUB_OUTPUT"
@@ -64,7 +64,7 @@ jobs:
           SHIPS: ${{ steps.scope.outputs.ships }}
         run: |
           if [ "$SHIPS" != "true" ]; then
-            echo "Only .github/ or the runtime pin changed; version bump not required."
+            echo "Only .github/, .claude/, the runtime pin or the agent guides changed; version bump not required."
             exit 0
           fi
           echo "Base (master): $BASE_VERSION"
