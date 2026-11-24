@@ -2,7 +2,7 @@ name: Labeler
 
 # Auto-labels PRs by the paths they touch (config in .github/labeler.yml).
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, reopened]
 
 permissions:
@@ -10,6 +10,8 @@ permissions:
 
 jobs:
   label:
+    # Fork PRs get a read-only token on pull_request, so labeling would fail. Skip them.
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
       contents: read
