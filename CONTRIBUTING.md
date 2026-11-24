@@ -93,8 +93,7 @@ The build is deliberately left out of the pre-push hook: it is a webpack build t
 needs a reachable, seeded database, and a minute-plus gate teaches people to reach for
 `--no-verify`.
 
-A failing CI gate will block merge. Every PR must also bump the `version` in
-`package.json` - the `package.json version bumped` check enforces it.
+A failing CI gate will block merge. Every PR must also bump the `version` in `package.json`, unless it changes only `.github/`, `.nvmrc`, `.claude/`, `AGENTS.md` or `CLAUDE.md`. The `package.json version bumped` check enforces it.
 
 ## Pull request guidelines
 

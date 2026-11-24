@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Admin dashboard now surfaces a stat for every content section (projects, experiences, skills, services, social links, funding links, FAQs, testimonials) plus a profile status and testimonial moderation breakdown.
 - Extracted a shared `AdminCrudPage` so the eight content sections no longer duplicate their list/dialog scaffold.
 - Service icons load one at a time by lucide icon name (for example `code`), so pages no longer ship every lucide icon.
+- The site runs on Node 26: `.nvmrc` is `26` and `engines.node` is `26.x`, so Vercel builds and serves it on Node 26.
 
 ### Fixed
 

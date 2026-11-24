@@ -13,7 +13,7 @@ async function get(url) {
   }
 }
 
-// Re-measured 2026-08-17 after the palette work: ~1492KB on all three, up from 1425. The ROOT
+// Re-measured 2026-11-24 in CI: ~1017KB on all three, down from 1492 on 2026-08-17. The ROOT
 // LAYOUT dominates (ThemeProvider, AmbientBackground, CustomCursor and three analytics scripts
 // load everywhere). A ceiling to ratchet DOWN, not an endorsement of 1.5MB.
 const BUDGETS = [
