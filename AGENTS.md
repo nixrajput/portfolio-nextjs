@@ -1,6 +1,6 @@
 # AI Agent Guidelines
 
-Last updated: 2026-10-07
+Last updated: 2026-11-24
 
 The working-discipline and multi-agent-safety rules that used to live here were a verbatim copy of `~/.claude/CLAUDE.md`, which is already loaded into every session. They were deleted rather than maintained in two places. This file now carries only what is true of **this repo** and cannot be derived from reading it quickly.
 
@@ -124,7 +124,7 @@ bun run check:vitals    # per-route JS payload and TTFB budgets
 
 ## Versioning and release
 
-Every PR must bump `version` in `package.json`. `version-check.yml` enforces it as the required check **`package.json version bumped`**. On merge to `master`, `release.yml` reads that version and creates tag `v<version>` plus a GitHub Release, skipping idempotently if the tag already exists. There is no manual tagging step.
+Every PR must bump `version` in `package.json`, unless it changes only `.github/`, `.nvmrc`, `.claude/`, `AGENTS.md` or `CLAUDE.md`. `version-check.yml` enforces it as the required check **`package.json version bumped`**. On merge to `master`, `release.yml` reads that version and creates tag `v<version>` plus a GitHub Release, skipping idempotently if the tag already exists. There is no manual tagging step.
 
 ## Content model
 
