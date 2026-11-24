@@ -1,7 +1,10 @@
 {
   "name": "portfolio-nextjs",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "private": true,
+  "engines": {
+    "node": "26.x"
+  },
   "scripts": {
     "dev": "next dev --turbopack -p 4000",
     "build": "next build --webpack",

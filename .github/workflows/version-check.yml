@@ -46,7 +46,7 @@ jobs:
       - name: Does this PR change anything that ships
         id: scope
         run: |
-          changed=$(git diff --name-only FETCH_HEAD HEAD)
+          changed=$(git diff --no-renames --name-only FETCH_HEAD HEAD)
           echo "changed files:"; printf '%s\n' "$changed" | sed 's/^/  /'
           total=$(printf '%s\n' "$changed" | grep -c . || true)
           infra=$(printf '%s\n' "$changed" | grep -cE '^(\.github/|\.claude/|\.nvmrc$|AGENTS\.md$|CLAUDE\.md$)' || true)
